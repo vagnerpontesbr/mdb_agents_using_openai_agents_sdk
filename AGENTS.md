@@ -20,6 +20,7 @@
 ## Development workflow
 
 - Inspect existing files and Git status when available; preserve unrelated work. Never overwrite remote history or invent a successful Git operation.
+- The user performs Git commits, pushes, and PR creation manually. Prepare and validate changes, then provide commands; verify results through read access. Do not attempt GitHub plugin writes.
 - Deliver a small end-to-end behavior or compatibility proof with explicit acceptance criteria. Avoid broad scaffolding that hides unvalidated dependencies.
 - Use uv for Python dependencies and interpreter management; commit the validated lock and frontend lock when those projects exist. Do not silently downgrade the requested Python target.
 - Verify external SDK APIs against official documentation and the pinned version. Record tested versions, environment, and unresolved gaps.

@@ -34,4 +34,4 @@ The implementation starts with compatibility proofs. In particular, the document
 
 Run `python3 scripts/check_repository.py` from the project root. This validates repository structure and local documentation links, not application behavior.
 
-Intended repository: https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk. GitHub access failed in this session and Git metadata writes are restricted; no commit, push, or remote CI result is claimed.
+Repository: https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk. Foundation commit `3c29d14` was published on `codex/repository-foundation`; Repository checks passed for that commit. No PR/merge is confirmed. The assistant prepares and validates changes; the user performs commits, pushes, and PR creation manually. Later local edits are pending until committed and pushed.

@@ -1,6 +1,6 @@
 # Telecom agent framework: implementation plan
 
-**Status:** researched plan, not an implemented or tested application. Research date: October 28, 2026. Four planning roles contributed: OpenAI Agents SDK, MongoDB Agent Engine, supporting architecture, and integrated review.
+**Status:** architecture planning and repository foundation published on `codex/repository-foundation` at commit `3c29d144af786fcbbd201eb8a990a49858b25b26`; Repository checks passed for that commit. Application implementation and provider validation remain pending. Four planning roles contributed: OpenAI Agents SDK, MongoDB Agent Engine, supporting architecture, and integrated review.
 
 **Language:** documentation, code identifiers, comments, prompts, configuration, navigation, user-facing UI, and sample chat/voice conversations will all be English.
 
@@ -314,7 +314,9 @@ Intended GitHub repository: https://github.com/vagnerpontesbr/mdb_agents_using_o
 
 ADRs 0012–0014 capture instruction design, task delivery, and layered verification. The available standard-library check is `python3 scripts/check_repository.py`; it checks foundation files, local Markdown file targets, and ADR structure. It does not validate external links, anchors, secrets, application behavior, or provider compatibility. Future uv/frontend locks and build/lint/type/contract commands are added only when actually implemented and validated. No global Codex configuration or custom skill is required for routine contribution.
 
-Current repository connection is blocked: GitHub DNS failed and filesystem policy denied `.git` creation. Files are authored locally, not committed/pushed; remote contents, settings, and Actions execution remain unverified. Follow the [repository setup runbook](docs/runbooks/REPOSITORY_SETUP.md) once access is available, preserving existing remote work. Branch protection and optional Codex GitHub review are recommended future administration tasks, not capabilities enabled by these files.
+The user initialized Git, fetched the existing history, preserved the remote ignore rules, and published commit `3c29d144af786fcbbd201eb8a990a49858b25b26` on `codex/repository-foundation`. The [Repository checks run](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/40671237487) succeeded for that commit. No PR or merge has been confirmed. The GitHub connector supports reading but returned 403 for writes; this session also encountered CLI network and Git metadata restrictions.
+
+**Agreed Git workflow:** the assistant prepares changes and runs available checks, then provides explicit commands. The user executes commits, pushes, and PR creation in the normal Terminal. The assistant verifies results when read access permits and does not attempt plugin writes. New local edits are not published until the user commits and pushes them. Branch protection and optional Codex GitHub review remain repository-administration tasks. See the [setup runbook](docs/runbooks/REPOSITORY_SETUP.md).
 
 ## 19. LLM-as-judge and function-calling examples
 

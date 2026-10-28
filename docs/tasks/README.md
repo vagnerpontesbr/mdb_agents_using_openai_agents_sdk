@@ -5,7 +5,7 @@ The [initial plan](../../initial_plan.md) defines scope; this backlog sequences 
 | ID | Deliverable | Dependency | Acceptance | Status |
 |---|---|---|---|---|
 | FND-001 | Codex instructions, docs validation, PR templates, development ADRs | None | Local checker passes; status honestly distinguishes authored files from GitHub setup | Done locally |
-| FND-002 | Reconcile local files with intended GitHub repository | Network and writable Git metadata | Inspect remote history; preserve remote work; review diff; establish remote/branch; verify resulting commit/PR | Blocked in current environment |
+| FND-002 | Reconcile local files with intended GitHub repository | User Terminal for Git writes | Remote history preserved; foundation commit/branch and successful CI verified; PR remains pending | Branch published; PR pending |
 | COMP-001 | Latest-Python dependency proof | Provider/package access | uv lock/sync/import/build on target; record compatible versions and failures; no silent downgrade | Ready |
 | COMP-002 | Engine memory and single-cluster proof | Atlas/Engine access, COMP-001 | Real record/context/isolation check on intended cluster; document supported schema/credentials without secrets | Ready |
 | COMP-003 | Engine hosted execution proof | COMP-001, platform access | Verify SDK orchestration, tool/LLM audit, replay, approval/resume; report unsupported contract explicitly | Ready |
@@ -23,4 +23,4 @@ Implementation tasks can be subdivided before coding. Failed compatibility gates
 
 VERT-001 includes an explicit `@function_tool` invoice walkthrough; VERT-002 includes approved simulated plan changes; RAG-001 includes curator-only ingestion jobs. EVAL-001 implements calibrated offline LLM-as-judge grading with independent time-valid references. Online judge gating is optional and disabled by default; deterministic policy checks remain mandatory.
 
-FND-001 evidence: `python3 scripts/check_repository.py` and the offline uv invocation passed locally on Python 3.14.6/uv 0.11.3. Temporary negative fixtures verified detection of broken/nonportable links, missing ADR context, and missing AGENTS.md. A path-normalization defect discovered by those fixtures was corrected and the cases passed. GitHub CI has not run; see the [setup runbook](../runbooks/REPOSITORY_SETUP.md).
+FND-001 evidence: `python3 scripts/check_repository.py` and the offline uv invocation passed locally on Python 3.14.6/uv 0.11.3. Temporary negative fixtures verified detection of broken/nonportable links, missing ADR context, and missing AGENTS.md. A path-normalization defect discovered by those fixtures was corrected and the cases passed. GitHub CI subsequently passed for published foundation commit `3c29d14`; later local edits require a new run. See the [setup runbook](../runbooks/REPOSITORY_SETUP.md).

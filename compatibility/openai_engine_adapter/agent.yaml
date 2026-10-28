@@ -1,0 +1,21 @@
+name: agentsdk
+version: 0.0.1
+description: Synthetic read-only OpenAI Runner compatibility proof
+framework: openai-agents
+language: python
+entrypoint: openai_engine_adapter.invoice:app
+features:
+  memory: false
+sandboxes:
+  agent:
+    secrets: []
+    tools: []
+    network:
+      egress_mode: deny_all
+  tool:
+    secrets: [OPENAI_API_KEY]
+    tools: [lookup_invoice]
+    network:
+      egress:
+        - fqdn: api.openai.com
+          ports: [443]

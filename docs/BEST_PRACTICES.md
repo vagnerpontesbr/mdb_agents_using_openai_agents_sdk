@@ -6,7 +6,7 @@ This is the architecture and implementation guide for the planned asset. Control
 
 The framework defines agent orchestration, typed tools, handoffs, and workflow contracts. The platform supplies hosting, identity, memory services, secrets, policies, audit, and operations. OpenAI Agents SDK is the selected orchestration framework; MongoDB Agent Engine is a platform integration target. An OpenAI model provider adapter is not proof of SDK runtime compatibility.
 
-Keep platform dependencies behind explicit adapters; independently prove memory and hosted execution support. Preserve required audit/replay wrappers. Avoid an abstraction that promises identical semantics across incompatible runtimes. Record supported capabilities and fail clearly for missing ones.
+Prefer Engine for overlapping capabilities according to [ADR-0018](adr/0018-engine-feature-precedence.md); do not create competing platform owners. Keep platform dependencies behind explicit adapters; independently prove memory and hosted execution support. Preserve required audit/replay wrappers. Avoid an abstraction that promises identical semantics across incompatible runtimes. Record supported capabilities and fail clearly for missing ones.
 
 ## 2. Use justified service boundaries
 
@@ -14,7 +14,7 @@ Separate ingress/API, interactive agent execution, knowledge retrieval/governanc
 
 Keep supervisor and specialists in one agent-runtime service initially. A specialist is not automatically a microservice. Extract CRM/BSS/OSS connectors only for independent security, scaling, ownership, or release needs. Avoid building a distributed monolith of synchronous calls.
 
-Each service owns writes to its collections; other services use its contract. Sharing a MongoDB cluster initially is acceptable but does not remove resource contention. The knowledge service owns document governance, chunks, publication, and retrieval cache; ingestion submits staged versions through its internal contract. Engine owns managed memory. Agent runtime owns run/approval state. Use least-privilege service credentials and observe pool sizes across replicas.
+Each service owns writes to its collections; other services use its contract. Sharing a MongoDB cluster initially is acceptable but does not remove resource contention. The knowledge service owns document governance, chunks, publication, and retrieval cache; ingestion submits staged versions through its internal contract. Engine owns managed memory. Engine owns run/approval lifecycle and persistence under [ADR-0018](adr/0018-engine-feature-precedence.md); SDK state translation remains a compatibility gate. Use least-privilege service credentials and observe pool sizes across replicas.
 
 ## 3. Scale without losing correctness
 

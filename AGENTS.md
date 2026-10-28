@@ -9,6 +9,7 @@
 
 ## Architecture invariants
 
+- Prefer Agent Engine for overlapping platform capabilities, following [ADR-0018](docs/adr/0018-engine-feature-precedence.md). Do not create parallel SDK memory, approval, replay, policy or primary trace owners; report unsupported integration as blocked.
 - OpenAI Agents SDK remains the orchestrator. Validate Engine memory and hosted execution separately; never describe untested adapters as supported.
 - Use the approved two-cluster boundary in [ADR-0017](docs/adr/0017-two-cluster-memory-boundary.md): OpenAI-SDK for application data and ClusterDemoTelco for project-managed Engine memory. Preserve service/domain ownership and least-privilege identities. Test tenant/ACL filters separately from database roles.
 - Prefer MongoDB Auto Embedding where the requested model/workflow is supported. Preserve voyage-context-4 for contextual knowledge and native MongoDB hybrid fusion.

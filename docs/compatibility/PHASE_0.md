@@ -434,3 +434,42 @@ The temporary account was then deactivated. At 19:20:45 UTC, the previously work
 [Portable read-only/revocation evidence](../../compatibility/engine-readonly-evidence.json) contains only sanitized results. Private creation output remains ignored and contains the now-deactivated credential. No secret rotation, provider change, memory restart or account-role broadening was performed.
 
 This establishes the tested read-only/read-write distinction and immediate rejection of the deactivated service credential. It does not establish a narrowly permissioned write-capable runtime role, application-tenant authorization, or cross-project isolation with two real projects. The currently documented role set offers no separate project-level invoke-only role. Hosted execution must account for that platform limitation rather than silently treating PROJECT_OWNER as least privilege. Database/service ownership and application tenant enforcement remain separate requirements. Phase 0 remains incomplete.
+
+## Paired Atlas test-account cleanup
+
+On 2026-10-28, an authenticated Atlas project-level read found the temporary paired account still present with GROUP_READ_ONLY and one secret after Engine deactivation. Engine name `agentsdk-phase0-readonly` maps to Atlas name `sa-ap-6ae24a796ef1e72bb8f70bcd` and client ID `mdb_sa_id_6ae24a7ab5ba6da6774a4f71`; this is a service account, not the MongoDB database user `agentsdk`. An organization-level membership query returned 401 USER_UNAUTHORIZED. No organization permissions were changed.
+
+The exact paired account was verified against the private creation response. Its one observed secret was revoked through the Atlas project API, and an independent read confirmed zero secrets. Its project membership was then removed; a subsequent project-level get returned 404 RESOURCE_NOT_FOUND. The organization-level account object was not deleted because organization access was unavailable; do not describe this as complete organization deletion. Existing accounts were untouched. Portable evidence is appended to [engine-readonly-evidence.json](../../compatibility/engine-readonly-evidence.json).
+
+## Hosted execution framework preflight
+
+COMP-003 has begun with the [hosted contract task](../tasks/COMP-003-HOSTED.md). The currently fetched official SDK overview lists LangGraph and Google ADK; it does not list an OpenAI Agents SDK adapter. The generic BaseApp/BaseAgent interfaces document extension points, not a tested OpenAI adapter. No build, deployment, new workspace or framework substitution was performed.
+
+## Installed hosted-runner contract inspection
+
+The [COMP-003 experiment](../tasks/COMP-003-HOSTED.md#pinned-runner-contract-experiment) installed OpenAI Agents SDK 0.24.0 with Engine base SDK/runner 0.11.11 in a separate frozen Python 3.15.2 macOS ARM64 environment. Dependency resolution, installation and imports passed. The actual runner dispatch guard rejected a native OpenAI Agent, and no model, workflow or suspension adapter hooks were registered. Inspection assertions passed; the diagnostic correctly exited 2 for blocked native integration.
+
+This distinguishes a working memory API from an unimplemented hosted execution adapter. A custom adapter remains possible but untested and is not claimed as supported. No runtime was started, no model/tool request was made, and no remote build, deployment, workspace mutation or provider configuration change occurred. See [portable contract evidence](../../compatibility/hosted-contract-evidence.json) and the task's mapping table for remaining work. Phase 0 remains incomplete.
+
+## Custom adapter local contract update
+
+Following explicit user authorization and [ADR-0018](../adr/0018-engine-feature-precedence.md), the [custom adapter](../../compatibility/openai_engine_adapter/README.md) implements a bounded BaseAgent/Runner bridge using Engine model/tool proxies. Eleven offline adapter tests pass on the pinned hosted-runtime environment. Model/tool transport is doubled; actual proxy construction and shared step allocation are inspected without network. No hosted execution, live policy enforcement or approval/replay acceptance is claimed. [COMP-003](../tasks/COMP-003-HOSTED.md) retains those gates.
+
+## Custom loader and package update
+
+The [custom adapter package](../../compatibility/openai_engine_adapter/README.md) now exposes a BaseApp loader and reuses authenticated AER context bindings. Sixteen tests pass, including actual TenantRuntime dispatch and AER terminal-result parsing with model/tool transport doubles. Input `message` and output `response` translation gaps were corrected. The package lock and sdist/wheel build pass on the existing Python 3.15.2 interpreter; Linux and hosted execution remain untested. The dedicated workspace was remotely verified as `not_deployed`; no build/deployment or policy/secret changes were made. Invoice provider selection and the concrete Tool Pod provider implementation remain prerequisites for live trace/denial evidence. Memory provider configuration is unchanged.
+
+## Remote invoice build attempt
+
+The user selected gpt-6-luna for the invoice workflow; shared Anthropic memory remains unchanged. Twenty-two offline adapter/loader/provider tests, strict manifest validation, dependency checks and local sdist/wheel build pass. The source-only remote build was accepted with framework openai-agents after custom was rejected. Build `bld_01M621HKZWQ2Q13QCGQM15M7ST` failed because its VM image/uv could not find Python 3.15.2, before the adapter ran. A generic lock error followed; no target downgrade or lock removal was made. The workspace remains not_deployed; no live invoice/Engine denial evidence exists. OPENAI_API_KEY was created at workspace scope only, without logging its value. [Build evidence and source hashes](../../compatibility/hosted-invoice-evidence.json) distinguish uploaded local source from the older commit label. [COMP-003](../tasks/COMP-003-HOSTED.md) tracks the interpreter blocker and remaining live gates.
+
+## Python 3.15.2 bundle and remote image success
+
+The [bundled interpreter experiment](PYTHON315_HOSTED.md) preserves the selected Python target. Both full and compact profiles passed frozen installation and 22 offline adapter tests in Linux/amd64. The full source archive exceeded Engine's decompressed-size limit; the compact profile omitted unused development/GUI/embedding components and passed archive validation. Build `bld_01M622CNYJW9R30TVZQ0Q36DQF` selected the bundled CPython 3.15.2 and succeeded through Firecracker image publication. The missing-interpreter blocker is resolved for this tested packaging path.
+
+Deployment `deploy-f45c6a70` was started for the exact successful build. Initial checks reported OENotReady, followed by pending internal certificates. These readiness blockers resolved: deployment succeeded at 2026-10-28T20:28:52.331Z, with OE, agent and tool available. A bounded invoice invocation was rejected as not deployed and did not establish model/tool execution. The existing geo-intelligence-network workspace independently reports ready/healthy. These platform observations do not identify an adapter failure or prove live invoice/policy acceptance. Forty-six bootstrap compatibility tests, including staging/checksum tests, pass. [Portable follow-up evidence](../../compatibility/python315-linux-evidence.json) records the build and deployment outcomes.
+
+
+## Hosted deployment succeeds; model policy blocks invocation
+
+The runtime registered `lookup_invoice`, populated the named LLM registry and completed AER warm-up. A blocking synthetic invoice call returned HTTP 500; a separate streaming call produced a correlated Engine `invoke_llm` trace marked BLOCKED: `AUTHORIZED_MODELS policy denied model "gpt-6-luna" at generation 8`. This is live model-policy denial evidence, not a successful invoice or complete positive/negative control. See [COMP-003](../tasks/COMP-003-HOSTED.md) and [portable evidence](../../compatibility/python315-linux-evidence.json). Project policy permits only `claude-opus-5-5`; its 26-tool allowlist omits `lookup_invoice`. Expanding these shared project permissions requires explicit user approval. No policy, memory provider or credential was changed in this diagnostic.

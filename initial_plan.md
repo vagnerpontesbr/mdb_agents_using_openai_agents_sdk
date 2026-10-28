@@ -4,6 +4,8 @@
 
 **Language:** documentation, code identifiers, comments, prompts, configuration, navigation, user-facing UI, and sample chat/voice conversations will all be English.
 
+**Current ownership decision:** [ADR-0018](docs/adr/0018-engine-feature-precedence.md) takes precedence over earlier proposed SDK/application ownership of overlapping platform features. Engine owns those capabilities; the SDK retains orchestration. The user subsequently authorized a [bounded custom adapter](compatibility/openai_engine_adapter/README.md); its local proof does not establish hosted compatibility.
+
 ## 1. Intended outcome
 
 Deliver an executable, adaptable reference asset for architects, developers, and builders: a small reusable Python agent package, a complete telecom example, and a React application. Use uv for Python dependencies and OpenAI Agents SDK for orchestration. Preserve the user's targets of the latest stable Python and MongoDB 9; availability and dependency compatibility must be verified before pinning versions.
@@ -53,8 +55,7 @@ flowchart TD
     JOB --> WORK[Worker: Docling → auto-chunking → embeddings]
     WORK --> VOY
     WORK --> DB
-    API --> STATE[Run state and approvals]
-    STATE --> DB
+    API --> STATE[Engine run state and approvals — integration pending]
 ```
 
 This is a component design, not a claim that an Engine runtime adapter already exists.
@@ -75,7 +76,7 @@ Identity, tenant, customer, and permissions come from the authenticated backend,
 Separate three responsibilities:
 
 1. **Session history:** ordered messages and tool calls/results, preserving complete turns and concurrency semantics. Adapt the OpenAI `SessionABC` interface where the Engine memory API is not already compatible. Do not assume its short-term memory automatically satisfies every SDK item contract.
-2. **Interrupted execution:** serialized run state for approval/resumption, versioned with the SDK. Validate the approving identity, exact action, parameters, expiry, and state version before resuming. A session transcript cannot replace this snapshot.
+2. **Interrupted execution:** Engine-owned approval/resumption and checkpoint persistence, with versioned SDK state translation only if required by a validated bridge. Do not build a separate application run/approval store. Validate the approving identity, exact action, parameters, expiry, and state version before resuming. A session transcript cannot replace this snapshot.
 3. **Durable memory:** use the official Engine memory framework for useful facts, preferences, and episodes across conversations.
 
 The Engine documentation describes chronological short-term turns, asynchronous snapshots, and semantic, episodic, procedural, and taxonomic long-term memory. Semantic/episodic/procedural memories are private to a user by default; taxonomic memory is shared at organization/project scope. `build_context` includes semantic and episodic memory by default; STM and other memory types require explicit inclusion through `enabled_sources`. Durable extraction is asynchronous and eventually available; immediate conversation continuity must use STM/session history. Approved SOPs remain in the separately governed knowledge base, not learned procedural memory. Budgeting, ranking, and deduplication belong to the framework rather than a second competing memory implementation.
@@ -337,7 +338,7 @@ Provide explicit function-calling examples in the implementation:
 |---|---|---|
 | Read an invoice | `@function_tool` with typed invoice identifier and authenticated local context | Validate scope; read through the business adapter; return authoritative structured values; render approved text |
 | Request PDF ingestion | Typed function tool returning `job_id` | Require curator authorization; enqueue bounded/idempotent work; never run OCR in the interactive call |
-| Confirm a simulated plan change | Function tool with approval interruption, such as `needs_approval=True` in the validated SDK | Bind user/parameters/version; validate current eligibility; resume safely; prevent duplicate effects |
+| Confirm a simulated plan change | Function tool mediated by Engine human review; SDK interruption translation requires compatibility proof | Bind user/parameters/version; validate current eligibility; resume safely; prevent duplicate effects |
 
 Tool names/arguments suggested by a model do not authorize execution. Business functions remain independently testable beneath the SDK wrapper. Example documentation includes direct deterministic adapter tests and a separate real-model run proving tool selection, arguments, results, denied access, malformed input, failure, and approval behavior. Do not call a mocked adapter test proof of live function calling. These examples are scoped in VERT-001, VERT-002, and RAG-001; graders belong to EVAL-001.
 

@@ -23,3 +23,5 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0015](0015-voyage-http-python315.md) | Preserve Python 3.15 and use the official Voyage HTTP API | Selected; verification pending |
 | [ADR-0016](0016-split-compatibility-environments.md) | Separate locked agent and CPU ingestion compatibility environments | Selected; local verification scoped |
 | [ADR-0017](0017-two-cluster-memory-boundary.md) | Separate application and shared Engine memory clusters | Approved by user; runtime validation pending |
+
+| [ADR-0018](0018-engine-feature-precedence.md) | Prefer Engine for overlapping platform features; retain SDK orchestration | Selected by user; integration verification pending |

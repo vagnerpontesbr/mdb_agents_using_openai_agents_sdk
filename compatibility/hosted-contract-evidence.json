@@ -1,0 +1,97 @@
+{
+  "recorded_at": "2026-10-28T19:38:03.229613+00:00",
+  "environment": {
+    "python": "3.15.2",
+    "system": "Darwin",
+    "machine": "arm64",
+    "packages": {
+      "openai-agents": "0.24.0",
+      "agent-engine-sdk": "0.11.11",
+      "agent-engine-runner-shared": "0.11.11"
+    }
+  },
+  "inspection_status": "pass",
+  "native_hosted_integration": "blocked",
+  "phase0_complete": false,
+  "scope": "Installed-package contract inspection, not adapter or hosted execution acceptance",
+  "checks": {
+    "native_agent_is_engine_base_agent": false,
+    "native_agent_has_get_agent": false,
+    "native_agent_has_run_entrypoint": false,
+    "runner_rejected_native_agent_with_expected_guard": true,
+    "llm_adapter_factory_missing": true,
+    "workflow_adapter_registered": false,
+    "suspend_handler_registered": false,
+    "durable_activity_suspend_handler_registered": false
+  },
+  "base_app_abstract_methods": [
+    "entrypoint",
+    "get_tool_definitions",
+    "tool",
+    "tools"
+  ],
+  "network_calls": 0,
+  "runtime_started": false,
+  "limitations": [
+    "The dispatch guard was called with synthetic state, without constructing the runtime.",
+    "No custom adapter was registered; missing hooks describe this environment only.",
+    "Generic interfaces may allow a custom adapter, whose support and behavior remain untested.",
+    "No model calls, tools, audit, replay, approval/resume, Linux or hosted build were tested."
+  ],
+  "verified_downloads": [
+    {
+      "package": "agent-engine-sdk",
+      "version": "0.11.11",
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "pydantic>=2.13.5",
+        "pytest-asyncio>=0.24.0; extra == \"dev\"",
+        "pytest>=9.1.1; extra == \"dev\""
+      ],
+      "wheel_sha256": "a2dd146252cf7b20355338e01139ab207afd1fed7cc57c0d2ae52a26c0915f50",
+      "source": "https://pypi.org/pypi/agent-engine-sdk/0.11.11/json"
+    },
+    {
+      "package": "agent-engine-runner-shared",
+      "version": "0.11.11",
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "agent-engine-sdk-memory==0.11.11",
+        "agent-engine-sdk==0.11.11",
+        "fastapi>=0.141.1",
+        "filelock>=3.0.0",
+        "httpx-sse>=0.4.0",
+        "httpx2>=2.5.0",
+        "httpx>=0.27.0",
+        "jsonschema>=4.26.0",
+        "mcp==2.3.0",
+        "msgpack>=1.0.0",
+        "protobuf<7,>=6.33.6",
+        "pydantic>=2.0.0",
+        "python-dotenv>=1.0.0",
+        "pyyaml>=6.0",
+        "regex>=2026.4.4",
+        "sentry-sdk>=2.27.0",
+        "starlette>=1.7.0",
+        "uvicorn>=0.50.0",
+        "debugpy>=1.8.0; extra == \"debug\"",
+        "debugpy>=1.8.0; extra == \"dev\"",
+        "mongomock>=4.1.0; extra == \"dev\"",
+        "msgpack>=1.0.0; extra == \"dev\"",
+        "pymongo>=4.0.0; extra == \"dev\"",
+        "pyright>=1.1.390; extra == \"dev\"",
+        "pytest-asyncio>=0.24.0; extra == \"dev\"",
+        "pytest>=9.1.1; extra == \"dev\"",
+        "ruff>=0.6.0; extra == \"dev\"",
+        "motor>=3.0.0; extra == \"mongodb\"",
+        "pymongo>=4.0.0; extra == \"mongodb\"",
+        "opentelemetry-api>=1.20.0; extra == \"tracing\"",
+        "opentelemetry-exporter-otlp-proto-http>=1.20.0; extra == \"tracing\"",
+        "opentelemetry-instrumentation-httpx>=0.47b0; extra == \"tracing\"",
+        "opentelemetry-sdk>=1.20.0; extra == \"tracing\""
+      ],
+      "wheel_sha256": "7e6f9044d6d606363209e0d307bf40a0137c14569be5f4b41bc38565baef361e",
+      "source": "https://pypi.org/pypi/agent-engine-runner-shared/0.11.11/json"
+    }
+  ]
+}

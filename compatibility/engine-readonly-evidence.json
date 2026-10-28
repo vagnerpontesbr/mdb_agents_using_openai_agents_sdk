@@ -42,7 +42,30 @@
   },
   "limitations": [
     "Administrative service-account endpoint rejected the credential type with 401; this is not a role-specific 403 proof.",
-    "The platform created a paired Atlas service account; its separate Atlas-side lifecycle was not independently inspected.",
-    "No active application credential was replaced; no general per-tenant authorization was validated."
-  ]
+    "No active application credential was replaced; no general per-tenant authorization was validated.",
+    "Atlas organization-level account deletion was not performed: organization API access was denied. Its observed secret was revoked and its project membership removed."
+  ],
+  "atlas_cleanup": {
+    "recorded_at": "2026-10-28T19:31:23.828509+00:00",
+    "actions": [
+      {
+        "action": "revoke_secret",
+        "exit_code": 0
+      },
+      {
+        "action": "remove_project_membership",
+        "exit_code": 0
+      }
+    ],
+    "secrets_remaining_before_project_removal": 0,
+    "post_removal_get_exit_code": 1,
+    "post_removal_http_statuses": [
+      "404"
+    ],
+    "post_removal_error_codes": [
+      "RESOURCE_NOT_FOUND"
+    ],
+    "organization_account_deletion": "not_performed_org_access_denied",
+    "original_accounts_modified": false
+  }
 }

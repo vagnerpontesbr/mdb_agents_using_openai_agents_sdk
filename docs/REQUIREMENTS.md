@@ -4,6 +4,10 @@
 
 Deliver an executable, adaptable reference for architects, developers, and builders: a uv-managed Python backend, React frontend, MongoDB persistence, and OpenAI Agents SDK orchestration. The current stage is research and planning, not application implementation.
 
+## Platform feature precedence — latest user decision
+
+Use Agent Engine whenever its capabilities overlap with OpenAI Agents SDK. [ADR-0018](adr/0018-engine-feature-precedence.md) is the authoritative ownership matrix and compatibility boundary. Keep the SDK orchestrator and backend domain enforcement; do not bypass Engine when integration is blocked. The user subsequently authorized a custom adapter under this ownership rule; scope and acceptance are tracked in [COMP-003](tasks/COMP-003-HOSTED.md).
+
 ## Requested capabilities
 
 - Target the latest stable Python release; verify compatibility rather than silently selecting an older release.

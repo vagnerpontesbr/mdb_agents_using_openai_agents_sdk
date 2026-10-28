@@ -1,0 +1,21 @@
+[project]
+name = "telecom-agent-runtime-probe"
+version = "0.0.1"
+description = "Phase 0 dependency proof; not the telecom application"
+requires-python = "==3.15.2"
+dependencies = [
+  "openai-agents[voice]==0.24.0",
+  "pymongo==4.19.0",
+  "agent-engine-sdk-memory==0.11.11",
+]
+
+[build-system]
+requires = ["uv_build==0.11.3"]
+build-backend = "uv_build"
+
+[dependency-groups]
+build = ["uv_build==0.11.3"]
+
+[tool.uv]
+environments = ["sys_platform == 'darwin' and platform_machine == 'arm64'"]
+

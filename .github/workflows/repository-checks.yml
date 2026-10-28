@@ -22,3 +22,5 @@ jobs:
           persist-credentials: false
       - name: Validate repository foundation
         run: python3 scripts/check_repository.py
+      - name: Test compatibility evidence and live-call controls
+        run: python3 -m unittest discover -s tests/compatibility -v

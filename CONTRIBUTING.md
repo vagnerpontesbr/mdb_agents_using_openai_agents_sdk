@@ -18,6 +18,8 @@ uv run --no-project --no-managed-python --offline python3 scripts/check_reposito
 
 This does not resolve or validate the application dependency graph. Phase 0 must establish the target interpreter and actual SDK compatibility; use uv and a committed lock for the future application. Current foundation was checked with system Python 3.14.6, not a claim that the planned application target has passed.
 
+The [local dependency proof](docs/tasks/COMP-001-DEPENDENCIES.md) now provides two frozen compatibility environments and actual build commands for macOS ARM64. These diagnostic packages do not replace the future application/frontend manifests.
+
 ## Task and review workflow
 
 1. Inspect current state and select one task from the [backlog](docs/tasks/README.md).
@@ -31,6 +33,10 @@ This does not resolve or validate the application dependency graph. Phase 0 must
 The PR template and workflow are local files until uploaded. Branch protection, required checks, and GitHub Codex review integration require repository-side configuration; none is automatically enabled by adding AGENTS.md.
 
 ## Validation levels
+
+Phase 0 now adds `python3 -m unittest discover -s tests/compatibility -v` and `python3 scripts/check_compatibility.py`. The former tests the diagnostic harness; the latter returns nonzero when prerequisites fail or remain blocked. See [Phase 0](docs/compatibility/PHASE_0.md) before running any live probe. Diagnostic success is not application compatibility.
+
+The user executes commits, pushes, and PR creation manually. Stop at each completed implementation phase and wait for the user's commit confirmation before beginning the next one. Do not label an unresolved phase complete merely to reach a commit checkpoint.
 
 | Level | Purpose | Status |
 |---|---|---|

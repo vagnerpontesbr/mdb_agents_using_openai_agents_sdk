@@ -1,0 +1,204 @@
+{
+  "lexical_control": [
+    {
+      "$search": {
+        "index": "phase0_lexical",
+        "text": {
+          "path": "text",
+          "query": "optical cable"
+        }
+      }
+    },
+    {
+      "$limit": 4
+    },
+    {
+      "$project": {
+        "_id": 1,
+        "tenant_id": 1,
+        "acl": 1,
+        "published": 1
+      }
+    }
+  ],
+  "lexical_filtered": [
+    {
+      "$search": {
+        "index": "phase0_lexical",
+        "compound": {
+          "must": [
+            {
+              "text": {
+                "path": "text",
+                "query": "optical cable"
+              }
+            }
+          ],
+          "filter": [
+            {
+              "equals": {
+                "path": "tenant_id",
+                "value": "synthetic_a"
+              }
+            },
+            {
+              "equals": {
+                "path": "acl",
+                "value": "customer"
+              }
+            },
+            {
+              "equals": {
+                "path": "published",
+                "value": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$limit": 4
+    },
+    {
+      "$project": {
+        "_id": 1,
+        "tenant_id": 1,
+        "acl": 1,
+        "published": 1
+      }
+    }
+  ],
+  "vector_control": [
+    {
+      "$vectorSearch": {
+        "index": "phase0_autoembed",
+        "path": "text",
+        "query": {
+          "text": "optical cable"
+        },
+        "numCandidates": 80,
+        "limit": 4
+      }
+    },
+    {
+      "$project": {
+        "_id": 1,
+        "tenant_id": 1,
+        "acl": 1,
+        "published": 1
+      }
+    }
+  ],
+  "vector_filtered": [
+    {
+      "$vectorSearch": {
+        "index": "phase0_autoembed",
+        "path": "text",
+        "query": {
+          "text": "optical cable"
+        },
+        "numCandidates": 80,
+        "limit": 4,
+        "filter": {
+          "tenant_id": "synthetic_a",
+          "acl": "customer",
+          "published": true
+        }
+      }
+    },
+    {
+      "$project": {
+        "_id": 1,
+        "tenant_id": 1,
+        "acl": 1,
+        "published": 1
+      }
+    }
+  ],
+  "hybrid_filtered": [
+    {
+      "$rankFusion": {
+        "input": {
+          "pipelines": {
+            "lexical": [
+              {
+                "$search": {
+                  "index": "phase0_lexical",
+                  "compound": {
+                    "must": [
+                      {
+                        "text": {
+                          "path": "text",
+                          "query": "optical cable"
+                        }
+                      }
+                    ],
+                    "filter": [
+                      {
+                        "equals": {
+                          "path": "tenant_id",
+                          "value": "synthetic_a"
+                        }
+                      },
+                      {
+                        "equals": {
+                          "path": "acl",
+                          "value": "customer"
+                        }
+                      },
+                      {
+                        "equals": {
+                          "path": "published",
+                          "value": true
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "$limit": 4
+              }
+            ],
+            "semantic": [
+              {
+                "$vectorSearch": {
+                  "index": "phase0_autoembed",
+                  "path": "text",
+                  "query": {
+                    "text": "optical cable"
+                  },
+                  "numCandidates": 80,
+                  "limit": 4,
+                  "filter": {
+                    "tenant_id": "synthetic_a",
+                    "acl": "customer",
+                    "published": true
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "combination": {
+          "weights": {
+            "lexical": 1,
+            "semantic": 1
+          }
+        }
+      }
+    },
+    {
+      "$limit": 4
+    },
+    {
+      "$project": {
+        "_id": 1,
+        "tenant_id": 1,
+        "acl": 1,
+        "published": 1
+      }
+    }
+  ]
+}

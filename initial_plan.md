@@ -14,6 +14,8 @@ Initial scope includes both text chat and browser voice agents. Working assumpti
 
 ## 2. Critical compatibility decisions
 
+**Implementation update:** Phase 0 is in progress. The user selected Python 3.15 and the official Voyage HTTP API, preserving all chosen models ([ADR-0015](docs/adr/0015-voyage-http-python315.md)). Core SDK imports and a live OpenAI function call passed on Python 3.15.2. The combined Python 3.15 dependency graph fails on Docling/PyTorch cp315 wheels; the authorized Python 3.14.6 CPU experiment now passes actual textual/scanned PDF conversion with expected page provenance on small synthetic fixtures. Atlas 9.0.4 is confirmed through PyMongo and MCP; Atlas-issued Voyage credentials pass HTTP contracts at ai.mongodb.com. A bounded Auto Embedding/native-fusion probe passed with tenant/ACL/publication prefilters. Split local dependency locks, frozen installs and diagnostic builds now pass on macOS ARM64 ([ADR-0016](docs/adr/0016-split-compatibility-environments.md)); Engine memory remains unresolved. See the authoritative [Phase 0 evidence](docs/compatibility/PHASE_0.md) for versions, checks and remaining gates. The existing Atlas cluster and Agent Engine project are ready according to the user; configuration and integration still require validation.
+
 | Topic | Evidence and planned decision |
 |---|---|
 | OpenAI orchestration | Use the supervisor/manager pattern with specialists exposed through `agent.as_tool()`. Keep the supervisor responsible for the final response. |
@@ -21,7 +23,7 @@ Initial scope includes both text chat and browser voice agents. Working assumpti
 | Engine deployment | The documented runtime integration supports LangGraph/LangChain through `agent-engine-sdk-langgraph`. Native OpenAI Agents SDK compatibility has not been established. A deployment bridge requires a proof of concept before it can be called supported or complete. |
 | Engine maturity | Agent Engine is Public Preview without an SLA/SLO. Treat runtime deployment as a preview target and document operational limits. |
 | MongoDB 9 | Official release notes confirm MongoDB 9 as the current stable release. Target MongoDB 9 and verify the selected Atlas/topology feature combination. Do not silently substitute another major version. |
-| Python latest stable | Python.org identifies Python 3.15.2 as the current stable release in this research. Resolve the complete uv dependency graph against that target. A lower-version Docling worker is a possible exception to discuss, not an automatic substitution. |
+| Python latest stable | Python.org identifies Python 3.15.2 as the current stable release in this research. Resolve the complete uv dependency graph against that target. The user authorized a Python 3.14 CPU-only Docling compatibility experiment; the agent runtime remains Python 3.15.2. |
 | PDF ingestion | OpenAI supports PDF input and hosted File Search, but these do not establish the required exportable parser pipeline into Voyage/MongoDB. Use IBM Docling for this pipeline. |
 | Voyage auto-chunking | Confirmed for `voyage-context-4`; use its native auto-chunking rather than treating contextual embeddings as manual chunking. |
 | Automatic embeddings | Prefer MongoDB Auto Embedding wherever the documented model, dimension, index, and query contracts support the required behavior. Use direct Voyage calls for unsupported paths; preserve the requested models. |
@@ -43,9 +45,9 @@ flowchart TD
     SALES --> BIZ
     TEC --> BIZ
     SUP --> MEM[Session adapter + official Engine memory]
-    MEM --> DB[(MongoDB)]
+    MEM --> MEMDB[(ClusterDemoTelco: managed memory)]
     TEC --> RAG[Eligible cache → hybrid retrieval → reranking]
-    RAG --> DB
+    RAG --> DB[(OpenAI-SDK: application data)]
     RAG --> VOY[Voyage AI]
     TEC --> JOB[Authorized ingestion tool]
     JOB --> WORK[Worker: Docling → auto-chunking → embeddings]
@@ -186,6 +188,8 @@ Keep the reusable core small and typed. Clients replace contracts and configurat
 
 ## 9. Implementation phases and acceptance criteria
 
+**Manual phase checkpoints:** finish one phase, report actual evidence and any remaining limitations, then stop and provide commit commands. The user performs the commit/push manually. Begin the next phase only after the user confirms. A failed compatibility gate remains open; do not call it phase completion.
+
 | Phase | Deliverable | Completion evidence |
 |---|---|---|
 | 0 — Compatibility | Python/dependency/MongoDB/Engine/Voyage matrix and ADRs | Official versions identified; uv lock, frozen installation, imports, and Python build pass; real minimal memory, Auto Embedding text-query/index, contextual auto-chunking, voice/session, reranking, and native-fusion checks recorded |
@@ -238,7 +242,8 @@ Maintain [individual ADRs](docs/adr/README.md) with status, accountable owner, c
 | 0008 | Share the agent workflow across chat and browser voice |
 | 0009 | Constrain model outputs and use deterministic business rules and response templates |
 | 0010 | Use MongoDB as the integrated operational, full-text, and vector data platform |
-| 0011 | Use exactly one Atlas cluster with service/domain databases and least-privilege collection ownership |
+| 0011 | Historical single-cluster decision; superseded by ADR-0017 |
+| 0017 | Approved application and shared Engine memory cluster separation |
 | 0012 | Use concise AGENTS.md instructions linked to authoritative specifications |
 | 0013 | Deliver bounded tasks with explicit acceptance and evidence |
 | 0014 | Automate repository checks and add layered validation with implementation |
@@ -296,17 +301,17 @@ These artifacts improve routing consistency and context selection but do not by 
 
 The asset retains the supervisor/specialist routing described above. Building an ontology, maintaining a formal intent catalog, implementing a dedicated classifier/router, and evaluating that extension are explicitly excluded from this delivery. Keep current tool authorization, structured output, document governance, and ambiguity handling in scope. The reusable contracts should permit a later routing adapter without introducing an unused framework now.
 
-## 17. MongoDB data platform, one Atlas cluster, and Twelve-Factor boundaries
+## 17. MongoDB data platform, cluster ownership, and Twelve-Factor boundaries
 
 Use MongoDB as the integrated platform for operational data, full-text Search, Vector Search, and native hybrid retrieval. This reduces separate database/search/vector products, external data copies, and application-managed synchronization pipelines. It does not imply one physical process, one index, immediate search consistency, or removal of external AI services. Mutable financial facts and document eligibility still require authoritative reads.
 
-**Exactly one Atlas cluster** hosts asset Atlas-backed data. Follow the [database/collection ownership design](docs/DATA_ARCHITECTURE.md): `telecom_demo_runtime`, `telecom_demo_knowledge`, `telecom_demo_ingestion`, and `telecom_demo_business`, plus separate eval/load namespaces. Engine and Auto Embedding internal namespaces retain official ownership and naming. Prove Engine can use this same cluster; otherwise keep the integration gate open, without adding another cluster silently.
+**Two existing Atlas clusters** are approved in [ADR-0017](docs/adr/0017-two-cluster-memory-boundary.md): OpenAI-SDK for application data and ClusterDemoTelco for project-managed Engine memory. Follow the [database/collection ownership design](docs/DATA_ARCHITECTURE.md): `telecom_demo_runtime`, `telecom_demo_knowledge`, `telecom_demo_ingestion`, and `telecom_demo_business`, plus separate eval/load namespaces. Engine and Auto Embedding internal namespaces retain official ownership and naming. Prove Engine can access its designated memory cluster; application connectivity is independent evidence.
 
 Use separate least-privilege identities, service-owned writes, collection lifecycle policies, schema validation, tenant/ACL filters, and deployment-allowlisted database names. API ingress does not receive broad database access. Hybrid search stays on the relevant service-owned collection; cross-domain access goes through contracts. Avoid databases per agent and collections per tenant/day as a default partitioning scheme.
 
 Twelve-Factor alignment covers explicit dependencies, injected configuration/secrets, attached backing services, build/release/run separation, stateless processes, port binding, independent process scaling, disposability, parity, logs, and one-off admin tasks. It does not itself enforce database or tenant isolation. Logical databases share physical resources and administrative/failure boundaries; measure contention and aggregate pools.
 
-Phase 1 delivers namespace/role/config contracts and migrations. Phase 4 verifies native search over owned collections and index freshness. Phase 8 runs isolated eval/load databases on the same cluster with separate identities, budgets, scheduled windows, and invariants. Test allowed/denied service access, forbidden demo-to-eval access, tenant isolation, backup/recovery assumptions, and search lag. Record real evidence before claiming enforcement.
+Phase 1 delivers namespace/role/config contracts and migrations. Phase 4 verifies native search over owned collections and index freshness. Phase 8 runs isolated application eval/load databases on OpenAI-SDK with separate identities, budgets, scheduled windows, and invariants. Test allowed/denied service access, forbidden demo-to-eval access, tenant isolation, backup/recovery assumptions, and search lag. Record real evidence before claiming enforcement.
 
 ## 18. Codex repository foundation and development decisions
 

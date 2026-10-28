@@ -47,6 +47,6 @@ Before an acceptance run, write workload-specific latency/error/recovery/cost th
 
 Implementation adds versioned workload manifests, a repeatable runner, dashboards, result artifacts, and a runbook. Demonstrate that ingestion saturation does not exhaust interactive worker resources, scale-out preserves session correctness, and governance still blocks the stale-document fixture during cache hits and concurrent updates. Production readiness remains outside this non-production asset's claim.
 
-## Single-cluster constraint
+## Cluster boundaries
 
-All Atlas-backed demo, evaluation, and load namespaces use exactly one cluster, with separate identities and service/domain databases. An isolated load environment means processes, credentials, and logical data isolation, not a second Atlas cluster. Schedule disruptive tests, enforce budgets, and measure shared-resource contention. The negative-control database must be inaccessible to demo roles. See [data architecture](DATA_ARCHITECTURE.md).
+Application demo, evaluation and load namespaces use OpenAI-SDK with separate identities and service/domain databases. Project-managed Engine memory remains on ClusterDemoTelco under [ADR-0017](adr/0017-two-cluster-memory-boundary.md). Scope memory load tests to the shared project and protect other workspaces; application isolation does not isolate the managed memory runtime. Schedule disruptive tests, enforce budgets, and measure shared-resource contention. The negative-control database must be inaccessible to demo roles. See [data architecture](DATA_ARCHITECTURE.md).

@@ -106,9 +106,9 @@ Measure repeated-run schema validity, routing agreement, parameter accuracy, bus
 
 Use MongoDB for operational documents and full-text/vector/hybrid retrieval to reduce separate data products and synchronization pipelines. This is integration simplification, not a promise of one physical engine, zero internal duplication, or immediate index visibility. Recheck mutable business facts and governance authoritatively.
 
-Use exactly one Atlas cluster with service/domain databases, access-pattern collections, per-service least-privilege credentials, and isolated eval/load namespaces. Names alone do not enforce access. Tenant filters remain mandatory in shared collections. Managed Engine/Auto Embedding schemas keep their supported ownership; validate same-cluster attachment. Shared infrastructure still creates contention and recovery blast radius.
+Use the [approved two-cluster boundary](adr/0017-two-cluster-memory-boundary.md) with service/domain databases, access-pattern collections, per-service least-privilege credentials, and isolated eval/load namespaces. Names alone do not enforce access. Tenant filters remain mandatory in shared collections. Managed Engine/Auto Embedding schemas keep their supported ownership; validate each designated cluster connection. Shared infrastructure still creates contention and recovery blast radius.
 
-Apply Twelve-Factor to config, backing services, stateless processes, releases, dependencies, concurrency, logs, and admin jobs. It is not a database isolation standard. See the [data architecture and factor mapping](DATA_ARCHITECTURE.md), [ADR-0010](adr/0010-mongodb-integrated-data-platform.md), and [ADR-0011](adr/0011-single-cluster-logical-isolation.md).
+Apply Twelve-Factor to config, backing services, stateless processes, releases, dependencies, concurrency, logs, and admin jobs. It is not a database isolation standard. See the [data architecture and factor mapping](DATA_ARCHITECTURE.md), [ADR-0010](adr/0010-mongodb-integrated-data-platform.md), and [ADR-0017](adr/0017-two-cluster-memory-boundary.md).
 
 ## 18. Make Codex practices executable
 

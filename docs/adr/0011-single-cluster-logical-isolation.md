@@ -1,6 +1,6 @@
 # ADR-0011: Use one Atlas cluster with service-owned databases and collections
 
-- Status: Selected by user; implementation verification pending
+- Status: Superseded by [ADR-0017](0017-two-cluster-memory-boundary.md); preserved as historical context
 - Owner: Architecture owner, to be assigned
 - Specification: [data architecture](../DATA_ARCHITECTURE.md)
 

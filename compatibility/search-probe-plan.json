@@ -1,0 +1,54 @@
+{
+  "status": "bounded_probe_passed",
+  "database": "telecom_eval_knowledge",
+  "collection": "phase0_search_probe",
+  "fixture_count": 4,
+  "maximum_live_queries": 6,
+  "indexes": [
+    {
+      "name": "phase0_lexical",
+      "type": "search",
+      "definition": {
+        "mappings": {
+          "dynamic": false,
+          "fields": {
+            "text": {"type": "string"},
+            "tenant_id": {"type": "token"},
+            "acl": {"type": "token"},
+            "published": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    {
+      "name": "phase0_autoembed",
+      "type": "vectorSearch",
+      "definition": {
+        "fields": [
+          {"type": "autoEmbed", "modality": "text", "path": "text", "model": "voyage-4-lite", "numDimensions": 512},
+          {"type": "filter", "path": "tenant_id"},
+          {"type": "filter", "path": "acl"},
+          {"type": "filter", "path": "published"}
+        ]
+      }
+    }
+  ],
+  "documents": [
+    {"_id": "phase0_allowed", "tenant_id": "synthetic_a", "acl": "customer", "published": true, "text": "Broadband optical signal: check the optical cable before restarting the router."},
+    {"_id": "phase0_other_tenant", "tenant_id": "synthetic_b", "acl": "customer", "published": true, "text": "Broadband optical signal: check the optical cable before restarting the router."},
+    {"_id": "phase0_other_acl", "tenant_id": "synthetic_a", "acl": "curator", "published": true, "text": "Broadband optical signal: check the optical cable before restarting the router."},
+    {"_id": "phase0_unpublished", "tenant_id": "synthetic_a", "acl": "customer", "published": false, "text": "Broadband optical signal: check the optical cable before restarting the router."}
+  ],
+  "acceptance": [
+    "Both index definitions are confirmed READY and queryable.",
+    "Lexical and vector branches independently return only phase0_allowed with tenant/ACL/published prefilters.",
+    "Native rankFusion combines the same filtered branches and returns only phase0_allowed.",
+    "Unfiltered controls establish that excluded documents were indexed; an empty result is not a passing isolation test."
+  ],
+  "limitations": [
+    "Diagnostic identity is not a validated production service role.",
+    "This is a model/index/filter contract test, not retrieval quality or full governance validation.",
+    "The MCP create-index schema omits autoEmbed numDimensions; the 512-dimensional index was created with PyMongo and verified through MCP.",
+    "The live server accepted the MCP query.text object for Auto Embedding; plain query strings were not tested."
+  ]
+}

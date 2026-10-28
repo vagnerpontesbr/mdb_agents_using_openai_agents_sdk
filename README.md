@@ -11,7 +11,7 @@ The design includes a supervisor and financial, technical, and sales specialists
 - [Implementation plan and acceptance criteria](initial_plan.md)
 - [Requirements and latest user decisions](docs/REQUIREMENTS.md)
 - [Architecture Decision Records](docs/adr/README.md)
-- [Single-cluster data architecture and Twelve-Factor mapping](docs/DATA_ARCHITECTURE.md)
+- [Data architecture, memory boundary and Twelve-Factor mapping](docs/DATA_ARCHITECTURE.md)
 - [Best Practices](docs/BEST_PRACTICES.md)
 - [Document governance and risk scoring](docs/DOCUMENT_GOVERNANCE.md)
 - [Outdated-document RAG demonstration](examples/telecom/governance/README.md)
@@ -30,8 +30,9 @@ The implementation starts with compatibility proofs. In particular, the document
 - [Contribution workflow and current checks](CONTRIBUTING.md)
 - [Implementation backlog](docs/tasks/README.md)
 - [Security boundaries](SECURITY.md)
+- [Phase 0 compatibility work and current blockers](docs/compatibility/PHASE_0.md)
 - [GitHub setup status and runbook](docs/runbooks/REPOSITORY_SETUP.md)
 
 Run `python3 scripts/check_repository.py` from the project root. This validates repository structure and local documentation links, not application behavior.
 
-Repository: https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk. Foundation commit `3c29d14` was published on `codex/repository-foundation`; Repository checks passed for that commit. No PR/merge is confirmed. The assistant prepares and validates changes; the user performs commits, pushes, and PR creation manually. Later local edits are pending until committed and pushed.
+Phase 0 is in progress: Python 3.15.2 runs locally and 16 diagnostic tests pass. The user selected the official Voyage HTTP API instead of the incompatible Python SDK, preserving the chosen models ([ADR-0015](docs/adr/0015-voyage-http-python315.md)). Full dependency and live provider compatibility remain unverified; no application lock is approved yet.

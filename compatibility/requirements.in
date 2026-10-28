@@ -1,0 +1,6 @@
+# Phase 0 candidate, NOT an approved application lock.
+# Voyage uses the official HTTP API; its Python SDK excludes Python 3.15.
+openai-agents[voice]==0.24.0
+pymongo==4.19.0
+docling==2.143.1
+agent-engine-sdk-memory==0.11.11

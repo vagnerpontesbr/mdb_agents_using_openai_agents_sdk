@@ -1,0 +1,3 @@
+# Python 3.14 CPU ingestion experiment, not an approved application lock.
+# PyTorch is also required by Docling's CPU pipeline; no GPU extras are selected.
+docling==2.143.1

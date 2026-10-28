@@ -14,6 +14,7 @@ Deliver an executable, adaptable reference for architects, developers, and build
 - Prepare deployment to MongoDB Agent Engine; validate its runtime contract with OpenAI Agents SDK.
 - Prefer MongoDB Auto Embedding wherever the required model/workflow is supported; document direct Voyage exceptions.
 - Semantic cache with expiration, invalidation, tenant isolation, and protection against private or stale transactional data reuse.
+- Keep Python 3.15 and use the official Voyage HTTP API for direct calls; preserve native Auto Embedding where supported ([ADR-0015](adr/0015-voyage-http-python315.md)).
 - Voyage Matryoshka embeddings: voyage-context-4 for technical knowledge, voyage-4 and voyage-4-lite elsewhere as appropriate.
 - voyage-context-4 auto-chunking, preserving provenance and validating quality.
 - Hybrid retrieval using MongoDB native rank fusion and Voyage reranking.
@@ -55,7 +56,7 @@ The first three research in parallel; the fourth reviews findings after an auxil
 
 ## Selected data architecture
 
-Use MongoDB as the integrated operational/full-text/vector data platform to reduce separately operated engines and synchronization pipelines. Use exactly one Atlas cluster; segregate environment/service-domain databases and service-owned collections with least-privilege identities. Enforce tenant/ACL isolation in shared collections. Align application configuration, backing services, stateless processes, releases, and administration with Twelve-Factor; do not claim that Twelve-Factor or namespace names provide isolation. Validate same-cluster Engine attachment and preserve managed namespaces.
+Use MongoDB as the integrated operational/full-text/vector data platform to reduce separately operated engines and synchronization pipelines. Use the two existing clusters approved in [ADR-0017](adr/0017-two-cluster-memory-boundary.md): OpenAI-SDK for application data and ClusterDemoTelco for shared Engine memory; segregate environment/service-domain databases and service-owned collections with least-privilege identities. Enforce tenant/ACL isolation in shared collections. Align application configuration, backing services, stateless processes, releases, and administration with Twelve-Factor; do not claim that Twelve-Factor or namespace names provide isolation. Validate Engine attachment to its designated memory cluster and preserve managed namespaces.
 
 The canonical project creation plan is `initial_plan.md` at the project root.
 

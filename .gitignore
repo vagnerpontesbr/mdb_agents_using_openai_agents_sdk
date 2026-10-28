@@ -218,3 +218,36 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Telecom agent asset: additional local rules
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.aws/
+.codex/
+.codex-log/
+
+# Python and frontend build/runtime artifacts
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+node_modules/
+dist/
+build/
+coverage/
+
+# Generated data and reports (synthetic source fixtures stay versioned)
+artifacts/
+test-results/
+playwright-report/
+*.log
+.DS_Store

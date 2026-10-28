@@ -26,7 +26,7 @@ Application and memory have separate network, credential, connection, backup and
 
 ## Validation before implementation acceptance
 
-Verify each connection targets its intended cluster and has the required permitted/denied operations. Prove real Engine record/context continuity, tenant isolation and deletion independently of application CRUD/search. Test failure behavior when either backing service is unavailable. The existing HTTP 500 remains unresolved; topology approval is not provider acceptance.
+Verify each connection targets its intended cluster and has the required permitted/denied operations. Prove real Engine record/context continuity, tenant isolation and deletion independently of application CRUD/search. Test failure behavior when either backing service is unavailable. The earlier HTTP 500 and bounded STM/durable retrieval blockers were resolved in the [Phase 0 evidence](../compatibility/PHASE_0.md). Authorization and remaining lifecycle acceptance are still pending; topology approval alone is not provider acceptance.
 
 ## Revisit trigger
 

@@ -1,0 +1,48 @@
+{
+  "scope": "Temporary PROJECT_READ_ONLY permission and revocation proof; not tenant isolation or write-capable least privilege",
+  "permissions": {
+    "recorded_at": "2026-10-28T19:19:13.166542+00:00",
+    "role": "PROJECT_READ_ONLY",
+    "token_exchange_status": 200,
+    "temporary_secret_expires_at": "2026-10-29T19:18:17Z",
+    "paired_atlas_account_created": true,
+    "checks": [
+      {
+        "check": "reader_project_metadata",
+        "http_status": 200
+      },
+      {
+        "check": "reader_memory_context",
+        "http_status": 200
+      },
+      {
+        "check": "reader_synthetic_write",
+        "http_status": 403
+      },
+      {
+        "check": "reader_admin_malformed_request",
+        "http_status": 401
+      },
+      {
+        "check": "owner_memory_control",
+        "http_status": 200
+      }
+    ],
+    "synthetic_write_run_id": "7992e154a62f433f8d36fb2490f37b3f",
+    "admin_request_was_malformed": true
+  },
+  "revocation": {
+    "recorded_at": "2026-10-28T19:20:45.842493+00:00",
+    "deactivation_exit_code": 0,
+    "pre_deactivation_read_status": 200,
+    "existing_token_after_deactivation_status": 401,
+    "new_token_after_deactivation_status": 401,
+    "metadata_is_active": false,
+    "original_accounts_modified": false
+  },
+  "limitations": [
+    "Administrative service-account endpoint rejected the credential type with 401; this is not a role-specific 403 proof.",
+    "The platform created a paired Atlas service account; its separate Atlas-side lifecycle was not independently inspected.",
+    "No active application credential was replaced; no general per-tenant authorization was validated."
+  ]
+}

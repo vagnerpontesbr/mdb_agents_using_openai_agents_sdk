@@ -175,7 +175,8 @@ def run_live(probe: str, allowed: bool) -> dict:
         return result(probe + ".live", "blocked", "Live probe requires --allow-live")
     try:
         return {"mongodb": probe_mongodb, "openai": probe_openai, "voyage": probe_voyage,
-                "engine": probe_engine, "engine-context": probe_engine_context}[probe]()
+                "engine": probe_engine, "engine-context": probe_engine_context,
+                "engine-auth": probe_engine_auth}[probe]()
     except ImportError:
         return result(probe + ".live", "blocked", "Required SDK dependency unavailable")
     except Exception as exc:
@@ -208,6 +209,51 @@ def probe_engine_context() -> dict:
                                               session_id="phase0-readonly-diagnostic"))
         chat.build_context(query="Synthetic connectivity check", enabled_sources={"stm"}, max_tokens=128)
     return result("engine-context.live", "pass", "Read-only context request succeeded; no write, isolation or attachment proof")
+
+
+def assess_engine_auth(statuses: dict) -> dict:
+    """Require a live positive control and explicit authentication denials."""
+    expected = {"valid": 200, "missing": 401, "invalid": 401, "different_project": 403}
+    passed = all(statuses.get(name) == status for name, status in expected.items())
+    return result("engine-auth.live", "pass" if passed else "fail",
+                  "Read-only credential and synthetic project-mismatch checks; not real cross-project "
+                  "or application-tenant authorization, and not least-privilege proof",
+                  http_statuses=statuses, different_project_is_synthetic=True, new_writes=0)
+
+
+def probe_engine_auth() -> dict:
+    missing = need_env(("AGENT_ENGINE_URL", "AGENT_ENGINE_PROJECT_ID",
+                        "AGENT_ENGINE_SERVICE_ACCOUNT_TOKEN"))
+    if missing:
+        return result("engine-auth.live", "blocked", "Required configuration missing", missing=missing)
+    if os.environ["AGENT_ENGINE_URL"].rstrip("/") != "https://agentengine.mongodb.com":
+        return result("engine-auth.live", "blocked", "This probe targets the official hosted service only")
+    import secrets
+    import httpx
+    from urllib.parse import quote
+
+    project = os.environ["AGENT_ENGINE_PROJECT_ID"]
+    foreign = secrets.token_hex(12)
+    if foreign == project:
+        return result("engine-auth.live", "blocked", "Synthetic project ID collision")
+    token = os.environ["AGENT_ENGINE_SERVICE_ACCOUNT_TOKEN"]
+    cases = (("valid", project, token), ("missing", project, None),
+             ("invalid", project, "synthetic-invalid-token"), ("different_project", foreign, token))
+    body = {"query": "Synthetic authentication boundary check",
+            "user_id": "phase0-readonly-diagnostic", "session_id": "phase0-readonly-diagnostic",
+            "enabled_sources": ["stm"], "max_tokens": 2048}
+    statuses = {}
+    # Four sequential reads, no retries or redirects. Timeout applies per I/O,
+    # not to the total diagnostic duration. Never retain response bodies.
+    with httpx.Client(base_url="https://agentengine.mongodb.com", timeout=20,
+                      follow_redirects=False) as client:
+        for name, target, credential in cases:
+            response = client.post(
+                "/api/v1/projects/" + quote(target, safe="") + "/memory/context",
+                headers={"Authorization": "Bearer " + credential} if credential else {}, json=body,
+            )
+            statuses[name] = response.status_code
+    return assess_engine_auth(statuses)
 
 
 def probe_engine() -> dict:
@@ -312,7 +358,7 @@ def exit_code(report: dict) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--probe", choices=("offline", "mongodb", "openai", "voyage", "engine", "engine-context"), default="offline")
+    parser.add_argument("--probe", choices=("offline", "mongodb", "openai", "voyage", "engine", "engine-context", "engine-auth"), default="offline")
     parser.add_argument("--allow-live", action="store_true")
     parser.add_argument("--target-python", default=TARGET)
     parser.add_argument("--output", type=Path)

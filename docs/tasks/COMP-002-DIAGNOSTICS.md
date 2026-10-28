@@ -1,6 +1,6 @@
 # COMP-002: Identify memory failure boundaries and inspect Atlas access
 
-- Status: Diagnostic increment done locally; provider compatibility blocked
+- Status: Bounded STM, durable semantic retrieval and separate user/session filters passed; tenant authorization and remaining lifecycle gates pending
 - Owner: Repository implementation
 - Dependencies: COMP-001, existing Atlas/Engine configuration
 - Relevant ADRs: [Memory boundaries](../adr/0003-memory-state.md), [approved cluster boundary](../adr/0017-two-cluster-memory-boundary.md)
@@ -49,3 +49,48 @@ The [latest investigation](../compatibility/PHASE_0.md#persisted-marker-and-stm-
 ## STM continuity gate passed after authorized configuration application
 
 The [applied STM checkpoint](../compatibility/PHASE_0.md#applied-stm-configuration-and-successful-continuity-proof) records generation 10, memory-server upgrade v0.11.10 to v0.11.11, and successful synthetic write/read plus distinct-user/session negative control. Text, semantic and hybrid retrieval also passed without source degradation. Anthropic and credentials were preserved. Earlier missing-STM results are superseded for new turns; tenant authorization, durable extraction and the remaining COMP-002 acceptance criteria are still open.
+
+
+## Read-only isolation and durable-memory diagnostic
+
+[check_memory_isolation.py](../../scripts/check_memory_isolation.py) reuses the synthetic run ID from a prior engine probe. It makes five context requests without writing turns or requesting promotion. Each request uses explicit hybrid sources, top_k 3 per source and a 2048-token budget. The pinned SDK may retry transport failures internally; the script adds no retries or polling. HTTP success is insufficient: each expected source must report the requested effective mode without error or a retryable condition.
+
+Acceptance requires the STM positive control, absence when changing only the session, and absence when changing only the user. Durable acceptance requires the exact marker in semantic/episodic context for the same user in a new session, with STM excluded. A durable negative control is blocked when its positive control fails; an observed leak always fails. These checks exercise caller-supplied filters under one service credential, not end-user authentication or cross-tenant authorization.
+
+```bash
+uv run --project compatibility/agent-runtime --frozen --env-file .env \
+  python scripts/check_memory_isolation.py \
+  --run-id 168632bc9e8e48ab9326c041f457b104 --allow-live \
+  --output artifacts/compatibility/engine-isolation-validated.json
+```
+
+Use an existing run ID from the engine probe; the script validates its synthetic hexadecimal format. Exit 0 means all requested checks pass, 1 means a failed check, and 2 means blocked prerequisites or controls without a failure. No live request occurs without `--allow-live`. No raw memory content, credentials or exception messages are logged.
+
+The [latest evidence](../compatibility/PHASE_0.md#separate-user-session-filters-and-durable-extraction-check) records passed STM controls and unproven durable extraction. A random marker in a single turn is a continuity fixture, not a measured extraction-quality benchmark. A missing marker cannot distinguish snapshot scheduling, extraction failure, an intentionally omitted fact or later retrieval selection.
+
+
+## Durable semantic marker passed with a complete conversation pair
+
+The [completed-pair checkpoint](../compatibility/PHASE_0.md#completed-conversation-pair-and-durable-semantic-memory-proof) supersedes the earlier empty durable result. One assistant acknowledgement completed the synthetic user-only fixture. The managed worker then promoted both turns, created a snapshot and extracted a semantic record; the read-only diagnostic passed all five assertions. No provider configuration or direct long-term-memory write was used. [Portable evidence](../../compatibility/engine-durable-evidence.json) records the observed lifecycle and limitations.
+
+The reproduction command above now succeeds for the completed fixture. For a fresh test, record both user and assistant turns with distinct idempotency keys through the managed SDK, then wait for the configured promotion interval before running the read-only probe. Successful snapshot tasks alone are insufficient: verify snapshot creation, extracted content and a new-session positive control. Do not infer episodic extraction quality from a task that produced no episodic record.
+
+
+## Read-only authentication boundary
+
+[Credential-boundary evidence](../compatibility/PHASE_0.md#credential-boundary-proof-and-application-tenancy-distinction) passes the valid-token positive control, missing/invalid-token rejection and synthetic project-mismatch rejection. The existing project accounts are PROJECT_OWNER; least-privilege runtime acceptance remains untested. Same-project service accounts are not application tenants, whose identity enforcement belongs to the future authenticated backend.
+
+```bash
+uv run --project compatibility/agent-runtime --frozen --env-file .env \
+  python scripts/check_compatibility.py --probe engine-auth --allow-live \
+  --output artifacts/compatibility/engine-auth-validated.json
+```
+
+The probe performs no writes and requires `--allow-live`. It never treats a 404 as authorization proof and requires a healthy authenticated positive control. See [portable evidence](../../compatibility/engine-auth-evidence.json) for the exact observed statuses and limits.
+
+
+## Limited credential and deactivation proof
+
+The [service-role checkpoint](../compatibility/PHASE_0.md#supported-service-roles-read-only-access-and-token-revocation) supersedes the proposed AGENT_DEVELOPER test: the current CLI and credential guide expose only PROJECT_OWNER and PROJECT_READ_ONLY at project scope. A temporary read-only account successfully read memory and was denied a valid synthetic turn write with 403. After deactivation, both its existing token and a fresh token exchange were rejected with 401. No original account was modified.
+
+This validates read-only behavior and token revocation, but does not establish an available write-capable least-privilege role. Administrative endpoint rejection was 401 because user-session authentication is required, not a role-specific 403. The paired Atlas account lifecycle remains separately unverified. [Portable evidence](../../compatibility/engine-readonly-evidence.json) records these distinctions.

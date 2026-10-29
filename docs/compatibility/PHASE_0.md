@@ -3,7 +3,8 @@
 Status: **complete for the explicitly accepted demo scope** on 2026-10-29.
 The Phase 0 compatibility checkpoint is complete; this is not completion of the
 full application, a production-readiness claim or authorization to start Phase 1.
-Final source/evidence changes remain local pending the manual commit checkpoint.
+The implementation/evidence checkpoint was committed and pushed as `43746c6`.
+For the subsequent documentation reconciliation, see [publication and CI](../runbooks/REPOSITORY_SETUP.md) for the publication checkpoint and passing remote CI on fix `60ef97b`.
 
 ## Current bounded checkpoint: 2026-10-29
 
@@ -12,8 +13,8 @@ build was restored by deployment `deploy-9c637560`, healthy at 20:33:55.797Z.
 A subsequent native review and memory recall completed successfully in execution
 `9841af21-2393-492a-a22c-7895c069d7dc`; see
 [restoration evidence](../../compatibility/hosted-dependency-failure-evidence.json).
-Stop at this phase boundary: provide manual commit/push commands and await user
-confirmation before starting Phase 1.
+The requested commit/push completed. Phase 1 still requires explicit user
+confirmation; the resolved remote CI failure is tracked in the publication runbook.
 
 The accepted demo scope is Engine semantic/episodic continuity ([ADR-0021](../adr/0021-demo-semantic-episodic-continuity.md)),
 the private operator Engine CLI identity in a loopback backend ([ADR-0022](../adr/0022-demo-private-engine-cli-identity.md)),
@@ -53,13 +54,14 @@ contract tests passed (150 total). The 61 hosted-contract tests also passed in t
 existing Linux/amd64 image with current source mounted. Repository validation and
 `git diff --check` passed; no injected secret value was found in versionable files.
 
-Implementation through `a17bb397c5ad172e7b005a78d60712b4c4f7312f` was committed and
-pushed; both remote CI runs for it passed ([run 40926227945](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/40926227945),
-[run 40926034369](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/40926034369)).
-Subsequent source, tests, evidence and scope decisions remain local and uncommitted.
-Remote fault deployment and database-role creation are recorded separately from
-Git publication. Historical sections below retain earlier findings and counts;
-they do not override this checkpoint.
+The full Phase 0 implementation/evidence checkpoint is published at `43746c6`.
+[Publication status](../runbooks/REPOSITORY_SETUP.md) is authoritative for the open
+PR and CI: the disconnect-test fix `60ef97b` passed both push and pull-request
+checks on GitHub. Local test counts above include suites outside the CI workflow.
+The hosted restore and database permissions are remote changes distinct from Git
+publication. The documentation reconciliation is a separate follow-up to those implementation commits.
+Historical sections below retain earlier observations and counts; they do not
+override this checkpoint.
 
 ## Implemented tooling
 

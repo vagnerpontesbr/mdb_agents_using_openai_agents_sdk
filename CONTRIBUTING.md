@@ -1,6 +1,6 @@
 # Contributing
 
-The intended repository is [vagnerpontesbr/mdb_agents_using_openai_agents_sdk](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk). Read [AGENTS.md](AGENTS.md) and the relevant task/ADR before working. Repository foundation is present; application implementation remains pending.
+The intended repository is [vagnerpontesbr/mdb_agents_using_openai_agents_sdk](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk). Read [AGENTS.md](AGENTS.md) and the relevant task/ADR before working. Phase 0 bounded compatibility is complete; Phase 1 and the full application have not started. See the [current checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md).
 
 ## Local validation
 
@@ -16,33 +16,53 @@ With uv and an existing system interpreter, the equivalent offline command is:
 uv run --no-project --no-managed-python --offline python3 scripts/check_repository.py
 ```
 
-This does not resolve or validate the application dependency graph. Phase 0 must establish the target interpreter and actual SDK compatibility; use uv and a committed lock for the future application. Current foundation was checked with system Python 3.14.6, not a claim that the planned application target has passed.
+This checks documentation structure only. Phase 0 separately validated the pinned Python environments and bounded SDK/provider integration. Future application manifests must use uv and their own validated lockfiles.
 
-The [local dependency proof](docs/tasks/COMP-001-DEPENDENCIES.md) now provides two frozen compatibility environments and actual build commands for macOS ARM64. These diagnostic packages do not replace the future application/frontend manifests.
+The [local dependency proof](docs/tasks/COMP-001-DEPENDENCIES.md) now provides frozen split compatibility environments and actual build commands for macOS ARM64. These diagnostic packages do not replace the future application/frontend manifests.
 
 ## Task and review workflow
 
 1. Inspect current state and select one task from the [backlog](docs/tasks/README.md).
 2. Record scope, dependencies, acceptance, and evidence using the [task template](docs/tasks/TEMPLATE.md).
-3. Work on a focused branch once Git access exists. Review the existing remote history before integrating local files; do not force-push or replace remote content.
+3. Work on a focused branch. Review the existing remote history before integrating local files; do not force-push or replace remote content.
 4. Make a small reviewable change. Update contracts and the authoritative documentation together.
 5. Run relevant checks. Document unavailable checks and why; mocks cannot certify live integrations.
 6. Review the diff for accidental secrets, generated data, unrelated edits, and unmet scope. Describe behavior, validation, and limitations in the PR.
 7. Mark a task complete only when its stated acceptance evidence exists. Review/merge and deployment are distinct events.
 
-The PR template and workflow are local files until uploaded. Branch protection, required checks, and GitHub Codex review integration require repository-side configuration; none is automatically enabled by adding AGENTS.md.
+The PR template and repository workflow are published. Branch protection, required checks, and GitHub Codex review integration require repository-side configuration; none is automatically enabled by adding AGENTS.md.
 
 ## Validation levels
 
-Phase 0 now adds `python3 -m unittest discover -s tests/compatibility -v` and `python3 scripts/check_compatibility.py`. The former tests the diagnostic harness; the latter returns nonzero when prerequisites fail or remain blocked. See [Phase 0](docs/compatibility/PHASE_0.md) before running any live probe. Diagnostic success is not application compatibility.
+Run the deterministic suites from the repository root:
 
-The user executes commits, pushes, and PR creation manually. Stop at each completed implementation phase and wait for the user's commit confirmation before beginning the next one. Do not label an unresolved phase complete merely to reach a commit checkpoint.
+```sh
+python3 -m unittest discover -s tests/compatibility -v
+python3 -m unittest discover -s tests/demo_auth -v
+uv run --project compatibility/hosted-runtime --frozen --no-sync python -m unittest discover -s tests/hosted_contract -v
+```
+
+The hosted suite requires its installed pinned environment. Compatibility and
+hosted tests include loopback sockets; a sandbox may require local-network
+permission. These are not credentialed provider requests. Counts and evidence
+are maintained in [Phase 0](docs/compatibility/PHASE_0.md).
+
+`python3 scripts/check_compatibility.py` remains an opt-in diagnostic harness:
+nonzero may mean missing local prerequisites or an unrequested live check, not
+that the completed Phase 0 evidence has been invalidated. Consult the runbook
+before live probes. GitHub currently runs the repository, compatibility and demo
+identity suites, not the hosted-contract suite or credentialed provider probes.
+The [publication runbook](docs/runbooks/REPOSITORY_SETUP.md) records the resolved
+disconnect-test failure and passing push/PR CI for `60ef97b`. Each subsequent
+commit requires its own CI run.
+
+Default to manual Git commands unless the user explicitly authorizes the assistant to commit/push. The latest user instruction takes precedence. Stop at each completed implementation phase and wait for the user's commit confirmation before beginning the next one. Do not label an unresolved phase complete merely to reach a commit checkpoint.
 
 | Level | Purpose | Status |
 |---|---|---|
 | Repository check | Local Markdown links, key foundation files, ADR sections/IDs | Available |
-| Unit/contract | Deterministic policies and adapter behavior | Add with implementation |
-| Build/lint/types | Reproducible backend/frontend checks | Add with manifests |
+| Unit/contract | Diagnostic, identity and hosted adapter behavior | Available; see commands above |
+| Build/lint/types | Packaging versus future application checks | Compatibility builds available; application lint/types/frontend await Phase 1 |
 | Provider integration | Actual version/account/API compatibility | Phase 0 and feature tasks |
 | Evals/load | Quality, cost, stability, and capacity | Separate explicit workloads and budgets |
 

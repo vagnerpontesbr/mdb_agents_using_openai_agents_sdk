@@ -1,6 +1,8 @@
 # ADR-0018: Prefer Agent Engine for overlapping platform capabilities
 
-- Status: Selected by explicit user instruction; integration verification pending
+Current acceptance is recorded in the [Phase 0 checkpoint](../compatibility/PHASE_0.md). Earlier evidence below preserves historical observations; superseded blockers do not reopen accepted demo gates.
+
+- Status: Selected by explicit user instruction; bounded custom hosted integration passed
 - Date: 2026-10-28
 - Owner: Repository implementation
 - Refines: [ADR-0001](0001-framework-platform.md), [ADR-0003](0003-memory-state.md), and [ADR-0007](0007-budgets-guardrails.md)

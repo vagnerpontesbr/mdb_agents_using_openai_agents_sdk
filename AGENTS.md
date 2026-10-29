@@ -2,7 +2,7 @@
 
 ## Start here
 
-- This workspace contains planning, synthetic fixtures, repository checks, and bounded Phase 0 provider/identity integration proofs. The full telecom application is not implemented.
+- Phase 0 bounded compatibility is complete; read the current [checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md). The full telecom application and Phase 1 are not implemented.
 - Read [initial_plan.md](initial_plan.md) for scope, [requirements](docs/REQUIREMENTS.md) for user decisions, and the relevant [ADR](docs/adr/README.md) before changing architecture.
 - Use [the task backlog](docs/tasks/README.md) to choose a bounded deliverable and record evidence. The latest explicit user instruction takes precedence over repository guidance.
 - All code, documentation, UI, prompts, and example conversations are English.
@@ -13,7 +13,7 @@
 - OpenAI Agents SDK remains the orchestrator. Validate Engine memory and hosted execution separately; never describe untested adapters as supported.
 - Use the approved two-cluster boundary in [ADR-0017](docs/adr/0017-two-cluster-memory-boundary.md): OpenAI-SDK for application data and ClusterDemoTelco for project-managed Engine memory. Preserve service/domain ownership and least-privilege identities. Test tenant/ACL filters separately from database roles.
 - Prefer MongoDB Auto Embedding where the requested model/workflow is supported. Preserve voyage-context-4 for contextual knowledge and native MongoDB hybrid fusion.
-- Agent Engine owns its managed memory. Do not add a competing memory writer.
+- Agent Engine owns its managed memory. Do not add a competing memory writer. Demo scope is semantic/episodic continuity ([ADR-0021](docs/adr/0021-demo-semantic-episodic-continuity.md)), private backend CLI identity ([ADR-0022](docs/adr/0022-demo-private-engine-cli-identity.md)), and quiet-environment voice ([ADR-0023](docs/adr/0023-quiet-environment-demo-voice.md)).
 - Keep ingestion/OCR outside interactive execution. Keep specialists in the shared runtime unless an ADR justifies extraction.
 - Enforce permissions, document validity, business rules, idempotency, and critical-response templates in backend code. A model prompt or similarity score cannot authorize an action.
 - Formal intent catalogs, ontologies, and a dedicated intent classifier are out of scope.
@@ -34,9 +34,9 @@
 
 From the project root, run `python3 scripts/check_repository.py` after documentation or repository-workflow changes. It is a standard-library bootstrap check, not application validation. Optional uv invocation is documented in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Phase 0 diagnostics: `python3 -m unittest discover -s tests/compatibility -v` tests the probe harness. `python3 scripts/check_compatibility.py` reports metadata/import/prerequisite evidence; nonzero status is expected while compatibility is blocked. See [the Phase 0 runbook](docs/compatibility/PHASE_0.md) before any explicit live probe.
+Phase 0 diagnostics: `python3 -m unittest discover -s tests/compatibility -v` tests the probe harness. `python3 scripts/check_compatibility.py` reports metadata/import/prerequisite evidence; nonzero status can report unconfigured local prerequisites or unrequested live checks; it does not replace the recorded Phase 0 acceptance. See [the Phase 0 runbook](docs/compatibility/PHASE_0.md) before any explicit live probe.
 
-There are no application build/lint/type commands yet. Add actual commands with the implementation; do not report placeholders as passing checks. Future changes must run the relevant behavior/contract tests, lint/types, and builds. Separate deterministic CI from credentialed provider evaluations and bounded stress runs.
+Identity and hosted-contract test commands are in CONTRIBUTING.md; compatibility packaging exists. There are no full-application build/lint/type commands yet. Add actual commands with the implementation; do not report placeholders as passing checks. Future changes must run the relevant behavior/contract tests, lint/types, and builds. Separate deterministic CI from credentialed provider evaluations and bounded stress runs.
 
 ## Code Review Rules
 

@@ -1,6 +1,6 @@
 # Security and trust boundaries
 
-This is a non-production reference under development. Security controls described in the plan require implementation evidence.
+This is a non-production reference under development. The [Phase 0 checkpoint](docs/compatibility/PHASE_0.md) records implemented bounded controls; unimplemented full-application controls remain requirements. The [private Engine CLI exception](docs/adr/0022-demo-private-engine-cli-identity.md) is accepted only for the loopback demo, not public or unattended deployment.
 
 Treat customer input, PDFs, retrieved text, memory content, and tool outputs as untrusted data. Backend identity, service credentials, and reviewed business/governance policy define authority. No model output may choose arbitrary tenants, database names, credentials, filesystem paths, or action permissions.
 

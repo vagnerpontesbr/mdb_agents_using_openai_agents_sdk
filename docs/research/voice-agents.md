@@ -1,5 +1,7 @@
 # Voice agent assessment
 
+Research context: this document informed the original design. For current implementation, accepted limitations and tested versions, use the [Phase 0 checkpoint](../compatibility/PHASE_0.md); for operating the bounded demo, use the [demo runbook](../runbooks/DEMO.md). Research proposals are not evidence of implemented full-application behavior.
+
 Official source fetched on 2026-10-28: [Voice agents](https://developers.openai.com/api/docs/guides/voice-agents).
 
 ## Confirmed capabilities

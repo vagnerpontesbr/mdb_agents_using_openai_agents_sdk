@@ -5,7 +5,7 @@ The [initial plan](../../initial_plan.md) defines scope; this backlog sequences 
 | ID | Deliverable | Dependency | Acceptance | Status |
 |---|---|---|---|---|
 | FND-001 | Codex instructions, docs validation, PR templates, development ADRs | None | Local checker passes; status honestly distinguishes authored files from GitHub setup | Done locally |
-| FND-002 | Reconcile local files with intended GitHub repository | User Terminal for Git writes | Remote history preserved; foundation commit/branch and successful CI verified; PR remains pending | Branch published; PR pending |
+| FND-002 | Reconcile local files with intended GitHub repository | User Terminal for Git writes | Remote history preserved; branch and PR verified; CI results recorded | `43746c6` published; integration tracked in PR #1; disconnect-test fix `60ef97b` published; push and PR CI passed; [publication status](../runbooks/REPOSITORY_SETUP.md) |
 | COMP-001 | Latest-Python dependency proof | Provider/package access | uv lock/sync/import/build on target; record compatible versions and failures; no silent downgrade | Passed for bounded split Python environments and bundled Python 3.15.2 hosted build; [dependency evidence](COMP-001-DEPENDENCIES.md). Future application dependencies remain separate. |
 | COMP-002 | Engine memory and designated-cluster proof | Atlas/Engine access, COMP-001 | Real record/context/isolation check on intended cluster; document supported schema/credentials without secrets | Passed for designated Engine memory cluster, managed projection, durable recall and bounded isolation controls; [memory evidence](COMP-002-DIAGNOSTICS.md). Native expurgo accepted by user. |
 | COMP-003 | Engine hosted execution proof | COMP-001, platform access | Verify SDK orchestration, tool/LLM audit, replay, approval/resume; report unsupported contract explicitly | Passed for bounded hosted orchestration, native review/replay/recovery, semantic/episodic recall, concurrency and injected dependency failure; [hosted evidence](COMP-003-HOSTED.md), [fault/restoration evidence](COMP-003-FAULTS.md). Chronological restoration excluded by ADR-0021; full framework implementation remains future work. |
@@ -24,12 +24,11 @@ The [initial plan](../../initial_plan.md) defines scope; this backlog sequences 
 demo scope documented in [Phase 0](../compatibility/PHASE_0.md), with explicit
 ADR-0021/0022/0023 limitations and user-accepted native expurgo. Final restoration
 and positive recall passed. The detailed task histories preserve broader limits;
-those are not claims of full application or production acceptance. Final changes
-are local and await the manual Git checkpoint. Do not start FND-003/Phase 1 yet.
+those are not claims of full application or production acceptance. Implementation/evidence was committed and pushed as `43746c6`. The documentation reconciliation follows that checkpoint; remote push and PR CI passed for fix `60ef97b`. Do not start FND-003/Phase 1 yet.
 
 Implementation tasks can be subdivided before coding. Failed compatibility gates should drive explicit decisions, not speculative implementations. Remote review and publishing remain distinct from local completion.
 
-User-defined phase gate: stop after each completed phase, provide manual commit commands, and wait for confirmation before the next phase. [Phase 0 evidence and runbook](../compatibility/PHASE_0.md) records the completed bounded checkpoint; provide manual commit commands and await user confirmation before the next phase.
+User-defined phase gate: stop after each completed phase, provide manual commit commands, and wait for confirmation before the next phase. [Phase 0 evidence and runbook](../compatibility/PHASE_0.md) records the completed bounded checkpoint; commit/push completed; await user confirmation before the next phase.
 
 VERT-001 includes an explicit `@function_tool` invoice walkthrough; VERT-002 includes approved simulated plan changes; RAG-001 includes curator-only ingestion jobs. EVAL-001 implements calibrated offline LLM-as-judge grading with independent time-valid references. Online judge gating is optional and disabled by default; deterministic policy checks remain mandatory.
 

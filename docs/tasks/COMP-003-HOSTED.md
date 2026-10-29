@@ -1,6 +1,8 @@
 # COMP-003: Hosted OpenAI Agents SDK execution contract
 
-- Status: Bounded hosted invoice and backend rejection pass; Engine model denial observed; replay, approval/resume and memory continuity remain open
+Current acceptance is recorded in the [Phase 0 checkpoint](../compatibility/PHASE_0.md). Earlier evidence below preserves historical observations; superseded blockers do not reopen accepted demo gates.
+
+- Status: Bounded hosted execution, native review/replay/recovery, managed memory recall and injected dependency failure passed; original recall deployment restored and verified. Full-application contracts remain separate.
 - Owner: Repository implementation
 - Dependencies: COMP-001, existing agentsdk workspace, provider access
 - Relevant ADRs: [Two-cluster boundary](../adr/0017-two-cluster-memory-boundary.md)

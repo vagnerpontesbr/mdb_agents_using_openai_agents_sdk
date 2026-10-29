@@ -2,7 +2,7 @@
 
 ## Objective
 
-Deliver an executable, adaptable reference for architects, developers, and builders: a uv-managed Python backend, React frontend, MongoDB persistence, and OpenAI Agents SDK orchestration. The current stage is research and planning, not application implementation.
+Deliver an executable, adaptable reference for architects, developers, and builders: a uv-managed Python backend, React frontend, MongoDB persistence, and OpenAI Agents SDK orchestration. Phase 0 bounded compatibility is complete; the full application and Phase 1 have not started. See [current evidence](compatibility/PHASE_0.md) and [publication/CI status](runbooks/REPOSITORY_SETUP.md).
 
 ## Platform feature precedence — latest user decision
 

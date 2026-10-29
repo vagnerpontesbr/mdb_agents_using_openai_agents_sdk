@@ -1,6 +1,8 @@
 # ADR-0019: Requester approval and thirty-day memory retention
 
-- Status: Selected by user; enforcement compatibility pending
+Current acceptance is recorded in the [Phase 0 checkpoint](../compatibility/PHASE_0.md). Earlier evidence below preserves historical observations; superseded blockers do not reopen accepted demo gates.
+
+- Status: Requester-only demo admission passed; native expurgo accepted without further deletion proof
 - Date: 2026-10-29
 - Owner: Repository implementation
 - Refines: [ADR-0017](0017-two-cluster-memory-boundary.md), [ADR-0018](0018-engine-feature-precedence.md)

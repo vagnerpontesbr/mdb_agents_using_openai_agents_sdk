@@ -1,6 +1,6 @@
 # Atlas application and managed-memory boundaries
 
-Status: user-selected architectural direction; roles, schemas, and integration tests remain pending.
+Status: two-cluster boundary and bounded identity-database/Engine-memory controls validated in Phase 0; remaining application schemas and service identities are planned. See [current evidence](compatibility/PHASE_0.md).
 
 ## Rationale
 
@@ -16,7 +16,8 @@ Use deployment-allowlisted names such as `telecom_<env>_<domain>`, never arbitra
 
 | Database | Owner | Collections / access |
 |---|---|---|
-| `telecom_demo_runtime` | Agent runtime | `runs`, `approvals`, `idempotency_records`; `session_items` only if required by SDK adaptation, without duplicating Engine memory |
+| `telecom_identity` | Implemented demo identity backend | `users`, `sessions`, `login_attempts`; restricted application credential, separate from Engine memory |
+| `telecom_demo_runtime` | Planned application runtime | Domain idempotency records if needed; Engine owns run/review state. No app approval or transcript store under ADR-0018/0021 |
 | `telecom_demo_knowledge` | Knowledge service | `documents`, `document_versions`, `chunks`, `review_events`, `retrieval_cache`, `outbox` |
 | `telecom_demo_ingestion` | Ingestion service/workers | `jobs`, `attempts`, `staged_artifacts`, `outbox`; publication through the knowledge contract, no direct knowledge writes |
 | `telecom_demo_business` | Simulated business adapter | `customers`, `accounts`, `invoices`, `plans`, `service_incidents`, `tickets`, `action_receipts` |
@@ -24,7 +25,7 @@ Use deployment-allowlisted names such as `telecom_<env>_<domain>`, never arbitra
 | Engine-managed namespaces | Official Engine services | On ClusterDemoTelco: discover supported names/permissions and verify managed attachment; do not assume arbitrary renaming |
 | Auto Embedding internal namespaces | MongoDB-managed functionality | Preserve internal ownership; no application writes or invented layout |
 
-The API/BFF needs no general database access. Give each service a separate least-privilege identity; explicitly review any exceptional read grants. Use a separate migration/index-management identity. The business adapter may begin as a module using its own credentials; process extraction follows measured needs. Collections reflect access patterns, lifecycle, and security, not one collection per customer, agent, intent, or day. Avoid unbounded transcript/chunk arrays.
+The implemented identity backend accesses only its identity collections; the future API/BFF needs no general cross-domain database access. Give each service a separate least-privilege identity; explicitly review any exceptional read grants. Use separate migration/index-management identities as services are implemented. The bounded identity demo currently grants CREATE_INDEX only on its three collections because startup provisions existing indexes; its exact grants and live denials are recorded in [COMP-005](tasks/COMP-005-DEMO-AUTH.md#restricted-application-identity-passes). The business adapter may begin as a module using its own credentials; process extraction follows measured needs. Collections reflect access patterns, lifecycle, and security, not one collection per customer, agent, intent, or day. Avoid unbounded transcript/chunk arrays.
 
 Keep lexical/vector indexes on the same authorized source collection for native rank fusion, such as knowledge chunks or business plans. Native fusion is not cross-database federation. Cross-domain access uses service/adapter contracts; intentional read models require ownership, lineage, and refresh rules.
 

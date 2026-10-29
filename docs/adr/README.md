@@ -1,6 +1,10 @@
 # Architecture Decision Records
 
-Status: ADRs 0001–0009 are proposed. ADR-0010 and ADR-0017 record explicit user-selected architecture; ADR-0017 supersedes ADR-0011; implementation verification remains pending. ADRs 0012–0014 define the authored Codex repository foundation; remote/runtime verification remains pending. ADR-0015 records the user-selected Voyage HTTP transport. None claims a verified provider integration.
+Status: ADRs 0001–0009 describe proposed full-application architecture. Later
+records capture explicit user decisions and bounded Phase 0 acceptance; ADR-0017
+supersedes ADR-0011. [Phase 0](../compatibility/PHASE_0.md) owns the detailed runtime
+evidence, and [publication status](../runbooks/REPOSITORY_SETUP.md) owns Git/PR/CI
+verification. ADR acceptance is not a claim of full application implementation.
 
 Each ADR records context, decision, alternatives, consequences, and validation. Assign an accountable owner when implementation starts. Change status to accepted only after review; preserve history and use a superseding ADR for a material reversal.
 
@@ -15,17 +19,17 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0007](0007-budgets-guardrails.md) | Enforce budgets and authorization outside model prompts | Proposed |
 | [ADR-0008](0008-voice-channel.md) | Reuse the agent workflow across chat and browser voice | Proposed |
 | [ADR-0009](0009-deterministic-responses.md) | Constrain generation and render critical responses deterministically | Proposed |
-| [ADR-0010](0010-mongodb-integrated-data-platform.md) | Use MongoDB for operational data, Search, and Vector Search | Selected; verification pending |
+| [ADR-0010](0010-mongodb-integrated-data-platform.md) | Use MongoDB for operational data, Search, and Vector Search | Selected; bounded Phase 0 evidence recorded |
 | [ADR-0011](0011-single-cluster-logical-isolation.md) | Use one Atlas cluster with service-owned databases and collections | Superseded by ADR-0017 |
 | [ADR-0012](0012-codex-repository-instructions.md) | Use concise repository instructions as Codex working context | Foundation selected; verification scoped |
 | [ADR-0013](0013-evidence-driven-delivery.md) | Deliver bounded tasks with explicit acceptance evidence | Foundation selected; verification scoped |
 | [ADR-0014](0014-layered-repository-validation.md) | Automate repository checks and add validation layers with implementation | Foundation selected; verification scoped |
-| [ADR-0015](0015-voyage-http-python315.md) | Preserve Python 3.15 and use the official Voyage HTTP API | Selected; verification pending |
+| [ADR-0015](0015-voyage-http-python315.md) | Preserve Python 3.15 and use the official Voyage HTTP API | Selected; bounded Phase 0 evidence recorded |
 | [ADR-0016](0016-split-compatibility-environments.md) | Separate locked agent and CPU ingestion compatibility environments | Selected; local verification scoped |
-| [ADR-0017](0017-two-cluster-memory-boundary.md) | Separate application and shared Engine memory clusters | Approved by user; runtime validation pending |
+| [ADR-0017](0017-two-cluster-memory-boundary.md) | Separate application and shared Engine memory clusters | Approved; bounded cluster/isolation controls passed |
 
-| [ADR-0018](0018-engine-feature-precedence.md) | Prefer Engine for overlapping platform features; retain SDK orchestration | Selected by user; integration verification pending |
-| [ADR-0019](0019-requester-approval-memory-retention.md) | Requester self-approval and thirty-day memory retention | Selected by user; enforcement compatibility pending |
+| [ADR-0018](0018-engine-feature-precedence.md) | Prefer Engine for overlapping platform features; retain SDK orchestration | Selected; bounded custom hosted integration passed |
+| [ADR-0019](0019-requester-approval-memory-retention.md) | Requester self-approval and thirty-day memory retention | Requester admission passed; native expurgo accepted without further proof |
 
 | [ADR-0020](0020-demo-email-password-auth.md) | Demo email/password login, admin-only registration and initial administrator | Selected by user; local contract implemented |
 | [ADR-0021](0021-demo-semantic-episodic-continuity.md) | Limit demo continuity to validated Engine semantic/episodic memory | Selected by user; chronological restoration outside demo scope |

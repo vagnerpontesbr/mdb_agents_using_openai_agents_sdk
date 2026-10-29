@@ -1,6 +1,6 @@
 # Telecom agent framework: implementation plan
 
-**Status:** Phase 0 compatibility is complete for the explicitly accepted demo scope on 2026-10-29; final source/evidence changes await the manual Git checkpoint. Full application implementation and Phase 1 have not started. See the authoritative [Phase 0 checkpoint](docs/compatibility/PHASE_0.md) for tested versions, accepted limitations and remote restoration evidence. Earlier planning findings below are historical where superseded by that checkpoint.
+**Status:** Phase 0 compatibility is complete for the explicitly accepted demo scope on 2026-10-29; the implementation/evidence checkpoint was published as `43746c6`; [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md) records the publication checkpoint and passing push/PR CI for the disconnect-test fix `60ef97b`. Full application implementation and Phase 1 have not started. See the authoritative [Phase 0 checkpoint](docs/compatibility/PHASE_0.md) for tested versions, accepted limitations and remote restoration evidence. Earlier planning findings below are historical where superseded by that checkpoint.
 
 **Language:** documentation, code identifiers, comments, prompts, configuration, navigation, user-facing UI, and sample chat/voice conversations will all be English.
 
@@ -16,7 +16,7 @@ Initial scope includes both text chat and browser voice agents. Working assumpti
 
 ## 2. Critical compatibility decisions
 
-**Implementation update:** Phase 0 is in progress. The user selected Python 3.15 and the official Voyage HTTP API, preserving all chosen models ([ADR-0015](docs/adr/0015-voyage-http-python315.md)). Core SDK imports and a live OpenAI function call passed on Python 3.15.2. The combined Python 3.15 dependency graph fails on Docling/PyTorch cp315 wheels; the authorized Python 3.14.6 CPU experiment now passes actual textual/scanned PDF conversion with expected page provenance on small synthetic fixtures. Atlas 9.0.4 is confirmed through PyMongo and MCP; Atlas-issued Voyage credentials pass HTTP contracts at ai.mongodb.com. A bounded Auto Embedding/native-fusion probe passed with tenant/ACL/publication prefilters. Split local dependency locks, frozen installs and diagnostic builds now pass on macOS ARM64 ([ADR-0016](docs/adr/0016-split-compatibility-environments.md)); Engine memory remains unresolved. See the authoritative [Phase 0 evidence](docs/compatibility/PHASE_0.md) for versions, checks and remaining gates. The existing Atlas cluster and Agent Engine project are ready according to the user; configuration and integration still require validation.
+**Implementation update:** Phase 0 passed for the accepted demo scope, including split Python dependency environments, hosted custom SDK orchestration, Engine memory/native review, application identity and restricted database permissions, search/provider controls, real microphone/listening, and bounded injected failures. The agent runtime remains Python 3.15.2; CPU Docling/OCR uses the approved separate Python 3.14.6 environment. Exact versions, limits and acceptance evidence live in the [Phase 0 checkpoint](docs/compatibility/PHASE_0.md). The component design below describes the intended full application; it does not claim the supervisor/specialists or React product have been implemented.
 
 | Topic | Evidence and planned decision |
 |---|---|
@@ -46,7 +46,7 @@ flowchart TD
     FIN --> BIZ[CRM / BSS / OSS adapters]
     SALES --> BIZ
     TEC --> BIZ
-    SUP --> MEM[Session adapter + official Engine memory]
+    SUP --> MEM[Engine semantic/episodic context]
     MEM --> MEMDB[(ClusterDemoTelco: managed memory)]
     TEC --> RAG[Eligible cache → hybrid retrieval → reranking]
     RAG --> DB[(OpenAI-SDK: application data)]
@@ -55,10 +55,10 @@ flowchart TD
     JOB --> WORK[Worker: Docling → auto-chunking → embeddings]
     WORK --> VOY
     WORK --> DB
-    API --> STATE[Engine run state and approvals — integration pending]
+    API --> STATE[Engine native run state and approvals]
 ```
 
-This is a component design, not a claim that an Engine runtime adapter already exists.
+This is the intended full-application component design. The bounded custom adapter exists and is validated separately; the complete application graph is not implemented.
 
 | Agent | Responsibilities | Evidence and actions |
 |---|---|---|
@@ -235,7 +235,7 @@ Open gates: latest stable Python compatibility; MongoDB 9 target topology and fe
 
 ## 12. Architecture Decision Records
 
-Maintain [individual ADRs](docs/adr/README.md) with status, accountable owner, context, decision, alternatives, consequences, validation evidence, and revisit triggers. ADRs 0001–0009 are **Proposed**; ADRs 0010–0011 are user-selected decisions with implementation verification pending.
+Maintain [individual ADRs](docs/adr/README.md) with status, accountable owner, context, decision, alternatives, consequences, validation evidence, and revisit triggers. ADRs 0001–0009 describe proposed full-application decisions. Later records define the accepted Phase 0 scope; ADR-0017 supersedes ADR-0011. Use the ADR index and current checkpoint for decision and evidence status.
 
 | ADR | Decision |
 |---|---|

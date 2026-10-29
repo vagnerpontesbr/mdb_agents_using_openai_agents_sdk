@@ -1,6 +1,8 @@
 # COMP-002: Identify memory failure boundaries and inspect Atlas access
 
-- Status: Bounded STM, durable semantic retrieval and separate user/session filters passed; tenant authorization and remaining lifecycle gates pending
+Current acceptance is recorded in the [Phase 0 checkpoint](../compatibility/PHASE_0.md). Earlier evidence below preserves historical observations; superseded blockers do not reopen accepted demo gates.
+
+- Status: Bounded memory/cluster/isolation controls passed. Later demo requester and database-role controls passed in COMP-005; native expurgo accepted by user. Broader production guarantees remain separate.
 - Owner: Repository implementation
 - Dependencies: COMP-001, existing Atlas/Engine configuration
 - Relevant ADRs: [Memory boundaries](../adr/0003-memory-state.md), [approved cluster boundary](../adr/0017-two-cluster-memory-boundary.md)

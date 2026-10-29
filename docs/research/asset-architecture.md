@@ -1,5 +1,7 @@
 # Research 3 — asset architecture, Voyage, ingestion and user experience
 
+Research context: this document informed the original design. For current implementation, accepted limitations and tested versions, use the [Phase 0 checkpoint](../compatibility/PHASE_0.md); for operating the bounded demo, use the [demo runbook](../runbooks/DEMO.md). Research proposals are not evidence of implemented full-application behavior.
+
 Research date: October 28, 2026. Planning only: no packages installed, paid inference called, compatibility tests run or deployment performed. The official pages below were opened and read through Chrome after shell DNS failed. Proposed architecture is distinguished from vendor capabilities.
 
 ## Verified capabilities

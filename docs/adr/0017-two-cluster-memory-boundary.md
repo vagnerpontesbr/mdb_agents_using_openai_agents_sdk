@@ -1,6 +1,8 @@
 # ADR-0017: Separate application and shared Engine memory clusters
 
-- Status: Approved by user; runtime validation pending
+Current acceptance is recorded in the [Phase 0 checkpoint](../compatibility/PHASE_0.md). Earlier evidence below preserves historical observations; superseded blockers do not reopen accepted demo gates.
+
+- Status: Approved by user; bounded memory/application role controls passed in Phase 0
 - Date: 2026-10-28
 - Owner: Repository implementation
 - Supersedes: [ADR-0011](0011-single-cluster-logical-isolation.md)

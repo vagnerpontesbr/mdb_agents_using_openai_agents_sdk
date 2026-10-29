@@ -1,0 +1,86 @@
+{
+  "scope": "local_split_dependency_validation",
+  "platform": "macOS ARM64",
+  "uv": "0.11.3",
+  "phase0_complete": false,
+  "environments": {
+    "agent": {
+      "lock_sha256": "23f7ac9bc9234ae255a779b1b3346bc95fe70bf9bb90329b2c742f54a1dddb7a",
+      "package_count": 46,
+      "installed_versions_match_lock": true,
+      "wheel_import_passed": true,
+      "probe": {
+        "scope": "agent_dependency_imports",
+        "python": "3.15.2",
+        "versions": {
+          "openai-agents": "0.24.0",
+          "pymongo": "4.19.0",
+          "agent-engine-sdk-memory": "0.11.11"
+        },
+        "provider_calls": false,
+        "phase0_complete": false
+      },
+      "build_artifacts": {
+        "telecom_agent_runtime_probe-0.0.1-py3-none-any.whl": "013091b1af06fe13b44ef4735610e86abd95e8250bbff03a9b1c2a69f74c248d",
+        "telecom_agent_runtime_probe-0.0.1.tar.gz": "dcc990718fba4e7d34d7aea0d9ccaa96830bcc2806bc033081bd39aae88dbf46"
+      }
+    },
+    "ingestion": {
+      "lock_sha256": "224ec2a51c4e584de09481685a9432324763a57f6d267d6c016094c9f1565d01",
+      "package_count": 105,
+      "installed_versions_match_lock": true,
+      "wheel_import_passed": true,
+      "probe": {
+        "scope": "ingestion_dependency_cpu",
+        "python": "3.14.6",
+        "versions": {
+          "docling": "2.143.1",
+          "torch": "2.14.1"
+        },
+        "device": "cpu",
+        "pdf_conversion": false,
+        "phase0_complete": false
+      },
+      "build_artifacts": {
+        "telecom_ingestion_runtime_probe-0.0.1-py3-none-any.whl": "17e63daee0538261501053e0605b2a7ba0f22960596f07fbe2d2294914b282a3",
+        "telecom_ingestion_runtime_probe-0.0.1.tar.gz": "48a362ba0d0e641a44c4fff38e0a91d6602b97ed5d10814838010a94bc3f80c4"
+      }
+    }
+  },
+  "locked_pdf_probe": {
+    "scope": "synthetic_pdf_cpu_conversion",
+    "phase0_complete": false,
+    "time_utc": "2026-10-28T14:34:22.652969+00:00",
+    "python": "3.14.6",
+    "docling": "2.143.1",
+    "torch": "2.14.1",
+    "device": "cpu",
+    "checks": {
+      "text": {
+        "expected_text_on_correct_pages": {
+          "1": true,
+          "2": true
+        },
+        "pass": true,
+        "conversion_status": "success"
+      },
+      "scanned": {
+        "expected_text_on_correct_pages": {
+          "1": true,
+          "2": true
+        },
+        "pass": true,
+        "conversion_status": "success"
+      }
+    },
+    "status": "pass"
+  },
+  "checks": {
+    "fresh_frozen_sync": "pass",
+    "lock_check_offline": "pass",
+    "uv_pip_check": "pass",
+    "wheel_and_sdist_build": "pass",
+    "harness_tests": 22,
+    "ruff_new_packages": "pass"
+  }
+}

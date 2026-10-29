@@ -1,0 +1,20 @@
+{
+  "session_id": "phase0-noisy-voice-6eac87db68bc",
+  "calls": [],
+  "checks": {
+    "noise_rejected_without_engine_dispatch": true,
+    "provider_401_stops_before_engine": true
+  },
+  "scope": "One generated English fixture at 10 dB additive white noise; one real provider credential denial",
+  "limitations": [
+    "Not an acoustic benchmark, hosted service outage or remote cancellation proof."
+  ],
+  "snr_db": 10,
+  "seed": 20261029,
+  "input_pcm_bytes": 228000,
+  "noise_outcome": "rejected_before_engine",
+  "rejection_reason": "missing_fixture_words",
+  "denied_provider_status": 401,
+  "status": "passed",
+  "recorded_at": "2026-10-29T20:18:46.179239+00:00"
+}

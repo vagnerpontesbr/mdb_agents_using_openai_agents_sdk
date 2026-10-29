@@ -1,0 +1,106 @@
+{
+  "date": "2026-10-29",
+  "entrypoint": "openai_engine_adapter.contract_probe:app",
+  "source_provenance": "Uncommitted local source; CLI Git label is not uploaded source identity.",
+  "versions": {
+    "python": "3.15.2",
+    "engine": "0.11.11",
+    "openai_agents": "0.24.0"
+  },
+  "local_tests": {
+    "count": 45,
+    "macos": "pass",
+    "linux_amd64_emulated": "pass",
+    "scope": "Transport doubles; not server enforcement"
+  },
+  "build": {
+    "id": "bld_01M62MK5ZBC56973ABV9QBDT4P",
+    "status": "succeeded"
+  },
+  "hosted_controls": "passed_changed_arguments_call_id_tool_name_and_stale_attempt",
+  "source_sha256": {
+    "agent.yaml": "d2f31d39d1d2276a14f2e5f306101d42723d6b2856d63ea25346c9005202f77a",
+    "pyproject.toml": "304bb10e7079204f52c36e18ef035aedcf8bd22f6a8a7329fc98f9808af9baa3",
+    "src/openai_engine_adapter/__init__.py": "e90a6d364b5bd822d90f174e21a6ebc015212791b3b73ca35a4e41c5f3db1a43",
+    "src/openai_engine_adapter/adapter.py": "5ded3feb899691643d9d10278b03eb809dba39909c8257a0c8c8588ef64cb396",
+    "src/openai_engine_adapter/app.py": "ebe88bf70a383f72abdf38f7721c5ab04ca833e844f53b3370b631cf7f18687c",
+    "src/openai_engine_adapter/contract_probe.py": "f514e914d1e95f9187cde8fad938392dc9c9b01615ae19d667e315fb9957402a",
+    "src/openai_engine_adapter/invoice.py": "81bf6f2a5007563e34fc726fb6a1aebc82aec846f1ad1c905b63865173c6d145",
+    "src/openai_engine_adapter/openai_provider.py": "173cad0fe456b8b17711274b0593e67d196fa545153af8c2636b7bd8b3cae96e",
+    "src/openai_engine_adapter/review.py": "93e598acdb95def5c098932ed0d714eb229cc2095e426c159bbaf9bed824caff",
+    "src/openai_engine_adapter/review_execution.py": "f5c3abb9619fc48bfd2db9206d469cfd25ff6a4632c7c52e7bc19401a2f0c7b2",
+    "src/openai_engine_adapter/review_invoice.py": "73e9fe4a9e53e3b20ef2e6952d86c9b92aa5fed7d527187f918d10e5b00b58af",
+    "uv.lock": "e28d48f85d3137d511ba0719b339f8cfd6d0cf5167c7cec6265428aee3ec3c37"
+  },
+  "shared_memory_changed": false,
+  "deployment": {
+    "id": "deploy-38e1d8dc",
+    "status": "succeeded",
+    "completed_at": "2026-10-29T01:37:12.334Z"
+  },
+  "previous_probe": {
+    "build": {
+      "id": "bld_01M62AA778V465J2AN8MW5C1QS",
+      "status": "succeeded"
+    },
+    "deployment": {
+      "id": "deploy-87302f61",
+      "status": "succeeded",
+      "completed_at": "2026-10-29T01:08:12.331Z"
+    },
+    "source_sha256": {
+      "agent.yaml": "d2f31d39d1d2276a14f2e5f306101d42723d6b2856d63ea25346c9005202f77a",
+      "pyproject.toml": "304bb10e7079204f52c36e18ef035aedcf8bd22f6a8a7329fc98f9808af9baa3",
+      "src/openai_engine_adapter/__init__.py": "e90a6d364b5bd822d90f174e21a6ebc015212791b3b73ca35a4e41c5f3db1a43",
+      "src/openai_engine_adapter/adapter.py": "5ded3feb899691643d9d10278b03eb809dba39909c8257a0c8c8588ef64cb396",
+      "src/openai_engine_adapter/app.py": "ebe88bf70a383f72abdf38f7721c5ab04ca833e844f53b3370b631cf7f18687c",
+      "src/openai_engine_adapter/contract_probe.py": "71d077586873ee50ebb116bcb1a94f2dd247ed1c1f5747fcb09cdb40338944f5",
+      "src/openai_engine_adapter/invoice.py": "81bf6f2a5007563e34fc726fb6a1aebc82aec846f1ad1c905b63865173c6d145",
+      "src/openai_engine_adapter/openai_provider.py": "173cad0fe456b8b17711274b0593e67d196fa545153af8c2636b7bd8b3cae96e",
+      "src/openai_engine_adapter/review.py": "93e598acdb95def5c098932ed0d714eb229cc2095e426c159bbaf9bed824caff",
+      "src/openai_engine_adapter/review_execution.py": "f5c3abb9619fc48bfd2db9206d469cfd25ff6a4632c7c52e7bc19401a2f0c7b2",
+      "src/openai_engine_adapter/review_invoice.py": "73e9fe4a9e53e3b20ef2e6952d86c9b92aa5fed7d527187f918d10e5b00b58af",
+      "uv.lock": "e28d48f85d3137d511ba0719b339f8cfd6d0cf5167c7cec6265428aee3ec3c37"
+    },
+    "initial_invoke": {
+      "session": "phase0-oe-controls-20261029",
+      "result": "failed_expected_code_mismatch",
+      "error": "workflow is nondeterministic: activity step:1/\"agent\":1/#1 changed",
+      "interpretation": "Server rejected changed arguments; fixture expected generic CONFLICT instead of specific NONDETERMINISTIC. Remaining controls did not run."
+    }
+  },
+  "expected_codes": {
+    "changed_action": "NONDETERMINISTIC",
+    "old_attempt": "STALE_FENCE"
+  },
+  "session": "phase0-oe-controls-v2-20261029",
+  "execution_id": "72f74cb7-8bcd-4620-baa5-3cf32b0078ef",
+  "review_activity_id": "6ae2a371f09e1404c0919f8f",
+  "response": "{\"invoice_id\":\"demo-1\",\"amount_minor\":7990,\"currency\":\"USD\",\"synthetic\":true}",
+  "first_attempt_log": {
+    "timestamp": "2026-10-29T01:37:49.841Z",
+    "changed_arguments": "rejected",
+    "changed_tool_call_id": "rejected",
+    "changed_tool_name": "rejected",
+    "stale_attempt": "awaiting_resume"
+  },
+  "restoration": {
+    "build_id": "bld_01M629GDVMFFAKH5SXYKMVMVFV",
+    "deployment_id": "deploy-72088429",
+    "status": "succeeded",
+    "completed_at": "2026-10-29T01:39:12.32Z"
+  },
+  "resume_log": {
+    "timestamp": "2026-10-29T01:38:02.535Z",
+    "changed_arguments": "rejected",
+    "changed_tool_call_id": "rejected",
+    "changed_tool_name": "rejected",
+    "stale_attempt": "rejected"
+  },
+  "limitations": [
+    "Bounded synthetic activity replay contract, not a business transaction.",
+    "Tests reuse one activity position; changed action receives NONDETERMINISTIC, not generic CONFLICT.",
+    "Old-attempt start rejected with STALE_FENCE; stale outcome reports, lease expiry during a tool and concurrent writers are not tested.",
+    "Reviewer authorization/expiry, business eligibility/idempotency and hosted memory continuity remain separate gates."
+  ]
+}

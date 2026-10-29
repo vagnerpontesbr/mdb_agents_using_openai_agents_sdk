@@ -1,0 +1,61 @@
+{
+  "recorded_at": "2026-10-28T16:39:10.398634+00:00",
+  "checks": [
+    {
+      "check": "atlas_embedding_with_local_key",
+      "http_status": 200,
+      "valid_dimension": true,
+      "same_key_as_engine": "unverified"
+    },
+    {
+      "check": "direct_atlas_vector_query",
+      "collection": "memory_semantic",
+      "status": "pass",
+      "synthetic_match_count": 0,
+      "scope": "execution contract only; not retrieval quality"
+    },
+    {
+      "check": "direct_atlas_vector_query",
+      "collection": "memory_snapshot",
+      "status": "pass",
+      "synthetic_match_count": 0,
+      "scope": "execution contract only; not retrieval quality"
+    },
+    {
+      "check": "/secrets/runtime",
+      "http_status": 200,
+      "ready": false,
+      "state": null,
+      "reason": "pending"
+    },
+    {
+      "check": "/memory/runtime",
+      "http_status": 200,
+      "ready": null,
+      "state": "ready",
+      "reason": null
+    },
+    {
+      "check": "hosted_memory_context",
+      "mode": "text",
+      "http_status": 200
+    },
+    {
+      "check": "hosted_memory_context",
+      "mode": "semantic",
+      "http_status": 500
+    }
+  ],
+  "scope": "Read-only dependency isolation; not end-to-end managed memory acceptance",
+  "environment": {
+    "python": "3.15.2",
+    "pymongo": "4.19.0",
+    "agent_engine_sdk_memory": "0.11.11"
+  },
+  "limits": [
+    "The locally injected Voyage key is not verified to match the project secret.",
+    "Zero-match queries establish query execution only, not retrieval quality or authorization isolation.",
+    "Atlas access was tested from the local diagnostic process, not from the hosted runtime network.",
+    "The semantic memory HTTP 500 remains unresolved."
+  ]
+}

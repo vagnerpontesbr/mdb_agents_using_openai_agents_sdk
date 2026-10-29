@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-10-29T16:20:28.124Z",
+  "scope": "Exact existing synthetic hosted projection session; MCP read only",
+  "database": "mdb_memory_67b385a7976edf15ecc62e06",
+  "collection": "memory_snapshot",
+  "result": {
+    "documents": [
+      {
+        "ttl_days": 30,
+        "timestamp": {
+          "$date": "2026-10-29T13:00:28.193Z"
+        },
+        "expires_at": {
+          "$date": "2026-11-28T13:00:28.194Z"
+        },
+        "promoted": false,
+        "deleted": false
+      }
+    ],
+    "queryResultsCount": 1,
+    "appliedLimits": []
+  },
+  "limitations": [
+    "Expiry is in the future; physical deletion not yet observed.",
+    "No inference of deletion cascading to derived memory."
+  ]
+}

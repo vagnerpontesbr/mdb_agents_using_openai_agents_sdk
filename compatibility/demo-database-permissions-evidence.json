@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-10-29T18:17:43.637095+00:00",
+  "checks": {
+    "startup_indexes": true,
+    "login_registration_session_read": true,
+    "attempt_insert_update": true,
+    "logout_revokes_session": true,
+    "user_update_denied": true,
+    "user_delete_denied": true,
+    "other_collection_read_denied": true,
+    "other_collection_write_denied": true,
+    "other_database_read_denied": true,
+    "other_database_write_denied": true,
+    "denied_update_preserved_user": true,
+    "memory_cluster_access_denied": true
+  },
+  "scope": "Real application collection privileges; independent of tenant/ACL authorization",
+  "limitations": [
+    "No capacity, public deployment or future application service permissions proof."
+  ],
+  "memory_cluster_denial_code": 18,
+  "status": "passed",
+  "synthetic_accounts_removed": true
+}

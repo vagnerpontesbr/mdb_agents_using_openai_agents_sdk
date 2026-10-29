@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-10-29T16:29:13.743531+00:00",
+  "read_only": true,
+  "credential_source": "user-refreshed service account token injected from .env",
+  "http_status": 200,
+  "top_level_keys": [
+    "config",
+    "generation",
+    "received_generation",
+    "updated_at"
+  ],
+  "config": {
+    "config": {
+      "short_term": {
+        "embed_on_write": true
+      },
+      "background_extraction": {
+        "snapshot": {
+          "max_messages": 20,
+          "stale_minutes": 1
+        }
+      },
+      "extraction": {
+        "enabled": [
+          "semantic",
+          "episodic",
+          "taxonomic"
+        ]
+      }
+    },
+    "generation": 10,
+    "received_generation": 10,
+    "updated_at": "2026-10-28T18:22:47.09Z"
+  },
+  "interpretation": {
+    "configuration_delivered": true,
+    "explicit_snapshot_retention_override": false,
+    "explicit_delete_promoted_override": false,
+    "documented_defaults": {
+      "ttl_days": 30,
+      "delete_promoted": false
+    },
+    "observed_snapshot_retention_days": 30,
+    "complete_derived_memory_expiry": "not established",
+    "runtime_status": "CLI independently reported ready before the service-token recheck",
+    "scope": "Read-only stored configuration and delivery generation; not proof of physical deletion or all effective runtime defaults."
+  }
+}

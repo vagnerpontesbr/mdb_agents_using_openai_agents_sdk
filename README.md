@@ -1,0 +1,59 @@
+# Telecom Agent Reference Asset
+
+A telecom customer-service reference using OpenAI Agents SDK for orchestration,
+MongoDB Agent Engine for managed platform capabilities, MongoDB Atlas, Voyage AI,
+and Python managed by uv. The planned full application includes a supervisor,
+financial/technical/sales specialists, React chat/voice, and governed PDF retrieval.
+
+**Phase 0 compatibility is complete for the accepted demo scope. Phase 1 and the
+full application have not started.** The published implementation checkpoint is
+[`43746c6`](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/commit/43746c67e81203c52d18ee81626412eff73f652a)
+on `codex/repository-foundation`. The [publication runbook](docs/runbooks/REPOSITORY_SETUP.md)
+records the publication checkpoint and passing push/PR CI for the disconnect-test fix `60ef97b`. Completion of bounded compatibility proofs does not imply production readiness.
+
+## What works in the bounded demo
+
+- A custom hosted adapter runs the real OpenAI Runner through Engine model/tool
+  proxies, with native review/resume and bounded replay/recovery controls.
+- Engine semantic/episodic memory recall, user isolation and chat/voice continuity
+  passed. Engine remains the only managed-memory owner.
+- The loopback identity UI supports email/password, `user`/`admin` roles,
+  admin-only registration and original-requester approval. A restricted MongoDB
+  identity accesses only the demo authentication collections on OpenAI-SDK.
+- Real browser microphone capture, Engine execution, speech output and explicit
+  human listening passed. Voice acceptance is limited to a quiet environment.
+- Search/Auto Embedding/native fusion, scoped filters, Voyage HTTP, and synthetic
+  textual/scanned PDF parsing have bounded compatibility evidence.
+- Local fault controls and an injected hosted dependency failure were exercised.
+  The normal recall build was restored and its positive control passed.
+
+The [Phase 0 checkpoint](docs/compatibility/PHASE_0.md) is authoritative for versions,
+test counts, scope and evidence. The [demo runbook](docs/runbooks/DEMO.md) provides
+startup commands and the [adapter guide](compatibility/openai_engine_adapter/README.md)
+explains runtime ownership and unsupported contracts.
+
+## Accepted limits and next work
+
+Exact chronological history restoration is outside demo scope. The backend uses
+the operator's private Engine CLI login as an explicit local-demo exception.
+Native memory expiry is accepted without additional deletion proof. No production
+outage/capacity guarantee, remote cancellation guarantee or noisy-speech accuracy
+claim follows from the tests. See ADRs [0021](docs/adr/0021-demo-semantic-episodic-continuity.md),
+[0022](docs/adr/0022-demo-private-engine-cli-identity.md) and
+[0023](docs/adr/0023-quiet-environment-demo-voice.md).
+
+The complete supervisor/specialist application, React frontend, governed ingestion,
+RAG quality evaluations and load profiles remain in the [backlog](docs/tasks/README.md).
+Starting Phase 1 requires the user's phase-boundary confirmation.
+
+## Documentation and contribution
+
+- [Implementation plan](initial_plan.md) and [requirements](docs/REQUIREMENTS.md)
+- [Architecture decisions](docs/adr/README.md) and [data boundaries](docs/DATA_ARCHITECTURE.md)
+- [Document governance](docs/DOCUMENT_GOVERNANCE.md) and [stale-document example](examples/telecom/governance/README.md)
+- [Best practices](docs/BEST_PRACTICES.md), [voice design](docs/research/voice-agents.md), and [scalability plan](docs/SCALABILITY_AND_STRESS_TESTS.md)
+- [Contributor commands](CONTRIBUTING.md), [agent instructions](AGENTS.md), and [security](SECURITY.md)
+
+All documentation, code and user-facing demo content is in English. Run
+`python3 scripts/check_repository.py` for repository structure and local link
+validation; it is not an application or provider test.

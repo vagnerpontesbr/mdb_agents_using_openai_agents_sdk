@@ -1,0 +1,12 @@
+{
+  "session_id": "phase0-noisy-voice-15730e83b090",
+  "calls": [],
+  "checks": {},
+  "scope": "One generated English fixture at 10 dB additive white noise; one real provider credential denial",
+  "limitations": [
+    "Not an acoustic benchmark, hosted service outage or remote cancellation proof."
+  ],
+  "status": "failed_or_incomplete",
+  "error_class": "UnexpectedTranscript",
+  "recorded_at": "2026-10-29T20:18:13.312153+00:00"
+}

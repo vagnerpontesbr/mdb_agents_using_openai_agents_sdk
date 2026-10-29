@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-29",
+  "build": {
+    "id": "bld_01M63Q77KBGH3BD6F4YK54Z040",
+    "status": "succeeded"
+  },
+  "entrypoint": "openai_engine_adapter.expiry_invoice:app",
+  "workflow_contract": "openai-engine-review/2",
+  "ttl_seconds": 60,
+  "local_tests": {
+    "count": 48,
+    "macos": "pass",
+    "linux_amd64_emulated": "pass"
+  },
+  "source_provenance": "Uncommitted local source; hashes identify staged contents.",
+  "source_sha256": {
+    "agent.yaml": "5a07dd40e078d6414ad18f81113f7243d7c99fe6258d2314759633b85f48bed8",
+    "pyproject.toml": "304bb10e7079204f52c36e18ef035aedcf8bd22f6a8a7329fc98f9808af9baa3",
+    "src/openai_engine_adapter/__init__.py": "e90a6d364b5bd822d90f174e21a6ebc015212791b3b73ca35a4e41c5f3db1a43",
+    "src/openai_engine_adapter/adapter.py": "5ded3feb899691643d9d10278b03eb809dba39909c8257a0c8c8588ef64cb396",
+    "src/openai_engine_adapter/app.py": "72de38f69142c1c23eb37457daf55c0b479cd0b535d9d07fc878e39f492761a8",
+    "src/openai_engine_adapter/contract_probe.py": "f514e914d1e95f9187cde8fad938392dc9c9b01615ae19d667e315fb9957402a",
+    "src/openai_engine_adapter/expiry_invoice.py": "dc483ba87f7a8507288698b42409a71a25cf9fb976041a0291099ae0e8999068",
+    "src/openai_engine_adapter/invoice.py": "81bf6f2a5007563e34fc726fb6a1aebc82aec846f1ad1c905b63865173c6d145",
+    "src/openai_engine_adapter/openai_provider.py": "173cad0fe456b8b17711274b0593e67d196fa545153af8c2636b7bd8b3cae96e",
+    "src/openai_engine_adapter/review.py": "8bcbbe1e3155138e396ed6d28d64b41ad1372565c896f8de5608c540c7071c31",
+    "src/openai_engine_adapter/review_deadline.py": "95ee4350cc5b538128ad5160af49ee3b19ecb8d8bdf92c664b791cefeba484c2",
+    "src/openai_engine_adapter/review_execution.py": "d0f5514d48b1dc46364f6333824cc55de04c0b97e79d290e8ace047a7a58396b",
+    "src/openai_engine_adapter/review_invoice.py": "73e9fe4a9e53e3b20ef2e6952d86c9b92aa5fed7d527187f918d10e5b00b58af",
+    "uv.lock": "e28d48f85d3137d511ba0719b339f8cfd6d0cf5167c7cec6265428aee3ec3c37"
+  },
+  "hosted_expiry": "passed_before_deadline_and_expired_after_sandbox_release",
+  "identity_control": {
+    "session": "phase0-review-user-control-20261029",
+    "execution_id": "88368c50-0821-4103-a3cc-5b1048e68c61",
+    "requested_user_id": "synthetic-unprivileged-reviewer",
+    "invoke": "accepted_under_current_authenticated_caller",
+    "cleanup": "rejected_same_execution",
+    "conclusion": "Delegated user ID accepted; not evidence of an independently authenticated unauthorized reviewer.",
+    "independent_reviewer": "requires_second_test_identity"
+  },
+  "shared_memory_changed": false,
+  "deployment": {
+    "id": "deploy-b0491bde",
+    "status": "succeeded",
+    "completed_at": "2026-10-29T11:42:14.048Z"
+  },
+  "controls": [
+    {
+      "name": "approval_before_deadline",
+      "session": "phase0-expiry-valid-20261029",
+      "execution_id": "06200ef7-856f-441b-9ce0-b96fe41061f1",
+      "review_activity_id": "6ae3312ef09e1404c0919f9e",
+      "issued_at": 1793274158.0454268,
+      "expires_at": 1793274218.0454268,
+      "response": "{\"invoice_id\":\"demo-1\",\"amount_minor\":7990,\"currency\":\"USD\",\"synthetic\":true}"
+    },
+    {
+      "name": "late_approval_after_sandbox_release",
+      "session": "phase0-expiry-late-20261029",
+      "execution_id": "425466f2-7d45-4eec-aa2c-1a18cb2bd2f7",
+      "review_activity_id": "6ae33151f09e1404c0919fae",
+      "issued_at": 1793274193.1134074,
+      "expires_at": 1793274253.1134074,
+      "runtime_release": "stop_accepted, then absent from full session list before resume",
+      "response": "{\"status\":\"expired\",\"tool_call_id\":\"release-demo-1\"}"
+    }
+  ],
+  "limitations": [
+    "Deadline checked by backend when processing the recorded decision before settlement; no automatic cancellation of pending Engine waits.",
+    "60 seconds is a synthetic test TTL, not an approved production policy.",
+    "Requires trustworthy runtime wall clock; clock-skew and delayed-settlement boundaries not tested.",
+    "No independent reviewer credential or negative reviewer-role authorization test; delegated user ID is not reviewer authentication.",
+    "No business write, transactional idempotency or hosted memory continuity proof."
+  ]
+}

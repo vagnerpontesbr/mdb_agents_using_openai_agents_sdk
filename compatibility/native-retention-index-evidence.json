@@ -1,0 +1,82 @@
+{
+  "recorded_at": "2026-10-29T16:16:05.822723+00:00",
+  "read_only": true,
+  "driver_version": "4.19.0",
+  "engine_error": {
+    "class": "HTTPError",
+    "http_status": 401
+  },
+  "indexes": {
+    "memory_short_term": {
+      "count": 10,
+      "ttl_indexes": []
+    },
+    "memory_snapshot": {
+      "count": 8,
+      "ttl_indexes": [
+        {
+          "name": "snap_ttl",
+          "key": {
+            "expires_at": 1
+          },
+          "expireAfterSeconds": 0
+        }
+      ]
+    },
+    "memory_semantic": {
+      "count": 9,
+      "ttl_indexes": []
+    },
+    "memory_episodic": {
+      "count": 9,
+      "ttl_indexes": []
+    },
+    "memory_procedural": {
+      "count": 9,
+      "ttl_indexes": []
+    },
+    "memory_taxonomic": {
+      "count": 7,
+      "ttl_indexes": []
+    },
+    "memory_user_context": {
+      "count": 4,
+      "ttl_indexes": []
+    },
+    "tasks": {
+      "count": 8,
+      "ttl_indexes": [
+        {
+          "name": "idx_task_expiry",
+          "key": {
+            "expires_at": 1
+          },
+          "expireAfterSeconds": 172800
+        }
+      ]
+    },
+    "tasks_dlq": {
+      "count": 7,
+      "ttl_indexes": [
+        {
+          "name": "idx_dlq_ttl",
+          "key": {
+            "moved_to_dlq_at": 1
+          },
+          "expireAfterSeconds": 5184000
+        }
+      ]
+    },
+    "scheduled_tasks": {
+      "count": 3,
+      "ttl_indexes": []
+    }
+  },
+  "scope": "Direct PyMongo metadata read using the existing mongodb_clusterdemotelco MCP configuration; no content read or mutation.",
+  "limitations": [
+    "HTTP 401 prevented reading current Engine configuration; no conclusion about current delete_promoted setting.",
+    "Index inventory does not exclude application-managed background cleanup.",
+    "Task TTLs are infrastructure retention, not conversation/derived-memory retention.",
+    "No physical expiration was observed."
+  ]
+}

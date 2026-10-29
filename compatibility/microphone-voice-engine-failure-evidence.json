@@ -1,0 +1,46 @@
+{
+  "status": "failed_or_incomplete",
+  "calls": [],
+  "session_id": "phase0-browser-voice-8a0ac5d146d9",
+  "scope": "User-operated microphone and synthetic phrase",
+  "limitations": [
+    "Automatic approval of exact synthetic fixture by one CLI caller.",
+    "Browser playback events do not prove human listening.",
+    "Browser cancellation does not cancel accepted remote work.",
+    "Both channels recall a previously stored marker."
+  ],
+  "recorded_at": "2026-10-29T18:21:06.799421+00:00",
+  "error_class": "ValueError",
+  "failure_frames": [
+    {
+      "file": "base_events.py",
+      "function": "run_until_complete",
+      "line": 724
+    },
+    {
+      "file": "serve_voice_engine_probe.py",
+      "function": "audio_operation",
+      "line": 71
+    },
+    {
+      "file": "check_voice_engine.py",
+      "function": "voice_turn",
+      "line": 145
+    },
+    {
+      "file": "result.py",
+      "function": "stream",
+      "line": 426
+    },
+    {
+      "file": "pipeline.py",
+      "function": "stream_events",
+      "line": 134
+    },
+    {
+      "file": "check_voice_engine.py",
+      "function": "run",
+      "line": 135
+    }
+  ]
+}

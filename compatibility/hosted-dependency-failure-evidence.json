@@ -1,0 +1,66 @@
+{
+  "status": "passed",
+  "build_id": "bld_01M64N7WA4D2R9FZDHDMECH6MV",
+  "restore_build_id": "bld_01M63Y9G5090B560AYEFWA7D4K",
+  "source_hashes": {
+    "agent.yaml": "7074146a8df1479c2086d3d3261c10e34d6ce6013a443b8eb8a9a3af73ce1a50",
+    "src/openai_engine_adapter/dependency_failure_invoice.py": "2c6b4e3841ce20571d7b7706fbb848c3b07bd0ac9ea3a74553f999cb279188c1",
+    "uv.lock": "e28d48f85d3137d511ba0719b339f8cfd6d0cf5167c7cec6265428aee3ec3c37"
+  },
+  "local_contract_tests": 61,
+  "linux_contract_tests": 61,
+  "scope": "Injected loopback dependency failure inside hosted Tool Pod; no shared service shutdown",
+  "hosted_result": "passed",
+  "session_id": "phase0-dependency-failure-a1edc5321c1e",
+  "deployment_id": "deploy-0feb3249",
+  "invoke_exit_code": 1,
+  "cli_mentions_dependency_failure": false,
+  "log_rows": [
+    {
+      "kind": "llm",
+      "status": "started",
+      "step_number": 1
+    },
+    {
+      "kind": "llm",
+      "status": "success",
+      "step_number": 1
+    },
+    {
+      "kind": "tool",
+      "status": "started",
+      "step_number": 2
+    },
+    {
+      "kind": "tool",
+      "status": "error",
+      "step_number": 2
+    }
+  ],
+  "logs_has_more": false,
+  "execution_id": "1900b0a9-7693-4e15-9a62-bda4fc17ede8",
+  "execution_status": "error",
+  "result_empty": true,
+  "execution_mentions_dependency_failure": true,
+  "logs_mention_dependency_failure": true,
+  "execution_scope_matches": true,
+  "log_scopes_match": true,
+  "build_status": "succeeded",
+  "deployment_status": "succeeded",
+  "deployment_completed_at": "2026-10-29T20:30:06.022Z",
+  "restored_positive_control": {
+    "passed": true,
+    "session_id": "phase0-restored-recall-bc0986191331",
+    "calls": [
+      {
+        "execution_id": "9841af21-2393-492a-a22c-7895c069d7dc",
+        "review_id": "6ae3add490bde009db47e591",
+        "completed": true
+      }
+    ]
+  },
+  "restore_deployment_id": "deploy-9c637560",
+  "restore_deployment_status": "succeeded",
+  "restore_completed_at": "2026-10-29T20:33:55.797Z",
+  "restore_all_components_available": true
+}

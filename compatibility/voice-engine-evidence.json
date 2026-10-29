@@ -1,0 +1,58 @@
+{
+  "session_id": "phase0-voice-engine-0fb7fa6c3359",
+  "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+  "calls": [
+    {
+      "execution_id": "71b34c36-ca5c-42e5-aec0-9ffe603d156f",
+      "review_id": "6ae37cf87e90ef4c0ed3ff8d",
+      "completed": true
+    },
+    {
+      "execution_id": "bc5e452a-4599-42ae-b92b-588944785083",
+      "review_id": "6ae37d0015276e2e5d5a4276",
+      "completed": true
+    }
+  ],
+  "status": "pass",
+  "lifecycle": [
+    "turn_started",
+    "turn_ended",
+    "session_ended"
+  ],
+  "input_audio_seconds": 4.65,
+  "output_audio_seconds": 7.85,
+  "stored_marker_recalled_in_both_channels": true,
+  "ephemeral_sdk_history_used": false,
+  "recorded_at": "2026-10-29T17:06:11.178667+00:00",
+  "phase0_complete": false,
+  "scope": "Synthetic audio plus hosted memory recall across voice/chat; no browser proof",
+  "limitations": [
+    "One CLI identity automatically approves the exact synthetic fixture only.",
+    "Both channels recall a previously stored marker; no new-fact retention proof.",
+    "No microphone, listening, browser codec or independent approver auth test.",
+    "Stopping the CLI does not cancel already accepted Engine/provider work."
+  ],
+  "storage_audit": {
+    "connection": "ClusterDemoTelco",
+    "collection": "memory_short_term",
+    "scope": "Exact project/org/user/session; metadata only",
+    "count": 6,
+    "roles": [
+      "user",
+      "assistant",
+      "tool",
+      "user",
+      "assistant",
+      "tool"
+    ],
+    "sequences": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "unique_hash_count": 6
+  }
+}

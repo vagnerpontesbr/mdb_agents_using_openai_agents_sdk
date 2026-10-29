@@ -1,0 +1,155 @@
+{
+  "recorded_at": "2026-10-29T16:09:06.503344+00:00",
+  "status": "contract_inspection_complete_enforcement_unverified",
+  "source": {
+    "url": "https://www.mongodb.com/docs/api/doc/agentengine.json",
+    "openapi": "3.1.0",
+    "info_version": "1.0",
+    "decompressed_sha256": "1c352518c67ebc0e04a976bf995010026e47135ec979f8f777ff78fa6c522123"
+  },
+  "local_packages": {
+    "agent-engine-sdk": "0.11.11",
+    "agent-engine-runner-shared": "0.11.11",
+    "agent-engine-sdk-memory": "0.11.11"
+  },
+  "source_sha256": {
+    "agent_engine_sdk/models.py": "a68a83773db5dfe3c1c50cd36ce64729705426adc808599629559613f3ab20a3",
+    "agent_engine_runner_shared/server/aer.py": "e3cb2d1c01fc7264ab259f616f648f3546b50dfd5f7d003a442291e6f8dd546e",
+    "agent_engine_sdk_memory/_client.py": "e7f2441dc6e213b08aa14af59fff73698b70d292467a8fd179dd45a005d12376",
+    "agent_engine_runner_shared/models.py": "3a5de386b313b8db0070bdbf1a7f445a348528858c9e4233a55028a33189bc46"
+  },
+  "memory_routes": [
+    {
+      "path": "/api/v1/projects/{id}/memory/config",
+      "methods": [
+        "get",
+        "put"
+      ]
+    },
+    {
+      "path": "/api/v1/projects/{id}/memory/config/sync",
+      "methods": [
+        "post"
+      ]
+    },
+    {
+      "path": "/api/v1/projects/{id}/memory/context",
+      "methods": [
+        "post"
+      ]
+    },
+    {
+      "path": "/api/v1/projects/{id}/memory/retrieval/context-from-sources",
+      "methods": [
+        "post"
+      ]
+    },
+    {
+      "path": "/api/v1/projects/{id}/memory/runtime",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "path": "/api/v1/projects/{id}/memory/runtime/restart",
+      "methods": [
+        "post"
+      ]
+    },
+    {
+      "path": "/api/v1/projects/{id}/memory/search",
+      "methods": [
+        "post"
+      ]
+    },
+    {
+      "path": "/api/v1/projects/{id}/memory/turns",
+      "methods": [
+        "post"
+      ]
+    }
+  ],
+  "config_description": "Stores the project-level memory server configuration (voyage, extraction, snapshot settings). The project scope is carried by the route id path parameter and the org is derived from that project. Takes effect after the next memory-config sync.",
+  "snapshot_schema": {
+    "properties": {
+      "delete_promoted": {
+        "type": "boolean"
+      },
+      "embed_stm_before_promotion": {
+        "type": "boolean"
+      },
+      "max_messages": {
+        "type": "integer"
+      },
+      "stale_minutes": {
+        "type": "integer"
+      },
+      "topic_shift_enabled": {
+        "type": "boolean"
+      },
+      "topic_shift_threshold": {
+        "type": "number"
+      },
+      "ttl_days": {
+        "type": "integer"
+      }
+    },
+    "type": "object"
+  },
+  "short_term_schema": {
+    "properties": {
+      "embed_on_write": {
+        "description": "EmbedOnWrite makes the memory server embed a turn's content synchronously\nat write time when the caller supplies no embedding, so the turn is\nsearchable by relevance immediately instead of waiting for background\nembedding. Defaults to false (fast write path). Distinct from\nSnapshotConfig.EmbedSTMBeforePromotion, which batch-embeds in the worker\nbefore a promotion check.",
+        "type": "boolean"
+      }
+    },
+    "type": "object"
+  },
+  "resume": {
+    "path": "/api/v1/projects/{id}/executions/{execution_id}/resume",
+    "security": [
+      {
+        "BearerAuth": []
+      }
+    ],
+    "request_schema": {
+      "properties": {
+        "decision": {
+          "example": "approved",
+          "type": "string"
+        },
+        "reviewer_notes": {
+          "example": "Reviewed and approved.",
+          "type": "string"
+        },
+        "suspend_generation": {
+          "description": "SuspendGeneration pins the decision to the suspension snapshot the\nreviewer was shown (from the execution's suspend_generation). OE rejects\nthe resume with a conflict when the current suspension differs, so an\napproval is never applied to review content the reviewer never saw.",
+          "example": 1,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "decision"
+      ],
+      "type": "object"
+    }
+  },
+  "findings": [
+    "Published memory configuration route is explicitly project-level.",
+    "No workspace-specific memory configuration route or DELETE memory operation found in this captured specification; this is not proof of platform-wide absence.",
+    "Snapshot ttl_days does not document complete thirty-day source-and-derived lifecycle.",
+    "Bearer authentication and suspend_generation do not document requester-only approval.",
+    "Pinned InvokeRequest explicitly labels custom_headers as caller-provided (X-Mdb-Agent-Engine-Custom-* forwarded); AER copies them into RequestContext.request_headers. They cannot serve as authenticated principal evidence without independent verification."
+  ],
+  "not_executed": [
+    "Credentialed authorization probes",
+    "Memory deletion or retention changes",
+    "Deployment or shared configuration changes"
+  ],
+  "remaining_prerequisites": [
+    "Supported trusted requester binding plus two independent authenticated identities for positive/negative tests",
+    "Supported application-scoped complete memory lifecycle API or a separately approved architectural resolution"
+  ]
+}

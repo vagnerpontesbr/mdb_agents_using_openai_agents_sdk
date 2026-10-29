@@ -1,0 +1,26 @@
+{
+  "checks": {
+    "anonymous_rejected": true,
+    "foreign_origin_rejected": true,
+    "admin_login_cookie": true,
+    "admin_registration": true,
+    "duplicate_does_not_promote": true,
+    "user_cannot_register_or_escalate": true,
+    "atlas_persistence_hashed": true,
+    "logout_revoked": true,
+    "login_rate_limited": true,
+    "bootstrap_admin_present": true
+  },
+  "status": "passed",
+  "recorded_at": "2026-10-29T17:35:11.370067+00:00",
+  "synthetic_user_removed": true,
+  "browser": {
+    "admin_login": true,
+    "admin_created_user": true,
+    "user_login": true,
+    "user_registration_form_absent": true,
+    "logout": true,
+    "synthetic_user_removed": true
+  },
+  "bootstrap_admin_preserved": true
+}

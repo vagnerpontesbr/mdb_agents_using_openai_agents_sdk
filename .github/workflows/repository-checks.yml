@@ -1,0 +1,28 @@
+name: Repository checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repository:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Validate repository foundation
+        run: python3 scripts/check_repository.py
+      - name: Test compatibility evidence and live-call controls
+        run: python3 -m unittest discover -s tests/compatibility -v
+      - name: Test demo authentication and Engine admission without network
+        run: python3 -m unittest discover -s tests/demo_auth -v

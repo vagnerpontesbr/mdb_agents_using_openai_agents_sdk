@@ -1,0 +1,105 @@
+{
+  "date": "2026-10-29",
+  "base_commit": "6e07fa0",
+  "build": {
+    "id": "bld_01M63Y9G5090B560AYEFWA7D4K",
+    "status": "succeeded"
+  },
+  "entrypoint": "openai_engine_adapter.recall_invoice:app",
+  "workflow_adapter": "openai-engine-review/4",
+  "local_tests": {
+    "count": 54,
+    "macos": "pass",
+    "linux_amd64_emulated": "pass"
+  },
+  "source_provenance": "Local uncommitted changes after the verified checkpoint.",
+  "source_sha256": {
+    "agent.yaml": "f60279fc4124f1d12cd900b15069487f808a6f24c431d3f4331332019018612f",
+    "pyproject.toml": "304bb10e7079204f52c36e18ef035aedcf8bd22f6a8a7329fc98f9808af9baa3",
+    "src/openai_engine_adapter/__init__.py": "e90a6d364b5bd822d90f174e21a6ebc015212791b3b73ca35a4e41c5f3db1a43",
+    "src/openai_engine_adapter/adapter.py": "e4f8b248a3fe27b92e3e4b8a3cdade3954298f25d3d02480f8edb80267d3a32a",
+    "src/openai_engine_adapter/app.py": "342c30cc8f35f2e4f2d75f1875217627350c9f190431c8466e308900485cbbc8",
+    "src/openai_engine_adapter/contract_probe.py": "f514e914d1e95f9187cde8fad938392dc9c9b01615ae19d667e315fb9957402a",
+    "src/openai_engine_adapter/expiry_invoice.py": "dc483ba87f7a8507288698b42409a71a25cf9fb976041a0291099ae0e8999068",
+    "src/openai_engine_adapter/invoice.py": "81bf6f2a5007563e34fc726fb6a1aebc82aec846f1ad1c905b63865173c6d145",
+    "src/openai_engine_adapter/managed_memory.py": "0e52062dc1579149626d4896adbe993fc67a6fb3035ffd90cc16cfc762281494",
+    "src/openai_engine_adapter/memory_context.py": "3e8d0d78a9e28b068cf5f6e427c4fe75c985b483b0613f4f24dc578757cad6f1",
+    "src/openai_engine_adapter/memory_invoice.py": "86303aed8945ebbf5f2686a8382e4b36b0bfb52ec974044fe4ec2784df6f1d27",
+    "src/openai_engine_adapter/openai_provider.py": "173cad0fe456b8b17711274b0593e67d196fa545153af8c2636b7bd8b3cae96e",
+    "src/openai_engine_adapter/recall_invoice.py": "50d432afc5367ccb60cab07dcf0bee8c4f9795c19fc58fd71f6c0dcee0381424",
+    "src/openai_engine_adapter/review.py": "1ab6ee84e7bf09121c1c32402fc80892d491b4d24dca9ca5de4c35f0e75f2451",
+    "src/openai_engine_adapter/review_deadline.py": "ec2d45757fce3e921862530e9f71ede28e566238333267eba458836c549643ce",
+    "src/openai_engine_adapter/review_execution.py": "6d91aeaf65c00e9a81ac0d692ebba7ae4064424d9f8ba4277a90b20acb5660ff",
+    "src/openai_engine_adapter/review_invoice.py": "73e9fe4a9e53e3b20ef2e6952d86c9b92aa5fed7d527187f918d10e5b00b58af",
+    "uv.lock": "e28d48f85d3137d511ba0719b339f8cfd6d0cf5167c7cec6265428aee3ec3c37"
+  },
+  "retrieval": {
+    "owner": "Engine TenantRuntime.build_context_from_sources",
+    "sources": [
+      "semantic",
+      "episodic"
+    ],
+    "mode": "hybrid",
+    "top_k_per_source": 3,
+    "max_tokens": 2048,
+    "visibility": "private",
+    "max_context_characters": 16000
+  },
+  "hosted_recall": {
+    "status": "pass",
+    "prompt": "Read invoice demo-1 and recall my synthetic verification marker.",
+    "expected_marker_in_prompt": false,
+    "controls": [
+      {
+        "name": "positive",
+        "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+        "session_id": "phase0-recall-positive-20261029",
+        "execution_id": "8834d266-4fa5-4eb4-9647-3e2fe059c0bd",
+        "review_id": "6ae34e9a15276e2e5d5a41b3",
+        "suspended": true,
+        "decision": "approve",
+        "resume_success": true,
+        "response": {
+          "invoice_id": "demo-1",
+          "amount_minor": 7990,
+          "currency": "USD",
+          "synthetic": true,
+          "model_reported_marker": "SYNTHETIC-PROBE-98751e7966484cf3a7703be3086aa820"
+        },
+        "result": "pass"
+      },
+      {
+        "name": "negative",
+        "user_id": "phase0-recall-other-98751e7966484cf3a7703be3086aa820",
+        "session_id": "phase0-recall-negative-20261029",
+        "execution_id": "7391d7db-eddf-4378-a4ed-59472145d90e",
+        "review_id": "6ae34eb015276e2e5d5a41c5",
+        "suspended": true,
+        "decision": "approve",
+        "resume_success": true,
+        "response": {
+          "invoice_id": "demo-1",
+          "amount_minor": 7990,
+          "currency": "USD",
+          "synthetic": true,
+          "model_reported_marker": "not_found"
+        },
+        "result": "pass"
+      }
+    ]
+  },
+  "shared_provider_configuration_changed": false,
+  "deployment": {
+    "id": "deploy-63cc0d11",
+    "status": "succeeded",
+    "completed_at": "2026-10-29T13:47:39.05Z",
+    "health": "all_components_ready"
+  },
+  "limitations": [
+    "User filters tested under one authenticated CLI caller; independent tenant/reviewer authorization remains unverified.",
+    "Stored-turn counts and deduplication remain unverified.",
+    "Full chronological SDK history restoration is distinct from bounded semantic context injection.",
+    "Combined review TTL and managed memory behavior has not been live-tested.",
+    "Broader lifecycle fault controls remain open; Phase 0 is incomplete."
+  ]
+}

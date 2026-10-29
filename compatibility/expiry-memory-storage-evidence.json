@@ -1,0 +1,68 @@
+{
+  "recorded_date": "2026-10-29",
+  "collection": "mdb_memory_67b385a7976edf15ecc62e06.memory_short_term",
+  "scope": "Exact organization/project plus synthetic user/session filters specified in expiry-memory-contract-evidence.json; no content retrieved.",
+  "observations": {
+    "valid": {
+      "documents": [
+        {
+          "count": 3,
+          "roles": [
+            "user",
+            "assistant",
+            "tool"
+          ],
+          "sequences": [
+            2,
+            3,
+            1
+          ],
+          "unique_hash_count": 3
+        }
+      ],
+      "count": 1,
+      "appliedLimits": []
+    },
+    "late_before": {
+      "documents": [
+        {
+          "count": 3,
+          "roles": [
+            "user",
+            "assistant",
+            "tool"
+          ],
+          "sequences": [
+            2,
+            3,
+            1
+          ],
+          "unique_hash_count": 3
+        }
+      ],
+      "count": 1,
+      "appliedLimits": []
+    },
+    "late_after": {
+      "documents": [
+        {
+          "count": 3,
+          "roles": [
+            "user",
+            "assistant",
+            "tool"
+          ],
+          "sequences": [
+            1,
+            3,
+            2
+          ],
+          "unique_hash_count": 3
+        }
+      ],
+      "count": 1,
+      "appliedLimits": []
+    }
+  },
+  "interpretation": "Each observation has three records, roles user/assistant/tool, sequences 1-3 and three distinct hashes. Late-session count unchanged after resume. Hash values were not returned; cross-observation hash equality is not asserted."
+}

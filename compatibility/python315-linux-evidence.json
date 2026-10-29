@@ -1,0 +1,158 @@
+{
+  "date": "2026-10-28",
+  "python": "3.15.2",
+  "architecture": "linux/amd64",
+  "execution": "Docker Desktop x86_64 emulation on macOS ARM64",
+  "distribution_url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.15.2%2B20261026-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz",
+  "distribution_sha256": "7b03163a980c607ba8194709d4a4086735a7a9c488cc475b098157306927b36b",
+  "download_checksum_verified": true,
+  "uv": "0.11.21",
+  "python_downloads": "disabled",
+  "interpreter_pin": "/app/.runtime-python/python/bin/python3.15",
+  "full_bundle": {
+    "frozen_install": "pass",
+    "adapter_tests": 22,
+    "tests_status": "pass",
+    "remote_build_id": "bld_01M6227MJW46XNDZC99EPK41F8",
+    "remote_status": "failed",
+    "error": "source archive exceeds 52428800 byte decompressed limit"
+  },
+  "compact_bundle": {
+    "frozen_install": "pass",
+    "adapter_tests": 22,
+    "tests_status": "pass",
+    "regular_file_bytes": 49166913,
+    "regular_file_count": 688,
+    "remote_status": "succeeded",
+    "remote_build_id": "bld_01M622CNYJW9R30TVZQ0Q36DQF",
+    "remote_python_selected": "3.15.2",
+    "remote_image_digest": "sha256:e83919d21ea4511f649628f6be0730b29ffdb69d294b9d8a0e85a3591164f175",
+    "deployment_id": "deploy-f45c6a70",
+    "deployment_status": "succeeded"
+  },
+  "scope": "Offline Engine/OpenAI contracts with HTTP/transport doubles; not live OE/model policy enforcement",
+  "runtime_profile": "Omits Tk/IDLE, ensurepip/pip, C development headers, unused libpython embedding shared library and terminfo. No binary patched.",
+  "source_sha256": {
+    ".python-version": "5b4c98b26cff7bfcfd695773d12213258f549fcfe44efae8baaede6b1631a497",
+    "agent.yaml": "c3b53ed898f035dd2be370ed0f05c206cfd7086acb041bec252d2b0d73b01a1e",
+    "pyproject.toml": "304bb10e7079204f52c36e18ef035aedcf8bd22f6a8a7329fc98f9808af9baa3",
+    "src/openai_engine_adapter/__init__.py": "e90a6d364b5bd822d90f174e21a6ebc015212791b3b73ca35a4e41c5f3db1a43",
+    "src/openai_engine_adapter/adapter.py": "5ded3feb899691643d9d10278b03eb809dba39909c8257a0c8c8588ef64cb396",
+    "src/openai_engine_adapter/app.py": "37b113b813f6dc5cb28b7e7d1683a371e66cb86e14ded8023dcc49f0dd274763",
+    "src/openai_engine_adapter/invoice.py": "c3a6439805f910bdb27a7b29f940c6729257f12b0ee35745d6f905f12864eecd",
+    "src/openai_engine_adapter/openai_provider.py": "1a79d8d5af7c80ffbcd446ef673edd1a337f6b751f54afafade4b42bef8a0220",
+    "uv.lock": "e28d48f85d3137d511ba0719b339f8cfd6d0cf5167c7cec6265428aee3ec3c37"
+  },
+  "phase0_complete": false,
+  "deployment_observation": {
+    "observed_at": "2026-10-28T20:35:09.599942+00:00",
+    "deployment_id": "deploy-f45c6a70",
+    "status": "succeeded",
+    "components": [
+      {
+        "name": "oe",
+        "type": "infrastructure",
+        "ready_replicas": 2,
+        "available": true
+      },
+      {
+        "name": "agent",
+        "type": "agent",
+        "ready_replicas": 4,
+        "available": true
+      },
+      {
+        "name": "tool",
+        "type": "tool",
+        "ready_replicas": 4,
+        "available": true
+      }
+    ],
+    "conditions": [
+      {
+        "type": "SecretsReady",
+        "status": "True",
+        "reason": "ExternalSecretsBypassedBroker",
+        "message": "Application secrets are served by the credential broker; this stack does not mount the project- or app-secrets ExternalSecrets.",
+        "last_transition_time": "2026-10-28T20:20:14Z"
+      },
+      {
+        "type": "OESecretsReady",
+        "status": "True",
+        "reason": "OESecretsBypassedBroker",
+        "message": "OE serves run secrets from the credential broker; the oe-secrets ExternalSecret is not mounted.",
+        "last_transition_time": "2026-10-28T20:20:14Z"
+      },
+      {
+        "type": "Available",
+        "status": "True",
+        "reason": "AllComponentsAvailable",
+        "message": "All components are serving.",
+        "last_transition_time": "2026-10-28T20:28:47Z"
+      },
+      {
+        "type": "OEAllowlistReady",
+        "status": "True",
+        "reason": "AllowlistConverged",
+        "message": "declared secret allowlist applied to the OE",
+        "last_transition_time": "2026-10-28T20:23:57Z"
+      },
+      {
+        "type": "OESandboxPolicyReady",
+        "status": "True",
+        "reason": "SandboxPolicyConverged",
+        "message": "declared sandbox policy applied to the OE",
+        "last_transition_time": "2026-10-28T20:23:58Z"
+      },
+      {
+        "type": "RunningImagesObserved",
+        "status": "True",
+        "reason": "PodsListed",
+        "message": "Workload pod list succeeded; running_images reflects this reconcile.",
+        "last_transition_time": "2026-10-28T20:24:44Z"
+      },
+      {
+        "type": "RolloutComplete",
+        "status": "True",
+        "reason": "AllWorkloadsUpdated",
+        "message": "Every workload Deployment has landed its current rollout.",
+        "last_transition_time": "2026-10-28T20:28:47Z"
+      }
+    ],
+    "last_event_seq": 26,
+    "runtime_logs": "Subsequent 15-minute queries confirmed AER warm-up, lookup_invoice registration and named LLM registry discovery; earlier empty queries were transient.",
+    "live_invoice": "Not yet validated",
+    "engine_policy_denial": "Observed model denial with correlated Engine trace; positive control and tool denial remain unvalidated.",
+    "completed_at": "2026-10-28T20:28:52.331Z"
+  },
+  "live_invocations": [
+    {
+      "transport": "blocking",
+      "session_id": "phase0-hosted-invoice-20261028",
+      "http_status": 500,
+      "cli_error": "Failed to invoke workspace"
+    },
+    {
+      "transport": "stream",
+      "session_id": "ed893800-3d15-4a29-b0e7-4a00af611273",
+      "http_status": 200,
+      "cli_error": "Execution was denied by policy.",
+      "trace_step": "invoke_llm",
+      "span_id": "8a13e9ae9aa61331",
+      "trace_status": "BLOCKED",
+      "trace_error": "AUTHORIZED_MODELS policy denied model \"gpt-6-luna\" at generation 8",
+      "trace_url": "https://agentengine.mongodb.com/project/67b385a7976edf15ecc62e06/sessions/ed893800-3d15-4a29-b0e7-4a00af611273"
+    }
+  ],
+  "policy_observation": {
+    "source": "Read-only project Policies UI and execution trace on 2026-10-28",
+    "scope": "Every workspace in project",
+    "authorized_models": [
+      "claude-opus-5-5"
+    ],
+    "authorized_tools_count": 26,
+    "lookup_invoice_authorized": false,
+    "mutations_performed": false,
+    "proposed_change": "Append gpt-6-luna to authorized models and lookup_invoice to authorized tools; retain all existing entries and limits. Requires explicit approval for shared project permission expansion."
+  }
+}

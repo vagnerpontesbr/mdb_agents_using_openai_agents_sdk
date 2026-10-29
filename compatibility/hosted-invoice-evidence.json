@@ -1,0 +1,44 @@
+{
+  "recorded_date": "2026-10-28",
+  "model": "gpt-6-luna",
+  "provider_api": "OpenAI Responses",
+  "local_adapter_provider_tests": 22,
+  "local_test_transport": "in-memory HTTP and Engine transport doubles; no live model call",
+  "manifest_validation": "passed with framework openai-agents",
+  "initial_framework_custom_build_validation": "rejected before upload",
+  "workspace_id": "ws-6ae20f53f3b040aa65fa961a",
+  "build_id": "bld_01M621HKZWQ2Q13QCGQM15M7ST",
+  "build_status": "failed",
+  "executor": "vm",
+  "remote_uv": "0.11.21 x86_64-unknown-linux-musl",
+  "root_error": "No interpreter found for Python 3.15.2 in managed installations or search path",
+  "secondary_messages": [
+    "Generic uv.lock out-of-date message follows missing-interpreter error",
+    "PRE_BUILD /src/agent.yaml FileNotFoundError did not abort that phase"
+  ],
+  "lock_behavior": "build log says honoring committed lockfile; full install was not reached",
+  "deployment_attempted": false,
+  "live_invoice_invoked": false,
+  "live_policy_denial_validated": false,
+  "workspace_secret_change": {
+    "name": "OPENAI_API_KEY",
+    "scope": "workspace",
+    "version": 1,
+    "value_logged": false
+  },
+  "shared_memory_configuration_changed": false,
+  "phase0_complete": false,
+  "source_provenance": "Uploaded current locally authored source, not the contents of the commit printed in the CLI build label",
+  "source_sha256": {
+    "agent.yaml": "c3b53ed898f035dd2be370ed0f05c206cfd7086acb041bec252d2b0d73b01a1e",
+    "pyproject.toml": "304bb10e7079204f52c36e18ef035aedcf8bd22f6a8a7329fc98f9808af9baa3",
+    "src/openai_engine_adapter/__init__.py": "e90a6d364b5bd822d90f174e21a6ebc015212791b3b73ca35a4e41c5f3db1a43",
+    "src/openai_engine_adapter/adapter.py": "5ded3feb899691643d9d10278b03eb809dba39909c8257a0c8c8588ef64cb396",
+    "src/openai_engine_adapter/app.py": "37b113b813f6dc5cb28b7e7d1683a371e66cb86e14ded8023dcc49f0dd274763",
+    "src/openai_engine_adapter/invoice.py": "c3a6439805f910bdb27a7b29f940c6729257f12b0ee35745d6f905f12864eecd",
+    "src/openai_engine_adapter/openai_provider.py": "1a79d8d5af7c80ffbcd446ef673edd1a337f6b751f54afafade4b42bef8a0220",
+    "uv.lock": "e28d48f85d3137d511ba0719b339f8cfd6d0cf5167c7cec6265428aee3ec3c37"
+  },
+  "followup_evidence": "python315-linux-evidence.json",
+  "original_build_status_is_historical": true
+}

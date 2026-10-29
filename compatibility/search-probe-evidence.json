@@ -1,0 +1,120 @@
+{
+  "recorded_at": "2026-10-28T14:27:00.275Z",
+  "scope": "phase0_synthetic_search",
+  "phase0_complete": false,
+  "database": "telecom_eval_knowledge",
+  "collection": "phase0_search_probe",
+  "creation": {
+    "lexical": "MongoDB MCP",
+    "autoembed": "PyMongo 4.19.0 / Python 3.15.2",
+    "documents": "MongoDB MCP"
+  },
+  "query_transport": "MongoDB MCP",
+  "query_count": 5,
+  "indexes": [
+    {
+      "name": "phase0_lexical",
+      "type": "search",
+      "status": "READY",
+      "queryable": true,
+      "latestDefinition": {
+        "mappings": {
+          "dynamic": false,
+          "fields": {
+            "text": {
+              "type": "string"
+            },
+            "tenant_id": {
+              "type": "token"
+            },
+            "acl": {
+              "type": "token"
+            },
+            "published": {
+              "type": "boolean"
+            }
+          }
+        },
+        "analyzer": "lucene.standard"
+      }
+    },
+    {
+      "name": "phase0_autoembed",
+      "type": "vectorSearch",
+      "status": "READY",
+      "queryable": true,
+      "latestDefinition": {
+        "fields": [
+          {
+            "type": "autoEmbed",
+            "modality": "text",
+            "path": "text",
+            "model": "voyage-4-lite",
+            "numDimensions": 512
+          },
+          {
+            "type": "filter",
+            "path": "tenant_id"
+          },
+          {
+            "type": "filter",
+            "path": "acl"
+          },
+          {
+            "type": "filter",
+            "path": "published"
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "name": "lexical_control",
+      "pass": true,
+      "returned_ids": [
+        "phase0_allowed",
+        "phase0_other_acl",
+        "phase0_other_tenant",
+        "phase0_unpublished"
+      ]
+    },
+    {
+      "name": "lexical_filtered",
+      "pass": true,
+      "returned_ids": [
+        "phase0_allowed"
+      ]
+    },
+    {
+      "name": "vector_control",
+      "pass": true,
+      "returned_ids": [
+        "phase0_allowed",
+        "phase0_other_acl",
+        "phase0_other_tenant",
+        "phase0_unpublished"
+      ]
+    },
+    {
+      "name": "vector_filtered",
+      "pass": true,
+      "returned_ids": [
+        "phase0_allowed"
+      ]
+    },
+    {
+      "name": "hybrid_filtered",
+      "pass": true,
+      "returned_ids": [
+        "phase0_allowed"
+      ]
+    }
+  ],
+  "status": "pass",
+  "limits": [
+    "Four synthetic documents only",
+    "Not database-role or production authorization proof",
+    "Not RAG quality, full governance or Engine compatibility proof"
+  ]
+}

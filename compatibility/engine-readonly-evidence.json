@@ -1,0 +1,71 @@
+{
+  "scope": "Temporary PROJECT_READ_ONLY permission and revocation proof; not tenant isolation or write-capable least privilege",
+  "permissions": {
+    "recorded_at": "2026-10-28T19:19:13.166542+00:00",
+    "role": "PROJECT_READ_ONLY",
+    "token_exchange_status": 200,
+    "temporary_secret_expires_at": "2026-10-29T19:18:17Z",
+    "paired_atlas_account_created": true,
+    "checks": [
+      {
+        "check": "reader_project_metadata",
+        "http_status": 200
+      },
+      {
+        "check": "reader_memory_context",
+        "http_status": 200
+      },
+      {
+        "check": "reader_synthetic_write",
+        "http_status": 403
+      },
+      {
+        "check": "reader_admin_malformed_request",
+        "http_status": 401
+      },
+      {
+        "check": "owner_memory_control",
+        "http_status": 200
+      }
+    ],
+    "synthetic_write_run_id": "7992e154a62f433f8d36fb2490f37b3f",
+    "admin_request_was_malformed": true
+  },
+  "revocation": {
+    "recorded_at": "2026-10-28T19:20:45.842493+00:00",
+    "deactivation_exit_code": 0,
+    "pre_deactivation_read_status": 200,
+    "existing_token_after_deactivation_status": 401,
+    "new_token_after_deactivation_status": 401,
+    "metadata_is_active": false,
+    "original_accounts_modified": false
+  },
+  "limitations": [
+    "Administrative service-account endpoint rejected the credential type with 401; this is not a role-specific 403 proof.",
+    "No active application credential was replaced; no general per-tenant authorization was validated.",
+    "Atlas organization-level account deletion was not performed: organization API access was denied. Its observed secret was revoked and its project membership removed."
+  ],
+  "atlas_cleanup": {
+    "recorded_at": "2026-10-28T19:31:23.828509+00:00",
+    "actions": [
+      {
+        "action": "revoke_secret",
+        "exit_code": 0
+      },
+      {
+        "action": "remove_project_membership",
+        "exit_code": 0
+      }
+    ],
+    "secrets_remaining_before_project_removal": 0,
+    "post_removal_get_exit_code": 1,
+    "post_removal_http_statuses": [
+      "404"
+    ],
+    "post_removal_error_codes": [
+      "RESOURCE_NOT_FOUND"
+    ],
+    "organization_account_deletion": "not_performed_org_access_denied",
+    "original_accounts_modified": false
+  }
+}

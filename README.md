@@ -5,11 +5,28 @@ MongoDB Agent Engine for managed platform capabilities, MongoDB Atlas, Voyage AI
 and Python managed by uv. The planned full application includes a supervisor,
 financial/technical/sales specialists, React chat/voice, and governed PDF retrieval.
 
-**Phase 0 compatibility is complete for the accepted demo scope. Phase 1 and the
-full application have not started.** The published implementation checkpoint is
-[`43746c6`](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/commit/43746c67e81203c52d18ee81626412eff73f652a)
-on `codex/repository-foundation`. The [publication runbook](docs/runbooks/REPOSITORY_SETUP.md)
-records the publication checkpoint and passing push/PR CI for the disconnect-test fix `60ef97b`. Completion of bounded compatibility proofs does not imply production readiness.
+**Phase 0 is complete and merged. Phase 1 application
+foundation is implemented and validated locally; the full telecom journey remains future work.** See [FND-003](docs/tasks/FND-003-FOUNDATION.md)
+for validation and [publication status](docs/runbooks/REPOSITORY_SETUP.md) for Git/CI checkpoints.
+
+## Run the application foundation
+
+The new React account workspace supports login, administrator-only registration,
+session restoration and logout through the existing MongoDB identity boundary.
+It does not yet expose chat, specialists or voice. The [application runbook](docs/runbooks/APPLICATION.md)
+provides prerequisites, private configuration, optional index/bootstrap commands,
+and the API contract.
+
+```sh
+uv sync --frozen --python /path/to/python3.15
+npm --prefix apps/web ci
+npm --prefix apps/web run build
+uv run --frozen --env-file .env telecom-api --port 8000
+```
+
+Open `http://127.0.0.1:8000` with the configured existing demo account. Python must
+be 3.15.2; configure `APP_WEB_DIST=apps/web/dist` and the restricted application
+cluster URI as documented. Existing users are not reset.
 
 ## What works in the bounded demo
 
@@ -42,9 +59,9 @@ claim follows from the tests. See ADRs [0021](docs/adr/0021-demo-semantic-episod
 [0022](docs/adr/0022-demo-private-engine-cli-identity.md) and
 [0023](docs/adr/0023-quiet-environment-demo-voice.md).
 
-The complete supervisor/specialist application, React frontend, governed ingestion,
+The complete supervisor/specialist application, chat/voice workspace, governed ingestion,
 RAG quality evaluations and load profiles remain in the [backlog](docs/tasks/README.md).
-Starting Phase 1 requires the user's phase-boundary confirmation.
+Starting Phase 2 requires the user's phase-boundary confirmation.
 
 ## Documentation and contribution
 

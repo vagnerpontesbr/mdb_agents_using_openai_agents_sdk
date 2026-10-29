@@ -21,7 +21,8 @@ REQUIRED = (
     "docs/adr/README.md",
     "docs/tasks/README.md",
 )
-SKIP = {".git", ".venv", "node_modules", "artifacts", "dist", "build"}
+SKIP = {".git", ".venv", "node_modules", "artifacts", "dist", "build",
+        ".pytest_cache", ".mypy_cache", ".ruff_cache"}
 LINK = re.compile(r"!?\[[^\]\n]*\]\(([^\s)]+)(?:\s+\"[^\"]*\")?\)")
 
 

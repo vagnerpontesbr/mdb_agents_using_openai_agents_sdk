@@ -1,7 +1,7 @@
 # Running the Phase 0 demo
 
-This runbook operates the bounded compatibility UI, not the planned React
-application. Read the [Phase 0 checkpoint](../compatibility/PHASE_0.md) for accepted
+This runbook operates the bounded Phase 0 compatibility UI. The separate
+[Phase 1 React account application](APPLICATION.md) has its own startup commands. Read the [Phase 0 checkpoint](../compatibility/PHASE_0.md) for accepted
 scope and [dependency environments](../tasks/COMP-001-DEPENDENCIES.md) for setup.
 Commands below assume the existing frozen agent-runtime environment and its
 pinned Python 3.15.2 interpreter. Do not silently downgrade that target.

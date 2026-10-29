@@ -29,7 +29,12 @@ class DummyClient:
 class VoiceHttpFaultTests(unittest.TestCase):
     @contextmanager
     def server(self, operation):
-        ready, saved = threading.Event(), threading.Event()
+        ready = threading.Event()
+        completed = set()
+        completion = threading.Condition()
+        def wait_completed(address):
+            with completion:
+                return completion.wait_for(lambda: address in completed, timeout=3)
         instances = []
         original = probe.ThreadingHTTPServer
         class Server(original):
@@ -37,9 +42,13 @@ class VoiceHttpFaultTests(unittest.TestCase):
                 instances.append(self)
                 ready.set()
                 super().serve_forever(poll_interval=0.01)
-            def shutdown_request(self, request):
-                super().shutdown_request(request)
-                saved.set()
+            def process_request_thread(self, request, client_address):
+                try:
+                    super().process_request_thread(request, client_address)
+                finally:
+                    with completion:
+                        completed.add(client_address)
+                        completion.notify_all()
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / 'report.json'
             argv = ['probe', '--allow-live', '--microphone', '--port', '0', '--output', str(output)]
@@ -64,7 +73,7 @@ class VoiceHttpFaultTests(unittest.TestCase):
                         with error:
                             return error.code, json.load(error)
                 try:
-                    yield post, output, origin, nonce, saved
+                    yield post, output, origin, nonce, wait_completed
                 finally:
                     instances[0].shutdown()
                     worker.join(3)
@@ -123,10 +132,11 @@ class VoiceHttpFaultTests(unittest.TestCase):
                 raise TimeoutError('test did not release operation')
             calls.append({'execution_id': 'synthetic', 'completed': True})
             return b'\x01\x00' * 24000, ['turn_started', 'turn_ended', 'session_ended']
-        with self.server(complete) as (post, output, origin, nonce, saved):
+        with self.server(complete) as (post, output, origin, nonce, wait_completed):
             post('/fixture')
             port = int(origin.rsplit(':', 1)[1])
             connection = socket.create_connection(('127.0.0.1', port), timeout=3)
+            client_address = connection.getsockname()
             request = (f'POST /voice HTTP/1.1\r\nHost: 127.0.0.1:{port}\r\nOrigin: {origin}\r\n'
                        f'X-Probe-Nonce: {nonce}\r\nContent-Length: 2\r\n\r\n').encode() + b'\x01\x00'
             try:
@@ -136,11 +146,11 @@ class VoiceHttpFaultTests(unittest.TestCase):
                 self.assertEqual(post('/voice', b'\x01\x00')[0], 409)
                 connection.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack('ii', 1, 0))
                 connection.close()
-                saved.clear()
             finally:
                 release.set()
                 connection.close()
-            self.assertTrue(saved.wait(3))
+            # Fixture and duplicate requests cannot signal completion of this connection.
+            self.assertTrue(wait_completed(client_address))
             self.assertEqual(post('/voice', b'\x01\x00')[0], 409)
             report = json.loads(output.read_text())
             self.assertEqual(report['status'], 'voice_passed')

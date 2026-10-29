@@ -21,6 +21,7 @@ from agent_engine_runner_shared.workflow.client import ActivityDispatch, Activit
 
 from openai_engine_adapter.review_invoice import app
 from openai_engine_adapter.memory_invoice import app as memory_app
+from openai_engine_adapter.expiry_memory_invoice import app as expiry_memory_app
 from agent_engine_runner_shared.workflow.memory import DurableMemoryState
 
 
@@ -31,13 +32,21 @@ class ReplayTests(unittest.IsolatedAsyncioTestCase):
     async def test_engine_memory_projection_replays_stable_writes_and_empty_review_ack(self):
         await self.exercise_replay(managed=True)
 
-    async def exercise_replay(self, *, managed):
+    async def test_memory_replay_before_deadline_releases_result_once(self):
+        await self.exercise_replay(managed=True, deadline=True, resume_time=1059.0)
+
+    async def test_memory_replay_at_deadline_expires_without_repeating_turns(self):
+        await self.exercise_replay(managed=True, deadline=True, resume_time=1060.0)
+
+    async def exercise_replay(self, *, managed, deadline=False, resume_time=1059.0):
         hooks.reset_hooks()
         self.addCleanup(hooks.reset_hooks)
         identity = WorkflowIdentity(tenant_scope=TenantScope(org_id="org", project_id="project", workspace_id="workspace"),
                                     session_id="session", execution_id="exec")
         ctx = RequestContext(execution_id="exec", user_id="user", session_id="session", workspace_id="workspace")
         commands, outcomes = {}, {}
+        review_ordinal = 4 if deadline else 3
+        selected_app = expiry_memory_app if deadline else memory_app if managed else app
         client = MagicMock()
         client.__enter__.return_value = client
 
@@ -65,8 +74,8 @@ class ReplayTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(pause.suspension.reason, "agent_interrupt")
             outcome = suspended_outcome(ActivityContext(workflow_identity=identity,
                 attempt_id=command.attempt_id, fencing_token=command.fencing_token,
-                activity_id="3"), reason="agent_interrupt", context={})
-            outcomes[3] = outcome.SerializeToString()
+                activity_id=str(review_ordinal)), reason="agent_interrupt", context={})
+            outcomes[review_ordinal] = outcome.SerializeToString()
             return [SimpleNamespace(position=pause.position, outcome=outcome)]
         settlement.finalize_step = AsyncMock(side_effect=finalize)
         settlement.complete_execution = AsyncMock()
@@ -80,11 +89,11 @@ class ReplayTests(unittest.IsolatedAsyncioTestCase):
                                            user_id="user", session_id="session", workspace_id="workspace")
             attempt = AttemptContext(workflow_identity=identity, attempt_id=f"attempt-{number}", fencing_token=number,
                                      replay_mode=number > 1)
-            request = ctx if number == 1 else ctx.model_copy(update={"resume": True, "resume_data": {"3": {"decision": "approve"}}})
+            request = ctx if number == 1 else ctx.model_copy(update={"resume": True, "resume_data": {str(review_ordinal): {"decision": "approve"}}})
             try:
                 with attempt_context_scope(attempt):
                     return await AERServer._execute_via_agent_stream(
-                        SimpleNamespace(), (memory_app if managed else app).get_agent(), request, AgentInput(payload={"message": "Read demo-1"}),
+                        SimpleNamespace(), selected_app.get_agent(), request, AgentInput(payload={"message": "Read demo-1"}),
                         "https://oe.invalid", "exec",
                     )
             finally:
@@ -101,24 +110,29 @@ class ReplayTests(unittest.IsolatedAsyncioTestCase):
              patch("agent_engine_runner_shared.workflow.settlement.AsyncWorkflowClient", return_value=settlement), \
              patch.object(SecureLLMProxy, "_stream_llm", side_effect=provider) as model_dispatch, \
              patch.object(SecureToolWrapper, "_execute_tool_native", return_value=(memory_app.get_tool_definitions()[0].callable(invoice_id="demo-1") if managed else invoice)) as tool_dispatch:
-            suspended = await leg(1)
+            with patch("openai_engine_adapter.review_deadline.time.time", return_value=1000.0):
+                suspended = await leg(1)
             self.assertIsInstance(suspended, InterruptResult)
-            self.assertEqual(sorted(commands), [1, 2, 3])
-            review = ActivityContext(workflow_identity=identity, attempt_id="attempt-1", fencing_token=1, activity_id="3")
-            outcomes[3] = completed_outcome(review, {"decision": "approve"}).SerializeToString()
-            resumed = await leg(2)
-        self.assertEqual(json.loads(resumed.content), invoice)
+            self.assertEqual(sorted(commands), list(range(1, review_ordinal + 1)))
+            review = ActivityContext(workflow_identity=identity, attempt_id="attempt-1", fencing_token=1, activity_id=str(review_ordinal))
+            outcomes[review_ordinal] = completed_outcome(review, {"decision": "approve"}).SerializeToString()
+            with patch("openai_engine_adapter.review_deadline.time.time", return_value=resume_time):
+                resumed = await leg(2)
+        expected = {"status": "expired", "tool_call_id": "release-demo-1"} if deadline and resume_time >= 1060.0 else invoice
+        self.assertEqual(json.loads(resumed.content), expected)
         model_dispatch.assert_called_once()
         tool_dispatch.assert_called_once()
-        self.assertEqual(client.start_activity.call_count, 6)
-        self.assertEqual(client.report_outcome.call_count, 2)
+        self.assertEqual(client.start_activity.call_count, review_ordinal * 2)
+        self.assertEqual(client.report_outcome.call_count, 3 if deadline else 2)
         settlement.complete_execution.assert_called_once()
-        self.assertEqual(hooks.get_workflow_adapter(), ("openai-engine-review", "3" if managed else "1"))
+        self.assertEqual(hooks.get_workflow_adapter(), ("openai-engine-review", "5" if deadline else "3" if managed else "1"))
         if managed:
             batches = [call.args[0].memory_writes for call in client.ensure_memory_written.call_args_list]
-            self.assertEqual([len(batch) for batch in batches], [2, 1, 2, 1, 0])
-            self.assertEqual(batches[0], batches[2])
-            self.assertEqual(batches[1], batches[3])
+            expected_sizes = [2, 1, 0, 2, 1, 0, 0] if deadline else [2, 1, 2, 1, 0]
+            self.assertEqual([len(batch) for batch in batches], expected_sizes)
+            replay_offset = 3 if deadline else 2
+            self.assertEqual(batches[0], batches[replay_offset])
+            self.assertEqual(batches[1], batches[replay_offset + 1])
             self.assertEqual(len({write.id for batch in batches for write in batch}), 3)
         else:
             client.ensure_memory_written.assert_not_called()

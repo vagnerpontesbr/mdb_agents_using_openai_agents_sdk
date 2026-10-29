@@ -1,0 +1,74 @@
+{
+  "valid": {
+    "execution_id": "17ca3dee-595b-4ed3-9826-fafa29c6a4b4",
+    "count": 12,
+    "events": [
+      {
+        "timestamp": "2026-10-29T16:49:05.673Z",
+        "message": "AER /execute: execution_id=17ca3dee, session_id=phase0-e"
+      },
+      {
+        "timestamp": "2026-10-29T16:49:09.079Z",
+        "message": "TOOL: Step 2 - lookup_invoice"
+      },
+      {
+        "timestamp": "2026-10-29T16:49:09.349Z",
+        "message": "TOOL: Step 2 - lookup_invoice success (182ms)"
+      },
+      {
+        "timestamp": "2026-10-29T16:49:09.602Z",
+        "message": "AER: Execution 17ca3dee... \u2192 SUSPENDED"
+      },
+      {
+        "timestamp": "2026-10-29T16:49:16.874Z",
+        "message": "AER /execute: execution_id=17ca3dee, session_id=phase0-e"
+      },
+      {
+        "timestamp": "2026-10-29T16:49:17.069Z",
+        "message": "TOOL: Step 2 - lookup_invoice"
+      },
+      {
+        "timestamp": "2026-10-29T16:49:08.769Z",
+        "message": "HTTP Request: POST https://api.openai.com/v1/responses \"HTTP/1.1 200 OK\""
+      }
+    ],
+    "collection_scope": "CLI --all, 20-minute window; NDJSON response, no hasMore field.",
+    "interpretation": "Two AER attempts and repeated tool-request log; one provider HTTP success and one tool-success log observed. Request logs also occur during replay; not independent provider billing or remote dispatch counters."
+  },
+  "late": {
+    "execution_id": "84969bc0-720c-42af-82db-602e60f27901",
+    "count": 12,
+    "events": [
+      {
+        "timestamp": "2026-10-29T16:49:30.134Z",
+        "message": "AER /execute: execution_id=84969bc0, session_id=phase0-e"
+      },
+      {
+        "timestamp": "2026-10-29T16:49:32.120Z",
+        "message": "TOOL: Step 2 - lookup_invoice"
+      },
+      {
+        "timestamp": "2026-10-29T16:49:32.379Z",
+        "message": "TOOL: Step 2 - lookup_invoice success (188ms)"
+      },
+      {
+        "timestamp": "2026-10-29T16:49:32.658Z",
+        "message": "AER: Execution 84969bc0... \u2192 SUSPENDED"
+      },
+      {
+        "timestamp": "2026-10-29T16:50:51.342Z",
+        "message": "AER /execute: execution_id=84969bc0, session_id=phase0-e"
+      },
+      {
+        "timestamp": "2026-10-29T16:50:51.536Z",
+        "message": "TOOL: Step 2 - lookup_invoice"
+      },
+      {
+        "timestamp": "2026-10-29T16:49:31.811Z",
+        "message": "HTTP Request: POST https://api.openai.com/v1/responses \"HTTP/1.1 200 OK\""
+      }
+    ],
+    "collection_scope": "CLI --all, 20-minute window; NDJSON response, no hasMore field.",
+    "interpretation": "Two AER attempts and repeated tool-request log; one provider HTTP success and one tool-success log observed. Request logs also occur during replay; not independent provider billing or remote dispatch counters."
+  }
+}

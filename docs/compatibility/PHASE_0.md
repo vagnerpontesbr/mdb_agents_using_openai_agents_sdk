@@ -514,3 +514,9 @@ The user selected requester self-approval and thirty-day conversation/derived-me
 
 
 The user subsequently accepted native expurgo as Engine responsibility and waived further physical deletion/cascade proof. Those historical retention gates no longer block Phase 0; [COMP-005](../tasks/COMP-005-AUTH-RETENTION.md#user-acceptance-of-native-expurgo) retains requester authorization work. This acceptance does not assert a configuration mutation or empirically verified deletion coverage.
+
+
+[Combined memory/review-expiry local contract](../tasks/COMP-003-HOSTED.md#combined-memory-and-review-expiry-local-contract-passes) passes all 56 tests on macOS/Linux with doubled remote transport. Timely approval releases the result, boundary-time approval expires, and replay preserves the same three memory write IDs. Workflow version 5 isolates the added deadline activity. This is not live hosted acceptance or Phase 0 completion.
+
+
+[Hosted combined memory/expiry](../tasks/COMP-003-HOSTED.md#hosted-combined-memory-and-expiry-passes) passes timely approval and late approval after sandbox release, with three stored turns per synthetic session. The prior recall build was restored healthy. This closes the bounded combined projection/expiry/recovery gate, not independent authorization or broader lifecycle acceptance.

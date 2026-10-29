@@ -110,7 +110,13 @@ class OpenAIEngineApp(BaseApp):
         if self.review_action_factory is not None:
             from .review_execution import ReviewExecutionAgent
 
-            hooks.register_workflow_adapter("openai-engine-review", "4" if self.retrieve_memory else "3" if self.managed_memory else ("2" if self.review_ttl_seconds is not None else "1"))
+            if self.managed_memory and self.review_ttl_seconds is not None:
+                # The deadline adds an activity: never replay a no-deadline
+                # execution with this changed activity sequence.
+                version = "6" if self.retrieve_memory else "5"
+            else:
+                version = "4" if self.retrieve_memory else "3" if self.managed_memory else ("2" if self.review_ttl_seconds is not None else "1")
+            hooks.register_workflow_adapter("openai-engine-review", version)
             return ReviewExecutionAgent(agent, self.review_action_factory, ttl_seconds=self.review_ttl_seconds)
         return agent
 

@@ -32,7 +32,7 @@ class OpenAIEngineApp(BaseApp):
     """
 
     def __init__(self, *, name, instructions, llm_id, model_name,
-                 provider_builder, provider_adapter_factory, review_action_factory=None, review_ttl_seconds=None, managed_memory=False):
+                 provider_builder, provider_adapter_factory, review_action_factory=None, review_ttl_seconds=None, managed_memory=False, retrieve_memory=False):
         super().__init__(name)
         self.instructions = instructions
         self.llm_id = llm_id
@@ -43,7 +43,11 @@ class OpenAIEngineApp(BaseApp):
         self._provider = None
         self.review_action_factory = review_action_factory
         self.review_ttl_seconds = review_ttl_seconds
+        if retrieve_memory and not managed_memory:
+            raise ValueError("Memory retrieval requires managed memory")
         self.managed_memory = managed_memory
+        self.retrieve_memory = retrieve_memory
+        self._runtime = None
 
     def tool(self, *, contract: RemoteReadTool):
         def register(function):
@@ -95,13 +99,18 @@ class OpenAIEngineApp(BaseApp):
 
         # Model/tool audit is owned by Engine proxies. Optional graph-node
         # callbacks are not synthesized into replacement execution traces.
+        def memory_context(context, query):
+            from .memory_context import retrieve_context
+            return retrieve_context(self._runtime, context, query)
+
         agent = RuntimeAgent(OpenAIEngineAgent(
             instructions=self.instructions, tools=self.tools(), bindings_factory=bindings,
+            memory_context_builder=memory_context if self.retrieve_memory else None,
         ))
         if self.review_action_factory is not None:
             from .review_execution import ReviewExecutionAgent
 
-            hooks.register_workflow_adapter("openai-engine-review", "3" if self.managed_memory else ("2" if self.review_ttl_seconds is not None else "1"))
+            hooks.register_workflow_adapter("openai-engine-review", "4" if self.retrieve_memory else "3" if self.managed_memory else ("2" if self.review_ttl_seconds is not None else "1"))
             return ReviewExecutionAgent(agent, self.review_action_factory, ttl_seconds=self.review_ttl_seconds)
         return agent
 
@@ -110,6 +119,7 @@ class OpenAIEngineApp(BaseApp):
 
         hooks.register_llm_adapter_factory(self.provider_adapter_factory)
         runtime = TenantRuntime(app_name=self.name, app_version="0.0.1")
+        self._runtime = runtime
         for definition in self.get_tool_definitions():
             metadata = definition.model_dump(exclude={"callable"})
             metadata["is_local"] = False

@@ -25,3 +25,4 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0017](0017-two-cluster-memory-boundary.md) | Separate application and shared Engine memory clusters | Approved by user; runtime validation pending |
 
 | [ADR-0018](0018-engine-feature-precedence.md) | Prefer Engine for overlapping platform features; retain SDK orchestration | Selected by user; integration verification pending |
+| [ADR-0019](0019-requester-approval-memory-retention.md) | Requester self-approval and thirty-day memory retention | Selected by user; enforcement compatibility pending |

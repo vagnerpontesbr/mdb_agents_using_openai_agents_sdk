@@ -1,0 +1,429 @@
+{
+  "recorded_at": "2026-10-29T14:39:23.295Z",
+  "status": "passed_bounded_post_resume_storage_audit",
+  "server": "mongodb_clusterdemotelco",
+  "connectionId": "preconfigured",
+  "database": "mdb_memory_67b385a7976edf15ecc62e06",
+  "collection": "memory_short_term",
+  "new_writes": 0,
+  "scope": "Three existing synthetic hosted executions after review/resume; metadata-only reads.",
+  "schema_validation": "Scoped $objectToArray/$type inspection of the exact synthetic sessions; no content or embedding values returned.",
+  "index_evidence": {
+    "classic_count": 10,
+    "search_count": 2,
+    "relevant": [
+      "st_session_time",
+      "st_turn_sequence_ordering",
+      "st_idempotency"
+    ],
+    "search_status": "Both indexes READY and queryable; no search execution in this audit.",
+    "unique_constraint": "Index tool omits unique/TTL options; uniqueness enforcement and TTL configuration not inferred."
+  },
+  "retention": "All nine expected turns remain stored and are marked promoted. Prior lifecycle evidence records asynchronous snapshot/extraction. Current retention policy and historical deletions were not established.",
+  "timeout": "MCP aggregate exposes no maxTimeMS argument; the planned 10000 ms server deadline was not applied. Exact indexed session filters and responseBytesLimit=3000 used.",
+  "cases": [
+    {
+      "case": "projection",
+      "filter": {
+        "org_id": "663e3089acf80f05b63effcf",
+        "project_id": "67b385a7976edf15ecc62e06",
+        "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+        "session_id": "phase0-session-98751e7966484cf3a7703be3086aa820"
+      },
+      "pipeline": [
+        {
+          "$match": {
+            "org_id": "663e3089acf80f05b63effcf",
+            "project_id": "67b385a7976edf15ecc62e06",
+            "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+            "session_id": "phase0-session-98751e7966484cf3a7703be3086aa820"
+          }
+        },
+        {
+          "$group": {
+            "_id": null,
+            "stored_count": {
+              "$sum": 1
+            },
+            "roles": {
+              "$push": "$role"
+            },
+            "turn_sequences": {
+              "$push": "$turn_seq"
+            },
+            "unique_sequences": {
+              "$addToSet": "$turn_seq"
+            },
+            "unique_hashes": {
+              "$addToSet": "$idempotency_hash"
+            },
+            "missing_hashes": {
+              "$sum": {
+                "$cond": [
+                  {
+                    "$or": [
+                      {
+                        "$eq": [
+                          {
+                            "$ifNull": [
+                              "$idempotency_hash",
+                              ""
+                            ]
+                          },
+                          ""
+                        ]
+                      },
+                      {
+                        "$ne": [
+                          {
+                            "$type": "$idempotency_hash"
+                          },
+                          "string"
+                        ]
+                      }
+                    ]
+                  },
+                  1,
+                  0
+                ]
+              }
+            },
+            "promoted_count": {
+              "$sum": {
+                "$cond": [
+                  "$promoted",
+                  1,
+                  0
+                ]
+              }
+            },
+            "first_timestamp": {
+              "$min": "$timestamp"
+            },
+            "last_timestamp": {
+              "$max": "$timestamp"
+            }
+          }
+        },
+        {
+          "$project": {
+            "_id": 0,
+            "stored_count": 1,
+            "roles": 1,
+            "turn_sequences": 1,
+            "unique_sequence_count": {
+              "$size": "$unique_sequences"
+            },
+            "unique_hash_count": {
+              "$size": "$unique_hashes"
+            },
+            "missing_hashes": 1,
+            "promoted_count": 1,
+            "first_timestamp": 1,
+            "last_timestamp": 1
+          }
+        }
+      ],
+      "result": {
+        "documents": [
+          {
+            "stored_count": 3,
+            "roles": [
+              "user",
+              "assistant",
+              "tool"
+            ],
+            "turn_sequences": [
+              1,
+              2,
+              3
+            ],
+            "missing_hashes": 0,
+            "promoted_count": 3,
+            "first_timestamp": {
+              "$date": "2026-10-29T12:59:22.941Z"
+            },
+            "last_timestamp": {
+              "$date": "2026-10-29T12:59:23.399Z"
+            },
+            "unique_sequence_count": 3,
+            "unique_hash_count": 3
+          }
+        ],
+        "count": 1,
+        "appliedLimits": []
+      }
+    },
+    {
+      "case": "recall_positive",
+      "filter": {
+        "org_id": "663e3089acf80f05b63effcf",
+        "project_id": "67b385a7976edf15ecc62e06",
+        "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+        "session_id": "phase0-recall-positive-20261029"
+      },
+      "pipeline": [
+        {
+          "$match": {
+            "org_id": "663e3089acf80f05b63effcf",
+            "project_id": "67b385a7976edf15ecc62e06",
+            "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+            "session_id": "phase0-recall-positive-20261029"
+          }
+        },
+        {
+          "$group": {
+            "_id": null,
+            "stored_count": {
+              "$sum": 1
+            },
+            "roles": {
+              "$push": "$role"
+            },
+            "turn_sequences": {
+              "$push": "$turn_seq"
+            },
+            "unique_sequences": {
+              "$addToSet": "$turn_seq"
+            },
+            "unique_hashes": {
+              "$addToSet": "$idempotency_hash"
+            },
+            "missing_hashes": {
+              "$sum": {
+                "$cond": [
+                  {
+                    "$or": [
+                      {
+                        "$eq": [
+                          {
+                            "$ifNull": [
+                              "$idempotency_hash",
+                              ""
+                            ]
+                          },
+                          ""
+                        ]
+                      },
+                      {
+                        "$ne": [
+                          {
+                            "$type": "$idempotency_hash"
+                          },
+                          "string"
+                        ]
+                      }
+                    ]
+                  },
+                  1,
+                  0
+                ]
+              }
+            },
+            "promoted_count": {
+              "$sum": {
+                "$cond": [
+                  "$promoted",
+                  1,
+                  0
+                ]
+              }
+            },
+            "first_timestamp": {
+              "$min": "$timestamp"
+            },
+            "last_timestamp": {
+              "$max": "$timestamp"
+            }
+          }
+        },
+        {
+          "$project": {
+            "_id": 0,
+            "stored_count": 1,
+            "roles": 1,
+            "turn_sequences": 1,
+            "unique_sequence_count": {
+              "$size": "$unique_sequences"
+            },
+            "unique_hash_count": {
+              "$size": "$unique_hashes"
+            },
+            "missing_hashes": 1,
+            "promoted_count": 1,
+            "first_timestamp": 1,
+            "last_timestamp": 1
+          }
+        }
+      ],
+      "result": {
+        "documents": [
+          {
+            "stored_count": 3,
+            "roles": [
+              "user",
+              "assistant",
+              "tool"
+            ],
+            "turn_sequences": [
+              1,
+              2,
+              3
+            ],
+            "missing_hashes": 0,
+            "promoted_count": 3,
+            "first_timestamp": {
+              "$date": "2026-10-29T13:48:10.029Z"
+            },
+            "last_timestamp": {
+              "$date": "2026-10-29T13:48:10.483Z"
+            },
+            "unique_sequence_count": 3,
+            "unique_hash_count": 3
+          }
+        ],
+        "count": 1,
+        "appliedLimits": []
+      }
+    },
+    {
+      "case": "recall_negative",
+      "filter": {
+        "org_id": "663e3089acf80f05b63effcf",
+        "project_id": "67b385a7976edf15ecc62e06",
+        "user_id": "phase0-recall-other-98751e7966484cf3a7703be3086aa820",
+        "session_id": "phase0-recall-negative-20261029"
+      },
+      "pipeline": [
+        {
+          "$match": {
+            "org_id": "663e3089acf80f05b63effcf",
+            "project_id": "67b385a7976edf15ecc62e06",
+            "user_id": "phase0-recall-other-98751e7966484cf3a7703be3086aa820",
+            "session_id": "phase0-recall-negative-20261029"
+          }
+        },
+        {
+          "$group": {
+            "_id": null,
+            "stored_count": {
+              "$sum": 1
+            },
+            "roles": {
+              "$push": "$role"
+            },
+            "turn_sequences": {
+              "$push": "$turn_seq"
+            },
+            "unique_sequences": {
+              "$addToSet": "$turn_seq"
+            },
+            "unique_hashes": {
+              "$addToSet": "$idempotency_hash"
+            },
+            "missing_hashes": {
+              "$sum": {
+                "$cond": [
+                  {
+                    "$or": [
+                      {
+                        "$eq": [
+                          {
+                            "$ifNull": [
+                              "$idempotency_hash",
+                              ""
+                            ]
+                          },
+                          ""
+                        ]
+                      },
+                      {
+                        "$ne": [
+                          {
+                            "$type": "$idempotency_hash"
+                          },
+                          "string"
+                        ]
+                      }
+                    ]
+                  },
+                  1,
+                  0
+                ]
+              }
+            },
+            "promoted_count": {
+              "$sum": {
+                "$cond": [
+                  "$promoted",
+                  1,
+                  0
+                ]
+              }
+            },
+            "first_timestamp": {
+              "$min": "$timestamp"
+            },
+            "last_timestamp": {
+              "$max": "$timestamp"
+            }
+          }
+        },
+        {
+          "$project": {
+            "_id": 0,
+            "stored_count": 1,
+            "roles": 1,
+            "turn_sequences": 1,
+            "unique_sequence_count": {
+              "$size": "$unique_sequences"
+            },
+            "unique_hash_count": {
+              "$size": "$unique_hashes"
+            },
+            "missing_hashes": 1,
+            "promoted_count": 1,
+            "first_timestamp": 1,
+            "last_timestamp": 1
+          }
+        }
+      ],
+      "result": {
+        "documents": [
+          {
+            "stored_count": 3,
+            "roles": [
+              "user",
+              "assistant",
+              "tool"
+            ],
+            "turn_sequences": [
+              1,
+              2,
+              3
+            ],
+            "missing_hashes": 0,
+            "promoted_count": 3,
+            "first_timestamp": {
+              "$date": "2026-10-29T13:48:32.198Z"
+            },
+            "last_timestamp": {
+              "$date": "2026-10-29T13:48:32.595Z"
+            },
+            "unique_sequence_count": 3,
+            "unique_hash_count": 3
+          }
+        ],
+        "count": 1,
+        "appliedLimits": []
+      }
+    }
+  ],
+  "limitations": [
+    "No concurrent-writer or crash-during-write guarantee.",
+    "No independent tenant/reviewer authorization proof.",
+    "No chronological history reconstruction or combined expiry/memory acceptance.",
+    "No deletion/retention policy validation.",
+    "Phase 0 remains incomplete."
+  ]
+}

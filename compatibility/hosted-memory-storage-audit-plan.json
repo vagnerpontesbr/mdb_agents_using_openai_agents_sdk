@@ -1,0 +1,160 @@
+{
+  "status": "executed_bounded_audit_passed",
+  "evidence": "hosted-memory-storage-evidence.json",
+  "cluster": "ClusterDemoTelco",
+  "database": "mdb_memory_67b385a7976edf15ecc62e06",
+  "collection": "memory_short_term",
+  "read_only": true,
+  "max_time_ms": 10000,
+  "prerequisites": [
+    "Verify the connection targets ClusterDemoTelco.",
+    "Inspect collection indexes and schema before execution; historical field names are not current schema proof.",
+    "Check retention/promotion behavior before interpreting missing records."
+  ],
+  "cases": [
+    {
+      "name": "projection",
+      "filter": {
+        "org_id": "663e3089acf80f05b63effcf",
+        "project_id": "67b385a7976edf15ecc62e06",
+        "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+        "session_id": "phase0-session-98751e7966484cf3a7703be3086aa820"
+      },
+      "pipeline": [
+        {
+          "$match": {
+            "org_id": "663e3089acf80f05b63effcf",
+            "project_id": "67b385a7976edf15ecc62e06",
+            "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+            "session_id": "phase0-session-98751e7966484cf3a7703be3086aa820"
+          }
+        },
+        {
+          "$group": {
+            "_id": null,
+            "stored_count": {
+              "$sum": 1
+            },
+            "roles": {
+              "$push": "$role"
+            },
+            "turn_sequences": {
+              "$push": "$turn_seq"
+            },
+            "idempotency_hashes": {
+              "$push": "$idempotency_hash"
+            }
+          }
+        },
+        {
+          "$project": {
+            "_id": 0,
+            "stored_count": 1,
+            "roles": 1,
+            "turn_sequences": 1,
+            "idempotency_hashes": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "recall_positive",
+      "filter": {
+        "org_id": "663e3089acf80f05b63effcf",
+        "project_id": "67b385a7976edf15ecc62e06",
+        "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+        "session_id": "phase0-recall-positive-20261029"
+      },
+      "pipeline": [
+        {
+          "$match": {
+            "org_id": "663e3089acf80f05b63effcf",
+            "project_id": "67b385a7976edf15ecc62e06",
+            "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+            "session_id": "phase0-recall-positive-20261029"
+          }
+        },
+        {
+          "$group": {
+            "_id": null,
+            "stored_count": {
+              "$sum": 1
+            },
+            "roles": {
+              "$push": "$role"
+            },
+            "turn_sequences": {
+              "$push": "$turn_seq"
+            },
+            "idempotency_hashes": {
+              "$push": "$idempotency_hash"
+            }
+          }
+        },
+        {
+          "$project": {
+            "_id": 0,
+            "stored_count": 1,
+            "roles": 1,
+            "turn_sequences": 1,
+            "idempotency_hashes": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "recall_negative",
+      "filter": {
+        "org_id": "663e3089acf80f05b63effcf",
+        "project_id": "67b385a7976edf15ecc62e06",
+        "user_id": "phase0-recall-other-98751e7966484cf3a7703be3086aa820",
+        "session_id": "phase0-recall-negative-20261029"
+      },
+      "pipeline": [
+        {
+          "$match": {
+            "org_id": "663e3089acf80f05b63effcf",
+            "project_id": "67b385a7976edf15ecc62e06",
+            "user_id": "phase0-recall-other-98751e7966484cf3a7703be3086aa820",
+            "session_id": "phase0-recall-negative-20261029"
+          }
+        },
+        {
+          "$group": {
+            "_id": null,
+            "stored_count": {
+              "$sum": 1
+            },
+            "roles": {
+              "$push": "$role"
+            },
+            "turn_sequences": {
+              "$push": "$turn_seq"
+            },
+            "idempotency_hashes": {
+              "$push": "$idempotency_hash"
+            }
+          }
+        },
+        {
+          "$project": {
+            "_id": 0,
+            "stored_count": 1,
+            "roles": 1,
+            "turn_sequences": 1,
+            "idempotency_hashes": 1
+          }
+        }
+      ]
+    }
+  ],
+  "acceptance": [
+    "Each completed synthetic execution should retain the three projected turns if no retention has removed them. Confirm actual Engine projection roles before asserting a role histogram.",
+    "No repeated nonempty idempotency_hash or turn_seq within each exact user/session scope.",
+    "Missing records/keys or unexpected counts are inconclusive or failures requiring diagnosis, never proof of deduplication."
+  ],
+  "limitations": [
+    "Post-resume counts establish only the observed executions, not concurrent-writer or crash-boundary guarantees.",
+    "Do not retrieve content, embeddings, unrelated sessions or credentials."
+  ]
+}

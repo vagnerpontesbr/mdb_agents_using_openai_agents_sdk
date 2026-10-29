@@ -10,6 +10,8 @@ Use Agent Engine whenever its capabilities overlap with OpenAI Agents SDK. [ADR-
 
 ## Requested capabilities
 
+The user-selected requester approval and thirty-day conversation/memory retention rules are defined in [ADR-0019](adr/0019-requester-approval-memory-retention.md). Policy selection does not establish remote enforcement; [COMP-005](tasks/COMP-005-AUTH-RETENTION.md) tracks the integration gate.
+
 - Target the latest stable Python release; verify compatibility rather than silently selecting an older release.
 - Target MongoDB 9 and validate required deployment/search capabilities.
 - One customer-service supervisor and three specialists: financial, technical, and sales, including upsell and cross-sell.

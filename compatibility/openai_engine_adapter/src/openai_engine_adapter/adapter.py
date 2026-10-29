@@ -201,12 +201,14 @@ class OpenAIEngineAgent:
     def __init__(
         self, *, instructions: str, tools: tuple[RemoteReadTool, ...],
         bindings_factory: Callable[[RequestContext, list[LLMToolSchema]], EngineBindings],
+        memory_context_builder=None,
     ):
         self.instructions = instructions
         self.registrations = {tool.name: tool for tool in tools}
         if len(self.registrations) != len(tools):
             raise ValueError("Duplicate tool names")
         self.bindings_factory = bindings_factory
+        self.memory_context_builder = memory_context_builder
 
     def execute(self, ctx: RequestContext, input: AgentInput) -> AgentExecutionResult:
         context = ctx.model_copy(deep=True)
@@ -233,6 +235,16 @@ class OpenAIEngineAgent:
             bindings = self.bindings_factory(
                 context, [tool.schema() for tool in self.registrations.values()],
             )
+            model_input = text
+            instructions = self.instructions
+            if self.memory_context_builder is not None:
+                from .memory_context import MEMORY_RULES
+                historical = await asyncio.to_thread(self.memory_context_builder, context, text)
+                # Keep retrieved text in the user-data channel, never interpolate
+                # it into the agent's privileged instructions.
+                model_input = json.dumps({"current_request": text, "untrusted_historical_memory": historical},
+                                         ensure_ascii=False)
+                instructions += "\n" + MEMORY_RULES
             sdk_tools = []
             for registration in self.registrations.values():
                 async def run_tool(tool_context, arguments, registration=registration):
@@ -254,13 +266,13 @@ class OpenAIEngineAgent:
                     on_invoke_tool=run_tool, strict_json_schema=False,
                 ))
             agent = Agent(
-                name="EngineReadAdapter", instructions=self.instructions,
+                name="EngineReadAdapter", instructions=instructions,
                 model=EngineModel(bindings, self.registrations), tools=sdk_tools,
                 model_settings=ModelSettings(parallel_tool_calls=False),
                 tool_use_behavior="stop_on_first_tool",
             )
             result = await Runner.run(
-                agent, text, context=context, max_turns=1,
+                agent, model_input, context=context, max_turns=1,
                 run_config=RunConfig(tracing_disabled=True),
             )
             return AgentOutput(response={"output": result.final_output})

@@ -1,0 +1,44 @@
+{
+  "status": "passed_microphone_voice_chat",
+  "calls": [
+    {
+      "execution_id": "399ab32d-dda7-42db-91b5-90355eadfa51",
+      "review_id": "6ae3a8d67e90ef4c0ed4000d",
+      "completed": true
+    },
+    {
+      "execution_id": "84ee424c-a0fb-4752-b468-3af17575c0d8",
+      "review_id": "6ae3a8de15276e2e5d5a4323",
+      "completed": true
+    }
+  ],
+  "voice_attempts": 2,
+  "session_id": "phase0-browser-voice-fbcfc6f0a5a2",
+  "scope": "User-operated microphone and synthetic phrase",
+  "limitations": [
+    "Automatic approval of exact synthetic fixture by one CLI caller.",
+    "Browser playback events do not prove human listening.",
+    "Browser cancellation does not cancel accepted remote work.",
+    "Both channels recall a previously stored marker."
+  ],
+  "recorded_at": "2026-10-29T20:13:50.060597+00:00",
+  "input_rejections": [
+    {
+      "reason": "no_speech",
+      "missing_words": []
+    }
+  ],
+  "lifecycle": [
+    "turn_started",
+    "turn_ended",
+    "session_ended"
+  ],
+  "input_pcm_bytes": 446400,
+  "output_pcm_bytes": 372000,
+  "browser_reported": {
+    "codec": "audio/webm;codecs=opus",
+    "encoded_bytes": 150026,
+    "playback_ended": true
+  },
+  "human_reported_intelligible": true
+}

@@ -14,6 +14,18 @@ Use email/password login and exactly `user`/`admin` roles. Only admins register 
 
 ## Requested capabilities
 
+Voice demo acceptance is limited to a quiet environment, with bounded manual
+retry for unrecognized speech, under [ADR-0023](adr/0023-quiet-environment-demo-voice.md).
+Reliable recognition in noisy environments is outside the current demo scope.
+
+The local demo retains the operator's private Engine CLI login in its backend
+under [ADR-0022](adr/0022-demo-private-engine-cli-identity.md). This accepted Engine
+credential exception does not waive minimum application MongoDB permissions.
+
+Demo continuity is limited to the validated Engine semantic/episodic memory path
+under [ADR-0021](adr/0021-demo-semantic-episodic-continuity.md). Complete chronological
+SDK history restoration is outside demo scope and does not block Phase 0.
+
 The user-selected requester approval and thirty-day conversation/memory retention rules are defined in [ADR-0019](adr/0019-requester-approval-memory-retention.md). Policy selection does not establish remote enforcement; [COMP-005](tasks/COMP-005-AUTH-RETENTION.md) tracks the integration gate.
 
 - Target the latest stable Python release; verify compatibility rather than silently selecting an older release.

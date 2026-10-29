@@ -77,8 +77,94 @@ A first metadata read returned 401 from the expired CLI access token. The docume
 
 [Real native approval evidence](../../compatibility/demo-auth-engine-evidence.json) passed execution `006266d5-8dbe-4dfd-bc1b-f6283d5c5388`: a regular application user initiated the invoice, a separately logged-in application admin received 403 for reading/approving that user's pending action, a spoofed requester field returned 400, and a changed action digest returned 409. A fresh Engine read returned exactly the same pending projection and generation after all denials. The owner then approved the original execution successfully; repeated approval returned 409. The disposable requester account and its app sessions were removed; Engine-owned synthetic memory remains managed by Engine.
 
-The [reproducible diagnostic](../../scripts/check_demo_engine_review.py) performs these controls through the app HTTP boundary and uses Atlas only for its own generated account cleanup. Four new local admission tests independently verify no resume call on different-user/stale-content/scope/generation/session-revocation failures. All fifteen identity/session/admission tests pass in the frozen runtime and with the standard-library test invocation now included in repository CI. The committed/published CI result remains unverified until the user commits/pushes.
+The [reproducible diagnostic](../../scripts/check_demo_engine_review.py) performs these controls through the app HTTP boundary and uses Atlas only for its own generated account cleanup. Four new local admission tests independently verify no resume call on different-user/stale-content/scope/generation/session-revocation failures. All fifteen identity/session/admission tests pass in the frozen runtime and with the standard-library test invocation now included in repository CI. Commit `a17bb397c5ad172e7b005a78d60712b4c4f7312f` was subsequently pushed and both remote CI runs passed; see the [current checkpoint](../compatibility/PHASE_0.md#current-bounded-checkpoint-2026-10-29).
 
-This closes authenticated requester self-approval for the tested local-demo access path, superseding the missing-application-identity blocker. It does not add a global requester policy to Engine itself, prove concurrent review races or every native review entrypoint, solve minimum backend credentials, or establish production HTTPS deployment. Full transcript restoration remains a separate task.
+This closes authenticated requester self-approval for the tested local-demo access path, superseding the missing-application-identity blocker. It does not add a global requester policy to Engine itself, prove concurrent review races or every native review entrypoint, solve minimum backend credentials, or establish production HTTPS deployment. Full transcript restoration is outside demo scope under [ADR-0021](../adr/0021-demo-semantic-episodic-continuity.md).
 
 Chrome also completed an additional invoice request and self-approval as the initial administrator, displaying the native pending action and the final synthetic invoice. The browser was logged out after validation; the local demo server remains available at the address delivered to the user. No commit/push or Engine redeployment was performed.
+
+## Runtime credential decision accepted after memory scope acceptance
+
+Official documentation was queried again on 2026-10-29. The
+[service-account guide](https://www.mongodb.com/docs/agentengine/api-keys-service-accounts/)
+requires `PROJECT_OWNER` for project-scoped invocation; `PROJECT_READ_ONLY` cannot
+invoke. The [public API](https://www.mongodb.com/docs/api/doc/agentengine)
+marks new project API-key creation unsupported (HTTP 410); existing keys still
+work. Its invocation schema permits human/API-key personalization, while service
+accounts always use their own identity and cannot act as another user.
+
+Consequently, creating a new service account is not an equivalent replacement
+for the current tested per-user CLI delegation. It also does not solve narrowly
+scoped invocation privileges. No new key, service account or permission was created.
+
+The user accepted [ADR-0022](../adr/0022-demo-private-engine-cli-identity.md), retaining the existing private
+human CLI login in the loopback backend, explicitly accepting the lack of a
+least-privilege Engine runtime identity for this demo only. App users continue
+using email/password, receive no Engine credential, and remain subject to the
+tested requester-only admission. This option retains the need for operator login
+and token refresh and is not unattended deployment acceptance.
+
+The Engine runtime credential gate is therefore accepted as a demo exception;
+minimum application MongoDB permissions, microphone/listening and outstanding
+fault tests remain required.
+
+## Application database permission follow-up
+
+The Atlas CLI recognizes the local operator login outside the sandbox, but an
+actual `atlas projects list --output json` request returned `session expired` on
+2026-10-29. Recognizing a cached account does not prove current API access.
+Renewal requires `atlas auth login`; this is separate from the accepted Engine
+CLI login. No Atlas role, database user or connection configuration changed.
+
+The current `MongoUserStore` uses only these application collections. Prepare a
+custom role scoped to them, with the database user restricted to the OpenAI-SDK
+cluster; verify the actual role and allowed/denied operations after login renewal:
+
+| Collection in `telecom_identity` | Operations required by the current demo |
+| --- | --- |
+| `users` | `FIND`, `INSERT`, `CREATE_INDEX` |
+| `sessions` | `FIND`, `INSERT`, `REMOVE`, `CREATE_INDEX` |
+| `login_attempts` | `FIND`, `INSERT`, `UPDATE`, `CREATE_INDEX` |
+
+`CREATE_INDEX` is currently needed because server startup calls `provision()`;
+it is not a grant for other databases. The collections already exist. Do not
+grant diagnostic account-cleanup privileges to the runtime user or modify the
+existing broad diagnostic identity. A fresh restricted identity and private
+configuration update must be tested before describing this gate as complete.
+
+
+## Restricted application identity passes
+
+After the user renewed Atlas CLI login, project and cluster discovery succeeded.
+Created custom role `telecomDemoIdentityRuntime` with exactly the collection
+privileges above, and a separate `telecom_demo_identity_runtime` database user
+scoped only to `OpenAI-SDK`. The Atlas create response confirmed both the exact
+role and cluster scope. Existing diagnostic identities and shared Engine settings
+were not modified.
+
+[Live evidence](../../compatibility/demo-database-permissions-evidence.json) records
+12 passing controls using the restricted credential: existing-index provisioning,
+login/admin registration/session read, throttle insert/update, logout revocation,
+denied user updates/deletes, denied reads/writes in another collection and another
+database, preservation of the user role after denial, and authentication denial
+(code 18) on ClusterDemoTelco. All disposable test users/sessions were removed
+with the separate diagnostic identity. The synthetic login-throttle record expires
+at its native minute boundary. These database-role checks remain distinct from
+the previously tested application requester and tenant/ACL controls.
+
+The private `.env` now uses the restricted `APP_MONGODB_URI`; other connection
+settings were preserved. The loopback demo restarted successfully at
+`http://127.0.0.1:52774` with the new identity. No password or URI was logged or
+versioned. The old server stopped with KeyboardInterrupt during client shutdown;
+this is not a clean-shutdown proof. No Engine deployment changed.
+
+Reproduce with the runtime URI as `APP_MONGODB_URI` and the separate application
+cluster diagnostic cleanup URI as `MONGODB_URI`, both injected privately:
+
+```sh
+uv run --project compatibility/agent-runtime --frozen --no-sync --env-file .env python scripts/check_demo_database_permissions.py --allow-live --output compatibility/demo-database-permissions-evidence.json
+```
+
+Minimum database privileges are validated for this bounded identity module, not
+future financial, ingestion or knowledge services. Those require their own scoped
+roles as implemented. The current Phase 0 database permission gate is closed.

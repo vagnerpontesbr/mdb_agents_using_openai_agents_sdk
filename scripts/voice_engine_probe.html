@@ -7,41 +7,69 @@ button{font:inherit;background:#00684a;color:white;padding:12px 18px;border:0;bo
 button:disabled{opacity:.45}pre{white-space:pre-wrap;background:white;padding:20px;border:1px solid #ccd9d0}
 </style>
 <h1>Synthetic browser voice compatibility</h1>
-<p>Tests generated speech through browser recording, speech recognition, Agent Engine, and speech output. No microphone is used. The exact synthetic invoice is automatically approved by the test caller.</p>
+<p id="intro">Tests generated speech through browser recording, speech recognition, Agent Engine, and speech output. No microphone is used. The exact synthetic invoice is automatically approved by the test caller.</p>
+<button id="finish" hidden>Finish recording</button><button id="heard" hidden>I heard the complete response clearly</button><button id="unclear" hidden>Response was unclear</button>
 <button id="run">Run synthetic voice and chat</button><button id="play" disabled>Play approved response</button><button id="stop">Stop local playback</button>
 <p id="status" role="status">Ready. This test makes provider requests and writes synthetic Engine memory.</p>
 <pre id="details">Pending</pre>
 <p>Playback events verify browser behavior, not human listening. Closing this page or stopping playback does not cancel work already accepted by Engine.</p>
 <script>
+const microphoneMode=__MICROPHONE_MODE__;
+const finish=document.querySelector('#finish'),heard=document.querySelector('#heard'),unclear=document.querySelector('#unclear');
 const statusEl=document.querySelector('#status'),details=document.querySelector('#details');
 const run=document.querySelector('#run'),play=document.querySelector('#play');
-let audio,codec,encodedBytes,context;
+let audio,codec,encodedBytes,context,captureStream;
+if(microphoneMode){
+ document.title='Microphone voice compatibility';document.querySelector('h1').textContent=document.title;
+ document.querySelector('#intro').textContent='Use a quiet environment. Click to allow microphone access, then say: “Read invoice demo one and recall my synthetic verification marker.” Click Finish recording. Audio is sent to OpenAI for transcription; the text is processed by Engine. No local recording is saved. Use only this synthetic phrase. The exact synthetic invoice is automatically approved by the test caller.';
+ run.textContent='Start microphone test';
+}
+window.addEventListener('pagehide',()=>captureStream?.getTracks().forEach(t=>t.stop()));
 async function post(path,body=new Uint8Array()){
  const response=await fetch(path,{method:'POST',headers:{'X-Probe-Nonce':'__PROBE_NONCE__'},body});
- if(!response.ok)throw Error(`Probe failed at ${path}: HTTP ${response.status}`);
+ if(!response.ok){
+  if(response.status===422){
+   const problem=await response.json();
+   const missing=problem.missing_words?.length?' Not recognized: '+problem.missing_words.join(', ')+'.':'';
+   const error=Error(problem.message+missing+(problem.retryable?' Click Start to try again.':' Test stopped; ask for diagnostic review.'));
+   error.retryable=problem.retryable;throw error;
+  }
+  throw Error(`Probe failed at ${path}: HTTP ${response.status}`);
+ }
  return response;
 }
 run.onclick=async()=>{
  run.disabled=true;
  try{
   context=new AudioContext();await context.resume();
-  statusEl.textContent='Generating synthetic input…';
-  const response=await post('/fixture');
-  const fixture=await context.decodeAudioData(await response.arrayBuffer());
-  if(!(fixture.duration>0 && fixture.duration<=20))throw Error('Invalid fixture duration');
   codec=['audio/webm;codecs=opus','audio/webm','audio/mp4'].find(x=>MediaRecorder.isTypeSupported(x));
   if(!codec)throw Error('No supported MediaRecorder codec');
-  statusEl.textContent='Recording generated speech through the browser codec…';
-  const destination=context.createMediaStreamDestination();
-  const source=context.createBufferSource();source.buffer=fixture;source.connect(destination);
-  const recorder=new MediaRecorder(destination.stream,{mimeType:codec});const chunks=[];
+  let source,destination,fixture;
+  if(microphoneMode){
+   captureStream=await navigator.mediaDevices.getUserMedia({audio:true});
+   await post('/fixture');
+  }else{
+   statusEl.textContent='Generating synthetic input…';
+   const response=await post('/fixture');
+   fixture=await context.decodeAudioData(await response.arrayBuffer());
+   if(!(fixture.duration>0 && fixture.duration<=20))throw Error('Invalid fixture duration');
+   destination=context.createMediaStreamDestination();captureStream=destination.stream;
+   source=context.createBufferSource();source.buffer=fixture;source.connect(destination);
+  }
+  const recorder=new MediaRecorder(captureStream,{mimeType:codec});const chunks=[];
   const recording=new Promise((resolve,reject)=>{
    recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
    recorder.onerror=()=>reject(Error('Recorder failed'));
    recorder.onstop=()=>resolve(new Blob(chunks,{type:codec}));
   });
-  recorder.start();source.onended=()=>recorder.stop();source.start();
-  const blob=await recording;destination.stream.getTracks().forEach(t=>t.stop());source.disconnect();
+  recorder.start();let timer;
+  if(microphoneMode){
+   statusEl.textContent='Recording: read the synthetic phrase, then click Finish recording (15-second maximum).';
+   finish.hidden=false;finish.onclick=()=>{if(recorder.state==='recording')recorder.stop()};
+   timer=setTimeout(()=>finish.onclick(),15000);
+  }else{source.onended=()=>recorder.stop();source.start();}
+  const blob=await recording;clearTimeout(timer);finish.hidden=true;
+  captureStream.getTracks().forEach(t=>t.stop());source?.disconnect();
   encodedBytes=blob.size;if(!encodedBytes || encodedBytes>960000)throw Error('Invalid encoded audio size');
   const decoded=await context.decodeAudioData(await blob.arrayBuffer());
   if(!(decoded.duration>0 && decoded.duration<=20))throw Error('Invalid decoded duration');
@@ -59,16 +87,18 @@ run.onclick=async()=>{
   details.textContent=JSON.stringify({codec,encoded_bytes:encodedBytes,voice:voice.answer,chat:chat.answer},null,2);
   play.disabled=false;statusEl.textContent='Voice and chat passed. Play the approved response to verify browser playback.';
   await context.close();
- }catch(error){statusEl.textContent=error.message; if(context && context.state!=='closed')await context.close();}
+ }catch(error){captureStream?.getTracks().forEach(t=>t.stop());finish.hidden=true;statusEl.textContent=error.message;run.disabled=!error.retryable; if(context && context.state!=='closed')await context.close();}
 };
 play.onclick=async()=>{
  play.disabled=true;
  audio.onended=async()=>{
-  try{await post('/playback',JSON.stringify({codec,encoded_bytes:encodedBytes,playback_ended:true}));statusEl.textContent='PASS: synthetic browser codec, Engine voice/chat continuity, and playback completed.';}
+  try{await post('/playback',JSON.stringify({codec,encoded_bytes:encodedBytes,playback_ended:true}));statusEl.textContent=microphoneMode?'Playback ended. Please report whether you heard the complete response clearly.':'PASS: synthetic browser codec, Engine voice/chat continuity, and playback completed.';heard.hidden=unclear.hidden=!microphoneMode;}
   catch(error){statusEl.textContent=error.message;}
  };
  try{await audio.play();statusEl.textContent='Playing approved synthetic response…';}
  catch(error){statusEl.textContent=error.message;play.disabled=false;}
 };
+async function listening(intelligible){try{const result=await (await post('/listening',JSON.stringify({intelligible}))).json();statusEl.textContent=result.status;heard.disabled=unclear.disabled=true;}catch(error){statusEl.textContent=error.message}}
+heard.onclick=()=>listening(true);unclear.onclick=()=>listening(false);
 document.querySelector('#stop').onclick=()=>{if(audio){audio.pause();audio.currentTime=0;play.disabled=false;statusEl.textContent='Local playback stopped. Remote work is not cancelled.';}};
 </script></html>

@@ -1,6 +1,6 @@
 # COMP-003: chronological Engine history diagnostic
 
-Status: **blocked for SDK restoration**; bounded read-only diagnosis completed on 2026-10-29.
+Status: **outside demo scope by user decision** under [ADR-0021](../adr/0021-demo-semantic-episodic-continuity.md); SDK restoration remains unsupported, but no longer blocks Phase 0. Bounded read-only diagnosis, including execution logs, completed on 2026-10-29. The acceptance requirements below are historical diagnostic criteria, not current demo gates.
 
 ## Acceptance and evidence
 
@@ -122,3 +122,42 @@ available, an AERQueryPlugin can read it and a bounded translator can be validat
 Adding a parallel writer or guessing result IDs would violate the architecture
 and cannot repair this compatibility gap. No production history helper was
 introduced because neither tested public read path meets that contract.
+
+## Structured execution-log follow-up
+
+The official public OpenAPI also documents
+`GET /api/v1/projects/{id}/execution-logs` under **Observability**, scoped by
+`session_id` and `workspace_id`, with an optional opaque `after` cursor.
+This source was read alongside the authoritative execution record for the
+completed synthetic demo-auth execution
+`006266d5-8dbe-4dfd-bc1b-f6283d5c5388`, session
+`demo-invoice-ce2182a37dc342189044daf5d78c8a2f` in the workspace above.
+
+The live response contained five logs and `has_more=false`: one memory row,
+LLM start/success at step 1, and tool start/success at step 2. Structural
+comparisons passed for all of the following:
+
+- The LLM call ID matched both tool-log call IDs.
+- The LLM tool name matched both tool-log names.
+- The LLM arguments matched the tool-start inputs.
+- All LLM/tool rows matched the execution's organization, project, workspace,
+  session, execution and user scope.
+- The completed execution result and tool output were equal after JSON parsing.
+  Their raw strings differed, so byte-for-byte equality is not claimed.
+
+This is stronger correlation evidence than the tested STM projection, but it
+is one completed, approved, single-tool execution. `has_more=false` establishes
+the end of this log response, not a lossless session transcript contract.
+The inspected route does not establish transcript completeness, cross-execution
+chronology, redaction behavior, or interrupted/cancelled outcome reconstruction.
+It also does not validate hosted SDK continuation. No model-log system messages
+were reused as instructions and no SDK translator or additional writer was added.
+
+The read-only diagnostic ran in the frozen agent-runtime environment on
+2026-10-29 and printed structural types and comparison booleans only. It used
+the existing private CLI identity; no credential, message text or tool payload
+was recorded here. No deployment or shared configuration changed.
+
+The user subsequently narrowed demo acceptance to the already-tested semantic/
+episodic continuity in ADR-0021. This is a scope change, not proof of transcript
+support; no further history investigation is required for the demo.

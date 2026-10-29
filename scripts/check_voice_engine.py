@@ -31,6 +31,26 @@ EXPECTED = {"invoice_id": "demo-1", "amount_minor": 7990, "currency": "USD",
             "synthetic": True, "model_reported_marker": MARKER}
 
 
+class UnexpectedTranscript(ValueError):
+    """Expected input rejection; carries no audio or transcript content."""
+
+    def __init__(self, reason, missing_words=()):
+        super().__init__("Speech did not match the synthetic test phrase")
+        self.reason = reason
+        self.missing_words = list(missing_words)
+
+
+def validate_transcription(transcription):
+    if not isinstance(transcription, str) or not transcription.strip():
+        raise UnexpectedTranscript("no_speech")
+    if len(transcription) > 300 or MARKER in transcription:
+        raise UnexpectedTranscript("outside_fixture")
+    missing = [word for word in ("invoice", "synthetic", "marker")
+               if word not in transcription.lower()]
+    if missing:
+        raise UnexpectedTranscript("missing_fixture_words", missing)
+
+
 def validate_scope(response, session):
     if not isinstance(response, dict) or response.get("success") is not True:
         raise ValueError("Engine operation did not succeed")
@@ -129,10 +149,7 @@ async def voice_turn(fixture, session, calls, client):
 
     class Workflow(VoiceWorkflowBase):
         async def run(self, transcription):
-            if (len(transcription) > 300 or MARKER in transcription
-                    or not all(word in transcription.lower()
-                               for word in ("invoice", "synthetic", "marker"))):
-                raise ValueError("Unexpected synthetic transcription")
+            validate_transcription(transcription)
             yield await engine_turn(session, transcription, calls)
 
     pipeline = VoicePipeline(workflow=Workflow(), stt_model=stt, tts_model=tts,

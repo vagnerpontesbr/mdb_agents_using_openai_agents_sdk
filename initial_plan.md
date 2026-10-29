@@ -1,6 +1,6 @@
 # Telecom agent framework: implementation plan
 
-**Status:** architecture planning and repository foundation published on `codex/repository-foundation` at commit `3c29d144af786fcbbd201eb8a990a49858b25b26`; Repository checks passed for that commit. Application implementation and provider validation remain pending. Four planning roles contributed: OpenAI Agents SDK, MongoDB Agent Engine, supporting architecture, and integrated review.
+**Status:** Phase 0 compatibility is complete for the explicitly accepted demo scope on 2026-10-29; final source/evidence changes await the manual Git checkpoint. Full application implementation and Phase 1 have not started. See the authoritative [Phase 0 checkpoint](docs/compatibility/PHASE_0.md) for tested versions, accepted limitations and remote restoration evidence. Earlier planning findings below are historical where superseded by that checkpoint.
 
 **Language:** documentation, code identifiers, comments, prompts, configuration, navigation, user-facing UI, and sample chat/voice conversations will all be English.
 
@@ -72,6 +72,12 @@ Specialists return typed outcomes such as `resolved`, `needs_information`, `need
 Identity, tenant, customer, and permissions come from the authenticated backend, not model-selected arguments. Tools enforce authorization, validation, and idempotency independently of model guardrails.
 
 ## 4. Memory, sessions, and execution state
+
+**Scope update:** [ADR-0021](docs/adr/0021-demo-semantic-episodic-continuity.md)
+supersedes the chronological-restoration requirement below for this demo. The user
+selected the validated Engine semantic/episodic continuity; exact transcript
+restoration is outside demo scope. Engine ownership and native execution replay
+remain unchanged.
 
 Separate three responsibilities:
 

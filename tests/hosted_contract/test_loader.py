@@ -5,7 +5,8 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
-from agent_engine_sdk.models import AgentInput, LLMResponse, LLMToolCall, RequestContext
+from agent_engine_sdk.models import AgentInput, LLMResponse, LLMToolCall, RequestContext, StreamEvent
+from agent_engine_runner_shared.models import InterruptResult
 from agent_engine_runner_shared import hooks
 from agent_engine_runner_shared.context import set_execution_context, clear_execution_context
 from agent_engine_runner_shared.runtime import TenantRuntime
@@ -85,6 +86,26 @@ class LoaderTests(unittest.IsolatedAsyncioTestCase):
                 "https://oe.invalid", "exec-1",
             )
         tool.assert_called_once()
+
+    async def test_aer_preserves_opaque_suspend_metadata_without_interpreting_it(self):
+        # A protocol fixture, not the application adapter: this proves only
+        # the AER envelope needed by a future Engine-owned checkpoint bridge.
+        state = {"adapter_version": "synthetic-v1", "pending_call_id": "call-review-1"}
+        payload = {"suspend_reason": "synthetic_review", "suspend_context": {"invoice_id": "demo-1"}}
+        async def events():
+            yield StreamEvent(event="suspend", data={
+                "suspend_payload": payload, "metadata": state,
+            })
+        fixture = SimpleNamespace(execute=lambda ctx, input: events())
+        outcome = await AERServer._execute_via_agent_stream(
+            SimpleNamespace(), fixture, self.ctx, AgentInput(payload={"message": "Read demo-1"}),
+            "https://oe.invalid", "exec-1",
+        )
+        self.assertIsInstance(outcome, InterruptResult)
+        self.assertEqual(outcome.suspend_payload, payload)
+        self.assertEqual(outcome.metadata, state)
+        self.assertIsNone(hooks.get_suspend_handler())
+        self.assertIsNone(hooks.get_workflow_adapter())
 
     async def test_payload_cannot_override_platform_context(self):
         agent = self.app.get_agent()

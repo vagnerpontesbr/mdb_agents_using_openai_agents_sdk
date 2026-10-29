@@ -3,14 +3,15 @@
 import asyncio
 import json
 import unittest
-from unittest.mock import create_autospec
+from unittest.mock import create_autospec, patch
 
 from agents.exceptions import UserError
 
 from agent_engine_sdk.interfaces import BaseAgent
 from agent_engine_sdk.models import AgentInput, LLMResponse, LLMToolCall, RequestContext
 from agent_engine_runner_shared.secure_llm_proxy import SecureLLMProxy
-from agent_engine_runner_shared.secure_wrapper import SecureToolWrapper
+from agent_engine_runner_shared.secure_wrapper import SecureToolWrapper, PolicyDeniedException
+from agent_engine_runner_shared.models import SuspendPayload, ToolExecuteResponse
 from pydantic import BaseModel, ConfigDict, ValidationError
 
 from openai_engine_adapter import EngineBindings, OpenAIEngineAgent, RemoteReadTool
@@ -84,6 +85,37 @@ class AdapterTests(unittest.IsolatedAsyncioTestCase):
         self.llm.invoke.side_effect = TimeoutError("synthetic timeout")
         with self.assertRaises(TimeoutError):
             await self.agent.execute(self.context, self.input)
+        self.llm.invoke.assert_called_once()
+        self.wrapper.execute_tool.assert_not_called()
+
+    async def test_engine_tool_suspend_without_handler_releases_no_result(self):
+        real_wrapper = SecureToolWrapper("https://oe.invalid", "exec-1")
+        payload = SuspendPayload(
+            suspend_reason="synthetic_review",
+            suspend_context={"invoice_id": "demo-1", "allowed_decisions": ["approve", "reject"]},
+        ).model_dump()
+        self.wrapper.execute_tool.side_effect = lambda *a, **kw: real_wrapper._handle_suspend(payload)
+        events = []
+        with patch("agent_engine_runner_shared.hooks.get_suspend_handler", return_value=None):
+            with self.assertRaises(UserError) as error:
+                async for event in self.agent.execute(self.context, self.input):
+                    events.append(event)
+        self.assertIsInstance(error.exception.__cause__, RuntimeError)
+        self.assertIn("No suspend handler registered", str(error.exception.__cause__))
+        self.assertEqual(events, [])
+        self.llm.invoke.assert_called_once()
+        self.wrapper.execute_tool.assert_called_once()
+
+    async def test_engine_model_review_without_handler_never_calls_tool(self):
+        bindings = EngineBindings.for_request(
+            oe_url="https://oe.invalid", context=self.context,
+            schemas=[self.tool.schema()], llm_id="invoice-model", model_name="gpt-5.6-luna",
+        )
+        response = ToolExecuteResponse(proceed=False, status="require_review", reason="Synthetic review")
+        self.llm.invoke.side_effect = lambda *a, **kw: list(bindings.llm._handle_require_review(response))
+        with patch("agent_engine_runner_shared.hooks.get_suspend_handler", return_value=None):
+            with self.assertRaises(PolicyDeniedException):
+                await self.agent.execute(self.context, self.input)
         self.llm.invoke.assert_called_once()
         self.wrapper.execute_tool.assert_not_called()
 

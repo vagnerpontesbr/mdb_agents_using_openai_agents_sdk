@@ -53,10 +53,93 @@
   "hosted_deployment": {
     "id": "deploy-fbbf9a94",
     "build_id": "bld_01M6262645YTMRR5FQX2CH2JJY",
-    "status": "in_progress",
+    "status": "succeeded",
     "workspace_id": "ws-6ae20f53f3b040aa65fa961a",
-    "policy_changes_applied": false,
-    "hosted_invoice": "pending",
-    "observation": "OE, agent and tool available; RolloutComplete=False, RolloutInProgress at 2026-10-28T21:22:12Z. Availability is not completion of the new rollout."
-  }
+    "policy_changes_applied": true,
+    "hosted_invoice": "pass",
+    "observation": "All components available and rollout completed; verified via deployment get.",
+    "completed_at": "2026-10-28T21:22:57.346Z"
+  },
+  "hosted_invocation": {
+    "session_id": "phase0-gpt56-invoice-20261028",
+    "status": "BLOCKED",
+    "step": "invoke_llm",
+    "span_id": "31c6c83011e2c487",
+    "error": "AUTHORIZED_MODELS policy denied model \"gpt-5.6-luna\" at generation 8",
+    "trace_url": "https://agentengine.mongodb.com/project/67b385a7976edf15ecc62e06/sessions/phase0-gpt56-invoice-20261028",
+    "provider_execution_proven": false,
+    "tool_execution_proven": false
+  },
+  "policy_update": {
+    "authorization": "User continued after explicit confirmation request for the two named additions.",
+    "authorized_models": [
+      "claude-opus-5-5",
+      "gpt-5.6-luna"
+    ],
+    "authorized_tools_count_before": 26,
+    "authorized_tools_count_after": 27,
+    "added_tool": "lookup_invoice",
+    "existing_entries_preserved": true,
+    "existing_budgets_preserved": true,
+    "shared_memory_configuration_changed": false,
+    "propagation": "First two new sessions still enforced generation 8; later new session succeeded. No restarts or further policy edits were used.",
+    "rollout_diagnostic": {
+      "pending_materialization": 0,
+      "pending_publish": 0,
+      "dead_lettered": 0,
+      "lagging_projects": []
+    }
+  },
+  "hosted_positive_control": {
+    "status": "pass",
+    "session_id": "phase0-gpt56-allowed3-20261028",
+    "execution_id": "109c2502-25d0-46c3-aa39-6bf686e24357",
+    "steps": [
+      {
+        "number": 1,
+        "name": "invoke_llm",
+        "status": "success"
+      },
+      {
+        "number": 2,
+        "name": "lookup_invoice",
+        "status": "success",
+        "tool_call_id": "call_bChc3IzmTfd3IqLnCR23l9nV",
+        "span_id": "b9f0b83c60e8d616"
+      }
+    ],
+    "response": {
+      "invoice_id": "demo-1",
+      "amount_minor": 7990,
+      "currency": "USD",
+      "synthetic": true
+    },
+    "ui_duration_seconds": 3.2,
+    "ui_tokens": 186,
+    "scope": "One synthetic read through hosted Engine model and tool proxies; no capacity or general reliability claim."
+  },
+  "hosted_backend_denial": {
+    "status": "pass",
+    "session_id": "phase0-gpt56-denied-20261028",
+    "requested_invoice_id": "other",
+    "model_step": "success",
+    "tool_step": "error",
+    "tool_call_id": "call_kdT8X47Bim54f2zWaNEQWxbi",
+    "span_id": "8e46d302a5f82f9f",
+    "error": "Synthetic invoice is outside the permitted fixture scope",
+    "ui_duration_seconds": 11.4,
+    "ui_tokens": 190,
+    "scope": "Backend fixture boundary; not a platform policy denial or tenant authorization proof."
+  },
+  "geo_health_after_policy_update": {
+    "state": "ready",
+    "health": "healthy",
+    "deployment_id": "deploy-e5f6797e",
+    "checked_at": "2026-10-28T21:27:35.915252035Z"
+  },
+  "remaining_limits": [
+    "Approval/resume and replay are not implemented or validated.",
+    "Hosted memory continuity is not implemented or validated; this synthetic fixture has memory disabled.",
+    "General tenant authorization, tool-policy denial and workload capacity are not established."
+  ]
 }

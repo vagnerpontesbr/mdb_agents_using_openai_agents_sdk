@@ -1,5 +1,7 @@
 """Custom BaseApp loader; provider construction stays in the Engine Tool Pod."""
 
+import json
+
 from agent_engine_sdk import BaseApp
 from agent_engine_sdk.models import AgentInput, ToolDefinition
 from agent_engine_runner_shared import hooks
@@ -30,7 +32,7 @@ class OpenAIEngineApp(BaseApp):
     """
 
     def __init__(self, *, name, instructions, llm_id, model_name,
-                 provider_builder, provider_adapter_factory):
+                 provider_builder, provider_adapter_factory, review_action_factory=None, review_ttl_seconds=None, managed_memory=False):
         super().__init__(name)
         self.instructions = instructions
         self.llm_id = llm_id
@@ -39,6 +41,9 @@ class OpenAIEngineApp(BaseApp):
         self.provider_adapter_factory = provider_adapter_factory
         self._registrations = {}
         self._provider = None
+        self.review_action_factory = review_action_factory
+        self.review_ttl_seconds = review_ttl_seconds
+        self.managed_memory = managed_memory
 
     def tool(self, *, contract: RemoteReadTool):
         def register(function):
@@ -48,7 +53,10 @@ class OpenAIEngineApp(BaseApp):
             def validated(**kwargs):
                 contract.arguments.model_validate(kwargs, strict=True)
                 result = function(**kwargs)
-                return contract.result.model_validate(result, strict=True).model_dump(mode="json")
+                validated = contract.result.model_validate(result, strict=True).model_dump(mode="json")
+                # A JSON string survives Engine protobuf replay without dict
+                # ordering/number-representation changes in its memory text.
+                return json.dumps(validated, sort_keys=True, separators=(",", ":"), allow_nan=False) if self.managed_memory else validated
 
             self._registrations[contract.name] = (contract, validated)
             return function
@@ -82,13 +90,20 @@ class OpenAIEngineApp(BaseApp):
 
         def bindings(context, schemas):
             return EngineBindings.from_runtime(context=context, schemas=schemas,
-                                               llm_id=self.llm_id, model_name=self.model_name)
+                                               llm_id=self.llm_id, model_name=self.model_name,
+                                               managed_memory=self.managed_memory)
 
         # Model/tool audit is owned by Engine proxies. Optional graph-node
         # callbacks are not synthesized into replacement execution traces.
-        return RuntimeAgent(OpenAIEngineAgent(
+        agent = RuntimeAgent(OpenAIEngineAgent(
             instructions=self.instructions, tools=self.tools(), bindings_factory=bindings,
         ))
+        if self.review_action_factory is not None:
+            from .review_execution import ReviewExecutionAgent
+
+            hooks.register_workflow_adapter("openai-engine-review", "3" if self.managed_memory else ("2" if self.review_ttl_seconds is not None else "1"))
+            return ReviewExecutionAgent(agent, self.review_action_factory, ttl_seconds=self.review_ttl_seconds)
+        return agent
 
     def run(self):
         from agent_engine_runner_shared.runtime import TenantRuntime

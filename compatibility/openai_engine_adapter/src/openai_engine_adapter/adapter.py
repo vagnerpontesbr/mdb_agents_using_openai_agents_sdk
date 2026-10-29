@@ -64,7 +64,7 @@ class EngineBindings:
     tools: SecureToolWrapper
 
     @classmethod
-    def from_runtime(cls, *, context, schemas, llm_id, model_name):
+    def from_runtime(cls, *, context, schemas, llm_id, model_name, managed_memory=False):
         """Reuse the AER-owned wrapper; never reconstruct its execution state."""
         from agent_engine_runner_shared.context import (
             get_current_wrapper, get_current_execution_id, get_current_user_id,
@@ -77,12 +77,20 @@ class EngineBindings:
         wrapper = get_current_wrapper()
         if actual != expected or wrapper is None or wrapper.execution_id != context.execution_id:
             raise UnsupportedContract("Missing or mismatched Engine execution context")
-        if wrapper.durable_memory is not None:
-            raise UnsupportedContract("Durable execution is not implemented")
+        if wrapper.durable_memory is not None and not managed_memory:
+            raise UnsupportedContract("Managed memory requires the explicit memory integration")
+        if managed_memory:
+            from agent_engine_runner_shared.workflow import current_attempt_context
+            from agent_engine_runner_shared.workflow.memory import validate_durable_memory_identity
+            attempt = current_attempt_context()
+            if attempt is None or wrapper.durable_memory is None:
+                raise UnsupportedContract("Managed memory requires an Engine memory-enabled attempt")
+            validate_durable_memory_identity(attempt.workflow_identity, context.user_id)
         return cls(SecureLLMProxy(
             oe_url=wrapper.oe_url, execution_id=context.execution_id,
             llm_id=llm_id, model_name=model_name, bound_tools=schemas,
             operational_steps=wrapper.operational_steps,
+            durable_memory=wrapper.durable_memory,
         ), wrapper)
 
     @classmethod
@@ -236,7 +244,8 @@ class OpenAIEngineAgent:
                     )
                     # Tool content is never interpreted as an approval/resume
                     # control message. Nonconforming results fail validation.
-                    validated = registration.result.model_validate(result, strict=True)
+                    validated = (registration.result.model_validate_json(result, strict=True) if isinstance(result, str)
+                                 else registration.result.model_validate(result, strict=True))
                     return validated.model_dump_json()
 
                 sdk_tools.append(FunctionTool(

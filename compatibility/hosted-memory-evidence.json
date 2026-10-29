@@ -1,0 +1,187 @@
+{
+  "date": "2026-10-29",
+  "build": {
+    "id": "bld_01M63VC2WBEK836XZFFZK2HEAJ",
+    "status": "succeeded"
+  },
+  "entrypoint": "openai_engine_adapter.memory_invoice:app",
+  "workflow_adapter": "openai-engine-review/3",
+  "memory_enabled": true,
+  "source_provenance": "Locally authored uncommitted source.",
+  "source_sha256": {
+    "agent.yaml": "888d4b1e04b5c613ceccc85c01a3faec307c0a2d9b00a893d2264ef30cfece6b",
+    "pyproject.toml": "304bb10e7079204f52c36e18ef035aedcf8bd22f6a8a7329fc98f9808af9baa3",
+    "src/openai_engine_adapter/__init__.py": "e90a6d364b5bd822d90f174e21a6ebc015212791b3b73ca35a4e41c5f3db1a43",
+    "src/openai_engine_adapter/adapter.py": "ac99096c6c69b55ff8da0295340bf2de5c1a81f7566edf95418d7ecf3009007b",
+    "src/openai_engine_adapter/app.py": "1ac4b23b8726469c46d79f34669f6992a483326c792e0c485781685bda29b4f1",
+    "src/openai_engine_adapter/contract_probe.py": "f514e914d1e95f9187cde8fad938392dc9c9b01615ae19d667e315fb9957402a",
+    "src/openai_engine_adapter/expiry_invoice.py": "dc483ba87f7a8507288698b42409a71a25cf9fb976041a0291099ae0e8999068",
+    "src/openai_engine_adapter/invoice.py": "81bf6f2a5007563e34fc726fb6a1aebc82aec846f1ad1c905b63865173c6d145",
+    "src/openai_engine_adapter/managed_memory.py": "0e52062dc1579149626d4896adbe993fc67a6fb3035ffd90cc16cfc762281494",
+    "src/openai_engine_adapter/memory_invoice.py": "86303aed8945ebbf5f2686a8382e4b36b0bfb52ec974044fe4ec2784df6f1d27",
+    "src/openai_engine_adapter/openai_provider.py": "173cad0fe456b8b17711274b0593e67d196fa545153af8c2636b7bd8b3cae96e",
+    "src/openai_engine_adapter/review.py": "1ab6ee84e7bf09121c1c32402fc80892d491b4d24dca9ca5de4c35f0e75f2451",
+    "src/openai_engine_adapter/review_deadline.py": "ec2d45757fce3e921862530e9f71ede28e566238333267eba458836c549643ce",
+    "src/openai_engine_adapter/review_execution.py": "6d91aeaf65c00e9a81ac0d692ebba7ae4064424d9f8ba4277a90b20acb5660ff",
+    "src/openai_engine_adapter/review_invoice.py": "73e9fe4a9e53e3b20ef2e6952d86c9b92aa5fed7d527187f918d10e5b00b58af",
+    "uv.lock": "e28d48f85d3137d511ba0719b339f8cfd6d0cf5167c7cec6265428aee3ec3c37"
+  },
+  "local_tests": {
+    "count": 49,
+    "macos": "pass",
+    "linux_amd64_emulated": "pass",
+    "scope": "Real Runner/proxies/Engine memory projection; doubled OE/provider transport; three stable content keys and empty review acknowledgement across two attempts."
+  },
+  "synthetic_run_id": "98751e7966484cf3a7703be3086aa820",
+  "hosted_memory": "passed_hosted_execution_projection_and_independent_stm_durable_retrieval_with_user_session_filter_controls",
+  "provider_configuration_changed": false,
+  "limitations": [
+    "No application memory writer or direct provider fallback.",
+    "Canonical JSON tool transport is validated at both producer and SDK boundary.",
+    "No claim of model history reconstruction or retrieval injection yet.",
+    "This fixture enables projection with a no-deadline review; deadline and projection coexistence has not been live-tested.",
+    "The refreshed token resolves the earlier authentication blocker; its value is never recorded here.",
+    "Retrieval controls use one service credential and caller-supplied filters; they do not prove independent end-user authorization.",
+    "Exact stored-turn deduplication/count and automatic model context injection remain unvalidated; retrieval counts are not total stored record counts."
+  ],
+  "deployment": {
+    "id": "deploy-88907967",
+    "status": "succeeded",
+    "completed_at": "2026-10-29T12:58:37.333Z"
+  },
+  "independent_read_preflight": {
+    "recorded_at": "2026-10-29T12:52:02.492193+00:00",
+    "status": "failed",
+    "error_class": "MemoryAuthError",
+    "error_code": "INVALID_TOKEN",
+    "http_status": 401,
+    "new_writes": 0
+  },
+  "live_session": {
+    "session_id": "phase0-session-98751e7966484cf3a7703be3086aa820",
+    "user_id": "phase0-user-98751e7966484cf3a7703be3086aa820",
+    "execution_id": "868b633d-03e4-486c-93ef-a560f8621fca",
+    "review_activity_id": "6ae3432b7e90ef4c0ed3ff0d",
+    "response": "{\"invoice_id\":\"demo-1\",\"amount_minor\":7990,\"currency\":\"USD\",\"synthetic\":true}",
+    "ui_trace": {
+      "runs": 1,
+      "llm_steps": 1,
+      "tool_steps": 1,
+      "review_steps": 1,
+      "tokens": 246,
+      "memory_saves": 0,
+      "memory_recalls": 0
+    },
+    "memory_ui_search": "Marker not found among 40 loaded long-term memories; loaded-page filter is not an exhaustive persistence query."
+  },
+  "independent_read_after_user_token_refresh": {
+    "recorded_at": "2026-10-29T13:03:44.712842+00:00",
+    "status": "pass",
+    "new_writes": 0
+  },
+  "independent_retrieval": {
+    "recorded_at": "2026-10-29T13:04:00.869173+00:00",
+    "synthetic_run_id": "98751e7966484cf3a7703be3086aa820",
+    "new_writes": 0,
+    "phase0_complete": false,
+    "scope": "User/session filters and exact durable marker retrieval; not tenant authorization",
+    "checks": [
+      {
+        "check": "stm_positive",
+        "healthy": true,
+        "marker_found": true,
+        "source_outcomes": [
+          {
+            "source": "stm",
+            "requested_mode": "hybrid",
+            "effective_mode": "hybrid",
+            "count": 2,
+            "retryable": false,
+            "error_present": false
+          }
+        ],
+        "status": "pass"
+      },
+      {
+        "check": "stm_other_session",
+        "healthy": true,
+        "marker_found": false,
+        "source_outcomes": [
+          {
+            "source": "stm",
+            "requested_mode": "hybrid",
+            "effective_mode": "hybrid",
+            "count": 0,
+            "retryable": false,
+            "error_present": false
+          }
+        ],
+        "status": "pass"
+      },
+      {
+        "check": "stm_other_user",
+        "healthy": true,
+        "marker_found": false,
+        "source_outcomes": [
+          {
+            "source": "stm",
+            "requested_mode": "hybrid",
+            "effective_mode": "hybrid",
+            "count": 0,
+            "retryable": false,
+            "error_present": false
+          }
+        ],
+        "status": "pass"
+      },
+      {
+        "check": "durable_new_session",
+        "healthy": true,
+        "marker_found": true,
+        "source_outcomes": [
+          {
+            "source": "semantic",
+            "requested_mode": "hybrid",
+            "effective_mode": "hybrid",
+            "count": 1,
+            "retryable": false,
+            "error_present": false
+          },
+          {
+            "source": "episodic",
+            "requested_mode": "hybrid",
+            "effective_mode": "hybrid",
+            "count": 2,
+            "retryable": false,
+            "error_present": false
+          }
+        ],
+        "status": "pass"
+      },
+      {
+        "check": "durable_other_user",
+        "healthy": true,
+        "marker_found": false,
+        "source_outcomes": [
+          {
+            "source": "semantic",
+            "requested_mode": "hybrid",
+            "effective_mode": "hybrid",
+            "count": 0,
+            "retryable": false,
+            "error_present": false
+          },
+          {
+            "source": "episodic",
+            "requested_mode": "hybrid",
+            "effective_mode": "hybrid",
+            "count": 0,
+            "retryable": false,
+            "error_present": false
+          }
+        ],
+        "status": "pass"
+      }
+    ]
+  }
+}

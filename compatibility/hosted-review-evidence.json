@@ -1,0 +1,169 @@
+{
+  "date": "2026-10-28",
+  "python": "3.15.2",
+  "engine_sdk": "0.11.11",
+  "openai_agents": "0.24.0",
+  "model": "gpt-5.6-luna",
+  "local_tests": {
+    "count": 41,
+    "macos": "pass",
+    "linux_amd64_emulated": "pass",
+    "scope": "Real Runner, Engine proxies/activity/settlement and AER; provider and OE transport doubles. Fresh objects and serialized outcomes, not a process restart."
+  },
+  "build": {
+    "id": "bld_01M629GDVMFFAKH5SXYKMVMVFV",
+    "status": "succeeded"
+  },
+  "entrypoint": "openai_engine_adapter.review_invoice:app",
+  "native_entrypoint_preserved": "openai_engine_adapter.invoice:app",
+  "source_provenance": "Uncommitted local source; CLI Git label is not the uploaded revision.",
+  "source_sha256": {
+    ".python-version": "5b4c98b26cff7bfcfd695773d12213258f549fcfe44efae8baaede6b1631a497",
+    "agent.yaml": "8789c3796cf3f202bc5d1ab021949399a1ed7f55bdba13d7cde90914c93c41b3",
+    "pyproject.toml": "304bb10e7079204f52c36e18ef035aedcf8bd22f6a8a7329fc98f9808af9baa3",
+    "src/openai_engine_adapter/__init__.py": "e90a6d364b5bd822d90f174e21a6ebc015212791b3b73ca35a4e41c5f3db1a43",
+    "src/openai_engine_adapter/adapter.py": "5ded3feb899691643d9d10278b03eb809dba39909c8257a0c8c8588ef64cb396",
+    "src/openai_engine_adapter/app.py": "ebe88bf70a383f72abdf38f7721c5ab04ca833e844f53b3370b631cf7f18687c",
+    "src/openai_engine_adapter/invoice.py": "81bf6f2a5007563e34fc726fb6a1aebc82aec846f1ad1c905b63865173c6d145",
+    "src/openai_engine_adapter/openai_provider.py": "173cad0fe456b8b17711274b0593e67d196fa545153af8c2636b7bd8b3cae96e",
+    "src/openai_engine_adapter/review.py": "93e598acdb95def5c098932ed0d714eb229cc2095e426c159bbaf9bed824caff",
+    "src/openai_engine_adapter/review_execution.py": "f5c3abb9619fc48bfd2db9206d469cfd25ff6a4632c7c52e7bc19401a2f0c7b2",
+    "src/openai_engine_adapter/review_invoice.py": "73e9fe4a9e53e3b20ef2e6952d86c9b92aa5fed7d527187f918d10e5b00b58af",
+    "uv.lock": "e28d48f85d3137d511ba0719b339f8cfd6d0cf5167c7cec6265428aee3ec3c37"
+  },
+  "hosted_review": "passed_bounded_synthetic_approve_and_reject",
+  "hosted_replay": "passed_after_explicit_session_sandbox_release_same_execution; no_duplicate_model_or_tool_steps_in_UI",
+  "shared_memory_changed": false,
+  "deployment": {
+    "id": "deploy-8e0ea235",
+    "status": "succeeded",
+    "previous_deployment_id": "deploy-69e4df59",
+    "completed_at": "2026-10-28T22:23:57.324Z"
+  },
+  "previous_attempt": {
+    "build": {
+      "id": "bld_01M628TVC2X3R06QT2YDWYJ1RA",
+      "status": "succeeded"
+    },
+    "deployment": {
+      "id": "deploy-69e4df59",
+      "status": "succeeded"
+    },
+    "session": "phase0-review-approve-20261028",
+    "result": "failed",
+    "error": "invalid workflow input: app.suspend() is not supported; use the framework's native interrupt instead",
+    "source_sha256": {
+      ".python-version": "5b4c98b26cff7bfcfd695773d12213258f549fcfe44efae8baaede6b1631a497",
+      "agent.yaml": "8789c3796cf3f202bc5d1ab021949399a1ed7f55bdba13d7cde90914c93c41b3",
+      "pyproject.toml": "304bb10e7079204f52c36e18ef035aedcf8bd22f6a8a7329fc98f9808af9baa3",
+      "src/openai_engine_adapter/__init__.py": "e90a6d364b5bd822d90f174e21a6ebc015212791b3b73ca35a4e41c5f3db1a43",
+      "src/openai_engine_adapter/adapter.py": "5ded3feb899691643d9d10278b03eb809dba39909c8257a0c8c8588ef64cb396",
+      "src/openai_engine_adapter/app.py": "ebe88bf70a383f72abdf38f7721c5ab04ca833e844f53b3370b631cf7f18687c",
+      "src/openai_engine_adapter/invoice.py": "81bf6f2a5007563e34fc726fb6a1aebc82aec846f1ad1c905b63865173c6d145",
+      "src/openai_engine_adapter/openai_provider.py": "173cad0fe456b8b17711274b0593e67d196fa545153af8c2636b7bd8b3cae96e",
+      "src/openai_engine_adapter/review.py": "613f1566a31451eb97022399832a22053a1b2611c20f9017728c300a01f2acce",
+      "src/openai_engine_adapter/review_execution.py": "c4163050390e0757e74bf6ad3c429d4b9b58bb06a4e62412c8ac6602880c0ef6",
+      "src/openai_engine_adapter/review_invoice.py": "73e9fe4a9e53e3b20ef2e6952d86c9b92aa5fed7d527187f918d10e5b00b58af",
+      "uv.lock": "e28d48f85d3137d511ba0719b339f8cfd6d0cf5167c7cec6265428aee3ec3c37"
+    }
+  },
+  "interrupt_contract": "DurableActivityInterrupted -> finalize_current_step_suspensions_command(agent_interrupt) -> OE activity ID and resume_map",
+  "controls": [
+    {
+      "name": "approve",
+      "session": "phase0-review-v2-approve-20261028",
+      "execution_id": "ea049029-a799-4daa-9cb0-a43cd4a49bb8",
+      "review_activity_id": "6ae27608f09e1404c0919f53",
+      "initial_activity_states": [
+        "completed",
+        "completed",
+        "suspended"
+      ],
+      "response": "{\"invoice_id\":\"demo-1\",\"amount_minor\":7990,\"currency\":\"USD\",\"synthetic\":true}",
+      "ui_trace": {
+        "runs": 1,
+        "llm_steps": 1,
+        "tool_steps": 1,
+        "human_review_steps": 1,
+        "tokens": 245,
+        "review_status": "success"
+      }
+    },
+    {
+      "name": "reject",
+      "session": "phase0-review-v2-reject-20261028",
+      "execution_id": "3426a442-8132-4615-a626-041fe31c12de",
+      "review_activity_id": "6ae2761c0a7e41e68bf9ec93",
+      "response": "{\"status\":\"rejected\",\"tool_call_id\":\"release-demo-1\"}",
+      "ui_trace": {
+        "runs": 1,
+        "llm_steps": 1,
+        "tool_steps": 1,
+        "human_review_steps": 1,
+        "tokens": 234
+      }
+    },
+    {
+      "name": "wrong_execution_review_id",
+      "session": "phase0-review-v2-reject-20261028",
+      "submitted_review_id": "6ae27608f09e1404c0919f53",
+      "code": "RESUME_INPUT_INVALID",
+      "cli_exit_code": 1
+    },
+    {
+      "name": "late_approve_after_rejection",
+      "session": "phase0-review-v2-reject-20261028",
+      "submitted_review_id": "6ae2761c0a7e41e68bf9ec93",
+      "code": "RESUME_INPUT_INVALID",
+      "cli_exit_code": 1
+    },
+    {
+      "name": "resume_after_sandbox_release",
+      "session": "phase0-review-restart-20261028",
+      "execution_id": "8e5dc5b4-aad0-4380-8956-b1301e6c5561",
+      "review_activity_id": "6ae276e70a7e41e68bf9eca4",
+      "stop_result": "stop_accepted",
+      "release_verification": "Session absent from workspace sessions list before resume; only prior approve/reject sessions remained.",
+      "response": "{\"invoice_id\":\"demo-1\",\"amount_minor\":7990,\"currency\":\"USD\",\"synthetic\":true}",
+      "ui_trace": {
+        "runs": 1,
+        "llm_steps": 1,
+        "tool_steps": 1,
+        "human_review_steps": 1,
+        "tokens": 227
+      },
+      "scope": "CLI session stop destroys reserved agent/tool sandboxes and ephemeral state; not a whole-project restart or mid-tool crash."
+    },
+    {
+      "name": "modified_arguments_in_resume_answer",
+      "session": "phase0-review-restart-20261028",
+      "submitted_answer": {
+        "decision": "approve",
+        "arguments": {
+          "amount_minor": 1
+        }
+      },
+      "code": "RESUME_INPUT_INVALID",
+      "cli_exit_code": 1,
+      "subsequent_valid_approval": "passed"
+    }
+  ],
+  "limitations": [
+    "Synthetic read-before-review; no business write or financial transaction.",
+    "Trace counts are platform observations, not independent provider billing verification.",
+    "Changed semantic action, expiry and separate reviewer authorization remain untested.",
+    "Hosted memory continuity remains separate; shared Anthropic configuration is unchanged.",
+    "Sandbox release/recovery passed at a durable review wait; mid-tool crash and live stale-fencing-token injection remain untested."
+  ],
+  "local_negative_controls": {
+    "engine_conflict_and_stale_fence": "doubled OE errors propagate without retry or fallback",
+    "changed_semantic_action": "name/call ID/arguments changes remain visible to Engine; server rejection not proven by this local test"
+  },
+  "current_review_deployment": {
+    "id": "deploy-72088429",
+    "build_id": "bld_01M629GDVMFFAKH5SXYKMVMVFV",
+    "status": "succeeded",
+    "completed_at": "2026-10-29T01:39:12.32Z"
+  },
+  "additional_control_evidence": "hosted-control-evidence.json"
+}

@@ -1,4 +1,6 @@
-**Current model update:** The user selected `gpt-5.6-luna`. A direct Responses API probe passed with the expected synthetic function call; see [provider evidence](../gpt56-luna-evidence.json). Local adapter defaults now select it. The deployed image still selects `gpt-6-luna`; shared project policy approval and a new build/deploy are required before hosted validation. Earlier model/build observations below are historical.
+**Hosted proof:** The `gpt-5.6-luna` invoice flow now passes through Engine, including correlated model/tool traces and backend rejection of an out-of-fixture invoice. The authorized project policy additions have been applied. See [current evidence](../gpt56-luna-evidence.json) and [COMP-003](../../docs/tasks/COMP-003-HOSTED.md). Replay, approval/resume and hosted memory continuity remain unsupported by this bounded adapter. Earlier checkpoints below are historical.
+
+**Current model update:** The user selected `gpt-5.6-luna`. A direct Responses API probe passed with the expected synthetic function call; see [provider evidence](../gpt56-luna-evidence.json). Local adapter defaults now select it. Deployment `deploy-fbbf9a94` now selects `gpt-5.6-luna`; the live Engine trace confirms that selection but blocks it under the project model allowlist. Shared project policy approval is required before a hosted positive control. Earlier model/build observations below are historical.
 
 **Current build update:** The compact bundled Python 3.15.2 experiment now passes Linux tests and the remote VM build. See the [build runbook](../../docs/compatibility/PYTHON315_HOSTED.md) and [COMP-003](../../docs/tasks/COMP-003-HOSTED.md) for deployment status; earlier failed-build evidence below remains historical.
 
@@ -103,3 +105,25 @@ Build `bld_01M621HKZWQ2Q13QCGQM15M7ST` failed in the VM image BUILD phase: uv 0.
 Only an explicit source-file allowlist was staged and uploaded, without .env, credentials, caches or artifacts. [Portable evidence](../hosted-invoice-evidence.json) records source hashes: the CLI's Git label points to an older commit, not the exact uploaded local source. No deployment was attempted and independent workspace status remains `not_deployed`. OPENAI_API_KEY was created at workspace scope (version 1), passed via stdin without printing the value; project Anthropic/Grove/Voyage credentials were not changed.
 
 Resolving this gate requires an Engine build image/interpreter path compatible with Python 3.15.2, or a separately authorized change to the Python requirement. This investigation did not establish a supported custom-image/Python-selection field. Do not remove the lock, silently downgrade Python, or report the adapter's live audit/denial acceptance as passed.
+
+
+## Suspension safety contract
+
+The 25-test hosted-contract suite also verifies that Engine-required model review and tool suspension fail closed when a handler is unavailable: no successful result or fallback tool call is released. A separate event fixture confirms AER preserves opaque suspension metadata. These prerequisites do not implement human approval, checkpoint restoration or replay. The next acceptance gate is specified in [COMP-003](../../docs/tasks/COMP-003-HOSTED.md#approvalresume-prerequisite-contract).
+
+
+## Experimental review activity
+
+The opt-in `review_invoice:app` entrypoint wraps the read flow with Engine-owned review. The default `invoice:app` remains the bounded read fixture. The first hosted review deployment exposed a rejected direct-suspend contract; the current implementation uses native interruption and Engine step finalization, publishing only the OE-issued activity ID and resume schema. It introduces no approval store or SDK RunState persistence.
+
+The current 49-test suite passes locally on macOS and Linux with real Runner/proxies/AER and doubled OE transport. Bounded hosted suspension, approval, rejection and wrong/stale review-ID controls now pass on deployment `deploy-8e0ea235`; each resumed trace shows one model/tool sequence. Recovery after explicit session sandbox termination also passes. A separate hosted diagnostic confirmed changed-action semantic rejection and stale-attempt-start fencing. The review build was restored afterward; reviewer authorization/expiry and hosted memory continuity remain unvalidated. See [control evidence](../hosted-control-evidence.json). See the [current contract and limitations](../../docs/tasks/COMP-003-HOSTED.md#native-interrupt-correction-after-hosted-rejection) and [exact source/build evidence](../hosted-review-evidence.json). Earlier sections record historical increments, not current deployment status.
+
+## Opt-in review deadline
+
+`expiry_invoice:app` uses workflow version 2 and a 60-second synthetic validity window recorded once by an Engine activity. Hosted timely approval returns the invoice; late approval after sandbox release returns `expired` without invoice data. Deployment `deploy-b0491bde` currently selects this fixture. No-TTL `review_invoice:app` remains version 1; this is not an in-flight migration contract. See [expiry evidence and identity limitations](../hosted-expiry-evidence.json). Independent reviewer authorization and hosted memory continuity remain open.
+
+## Opt-in Engine memory projection
+
+`memory_invoice:app` passes AER's managed memory state to the real Engine proxies and acknowledges non-conversation control activities. Canonical JSON tool output avoids changing memory text during protobuf replay. Deployment `deploy-88907967` currently selects this no-TTL memory fixture. Hosted execution and approval/resume pass; independent persistence/retrieval are not yet validated because the local read token returns 401. The trace memory counter is zero, so it is not positive persistence evidence. See [memory evidence](../hosted-memory-evidence.json). No provider/memory configuration or credential was changed.
+
+After user-managed token refresh, independent read-only checks recovered the hosted marker from STM and from durable memory in a new session; all five user/session filter controls passed without new writes. This supersedes the token/persistence blocker above. Total stored-turn deduplication and automatic model context injection remain open. See [updated evidence](../hosted-memory-evidence.json).

@@ -327,3 +327,19 @@ The timely approval resumed execution `17ca3dee-595b-4ed3-9826-fafa29c6a4b4` and
 [Metadata-only storage reads](../../compatibility/expiry-memory-storage-evidence.json) found three turns per session, one each for user/assistant/tool, sequences 1–3 and three distinct idempotency hashes. The late session retained the same count after restart/resume; no additional control turns were observed. [Filtered runtime log evidence](../../compatibility/expiry-memory-log-evidence.json) covers both attempts and shows one provider HTTP success and one tool-success log per execution. A tool-request message repeats during replay, so it is not a remote dispatch count or a duplicate side-effect claim.
 
 After the experiment, the prior recall build was restored successfully by `deploy-7c2660de` at 16:52:19.050Z; all components were available. No shared memory/provider policy or credential changed. Two synthetic invocations incurred provider usage and Engine-owned memory writes. The bounded combined projection/expiry/recovery gate now passes. Independent requester authorization, broader concurrency/fault cases and chronological history remain separate. Phase 0 is not complete; these source/evidence changes are locally authored and not committed.
+
+
+## Bounded concurrent hosted sessions pass
+
+On 2026-10-29, two fresh synthetic invocations overlapped on the existing recall deployment `deploy-7c2660de`. Each suspended with a distinct execution and interrupt ID and its matching delegated user. Two overlapping approvals resumed the corresponding execution and returned the exact synthetic invoice with `model_reported_marker: "not_found"`. [Portable concurrency evidence](../../compatibility/concurrent-hosted-evidence.json) records client intervals and responses.
+
+A subsequent metadata-only ClusterDemoTelco audit found exactly three STM turns per session, roles user/assistant/tool, sequences 1–3 and three distinct idempotency hashes. The initial sandbox attempt failed before returning execution IDs; its cause and remote effects were not independently established. The successful repeat used approved network access. No deployment, shared policy or credentials changed; the successful invocations incurred provider usage and Engine-managed memory writes.
+
+This closes a bounded two-session concurrency check. One authenticated CLI caller delegated both synthetic users, so it does not prove independent requester authorization, capacity, arbitrary fault recovery or chronological history support.
+
+
+## Follow-up cancellation and chronological-history boundaries
+
+The [cancellation task](COMP-003-FAULTS.md) adds three local controls; all 59 hosted-contract tests pass on macOS and Linux/amd64. It suppresses late output and later stages without claiming to cancel already-running remote work. No runtime source or deployment changed in this increment.
+
+The [history investigation](COMP-003-HISTORY.md) found a concrete Engine-owned STM read path, but it lacks complete call arguments/result IDs and authoritative transcript completeness/outcomes. Its OpenAI formatter emits a privileged role for tool content. These reads cannot safely restore the SDK transcript; no alternative memory writer or speculative translator was added. [Requester investigation](COMP-005-AUTH-RETENTION.md#current-approver-boundary-investigation-2026-10-29) separately requires authorization before native decision acceptance. These remain platform-integration gates, not another business-policy choice.

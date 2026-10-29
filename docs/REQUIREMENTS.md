@@ -8,6 +8,10 @@ Deliver an executable, adaptable reference for architects, developers, and build
 
 Use Agent Engine whenever its capabilities overlap with OpenAI Agents SDK. [ADR-0018](adr/0018-engine-feature-precedence.md) is the authoritative ownership matrix and compatibility boundary. Keep the SDK orchestrator and backend domain enforcement; do not bypass Engine when integration is blocked. The user subsequently authorized a custom adapter under this ownership rule; scope and acceptance are tracked in [COMP-003](tasks/COMP-003-HOSTED.md).
 
+## Demo authentication — latest user decision
+
+Use email/password login and exactly `user`/`admin` roles. Only admins register users. Initial administrator: `admin@mongodb.com`, with the user-provided password injected privately at bootstrap. [ADR-0020](adr/0020-demo-email-password-auth.md) defines the authoritative identity contract and its integration limits.
+
 ## Requested capabilities
 
 The user-selected requester approval and thirty-day conversation/memory retention rules are defined in [ADR-0019](adr/0019-requester-approval-memory-retention.md). Policy selection does not establish remote enforcement; [COMP-005](tasks/COMP-005-AUTH-RETENTION.md) tracks the integration gate.

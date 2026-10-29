@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Synthetic browser voice compatibility</title>
+<style>
+body{font:17px system-ui;background:#f4f8f5;color:#12372a;max-width:850px;margin:60px auto;padding:24px}
+button{font:inherit;background:#00684a;color:white;padding:12px 18px;border:0;border-radius:6px;margin:8px 8px 8px 0}
+button:disabled{opacity:.45}pre{white-space:pre-wrap;background:white;padding:20px;border:1px solid #ccd9d0}
+</style>
+<h1>Synthetic browser voice compatibility</h1>
+<p>Tests generated speech through browser recording, speech recognition, Agent Engine, and speech output. No microphone is used. The exact synthetic invoice is automatically approved by the test caller.</p>
+<button id="run">Run synthetic voice and chat</button><button id="play" disabled>Play approved response</button><button id="stop">Stop local playback</button>
+<p id="status" role="status">Ready. This test makes provider requests and writes synthetic Engine memory.</p>
+<pre id="details">Pending</pre>
+<p>Playback events verify browser behavior, not human listening. Closing this page or stopping playback does not cancel work already accepted by Engine.</p>
+<script>
+const statusEl=document.querySelector('#status'),details=document.querySelector('#details');
+const run=document.querySelector('#run'),play=document.querySelector('#play');
+let audio,codec,encodedBytes,context;
+async function post(path,body=new Uint8Array()){
+ const response=await fetch(path,{method:'POST',headers:{'X-Probe-Nonce':'__PROBE_NONCE__'},body});
+ if(!response.ok)throw Error(`Probe failed at ${path}: HTTP ${response.status}`);
+ return response;
+}
+run.onclick=async()=>{
+ run.disabled=true;
+ try{
+  context=new AudioContext();await context.resume();
+  statusEl.textContent='Generating synthetic input…';
+  const response=await post('/fixture');
+  const fixture=await context.decodeAudioData(await response.arrayBuffer());
+  if(!(fixture.duration>0 && fixture.duration<=20))throw Error('Invalid fixture duration');
+  codec=['audio/webm;codecs=opus','audio/webm','audio/mp4'].find(x=>MediaRecorder.isTypeSupported(x));
+  if(!codec)throw Error('No supported MediaRecorder codec');
+  statusEl.textContent='Recording generated speech through the browser codec…';
+  const destination=context.createMediaStreamDestination();
+  const source=context.createBufferSource();source.buffer=fixture;source.connect(destination);
+  const recorder=new MediaRecorder(destination.stream,{mimeType:codec});const chunks=[];
+  const recording=new Promise((resolve,reject)=>{
+   recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+   recorder.onerror=()=>reject(Error('Recorder failed'));
+   recorder.onstop=()=>resolve(new Blob(chunks,{type:codec}));
+  });
+  recorder.start();source.onended=()=>recorder.stop();source.start();
+  const blob=await recording;destination.stream.getTracks().forEach(t=>t.stop());source.disconnect();
+  encodedBytes=blob.size;if(!encodedBytes || encodedBytes>960000)throw Error('Invalid encoded audio size');
+  const decoded=await context.decodeAudioData(await blob.arrayBuffer());
+  if(!(decoded.duration>0 && decoded.duration<=20))throw Error('Invalid decoded duration');
+  const offline=new OfflineAudioContext(1,Math.ceil(decoded.duration*24000),24000);
+  const converted=offline.createBufferSource();converted.buffer=decoded;converted.connect(offline.destination);converted.start();
+  const rendered=await offline.startRendering();const samples=rendered.getChannelData(0);
+  const pcm=new ArrayBuffer(samples.length*2),view=new DataView(pcm);
+  samples.forEach((value,i)=>view.setInt16(i*2,Math.round(Math.max(-1,Math.min(1,value))*32767),true));
+  statusEl.textContent='Recognizing speech and completing native Engine review…';
+  const voice=await (await post('/voice',pcm)).json();
+  const wav=Uint8Array.from(atob(voice.wav),c=>c.charCodeAt(0));
+  audio=new Audio(URL.createObjectURL(new Blob([wav],{type:'audio/wav'})));
+  statusEl.textContent='Continuing through chat with the same Engine user and session…';
+  const chat=await (await post('/chat')).json();
+  details.textContent=JSON.stringify({codec,encoded_bytes:encodedBytes,voice:voice.answer,chat:chat.answer},null,2);
+  play.disabled=false;statusEl.textContent='Voice and chat passed. Play the approved response to verify browser playback.';
+  await context.close();
+ }catch(error){statusEl.textContent=error.message; if(context && context.state!=='closed')await context.close();}
+};
+play.onclick=async()=>{
+ play.disabled=true;
+ audio.onended=async()=>{
+  try{await post('/playback',JSON.stringify({codec,encoded_bytes:encodedBytes,playback_ended:true}));statusEl.textContent='PASS: synthetic browser codec, Engine voice/chat continuity, and playback completed.';}
+  catch(error){statusEl.textContent=error.message;}
+ };
+ try{await audio.play();statusEl.textContent='Playing approved synthetic response…';}
+ catch(error){statusEl.textContent=error.message;play.disabled=false;}
+};
+document.querySelector('#stop').onclick=()=>{if(audio){audio.pause();audio.currentTime=0;play.disabled=false;statusEl.textContent='Local playback stopped. Remote work is not cancelled.';}};
+</script></html>

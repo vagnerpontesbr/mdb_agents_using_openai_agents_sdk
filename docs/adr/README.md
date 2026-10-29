@@ -26,3 +26,5 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 
 | [ADR-0018](0018-engine-feature-precedence.md) | Prefer Engine for overlapping platform features; retain SDK orchestration | Selected by user; integration verification pending |
 | [ADR-0019](0019-requester-approval-memory-retention.md) | Requester self-approval and thirty-day memory retention | Selected by user; enforcement compatibility pending |
+
+| [ADR-0020](0020-demo-email-password-auth.md) | Demo email/password login, admin-only registration and initial administrator | Selected by user; local contract implemented |

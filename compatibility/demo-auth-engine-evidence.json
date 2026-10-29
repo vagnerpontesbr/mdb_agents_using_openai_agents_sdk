@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "engine_owner_matches_authenticated_app_user": true,
+    "other_admin_denied_before_resume": true,
+    "spoofed_identity_field_rejected": true,
+    "changed_review_digest_rejected": true,
+    "native_pending_action_unchanged_after_denials": true,
+    "requester_approval_completed_original_execution": true,
+    "repeat_decision_rejected": true
+  },
+  "status": "passed",
+  "recorded_at": "2026-10-29T17:47:16.175008+00:00",
+  "invocation_http_status": 200,
+  "execution_id": "006266d5-8dbe-4dfd-bc1b-f6283d5c5388",
+  "session_id": "demo-invoice-ce2182a37dc342189044daf5d78c8a2f",
+  "synthetic_user_removed": true,
+  "scope": "Authenticated application requester admission before native Engine resume, using the existing private operator CLI credential.",
+  "limitations": [
+    "Not an Engine-wide requester policy; direct privileged Engine operators are outside the app boundary.",
+    "Service-account delegation and minimum runtime/database privileges are unverified.",
+    "Concurrent reviewer races and public HTTPS deployment are not tested."
+  ],
+  "browser": {
+    "admin_own_invoice_requested": true,
+    "native_action_displayed": true,
+    "own_approval_completed": true,
+    "logout": true
+  },
+  "source_sha256": {
+    "compatibility/demo_auth/engine.py": "0cccad4254831898c60a015fbd8c11274fd6b6cd936dadd98486e93ff78967c6",
+    "compatibility/demo_auth/sessions.py": "0b0d3f9c637b4f104d0f6813e610b268ba44458cdc75428933b9e64e064722fd",
+    "scripts/serve_demo_auth.py": "3cee0af97454f3cd2a46890d49ede7b8ff6d7ef249a71bfa33d3d35c01e04cd0",
+    "scripts/demo_auth.html": "2b3c641741cd066a6c30b3d9bde4b08dbd4f625a8c7cd0a0ccfea09f55676376"
+  }
+}

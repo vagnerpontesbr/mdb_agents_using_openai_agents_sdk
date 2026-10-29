@@ -1,0 +1,291 @@
+{
+  "recorded_at": "2026-10-29T16:59:56.253009+00:00",
+  "run_id": "4299d08bc50c",
+  "deployment": "deploy-7c2660de",
+  "scope": "Two concurrent synthetic CLI invocations and two concurrent native resumes; one authenticated CLI caller delegates distinct synthetic users.",
+  "calls": [
+    {
+      "case": "a",
+      "session": "phase0-concurrent-4299d08bc50c-a",
+      "user": "phase0-concurrent-user-4299d08bc50c-a",
+      "stage": "invoke",
+      "started_at_epoch": 1793293196.2551198,
+      "ended_at_epoch": 1793293201.586802,
+      "exit_code": 0,
+      "response": {
+        "success": true,
+        "workspace_id": "ws-6ae20f53f3b040aa65fa961a",
+        "project_id": "67b385a7976edf15ecc62e06",
+        "org_id": "663e3089acf80f05b63effcf",
+        "session_id": "phase0-concurrent-4299d08bc50c-a",
+        "suspended": true,
+        "execution_id": "fdcc9592-2a35-48a4-9bb0-6d11cc95329f",
+        "suspend_context": {
+          "activity_states": [
+            {
+              "activity_id": "6ae37b8d15276e2e5d5a4226",
+              "status": "completed"
+            },
+            {
+              "activity_id": "6ae37b8d7e90ef4c0ed3ff65",
+              "status": "completed"
+            },
+            {
+              "activity_id": "6ae37b907e90ef4c0ed3ff69",
+              "status": "completed"
+            },
+            {
+              "activity_id": "6ae37b917e90ef4c0ed3ff6f",
+              "status": "suspended"
+            }
+          ],
+          "interrupts": [
+            {
+              "id": "6ae37b917e90ef4c0ed3ff6f",
+              "value": {
+                "action": {
+                  "arguments": {
+                    "amount_minor": 7990,
+                    "currency": "USD",
+                    "invoice_id": "demo-1",
+                    "model_reported_marker": "not_found",
+                    "synthetic": true
+                  },
+                  "tool_call_id": "release-demo-1",
+                  "tool_name": "release_synthetic_recall"
+                },
+                "allowed_decisions": [
+                  "approve",
+                  "reject"
+                ],
+                "contract": "openai-engine-review-v1",
+                "requesting_user_id": "phase0-concurrent-user-4299d08bc50c-a"
+              }
+            }
+          ],
+          "resume_schema": {
+            "additionalProperties": true,
+            "properties": {
+              "resume_map": {
+                "additionalProperties": false,
+                "properties": {
+                  "6ae37b917e90ef4c0ed3ff6f": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "decision": {
+                        "enum": [
+                          "approve",
+                          "reject"
+                        ],
+                        "title": "Decision",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "decision"
+                    ],
+                    "title": "ReviewDecision",
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "6ae37b917e90ef4c0ed3ff6f"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "resume_map"
+            ],
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "case": "b",
+      "session": "phase0-concurrent-4299d08bc50c-b",
+      "user": "phase0-concurrent-user-4299d08bc50c-b",
+      "stage": "invoke",
+      "started_at_epoch": 1793293196.2551832,
+      "ended_at_epoch": 1793293201.515376,
+      "exit_code": 0,
+      "response": {
+        "success": true,
+        "workspace_id": "ws-6ae20f53f3b040aa65fa961a",
+        "project_id": "67b385a7976edf15ecc62e06",
+        "org_id": "663e3089acf80f05b63effcf",
+        "session_id": "phase0-concurrent-4299d08bc50c-b",
+        "suspended": true,
+        "execution_id": "f0ec9cae-7e06-4499-b12c-69fb18e3ebec",
+        "suspend_context": {
+          "activity_states": [
+            {
+              "activity_id": "6ae37b8d15276e2e5d5a421e",
+              "status": "completed"
+            },
+            {
+              "activity_id": "6ae37b8d15276e2e5d5a4222",
+              "status": "completed"
+            },
+            {
+              "activity_id": "6ae37b9015276e2e5d5a422f",
+              "status": "completed"
+            },
+            {
+              "activity_id": "6ae37b907e90ef4c0ed3ff6c",
+              "status": "suspended"
+            }
+          ],
+          "interrupts": [
+            {
+              "id": "6ae37b907e90ef4c0ed3ff6c",
+              "value": {
+                "action": {
+                  "arguments": {
+                    "amount_minor": 7990,
+                    "currency": "USD",
+                    "invoice_id": "demo-1",
+                    "model_reported_marker": "not_found",
+                    "synthetic": true
+                  },
+                  "tool_call_id": "release-demo-1",
+                  "tool_name": "release_synthetic_recall"
+                },
+                "allowed_decisions": [
+                  "approve",
+                  "reject"
+                ],
+                "contract": "openai-engine-review-v1",
+                "requesting_user_id": "phase0-concurrent-user-4299d08bc50c-b"
+              }
+            }
+          ],
+          "resume_schema": {
+            "additionalProperties": true,
+            "properties": {
+              "resume_map": {
+                "additionalProperties": false,
+                "properties": {
+                  "6ae37b907e90ef4c0ed3ff6c": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "decision": {
+                        "enum": [
+                          "approve",
+                          "reject"
+                        ],
+                        "title": "Decision",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "decision"
+                    ],
+                    "title": "ReviewDecision",
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "6ae37b907e90ef4c0ed3ff6c"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "resume_map"
+            ],
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "case": "a",
+      "session": "phase0-concurrent-4299d08bc50c-a",
+      "user": "phase0-concurrent-user-4299d08bc50c-a",
+      "stage": "resume",
+      "started_at_epoch": 1793293201.588279,
+      "ended_at_epoch": 1793293203.543754,
+      "exit_code": 0,
+      "response": {
+        "success": true,
+        "workspace_id": "ws-6ae20f53f3b040aa65fa961a",
+        "project_id": "67b385a7976edf15ecc62e06",
+        "org_id": "663e3089acf80f05b63effcf",
+        "session_id": "phase0-concurrent-4299d08bc50c-a",
+        "response": "{\"invoice_id\":\"demo-1\",\"amount_minor\":7990,\"currency\":\"USD\",\"synthetic\":true,\"model_reported_marker\":\"not_found\"}",
+        "execution_id": "fdcc9592-2a35-48a4-9bb0-6d11cc95329f"
+      }
+    },
+    {
+      "case": "b",
+      "session": "phase0-concurrent-4299d08bc50c-b",
+      "user": "phase0-concurrent-user-4299d08bc50c-b",
+      "stage": "resume",
+      "started_at_epoch": 1793293201.5929952,
+      "ended_at_epoch": 1793293203.5433002,
+      "exit_code": 0,
+      "response": {
+        "success": true,
+        "workspace_id": "ws-6ae20f53f3b040aa65fa961a",
+        "project_id": "67b385a7976edf15ecc62e06",
+        "org_id": "663e3089acf80f05b63effcf",
+        "session_id": "phase0-concurrent-4299d08bc50c-b",
+        "response": "{\"invoice_id\":\"demo-1\",\"amount_minor\":7990,\"currency\":\"USD\",\"synthetic\":true,\"model_reported_marker\":\"not_found\"}",
+        "execution_id": "f0ec9cae-7e06-4499-b12c-69fb18e3ebec"
+      }
+    }
+  ],
+  "status": "passed_bounded_concurrent_invocation_and_resume",
+  "limitations": [
+    "Overlapping client request intervals are not a capacity benchmark or proof of simultaneous execution of every internal step.",
+    "No independent end-user authorization test; one CLI identity delegates both users.",
+    "Storage counts cover these two runs only; no capacity or arbitrary crash-boundary guarantee."
+  ],
+  "prior_attempt": {
+    "run_id": "174a0ab26588",
+    "outcome": "Both CLI calls exited 1 inside the sandbox without execution IDs; cause not captured. Repeated with approved external network access.",
+    "remote_effects": "not independently verified"
+  },
+  "storage_audit": {
+    "connection": "ClusterDemoTelco",
+    "collection": "memory_short_term",
+    "scope": "Exact org/project and the two synthetic session IDs; metadata only",
+    "sessions": [
+      {
+        "session": "phase0-concurrent-4299d08bc50c-a",
+        "user": "phase0-concurrent-user-4299d08bc50c-a",
+        "count": 3,
+        "roles": [
+          "user",
+          "assistant",
+          "tool"
+        ],
+        "sequences": [
+          1,
+          2,
+          3
+        ],
+        "unique_hash_count": 3
+      },
+      {
+        "session": "phase0-concurrent-4299d08bc50c-b",
+        "user": "phase0-concurrent-user-4299d08bc50c-b",
+        "count": 3,
+        "roles": [
+          "user",
+          "assistant",
+          "tool"
+        ],
+        "sequences": [
+          1,
+          2,
+          3
+        ],
+        "unique_hash_count": 3
+      }
+    ],
+    "result": "passed_bounded_post_resume_counts"
+  }
+}

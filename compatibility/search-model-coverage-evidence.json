@@ -1,0 +1,50 @@
+{
+  "recorded_at": "2026-10-29T16:58:05.823Z",
+  "scope": "phase0_synthetic_search_model_override",
+  "status": "pass",
+  "phase0_complete": false,
+  "database": "telecom_eval_knowledge",
+  "collection": "phase0_search_probe",
+  "transport": "MongoDB MCP",
+  "query_count": 1,
+  "cumulative_bounded_probe_queries": 6,
+  "index": {
+    "name": "phase0_autoembed",
+    "model": "voyage-4-lite",
+    "dimensions": 512,
+    "status": "READY",
+    "queryable": true
+  },
+  "pipeline": [
+    {
+      "$vectorSearch": {
+        "index": "phase0_autoembed",
+        "path": "text",
+        "query": {
+          "text": "optical cable"
+        },
+        "model": "voyage-4",
+        "numCandidates": 80,
+        "limit": 4,
+        "filter": {
+          "tenant_id": "synthetic_a",
+          "acl": "customer",
+          "published": true
+        }
+      }
+    },
+    {
+      "$project": {
+        "_id": 1
+      }
+    }
+  ],
+  "returned_ids": [
+    "phase0_allowed"
+  ],
+  "limitations": [
+    "Query-model override only; voyage-4 document indexing not tested",
+    "Four synthetic records; no retrieval-quality or database-role authorization proof",
+    "No index mutations or Engine-managed namespace access"
+  ]
+}

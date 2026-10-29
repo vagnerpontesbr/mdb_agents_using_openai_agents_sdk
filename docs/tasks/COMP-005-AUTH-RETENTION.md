@@ -82,3 +82,69 @@ This completes the read-only configuration/delivery inspection. The thirty-day r
 ## User acceptance of native expurgo
 
 The latest user instruction accepts expurgo as Agent Engine responsibility and removes the requirement to prove it in this asset. The earlier expurgo/cascade/retention tests are no longer Phase 0 gates; see the [ADR acceptance adjustment](../adr/0019-requester-approval-memory-retention.md#acceptance-adjustment-selected-by-the-user). No additional shared configuration change or successful full-coverage deletion test is implied. Remaining COMP-005 work is authenticated requester approval and denied other-user/spoofed-requester controls.
+
+## Read-only gateway identity provenance diagnostic: 2026-10-29
+
+The captured official OpenAPI defines `main.SessionRun.user_id` as the delegation target and `invoker_user_id` as the gateway-authenticated caller who started the run. Either may be absent; both are omitted from the support-safe view. `GET /api/v1/users/me` returns the current authenticated profile, and `GET /api/v1/projects/{id}/sessions/{session_id}/runs?workspace_id=...` returns session runs with a documented `truncated` indicator. These are a concrete provenance surface, not a supported current-reviewer authorization hook.
+
+Added [read-only diagnostic](../../scripts/check_requester_provenance.py) and [four deterministic tests](../../tests/compatibility/test_requester_provenance.py). The diagnostic reads the existing CLI session credential only in memory, rejects redirects, bounds response size, and emits boolean metadata without personal identifiers or conversation content. It checks exact execution/session/workspace scope, delegated fixture identity, invoker/profile equality, and completeness before reporting an observation. Even a successful observation explicitly leaves `requester_approval_authorized=false`.
+
+Live invocation used the existing synthetic valid expiry/memory execution, without creating an identity or invoking/resuming an agent:
+
+```sh
+python3 scripts/check_requester_provenance.py \
+  --project 67b385a7976edf15ecc62e06 \
+  --workspace ws-6ae20f53f3b040aa65fa961a \
+  --session phase0-expiry-memory-valid-20261029 \
+  --execution 17ca3dee-595b-4ed3-9826-fafa29c6a4b4 \
+  --delegated-user phase0-expiry-memory-user-valid-20261029
+```
+
+Both JSON reads succeeded. The run response contained the target execution with an `invoker_user_id`; its count matched the returned runs, but `truncated` was absent. The diagnostic therefore exited 1 with `incomplete_run_view`, rather than treating an omitted completeness indicator as false. This is conservative diagnostic behavior, not proof of a platform authorization failure. No identity equality result is claimed for this live read.
+
+Remaining prerequisite: a supported authenticated principal for the **current approver** at the decision boundary, bound to the exact pending action, plus two independent authenticated principals for requester-allowed and other-user/spoof-denied controls. The original invocation's gateway identity cannot authenticate a subsequent reviewer. Caller-provided delegated IDs or custom headers cannot fill this gap. No business-policy decision, new account, shared policy change, memory change, deployment, commit or push was made by this work. Native expurgo remains accepted and is not reopened.
+
+Validation: `python3 -m unittest discover -s tests/compatibility -v` passed 56 tests, including the four new provenance tests; `python3 scripts/check_repository.py` passed; `git diff --check` passed. These local tests validate diagnostic rejection/sanitization, not provider requester authorization.
+
+## Current-approver boundary investigation: 2026-10-29
+
+A second inspection of pinned `agent-engine-sdk==0.11.11` and `agent-engine-runner-shared==0.11.11` confirms the exact boundary: `models.py:RequestContext` has no current authenticated invoker/reviewer field, and `server/aer.py` constructs it using `request.user_id` and `request.custom_headers`. The runner's context helpers describe these headers as caller-provided. The reserved internal `a2a-token` supports agent-to-agent calls; it is not a documented human-reviewer assertion and must not be repurposed as one.
+
+The official [invoke guide](https://www.mongodb.com/docs/agentengine/deploy/invoke-agent/) permits forwarding an authorization header to an external API and requires custom headers to be resent on resume. That transports a credential; it does not authenticate its content or establish a requester claim. An independently verified issuer credential could support backend authorization, but no application issuer, audience, trusted keys or introspection configuration currently exists in this repository. The captured Engine OpenAPI describes `BearerAuth` as JWT or API key and publishes `/api/v1/users/me`, but no JWKS, OpenID discovery, token introspection or signed current-reviewer assertion contract. This limits local offline token verification; decoding a JWT without verifying its signature would not close the gap. The successful `/users/me` read authenticates its own bearer caller only.
+
+The official [runner execution flow](https://www.mongodb.com/docs/agentengine/sdk/python/packages/agent-engine-runner-shared/) places “Store human decision” in OE before its subsequent `POST /execute` to AER. Therefore an adapter-only check after resume cannot be presented as a guarantee that unauthorized decisions leave the native suspension untouched. The published flat review endpoint and the native `resume_map` invocation path remain distinct contracts. The [HITL guide](https://www.mongodb.com/docs/agentengine/deploy/human-in-the-loop/) documents decision allowlisting, not requester-only access. Published `main.PolicyType` includes limits and authorized tools/models, but no requester-only approval policy. These are inspected-surface limitations, not proof of platform-wide absence.
+
+A backend admission check *before* the Engine resume request is the concrete application-side control point, provided every application reviewer goes through that authenticated boundary and cannot bypass it through another Engine invoke/resume route. It must bind the verified principal to the trusted original requester and exact pending action, reject before forwarding on mismatch, preserve Engine as the sole approval owner, and pin the reviewed suspension/action version. No backend was scaffolded: its authentication, bypass restrictions and integration compatibility are still prerequisites.
+
+Credential type also matters. `main.InvokeWorkspaceRequest.user_id` explicitly states that human/API-key calls may supply a personalization identity, while service-account calls always use the service-account identity and cannot yet act as another user. Earlier successful synthetic delegation used the authenticated CLI session; it is not evidence that a service-account proxy can preserve per-requester Engine memory isolation. Introducing such a proxy without validating that boundary could merge users under one service-account memory identity. Read-only or owner-level access evidence does not establish the minimum write-capable role for this flow.
+
+The missing `truncated` field remains conservative diagnostic uncertainty. The reviewed OpenAPI gives it no explicit omitted-means-false default, and no additional source established one. It is not an authorization blocker in itself, and no relaxation was made to manufacture an observed result.
+
+### Minimal platform contract required to close this gate
+
+1. A documented authenticated current-caller identity or independently verifiable assertion available **before** accepting either a flat review decision or a native `resume_map`, with its issuer, audience, verification mechanism and binding to the target execution/workspace/action.
+2. A supported requester-only admission hook/policy, or backend-only execution access that prevents application users from bypassing admission through alternate invocation routes. Denial must retain the pending action for its authorized requester.
+3. A documented relationship between authenticated principal, delegated personalization identity and Engine memory identity for the credential type actually used, plus the minimum permissions needed to invoke, inspect suspension and resume.
+4. Two independent authenticated test principals. The same token paired with different `user_id` values remains one principal and cannot demonstrate denied impersonation.
+
+### Prepared technical questions for MongoDB support — not sent
+
+- Which supported gateway or OE hook enforces authenticated requester-only approval before decision storage for **both** `POST .../executions/{execution_id}/resume` and workspace invocation with native `resume_map`? Does denying there leave the original interrupt pending and its generation unchanged?
+- Is the gateway-authenticated caller of the current resume exposed separately from the original invocation's `SessionRun.invoker_user_id`? If supplied as an assertion/header, what is its signature-verification contract, and how does the gateway strip caller-forged versions?
+- Can supported project/workspace permissions force application users through an authenticated backend while preserving Engine-owned approval and per-user managed memory? What credential/delegation mechanism supports that, given the documented service-account restriction?
+- What are the minimum roles/actions for that invoke/read-suspension/resume path, and how are permissions restricted to the intended workspace? Which response identifies a forbidden reviewer distinctly from expired authentication or a stale suspension?
+- Is omitted `SessionRunsResponse.truncated` contractually equivalent to false, or a version/support-safe projection with unknown completeness?
+
+No support message was sent and no identities, roles, policies, deployments or secrets were changed. This follow-up narrows the implementation prerequisite; it does not mark requester authorization as passed or request another business-policy decision. Documentation validation: `python3 scripts/check_repository.py` and `git diff --check` passed.
+
+
+## Application identity decision now selected
+
+The user selected demo-local email/password authentication, admin-only registration, two roles and an initial administrator. [ADR-0020](../adr/0020-demo-email-password-auth.md) supersedes the earlier unknown application authentication choice. [The bounded identity module](COMP-005-DEMO-AUTH.md) implements credential checks and requester-only domain admission locally. No external IdP decision is pending. Trusted Engine action ownership, pre-resume enforcement, bypass restrictions and delegated memory identity remain distinct integration work.
+
+
+## Bounded application admission now passes
+
+After the user selected local email/password identities, [the demo HTTP boundary](COMP-005-DEMO-AUTH.md#authenticated-native-engine-approval-passes) validated native requester approval with two independently authenticated application accounts. It reads original ownership and suspension content from the authenticated Engine execution endpoint, denies another application user before any resume, confirms the Engine pending projection unchanged, then permits the original requester. Engine remains the only approval owner. No signed reviewer claim inside AER is required for this **backend-only demo access path** because app users receive no Engine credentials.
+
+This supersedes the earlier prerequisite of an unspecified application identity provider and closes the bounded application authorization control. It does not establish an Engine-wide requester-only policy or stop privileged Engine operators from using direct platform APIs. The bridge uses the existing human CLI credential with delegated app user IDs; service-account delegation and least-privilege deployment remain unproved. Native expurgo remains accepted by the user.

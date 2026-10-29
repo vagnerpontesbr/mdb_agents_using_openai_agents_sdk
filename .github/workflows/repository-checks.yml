@@ -24,3 +24,5 @@ jobs:
         run: python3 scripts/check_repository.py
       - name: Test compatibility evidence and live-call controls
         run: python3 -m unittest discover -s tests/compatibility -v
+      - name: Test demo authentication and Engine admission without network
+        run: python3 -m unittest discover -s tests/demo_auth -v

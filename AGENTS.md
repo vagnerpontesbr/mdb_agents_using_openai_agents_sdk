@@ -2,7 +2,7 @@
 
 ## Start here
 
-- This workspace currently contains planning, synthetic fixtures, and repository checks. Application/provider integrations are not implemented.
+- This workspace contains planning, synthetic fixtures, repository checks, and bounded Phase 0 provider/identity integration proofs. The full telecom application is not implemented.
 - Read [initial_plan.md](initial_plan.md) for scope, [requirements](docs/REQUIREMENTS.md) for user decisions, and the relevant [ADR](docs/adr/README.md) before changing architecture.
 - Use [the task backlog](docs/tasks/README.md) to choose a bounded deliverable and record evidence. The latest explicit user instruction takes precedence over repository guidance.
 - All code, documentation, UI, prompts, and example conversations are English.

@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Telecom Demo · User access</title>
+<style>body{font:16px system-ui;color:#073b2a;background:#f3f8f5;max-width:650px;margin:60px auto;padding:24px}section{padding:24px;background:white;border:1px solid #d1ded6;border-radius:12px;margin:20px 0}label{display:block;margin-top:16px}input,select{box-sizing:border-box;font:inherit;width:100%;padding:10px;border:1px solid #8fa69a;border-radius:5px}button{font:inherit;background:#00684a;color:white;border:0;border-radius:6px;padding:11px 18px;margin-top:20px}#status{min-height:24px}[hidden]{display:none!important}</style>
+<h1>Telecom Demo</h1><p>User access</p>
+<p id="status" role="status"></p>
+<section id="loginPanel"><h2>Sign in</h2><form id="login">
+<label for="email">Email</label><input id="email" type="email" autocomplete="username" required maxlength="254">
+<label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required minlength="8" maxlength="128">
+<button>Sign in</button></form></section>
+<section id="account" hidden><h2>Signed in</h2><p id="identity"></p><button id="logout">Sign out</button></section>
+<section id="admin" hidden><h2>Create user</h2><form id="create">
+<label for="newEmail">New user email</label><input id="newEmail" type="email" autocomplete="off" required maxlength="254">
+<label for="newPassword">Initial password</label><input id="newPassword" type="password" autocomplete="new-password" required minlength="8" maxlength="128">
+<label for="role">Role</label><select id="role"><option value="user">User</option><option value="admin">Admin</option></select>
+<button>Create user</button></form></section>
+<section id="invoice" hidden><h2>Synthetic invoice</h2><p>Request a demo invoice through Agent Engine. Only you may approve your pending response.</p><button id="requestInvoice">Request invoice</button>
+<pre id="pending" style="white-space:pre-wrap"></pre><button id="approve" hidden>Approve</button><button id="reject" hidden>Reject</button></section>
+<script>
+const $=id=>document.getElementById(id);let busy=false,pendingReview=null;const engineEnabled=__ENGINE_ENABLED__;
+async function request(path,data){
+ const response=await fetch(path,data===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+ const body=await response.json();if(!response.ok)throw Error(body.error||'Request failed');return body;
+}
+function show(user){$('loginPanel').hidden=!!user;$('account').hidden=!user;$('admin').hidden=!user||user.role!=='admin';$('identity').textContent=user?`${user.email} · ${user.role}`:'';$('invoice').hidden=!user||!engineEnabled;pendingReview=null;$('pending').textContent='';$('approve').hidden=$('reject').hidden=true;}
+async function action(work){if(busy)return;busy=true;document.querySelectorAll('button').forEach(b=>b.disabled=true);try{await work();}catch(e){$('status').textContent=e.message;}finally{busy=false;document.querySelectorAll('button').forEach(b=>b.disabled=false);}}
+$('login').onsubmit=e=>{e.preventDefault();action(async()=>{try{const user=await request('/api/login',{email:$('email').value,password:$('password').value});show(user);$('status').textContent='Signed in successfully.';}finally{$('password').value='';}});};
+$('create').onsubmit=e=>{e.preventDefault();action(async()=>{try{const user=await request('/api/users',{email:$('newEmail').value,password:$('newPassword').value,role:$('role').value});$('create').reset();$('status').textContent=`Created ${user.email} with role ${user.role}.`;}finally{$('newPassword').value='';}});};
+$('logout').onclick=()=>action(async()=>{await request('/api/logout',{});show(null);$('status').textContent='Signed out.';});
+$('requestInvoice').onclick=()=>action(async()=>{pendingReview=await request('/api/invoice',{});$('pending').textContent=JSON.stringify(pendingReview.action,null,2);$('approve').hidden=$('reject').hidden=false;$('status').textContent='Engine is awaiting your decision.';});
+async function decide(decision){await action(async()=>{if(!pendingReview)return;const result=await request('/api/review',{execution_id:pendingReview.execution_id,action_digest:pendingReview.action_digest,decision});$('pending').textContent=JSON.stringify(result.result,null,2);pendingReview=null;$('approve').hidden=$('reject').hidden=true;$('status').textContent='Engine review completed.';});}
+$('approve').onclick=()=>decide('approve');$('reject').onclick=()=>decide('reject');
+request('/api/me').then(show).catch(()=>show(null));
+</script></html>

@@ -1,0 +1,29 @@
+{
+  "status": "failed_or_incomplete",
+  "calls": [],
+  "session_id": "phase0-browser-voice-e55753a33579",
+  "scope": "Synthetic MediaRecorder/codec, hosted voice and chat; no microphone",
+  "limitations": [
+    "Automatic approval of exact synthetic fixture by one CLI caller.",
+    "Browser playback events do not prove human listening.",
+    "Browser cancellation does not cancel accepted remote work.",
+    "Both channels recall a previously stored marker."
+  ],
+  "recorded_at": "2026-10-29T17:11:16.881629+00:00",
+  "error_class": "RuntimeError",
+  "storage_audit": {
+    "connection": "ClusterDemoTelco",
+    "collection": "memory_short_term",
+    "scope": "Exact project/org/user/session; metadata only",
+    "count": 2,
+    "roles": [
+      "user",
+      "assistant"
+    ],
+    "sequences": [
+      1,
+      2
+    ],
+    "unique_hash_count": 2
+  }
+}

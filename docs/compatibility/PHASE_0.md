@@ -2,6 +2,20 @@
 
 Status: in progress, with remaining Engine/provider gates. Local split dependency locks, frozen installs/builds and synthetic CPU PDF/OCR now pass on macOS ARM64; see the latest checkpoint below. This phase is not complete. The application has not been scaffolded; these are diagnostic environment locks, not application or hosted-runtime acceptance.
 
+## Current bounded checkpoint: 2026-10-29
+
+The latest follow-up closes [two concurrent hosted sessions and resumes](../tasks/COMP-003-HOSTED.md#bounded-concurrent-hosted-sessions-pass), each with three distinct stored turns, and the [voyage-4 query override](../tasks/COMP-004-SEARCH.md#model-coverage-follow-up-2026-10-29) against the existing lite index with tenant/ACL/publication filters. [Hosted voice/chat and synthetic browser codec/playback](../tasks/COMP-004-VOICE.md#hosted-engine-voice-and-chat-proof-2026-10-29) now pass against existing Engine memory. The first browser failure still wrote two turns; both successful two-turn sessions stored six distinct turns. These are bounded live observations, not capacity or application authorization guarantees.
+
+[Local cancellation tests](../tasks/COMP-003-FAULTS.md) now verify no late output/next-stage dispatch/retry after cancellation during memory/model/tool work. They also demonstrate that an already-running synchronous operation continues. All 59 hosted-contract tests pass on macOS and Linux/amd64; all 66 bootstrap compatibility tests and browser JavaScript syntax checks pass. Remote transport is doubled in local contract tests; browser/provider/Engine observations are reported separately.
+
+[Authenticated requester approval through the local demo backend](../tasks/COMP-005-DEMO-AUTH.md#authenticated-native-engine-approval-passes) now passes: other-user/spoof/stale controls leave native pending state intact, and the requester completes the same execution. The test uses two app accounts behind the existing private human CLI identity; service-account delegation and privileged direct Engine access are outside this proof.
+
+Remaining gates are a supported [chronological history source](../tasks/COMP-003-HISTORY.md) with faithful SDK tool correlation, real microphone/human listening and broader channel fault coverage, and least-privilege runtime identity limitations. The history endpoint was empty; further STM reads returned incomplete call/result correlation and an unsafe privileged-role formatter, so no transcript adapter was fabricated. [Current-approver investigation](../tasks/COMP-005-AUTH-RETENTION.md#current-approver-boundary-investigation-2026-10-29) identifies the necessary pre-resume control and credential/delegation questions for MongoDB. Prepared support questions have not been sent.
+
+The user subsequently selected [demo email/password authentication](../adr/0020-demo-email-password-auth.md), `user`/`admin` roles and admin-only registration. Eleven [local credential/session tests](../tasks/COMP-005-DEMO-AUTH.md) pass. The initial admin now exists in Atlas; loopback login, admin registration, user denial, session revocation/throttling and browser role views passed real controls. The bounded demo pre-resume admission also passes; minimum database/Engine permissions and deployable service credentials remain unverified. No external identity-provider choice is pending.
+
+Native expurgo proof is waived by the user and is not pending. Optional model comparisons and end-to-end RAG quality remain in their scoped implementation tasks. New changes are locally authored, not committed/pushed or deployed; the existing recall deployment and shared settings remain unchanged. Earlier sections preserve historical findings and do not override this checkpoint. Phase 0 remains incomplete.
+
 ## Implemented tooling
 
 - `compatibility/package-metadata.json`: captured official PyPI package metadata, source URLs, version constraints, and download hashes. Metadata is not runtime evidence.

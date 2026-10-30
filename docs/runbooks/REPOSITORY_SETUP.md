@@ -88,3 +88,18 @@ unverified operations succeeded.
 Earlier initialization/network/plugin-write failures were historical setup
 constraints. They no longer describe the verified publication above. Do not
 relocate Git metadata or retry plugin writes to bypass restrictions.
+
+## PR #3 intermittent login-limit test correction
+
+The PR #3 run `41038899374` failed because
+`test_unknown_accounts_share_peer_rate_limit` used the real clock and crossed a
+minute boundary: the ninth request correctly entered a fresh counter window and
+returned 200 instead of the test's expected 429. The merge and Phase 3 commit
+subsequently passed CI, but that did not remove the timing-dependent test defect.
+
+The locally authored correction injects a fixed clock into this test, verifies
+429 after eight unknown-account attempts, then advances one second across the
+minute boundary and verifies successful login. Application rate limits and the
+shared identity fixture remain unchanged. Seven HTTP tests and Ruff passed;
+new remote CI requires the user's manual commit/push. Phase 4 work in progress is
+separate from this correction.

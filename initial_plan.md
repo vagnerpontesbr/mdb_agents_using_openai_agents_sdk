@@ -1,6 +1,6 @@
 # Telecom agent framework: implementation plan
 
-**Status:** Phase 0 compatibility is complete for the explicitly accepted demo scope on 2026-10-29; the implementation/evidence checkpoint was published as `43746c6`; [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md) records the publication checkpoint and passing push/PR CI for the disconnect-test fix `60ef97b`. Full application implementation and Phase 1 have not started. See the authoritative [Phase 0 checkpoint](docs/compatibility/PHASE_0.md) for tested versions, accepted limitations and remote restoration evidence. Earlier planning findings below are historical where superseded by that checkpoint.
+**Status:** Phase 0 compatibility is complete for the explicitly accepted demo scope on 2026-10-29; the implementation/evidence checkpoint was published as `43746c6`; [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md) records the publication checkpoint and passing push/PR CI for the disconnect-test fix `60ef97b`. Phase 1 application foundation is implemented locally; [FND-003](docs/tasks/FND-003-FOUNDATION.md) records validation. The full application journey and Phase 2 have not started. See the authoritative [Phase 0 checkpoint](docs/compatibility/PHASE_0.md) for tested versions, accepted limitations and remote restoration evidence. Earlier planning findings below are historical where superseded by that checkpoint.
 
 **Language:** documentation, code identifiers, comments, prompts, configuration, navigation, user-facing UI, and sample chat/voice conversations will all be English.
 
@@ -194,6 +194,8 @@ docs/SCALABILITY_AND_STRESS_TESTS.md
 Keep the reusable core small and typed. Clients replace contracts and configuration rather than copying the agent loop. Create concise root and directory-specific `AGENTS.md` instructions with actual setup/build/test commands. Commit dependency locks; frozen CI installs must not silently change versions. Document externally sourced API decisions with dates and links.
 
 ## 9. Implementation phases and acceptance criteria
+
+Phase 1 scope is refined by [ADR-0024](docs/adr/0024-phase-one-application-boundaries.md): deliver the working identity journey and actual API/admin entrypoints, retain the separate Engine runtime, and defer knowledge/worker implementations until their feature phase. Do not scaffold empty services. ADR-0021 supersedes exact chronological restoration in the original Phase 3 row; native expurgo remains accepted without additional deletion proof.
 
 **Manual phase checkpoints:** finish one phase, report actual evidence and any remaining limitations, then stop and provide commit commands. The user performs the commit/push manually. Begin the next phase only after the user confirms. A failed compatibility gate remains open; do not call it phase completion.
 

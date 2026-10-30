@@ -2,7 +2,7 @@
 
 ## Start here
 
-- Phase 0 bounded compatibility is complete; read the current [checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md). The full telecom application and Phase 1 are not implemented.
+- Phase 0 bounded compatibility is complete; read the current [checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md). Phase 1 application foundation is tracked in [FND-003](docs/tasks/FND-003-FOUNDATION.md); use the [application runbook](docs/runbooks/APPLICATION.md). The full telecom journey is not implemented.
 - Read [initial_plan.md](initial_plan.md) for scope, [requirements](docs/REQUIREMENTS.md) for user decisions, and the relevant [ADR](docs/adr/README.md) before changing architecture.
 - Use [the task backlog](docs/tasks/README.md) to choose a bounded deliverable and record evidence. The latest explicit user instruction takes precedence over repository guidance.
 - All code, documentation, UI, prompts, and example conversations are English.
@@ -36,7 +36,7 @@ From the project root, run `python3 scripts/check_repository.py` after documenta
 
 Phase 0 diagnostics: `python3 -m unittest discover -s tests/compatibility -v` tests the probe harness. `python3 scripts/check_compatibility.py` reports metadata/import/prerequisite evidence; nonzero status can report unconfigured local prerequisites or unrequested live checks; it does not replace the recorded Phase 0 acceptance. See [the Phase 0 runbook](docs/compatibility/PHASE_0.md) before any explicit live probe.
 
-Identity and hosted-contract test commands are in CONTRIBUTING.md; compatibility packaging exists. There are no full-application build/lint/type commands yet. Add actual commands with the implementation; do not report placeholders as passing checks. Future changes must run the relevant behavior/contract tests, lint/types, and builds. Separate deterministic CI from credentialed provider evaluations and bounded stress runs.
+Root application commands: `uv sync --frozen`, `uv run --frozen ruff check src/telecom_app tests/foundation`, `uv run --frozen mypy`, `uv run --frozen pytest -q`, and `uv build --no-build-isolation`. Frontend: `npm --prefix apps/web ci`, `npm --prefix apps/web run lint`, `npm --prefix apps/web run typecheck`, `npm --prefix apps/web test`, `npm --prefix apps/web run build`, and `npm --prefix apps/web run test:e2e` (Chromium installed). Identity and hosted-contract commands remain in CONTRIBUTING.md. Run checks relevant to the changed boundary. Separate deterministic CI from credentialed provider evaluations and bounded stress runs.
 
 ## Code Review Rules
 

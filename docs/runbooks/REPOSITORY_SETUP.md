@@ -2,7 +2,15 @@
 
 Remote: https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk
 
-## Verified publication checkpoint
+## Current publication and work checkpoint
+
+PR #1 merged into `main` as `5dc29d87cf3584c8cd749208b0d9b1b43cfa8b08`.
+Documentation commit `1ba8c49` passed both push/PR checks; the [post-merge run](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/40953112946) also passed.
+The user subsequently authorized Phase 1. Its source, locks and new application
+CI job are local on `codex/phase-1-foundation` until separately published; see
+[FND-003](../tasks/FND-003-FOUNDATION.md). Earlier checkpoints below are history.
+
+## Verified Phase 0 publication checkpoint
 
 On 2026-10-29, commit
 [`43746c67e81203c52d18ee81626412eff73f652a`](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/commit/43746c67e81203c52d18ee81626412eff73f652a)
@@ -68,7 +76,7 @@ unverified; a workflow file does not establish those repository settings.
 
 [Phase 0](../compatibility/PHASE_0.md) records accepted bounded integration evidence,
 including the restored hosted demo; it is distinct from PR/CI/merge acceptance.
-Phase 1 has not started. Default to preparing exact manual Git commands, unless
+Phase 1 was subsequently authorized; its acceptance is tracked separately. Default to preparing exact manual Git commands, unless
 the user explicitly authorizes the assistant to execute commit/push. Preserve
 remote history and use the repository review process; do not force-push or claim
 unverified operations succeeded.

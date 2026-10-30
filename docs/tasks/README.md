@@ -11,7 +11,7 @@ The [initial plan](../../initial_plan.md) defines scope; this backlog sequences 
 | COMP-003 | Engine hosted execution proof | COMP-001, platform access | Verify SDK orchestration, tool/LLM audit, replay, approval/resume; report unsupported contract explicitly | Passed for bounded hosted orchestration, native review/replay/recovery, semantic/episodic recall, concurrency and injected dependency failure; [hosted evidence](COMP-003-HOSTED.md), [fault/restoration evidence](COMP-003-FAULTS.md). Chronological restoration excluded by ADR-0021; full framework implementation remains future work. |
 | COMP-004 | Voyage/search/voice capability probes | COMP-001, provider access | Actual auto-chunk, dimensions, fusion, Auto Embedding and voice/session contract results | Passed for scoped [search](COMP-004-SEARCH.md) and [voice](COMP-004-VOICE.md) compatibility, including real microphone/listening. Quiet-environment voice accepted in ADR-0023; noise robustness and application RAG quality remain outside this checkpoint. |
 | COMP-005 | Requester authorization and thirty-day memory lifecycle | COMP-002, COMP-003 | Authenticated self-approval and denied other-user controls; native expurgo accepted without additional proof | Passed for [demo identity, requester-only admission and restricted application database permissions](COMP-005-DEMO-AUTH.md). Private Engine CLI identity accepted in ADR-0022; native expurgo proof waived by user. |
-| FND-003 | Backend/frontend manifests and CI | COMP-001 | Frozen installs, imports/builds, lint/types and relevant tests; no fake lockfiles | Ready |
+| FND-003 | Backend/frontend manifests and CI | COMP-001 | Frozen installs, imports/builds, lint/types and relevant tests; no fake lockfiles | Complete locally; publication/remote CI pending; [FND-003 evidence](FND-003-FOUNDATION.md) |
 | VERT-001 | First authenticated financial request | FND-003 | Typed intent, validated tool, simulated invoice, approved template, denied access and idempotency cases | Ready |
 | VERT-002 | Three specialists plus browser voice | VERT-001, COMP-004 | Mixed-intent route, mic/transcript/playback, shared context, cancellation and failure cases | Ready |
 | MEM-001 | Memory and interrupted-run persistence | COMP-002, VERT-001 | Continuity, isolated tenants, concurrency and resume evidence; native expurgo accepted by user | Ready |
@@ -24,11 +24,11 @@ The [initial plan](../../initial_plan.md) defines scope; this backlog sequences 
 demo scope documented in [Phase 0](../compatibility/PHASE_0.md), with explicit
 ADR-0021/0022/0023 limitations and user-accepted native expurgo. Final restoration
 and positive recall passed. The detailed task histories preserve broader limits;
-those are not claims of full application or production acceptance. Implementation/evidence was committed and pushed as `43746c6`. The documentation reconciliation follows that checkpoint; remote push and PR CI passed for fix `60ef97b`. Do not start FND-003/Phase 1 yet.
+those are not claims of full application or production acceptance. Implementation/evidence was committed and pushed as `43746c6`. The documentation reconciliation follows that checkpoint; remote push and PR CI passed for fix `60ef97b`. Phase 1 was subsequently authorized; see FND-003. Do not start Phase 2 without its checkpoint.
 
 Implementation tasks can be subdivided before coding. Failed compatibility gates should drive explicit decisions, not speculative implementations. Remote review and publishing remain distinct from local completion.
 
-User-defined phase gate: stop after each completed phase, provide manual commit commands, and wait for confirmation before the next phase. [Phase 0 evidence and runbook](../compatibility/PHASE_0.md) records the completed bounded checkpoint; commit/push completed; await user confirmation before the next phase.
+User-defined phase gate: stop after each completed phase, provide manual commit commands, and wait for confirmation before the next phase. [Phase 0 evidence and runbook](../compatibility/PHASE_0.md) records the completed bounded checkpoint; Phase 0 commit/push/merge completed; the user authorized Phase 1. Its next checkpoint precedes Phase 2.
 
 VERT-001 includes an explicit `@function_tool` invoice walkthrough; VERT-002 includes approved simulated plan changes; RAG-001 includes curator-only ingestion jobs. EVAL-001 implements calibrated offline LLM-as-judge grading with independent time-valid references. Online judge gating is optional and disabled by default; deterministic policy checks remain mandatory.
 

@@ -1,8 +1,12 @@
 # Contributing
 
-The intended repository is [vagnerpontesbr/mdb_agents_using_openai_agents_sdk](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk). Read [AGENTS.md](AGENTS.md) and the relevant task/ADR before working. Phase 0 bounded compatibility is complete; Phase 1 and the full application have not started. See the [current checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md).
+The intended repository is [vagnerpontesbr/mdb_agents_using_openai_agents_sdk](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk). Read [AGENTS.md](AGENTS.md) and the relevant task/ADR before working. Phase 0 bounded compatibility is complete; Phase 1 foundation is implemented locally; see [FND-003](docs/tasks/FND-003-FOUNDATION.md). The full application journey has not started. See the [current checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md).
 
-## Local validation
+## Application validation
+
+Use the exact Python 3.15.2 interpreter and frozen root lock. The [application runbook](docs/runbooks/APPLICATION.md) lists backend lint/types/tests/build and frontend lint/types/unit/build/browser commands. Root checks cover the new typed application boundary; existing identity code retains its Phase 0 suite.
+
+## Repository validation
 
 The bootstrap checker uses only the Python standard library:
 
@@ -16,7 +20,7 @@ With uv and an existing system interpreter, the equivalent offline command is:
 uv run --no-project --no-managed-python --offline python3 scripts/check_repository.py
 ```
 
-This checks documentation structure only. Phase 0 separately validated the pinned Python environments and bounded SDK/provider integration. Future application manifests must use uv and their own validated lockfiles.
+This checks documentation structure only. Phase 0 separately validated the pinned Python environments and bounded SDK/provider integration. The root application and frontend now have their own validated lockfiles.
 
 The [local dependency proof](docs/tasks/COMP-001-DEPENDENCIES.md) now provides frozen split compatibility environments and actual build commands for macOS ARM64. These diagnostic packages do not replace the future application/frontend manifests.
 
@@ -50,8 +54,11 @@ are maintained in [Phase 0](docs/compatibility/PHASE_0.md).
 `python3 scripts/check_compatibility.py` remains an opt-in diagnostic harness:
 nonzero may mean missing local prerequisites or an unrequested live check, not
 that the completed Phase 0 evidence has been invalidated. Consult the runbook
-before live probes. GitHub currently runs the repository, compatibility and demo
-identity suites, not the hosted-contract suite or credentialed provider probes.
+before live probes. The workflow retains repository, compatibility and demo identity suites and adds
+a Phase 1 application job. That job installs frozen dependencies, runs backend
+and frontend checks, and exercises the synthetic Chromium identity journey. It
+does not run the hosted-contract suite or credentialed provider probes; remote
+status must be checked after publication.
 The [publication runbook](docs/runbooks/REPOSITORY_SETUP.md) records the resolved
 disconnect-test failure and passing push/PR CI for `60ef97b`. Each subsequent
 commit requires its own CI run.
@@ -62,7 +69,7 @@ Default to manual Git commands unless the user explicitly authorizes the assista
 |---|---|---|
 | Repository check | Local Markdown links, key foundation files, ADR sections/IDs | Available |
 | Unit/contract | Diagnostic, identity and hosted adapter behavior | Available; see commands above |
-| Build/lint/types | Packaging versus future application checks | Compatibility builds available; application lint/types/frontend await Phase 1 |
+| Build/lint/types | Packaging versus future application checks | Application lint/types/backend packaging and React build available |
 | Provider integration | Actual version/account/API compatibility | Phase 0 and feature tasks |
 | Evals/load | Quality, cost, stability, and capacity | Separate explicit workloads and budgets |
 

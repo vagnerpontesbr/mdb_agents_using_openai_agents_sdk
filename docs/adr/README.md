@@ -35,3 +35,5 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0021](0021-demo-semantic-episodic-continuity.md) | Limit demo continuity to validated Engine semantic/episodic memory | Selected by user; chronological restoration outside demo scope |
 | [ADR-0022](0022-demo-private-engine-cli-identity.md) | Retain private operator Engine CLI identity in the loopback demo backend | Selected by user; demo-only privilege exception |
 | [ADR-0023](0023-quiet-environment-demo-voice.md) | Limit demo voice to quiet environments with bounded manual retries | Selected by user; microphone/listening proof passed |
+
+| [ADR-0024](0024-phase-one-application-boundaries.md) | Phase 1 identity application, process ownership and typed response boundary | Implemented; validation in FND-003 |

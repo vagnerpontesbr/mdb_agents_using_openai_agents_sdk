@@ -26,7 +26,7 @@ from agent_engine_runner_shared.workflow.context import (
 )
 from agent_engine_runner_shared.workflow.activity import unwrap_activity_outcome
 
-from .review import request_review, ReviewInterrupt, ReviewDecision
+from .review import request_review, ReviewInterrupt, ReviewDecision, recorded_review_decision
 from .review_deadline import record_deadline
 from .managed_memory import acknowledge_control
 
@@ -64,7 +64,7 @@ async def finalize_review_interrupt(attempt, interrupt):
                 }}, "additionalProperties": True,
             }, "metadata": {},
         })
-    decision = ReviewDecision.model_validate(unwrap_activity_outcome(outcome), strict=True)
+    decision = recorded_review_decision(unwrap_activity_outcome(outcome))
     # Resolved-at-finalization skips the activity helper's normal replay hook.
     with WorkflowClient(get_current_oe_url()) as client:
         acknowledge_control(client, ActivityContext(

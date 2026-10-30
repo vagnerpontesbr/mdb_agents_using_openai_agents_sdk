@@ -38,6 +38,33 @@ class ReviewDecision(BaseModel):
     decision: Literal["approve", "reject"]
 
 
+class NativeHumanReview(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    decision: Literal["approved", "rejected"]
+    reviewer_notes: str = Field(max_length=4000)
+
+
+class NativeReviewEnvelope(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    human_review: NativeHumanReview
+
+
+def recorded_review_decision(answer):
+    """Translate only an Engine-recorded activity result, never request input.
+
+    The generation-pinned execution resume API records a JSON human_review
+    envelope; the per-interrupt resume API records the original typed dictionary.
+    Neither transport changes the domain decision or grants authorization here.
+    """
+    if isinstance(answer, str):
+        if len(answer) > 10000:
+            raise UnsupportedContract("Native review answer exceeds bound")
+        native = NativeReviewEnvelope.model_validate_json(answer, strict=True)
+        return ReviewDecision(decision=(
+            "approve" if native.human_review.decision == "approved" else "reject"))
+    return ReviewDecision.model_validate(answer, strict=True)
+
+
 def request_review(*, client, context: RequestContext, action: ReviewAction,
                    activity_ordinal: int, deadline=None) -> ReviewDecision:
     """Record a wait, or consume OE's recorded answer at the same position.
@@ -81,4 +108,4 @@ def request_review(*, client, context: RequestContext, action: ReviewAction,
         activity_ordinal=activity_ordinal, semantic_input=semantic_input,
         execute=suspend, on_unknown_outcome="fail", on_activity_resolved=acknowledge_control,
     )
-    return ReviewDecision.model_validate(answer, strict=True)
+    return recorded_review_decision(answer)

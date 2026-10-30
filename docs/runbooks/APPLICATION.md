@@ -136,3 +136,10 @@ monitor pool checkout failures/waits, connection creation/churn and aggregate
 Atlas connections; include monitoring sockets and other shared workloads. Tune
 only with measured evidence. No load or public-deployment claim follows from
 these foundation checks. Phase 2 requires a separate user checkpoint.
+
+## Phase 2 support journey
+
+The supervisor/specialist and browser voice implementation is opt-in and has passed bounded
+hosted/browser acceptance. Follow [the Phase 2 runbook](PHASE_2.md) for the deployment gate,
+`APP_JOURNEY_ENABLED`, protected endpoints and recovery. Keep it disabled against
+the Phase 0 invoice deployment.

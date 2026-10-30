@@ -29,6 +29,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--python-archive", type=Path)
     parser.add_argument("--compact-runtime", action="store_true")
+    parser.add_argument("--profile", choices=("invoice", "journey"), default="invoice")
     args = parser.parse_args()
     # Never mix a new build with stale files, keys or caches in an old stage.
     args.output.mkdir(parents=True, exist_ok=False)
@@ -39,6 +40,17 @@ def main():
         target = args.output / file.relative_to(source)
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(file, target)
+    if args.profile == "journey":
+        manifest = args.output / "agent.yaml"
+        content = manifest.read_text()
+        content = content.replace("Synthetic read-only OpenAI Runner compatibility proof",
+                                  "Synthetic telecom supervisor and specialist journey")
+        content = content.replace("openai_engine_adapter.invoice:app",
+                                  "openai_engine_adapter.journey:app")
+        content = content.replace("memory: false", "memory: true")
+        content = content.replace("tools: [lookup_invoice]", "tools: [telco_read_invoice, "
+            "telco_check_connection, telco_offer_plan, telco_simulate_plan_change]")
+        manifest.write_text(content)
     if args.python_archive:
         with args.python_archive.open("rb") as archive_file:
             actual_hash = hashlib.file_digest(archive_file, "sha256").hexdigest()

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { SubmitEvent } from 'react';
 import { ApiError, principal, request } from './api';
 import type { Principal, Role } from './api';
+import Journey from './Journey';
 
 export default function App() {
   const [user, setUser] = useState<Principal | null>(null);
@@ -77,7 +78,7 @@ export default function App() {
           {user ? <>
             <p className="eyebrow">YOUR ACCOUNT</p><h2>Welcome back</h2>
             <div className="account"><strong>{user.email}</strong><span className="role">{user.role}</span></div>
-            <p className="muted">You’re signed in. Support conversations will be available in a future release.</p>
+            <p className="muted">You’re signed in. Your support workspace is below.</p>
             {user.role === 'admin' && <div className="registration">
               <h3>Create an account</h3><p className="muted">Give a team member access to this demo.</p>
               <form onSubmit={event => { void submit(event, true); }}>
@@ -102,6 +103,7 @@ export default function App() {
         {error && <p className="feedback error" role="alert">{error}</p>}
         {notice && <p className="feedback success" role="status">{notice}</p>}
       </section>
+      {user && <Journey key={user.user_id} user={user} />}
     </main>
     <footer>Telecom reference asset <span>Private demo workspace</span></footer>
   </div>;

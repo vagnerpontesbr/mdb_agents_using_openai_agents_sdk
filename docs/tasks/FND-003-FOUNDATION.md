@@ -1,6 +1,6 @@
 # FND-003: Executable application foundation
 
-- Status: Complete locally; publication and new remote CI run pending
+- Status: Complete; commit b2ff9c7 published, PR #2 merged, main CI passed
 - Owner: Repository implementation
 - Phase: 1
 - Dependencies: Accepted COMP-001 through COMP-005
@@ -90,3 +90,11 @@ remain in force; no new memory/approval/transcript owner is introduced.
 Changes are local until explicitly committed/pushed. New GitHub Actions checks
 cannot be described as remotely passed before publication. Stop at this phase
 boundary and provide manual commit commands before starting Phase 2.
+
+## Publication follow-up
+
+Phase 1 commit `b2ff9c7` was published and PR #2 merged as
+`f7611dc7571aef4d76da0c6f8d6069ef85ebd146`. The
+[main CI run](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/40986600069)
+passed. Earlier local-only statements above describe that implementation checkpoint.
+The user subsequently authorized Phase 2, tracked in [VERT-001/002](VERT-001-JOURNEY.md).

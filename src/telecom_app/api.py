@@ -1,11 +1,13 @@
 """Same-origin identity API and React shell; no model or Engine calls at startup."""
 
+import json
+import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
 
@@ -16,12 +18,28 @@ from .config import Settings
 from .contracts import LoginRequest, PrincipalView, RegistrationRequest
 from .database import connect, user_store, verify_connection
 from .identity import IdentityService, identity_service, public_principal
+from .journey import (
+    ChatInput,
+    ConversationInput,
+    EngineAPI,
+    EngineUnavailable,
+    ExecutionInput,
+    JourneyConflict,
+    JourneyService,
+    ReviewInput,
+)
 from .security import Boundary
+from .voice import AudioInput, VoiceService
 
 COOKIE = "telecom_session"
 
 
-def create_app(settings: Settings, identity: IdentityService | None = None) -> FastAPI:
+def create_app(
+    settings: Settings,
+    identity: IdentityService | None = None,
+    journey: JourneyService | None = None,
+    voice: VoiceService | None = None,
+) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         client = None
@@ -32,6 +50,14 @@ def create_app(settings: Settings, identity: IdentityService | None = None) -> F
                 app.state.identity = identity_service(user_store(client))
             else:
                 app.state.identity = identity
+            app.state.journey = journey or (
+                JourneyService(app.state.identity, EngineAPI())
+                if settings.journey_enabled
+                else None
+            )
+            app.state.voice = voice or (
+                VoiceService() if os.environ.get("OPENAI_API_KEY") else None
+            )
             yield
         except Exception:
             raise RuntimeError("Identity service unavailable; details suppressed") from None
@@ -39,8 +65,14 @@ def create_app(settings: Settings, identity: IdentityService | None = None) -> F
             if client is not None:
                 client.close()
 
-    app = FastAPI(title="Telecom demo foundation", version="1.0.0", lifespan=lifespan,
-                  docs_url=None, redoc_url=None, openapi_url=None)
+    app = FastAPI(
+        title="Telecom demo foundation",
+        version="1.0.0",
+        lifespan=lifespan,
+        docs_url=None,
+        redoc_url=None,
+        openapi_url=None,
+    )
     app.add_middleware(Boundary, origin=settings.origin)
 
     def service() -> IdentityService:
@@ -52,9 +84,23 @@ def create_app(settings: Settings, identity: IdentityService | None = None) -> F
 
     @app.exception_handler(AccessDenied)
     async def denied(request: Request, error: AccessDenied) -> JSONResponse:
-        admin = str(error) == "Administrator required"
-        return JSONResponse({"error": "Administrator required" if admin else "Login required"},
-                            status_code=403 if admin else 401)
+        forbidden = str(error) in ("Administrator required", "Execution belongs to another scope")
+        return JSONResponse(
+            {"error": str(error) if forbidden else "Login required"},
+            status_code=403 if forbidden else 401,
+        )
+
+    @app.exception_handler(JourneyConflict)
+    async def conflict(request: Request, error: JourneyConflict) -> JSONResponse:
+        return JSONResponse(
+            {"error": "Execution changed; refresh its status before retrying"}, status_code=409
+        )
+
+    @app.exception_handler(EngineUnavailable)
+    async def unavailable(request: Request, error: EngineUnavailable) -> JSONResponse:
+        return JSONResponse(
+            {"error": "Engine unavailable; check execution status before retrying"}, status_code=503
+        )
 
     @app.exception_handler(UserExists)
     async def duplicate(request: Request, error: UserExists) -> JSONResponse:
@@ -62,8 +108,11 @@ def create_app(settings: Settings, identity: IdentityService | None = None) -> F
 
     @app.exception_handler(RateLimited)
     async def limited(request: Request, error: RateLimited) -> JSONResponse:
-        return JSONResponse({"error": "Too many login attempts; try again next minute"},
-                            status_code=429, headers={"Retry-After": "60"})
+        return JSONResponse(
+            {"error": "Too many login attempts; try again next minute"},
+            status_code=429,
+            headers={"Retry-After": "60"},
+        )
 
     @app.exception_handler(RequestValidationError)
     @app.exception_handler(ValueError)
@@ -89,8 +138,9 @@ def create_app(settings: Settings, identity: IdentityService | None = None) -> F
             except AccessDenied:
                 pass
         # HTTP cookie is permitted only for this strictly loopback-only demo.
-        response.set_cookie(COOKIE, new_token, max_age=SESSION_SECONDS, httponly=True,
-                            samesite="strict", path="/")
+        response.set_cookie(
+            COOKIE, new_token, max_age=SESSION_SECONDS, httponly=True, samesite="strict", path="/"
+        )
         return public_principal(principal)
 
     @app.post("/api/logout")
@@ -101,10 +151,85 @@ def create_app(settings: Settings, identity: IdentityService | None = None) -> F
 
     @app.post("/api/users", response_model=PrincipalView, status_code=201)
     def register(data: RegistrationRequest, request: Request) -> PrincipalView:
-        return public_principal(service().register(
-            token(request), email=data.email, password=data.password.get_secret_value(),
-            role=data.role.value,
-        ))
+        return public_principal(
+            service().register(
+                token(request),
+                email=data.email,
+                password=data.password.get_secret_value(),
+                role=data.role.value,
+            )
+        )
+
+    def journey_service(request: Request) -> JourneyService:
+        service().principal(token(request))
+        result: JourneyService | None = app.state.journey
+        if result is None:
+            raise EngineUnavailable("Journey is not configured")
+        return result
+
+    @app.get("/api/capabilities")
+    def capabilities(request: Request) -> dict[str, bool]:
+        service().principal(token(request))
+        enabled = app.state.journey is not None
+        return {"journey": enabled, "voice": enabled and app.state.voice is not None}
+
+    @app.post("/api/journey/chat")
+    def chat(data: ChatInput, request: Request) -> StreamingResponse:
+        handler = journey_service(request)
+        session_token = token(request)
+
+        async def stream() -> AsyncIterator[str]:
+            yield 'event: progress\ndata: {"message":"Consulting your support team"}\n\n'
+            try:
+                result = await run_in_threadpool(
+                    handler.send, session_token, data.conversation_id, data.message
+                )
+                yield "event: result\ndata: " + json.dumps(result) + "\n\n"
+            except Exception:
+                # Native execution may still exist after cancellation/transport loss.
+                yield (
+                    'event: error\ndata: {"message":"The outcome could not be confirmed. '
+                    'Check the latest execution before sending again."}\n\n'
+                )
+
+        return StreamingResponse(
+            stream(), media_type="text/event-stream", headers={"X-Accel-Buffering": "no"}
+        )
+
+    @app.post("/api/journey/status")
+    def status(data: ExecutionInput, request: Request) -> dict[str, object]:
+        return journey_service(request).present(token(request), str(data.execution_id))
+
+    @app.post("/api/journey/latest")
+    def latest(data: ConversationInput, request: Request) -> dict[str, object]:
+        return journey_service(request).latest(token(request), data.conversation_id)
+
+    @app.post("/api/journey/review")
+    def review(data: ReviewInput, request: Request) -> dict[str, object]:
+        return journey_service(request).decide(
+            token(request), str(data.execution_id), data.action_digest, data.decision
+        )
+
+    @app.post("/api/voice/transcribe")
+    async def transcribe(data: AudioInput, request: Request) -> dict[str, str]:
+        journey_service(request)
+        speech: VoiceService | None = app.state.voice
+        if speech is None:
+            raise EngineUnavailable("Voice is not configured")
+        result = await speech.transcribe(data.pcm_base64)
+        service().principal(token(request))
+        return {"text": result}
+
+    @app.post("/api/voice/speak")
+    async def speak(data: ExecutionInput, request: Request) -> Response:
+        handler = journey_service(request)
+        result = await run_in_threadpool(handler.present, token(request), str(data.execution_id))
+        speech: VoiceService | None = app.state.voice
+        if result["status"] != "completed" or speech is None:
+            raise JourneyConflict("Only a completed result can be spoken")
+        audio = await speech.speak(str(result["text"]))
+        service().principal(token(request))
+        return Response(audio, media_type="audio/wav")
 
     if settings.web_dist is not None:
         index = settings.web_dist / "index.html"

@@ -12,7 +12,8 @@ test('admin registers a user; reload and logout preserve session boundaries', as
   await page.getByLabel('Email', { exact: true }).fill('member@example.test');
   await page.getByLabel('Password', { exact: true }).fill('synthetic-member-only');
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
-  await expect(page.getByRole('status')).toHaveText('Account created for member@example.test.');
+  await expect(page.getByRole('status').filter({ hasText: 'Account created for' }))
+    .toHaveText('Account created for member@example.test.');
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Welcome back' })).toBeVisible();
   await page.getByRole('button', { name: 'Sign out', exact: true }).click();

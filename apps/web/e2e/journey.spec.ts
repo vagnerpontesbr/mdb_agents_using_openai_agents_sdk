@@ -1,13 +1,25 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Cookie } from '@playwright/test';
+
+// Reuse this suite's synthetic authenticated session; login behavior is tested
+// separately, and repeated UI setup must not exhaust the real login limiter.
+let cookies: Cookie[] = [];
 
 // UI-only Engine doubles. Backend authorization has separate Python tests.
 async function signIn(page: import('@playwright/test').Page) {
   await page.route('**/api/capabilities', route => route.fulfill({ json: { journey: true, voice: true } }));
+  await page.route('**/api/journey/latest', route => route.fulfill({ json: { status: 'empty' } }));
+  if (cookies.length) {
+    await page.context().addCookies(cookies);
+    await page.goto('/');
+    await expect(page.getByLabel('Your message')).toBeEnabled();
+    return;
+  }
   await page.goto('/');
   await page.getByLabel('Email', { exact: true }).fill('admin@mongodb.com');
   await page.getByLabel('Password', { exact: true }).fill('synthetic-browser-only');
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
   await expect(page.getByLabel('Your message')).toBeEnabled();
+  cookies = await page.context().cookies();
 }
 
 for (const decision of ['approve', 'reject']) {
@@ -106,4 +118,60 @@ test('same-origin policy permits synthesized WAV playback', async ({ page }) => 
   await page.getByRole('button', { name: 'Play response', exact: true }).click();
   await expect(page.locator('html'), errors.join('\n')).toHaveAttribute('data-audio-playing', 'true');
   await page.getByRole('region', { name: 'Support workspace' }).screenshot({ path: 'test-results/voice-playback.png' });
+});
+
+test('reload restores pending review; new conversation changes only the opaque session', async ({ page }) => {
+  await signIn(page);
+  let conversation = '';
+  await page.route('**/api/journey/chat', async route => {
+    conversation = route.request().postDataJSON().conversation_id;
+    await route.fulfill({ contentType: 'text/event-stream', body: 'event: error\ndata: {}\n\n' });
+  });
+  await page.getByLabel('Your message').fill('Simulate fiber-500');
+  await page.getByRole('button', { name: 'Send', exact: true }).click();
+  await expect(page.getByLabel('Your message')).toBeDisabled();
+  const pending = { execution_id: '00000000-0000-4000-8000-000000000004', status: 'suspended',
+    action_digest: 'a'.repeat(64), action: { plan_id: 'fiber-500', monthly_minor: 8990, proposal_id: 'b'.repeat(64) } };
+  await page.route('**/api/journey/latest', route => route.fulfill({ json:
+    route.request().postDataJSON().conversation_id === conversation ? pending : { status: 'empty' } }));
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Confirm this simulation' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'New conversation', exact: true })).toBeDisabled();
+  await page.getByRole('button', { name: 'Check latest execution' }).click();
+  await page.route('**/api/journey/review', route => route.fulfill({ json: {
+    execution_id: pending.execution_id, status: 'completed', text: 'Simulation rejected.', specialists: ['sales'],
+  } }));
+  await page.getByRole('button', { name: 'Reject', exact: true }).click();
+  await page.getByRole('button', { name: 'New conversation', exact: true }).click();
+  await expect(page.getByLabel('Your message')).toBeEnabled();
+  await expect(page.locator('.result')).toHaveCount(0);
+  const storage = await page.evaluate(() => ({ ...sessionStorage }));
+  expect(Object.values(storage)).not.toContain(conversation);
+  expect(JSON.stringify(storage)).not.toContain('fiber-500');
+});
+
+test('empty or previous result cannot clear an uncertain new invocation, even after reload', async ({ page }) => {
+  await signIn(page);
+  const previous = { execution_id: '00000000-0000-4000-8000-000000000005', status: 'completed', text: 'Previous result.' };
+  await page.route('**/api/journey/latest', route => route.fulfill({ json: previous }));
+  await page.getByRole('button', { name: 'Check latest execution' }).click();
+  await expect(page.locator('.result')).toContainText('Previous result.');
+  let calls = 0;
+  await page.route('**/api/journey/chat', async route => {
+    calls++;
+    await route.fulfill({ contentType: 'text/event-stream', body: 'event: error\ndata: {}\n\n' });
+  });
+  await page.getByLabel('Your message').fill('Read demo-1');
+  await page.getByRole('button', { name: 'Send', exact: true }).click();
+  await expect(page.getByLabel('Your message')).toBeDisabled();
+  await page.getByRole('button', { name: 'Check latest execution' }).click();
+  await expect(page.getByText('The uncertain request has not been recovered. Check again before continuing.')).toBeVisible();
+  await expect(page.getByLabel('Your message')).toBeDisabled();
+  await page.route('**/api/journey/latest', route => route.fulfill({ json: { status: 'empty' } }));
+  await page.reload();
+  await expect(page.getByText('A previous request has an uncertain outcome. Check the latest execution before continuing.')).toBeVisible();
+  await page.getByRole('button', { name: 'Check latest execution' }).click();
+  await expect(page.getByLabel('Your message')).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'New conversation', exact: true })).toBeDisabled();
+  expect(calls).toBe(1);
 });

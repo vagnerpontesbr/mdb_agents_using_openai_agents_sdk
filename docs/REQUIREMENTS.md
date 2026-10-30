@@ -2,7 +2,7 @@
 
 ## Objective
 
-Deliver an executable, adaptable reference for architects, developers, and builders: a uv-managed Python backend, React frontend, MongoDB persistence, and OpenAI Agents SDK orchestration. Phase 0 bounded compatibility is complete; Phase 1 adds the application foundation ([FND-003](tasks/FND-003-FOUNDATION.md)); Phase 2 has passed bounded hosted and browser acceptance ([VERT-001/002](tasks/VERT-001-JOURNEY.md)); manual publication remains pending. See [current evidence](compatibility/PHASE_0.md) and [publication/CI status](runbooks/REPOSITORY_SETUP.md).
+Deliver an executable, adaptable reference for architects, developers, and builders: a uv-managed Python backend, React frontend, MongoDB persistence, and OpenAI Agents SDK orchestration. Phase 0 bounded compatibility is complete; Phase 1 adds the application foundation ([FND-003](tasks/FND-003-FOUNDATION.md)); Phase 2 has passed bounded hosted and browser acceptance ([VERT-001/002](tasks/VERT-001-JOURNEY.md)); its publication and CI passed. Phase 3 bounded memory/recovery acceptance passed in [MEM-001](tasks/MEM-001-MEMORY.md). See [current evidence](compatibility/PHASE_0.md) and [publication/CI status](runbooks/REPOSITORY_SETUP.md).
 
 ## Platform feature precedence — latest user decision
 

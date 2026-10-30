@@ -105,7 +105,7 @@ class JourneyApp(OpenAIEngineApp):
     def get_agent(self, callbacks=None, *, graph=None):
         # Reuse validated model discovery; its unused single-read agent is not executed.
         super().get_agent(callbacks, graph=graph)
-        hooks.register_workflow_adapter("telecom-journey", "2")
+        hooks.register_workflow_adapter("telecom-journey", "4")
         def bindings(context, schemas):
             return EngineBindings.from_runtime(context=context, schemas=schemas,
                 llm_id=self.llm_id, model_name=self.model_name, managed_memory=True)

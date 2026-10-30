@@ -57,7 +57,8 @@ class MemoryContextTests(unittest.TestCase):
 
     def test_wrong_identity_rejected_before_retrieval(self):
         self.runtime.build_context_from_sources = MagicMock()
-        self.ctx.user_id = None
-        with attempt_context_scope(self.attempt()), self.assertRaises(UnsupportedContract):
-            retrieve_context(self.runtime, self.ctx, 'marker?')
+        for user in (None, 'another-user'):
+            self.ctx.user_id = user
+            with attempt_context_scope(self.attempt()), self.assertRaises(UnsupportedContract):
+                retrieve_context(self.runtime, self.ctx, 'marker?')
         self.runtime.build_context_from_sources.assert_not_called()

@@ -14,7 +14,7 @@ The [initial plan](../../initial_plan.md) defines scope; this backlog sequences 
 | FND-003 | Backend/frontend manifests and CI | COMP-001 | Frozen installs, imports/builds, lint/types and relevant tests; no fake lockfiles | Published and merged via PR #2; main CI passed; [FND-003 evidence](FND-003-FOUNDATION.md) |
 | VERT-001 | First authenticated financial request | FND-003 | Typed intent, validated tool, simulated invoice, approved template, denied access and idempotency cases | Complete for bounded demo; [journey evidence](VERT-001-JOURNEY.md) |
 | VERT-002 | Three specialists plus browser voice | VERT-001, COMP-004 | Mixed-intent route, mic/transcript/playback, shared context, cancellation and failure cases | Complete for bounded demo; [journey evidence](VERT-001-JOURNEY.md) |
-| MEM-001 | Memory and interrupted-run persistence | COMP-002, VERT-001 | Continuity, isolated tenants, concurrency and resume evidence; native expurgo accepted by user | Ready |
+| MEM-001 | Memory and interrupted-run persistence | COMP-002, VERT-001 | Continuity, isolated tenants, concurrency and resume evidence; native expurgo accepted by user | [Passed for bounded demo; manual publication pending](MEM-001-MEMORY.md) |
 | RAG-001 | Governed PDF ingestion and retrieval | COMP-004, FND-003 | Text/scanned PDFs, version publication, owner/risk enforcement, native search/rerank citations | Ready |
 | EVAL-001 | Stale-document/cache/determinism experiments | RAG-001, MEM-001 | Independent current truth; actual metrics; invalidation and repeated-run reports | Ready |
 | OPS-001 | Load and resilience profiles | VERT-002, RAG-001, EVAL-001 | Separate mocks/live-provider results; budgets, resource contention and invariants across the approved cluster boundaries | Ready |

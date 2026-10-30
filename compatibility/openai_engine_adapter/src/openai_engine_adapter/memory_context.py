@@ -1,6 +1,7 @@
 """Bounded read through TenantRuntime; Engine owns retrieval and replay."""
 from agent_engine_sdk_memory import SourceSpec
 from agent_engine_runner_shared.workflow import current_attempt_context
+from agent_engine_runner_shared.context import get_current_user_id
 from .adapter import UnsupportedContract
 
 MEMORY_RULES = (
@@ -17,7 +18,7 @@ def retrieve_context(runtime, context, query):
         raise UnsupportedContract("Memory retrieval requires the bound Engine runtime and attempt")
     identity = attempt.workflow_identity
     scope = identity.tenant_scope
-    if (not context.user_id or not runtime.memory_enabled
+    if (not context.user_id or context.user_id != get_current_user_id() or not runtime.memory_enabled
             or (context.execution_id, context.session_id, context.workspace_id)
             != (identity.execution_id, identity.session_id, scope.workspace_id)
             or (runtime.org_id, runtime.project_id) != (scope.org_id, scope.project_id)):

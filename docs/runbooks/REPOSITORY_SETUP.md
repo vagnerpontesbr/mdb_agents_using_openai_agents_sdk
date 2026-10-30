@@ -4,11 +4,15 @@ Remote: https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk
 
 ## Current publication and work checkpoint
 
-PR #1 merged into `main` as `5dc29d87cf3584c8cd749208b0d9b1b43cfa8b08`.
-Documentation commit `1ba8c49` passed both push/PR checks; the [post-merge run](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/40953112946) also passed.
-The user subsequently authorized Phase 1. Its source, locks and new application
-CI job are local on `codex/phase-1-foundation` until separately published; see
-[FND-003](../tasks/FND-003-FOUNDATION.md). Earlier checkpoints below are history.
+Phase 2 is published on `codex/phase-2-journey` as
+`3c68530d932182b0fdba81319dc08a5a4dfb841d`. Its
+[GitHub Actions run](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41036233739)
+passed, verified on 2026-10-30. Phase 1 commit `b2ff9c7` also has successful remote CI.
+
+The user authorized Phase 3 after that publication. [MEM-001](../tasks/MEM-001-MEMORY.md)
+records its local changes and hosted evidence. Phase 3 has not been committed or
+pushed; its new remote CI remains separate. The user performs Git publication
+manually. Earlier checkpoints below are history.
 
 ## Verified Phase 0 publication checkpoint
 

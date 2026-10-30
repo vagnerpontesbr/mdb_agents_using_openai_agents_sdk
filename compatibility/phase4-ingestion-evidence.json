@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-10-30T10:48:04.375813+00:00",
+  "checks_passed": [
+    "concurrent_identical_submission_deduplicated",
+    "concurrent_admission_capped_at_four",
+    "other_tenant_cannot_claim",
+    "each_job_has_one_active_claim",
+    "real_pdf_docling_voyage_durable_staging",
+    "duplicate_finish_rejected",
+    "stale_worker_fenced_after_reclaim",
+    "attempt_budget_exhaustion_releases_quota_once"
+  ],
+  "provider_calls": 1,
+  "model": "voyage-context-4",
+  "dimensions": 1024,
+  "published_documents": 0,
+  "synthetic_probe_cleaned": true,
+  "limits": {
+    "active_per_tenant": 4,
+    "attempts": 2,
+    "lease_seconds": 360
+  },
+  "limitations": [
+    "No curator API or native publication approval enabled",
+    "Ingestion schema validators pending",
+    "Crash recovery may repeat one paid embedding call"
+  ]
+}

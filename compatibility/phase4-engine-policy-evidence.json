@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-30T11:01:52.597857+00:00",
+  "policy_id": "6ae1ab6186dc82d1c54886b1",
+  "status": "applied_control_plane_verified",
+  "added": [
+    "telco_request_ingestion",
+    "telco_search_knowledge",
+    "telco_publish_knowledge"
+  ],
+  "before_count": 31,
+  "after_count": 34,
+  "other_policies_unchanged": true,
+  "limitations": [
+    "Tool runtime propagation and hosted integration pending",
+    "No publication or deployment enabled by this operation"
+  ]
+}

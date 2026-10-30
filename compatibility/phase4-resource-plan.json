@@ -1,0 +1,343 @@
+{
+  "status": "proposed_not_applied",
+  "cluster": "OpenAI-SDK",
+  "project_id": "67b385a7976edf15ecc62e06",
+  "collections": {
+    "telecom_demo_knowledge": [
+      "documents",
+      "document_versions",
+      "chunks",
+      "review_events",
+      "owners"
+    ],
+    "telecom_demo_ingestion": [
+      "jobs",
+      "staged_artifacts"
+    ]
+  },
+  "search_indexes": [
+    {
+      "database": "telecom_demo_knowledge",
+      "collection": "chunks",
+      "name": "knowledge_lexical_v1",
+      "type": "search",
+      "definition": {
+        "analyzer": "lucene.standard",
+        "mappings": {
+          "dynamic": false,
+          "fields": {
+            "tenant_id": {
+              "type": "token"
+            },
+            "acl": {
+              "type": "token"
+            },
+            "product": {
+              "type": "token"
+            },
+            "region": {
+              "type": "token"
+            },
+            "firmware_range": {
+              "type": "token"
+            },
+            "language": {
+              "type": "token"
+            },
+            "status": {
+              "type": "token"
+            },
+            "embedding_profile": {
+              "type": "token"
+            },
+            "eligible": {
+              "type": "boolean"
+            },
+            "effective_from": {
+              "type": "date"
+            },
+            "expires_at": {
+              "type": "date"
+            },
+            "review_due_at": {
+              "type": "date"
+            },
+            "text": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "database": "telecom_demo_knowledge",
+      "collection": "chunks",
+      "name": "knowledge_context_1024_v1",
+      "type": "vectorSearch",
+      "definition": {
+        "fields": [
+          {
+            "type": "vector",
+            "path": "embedding",
+            "numDimensions": 1024,
+            "similarity": "cosine"
+          },
+          {
+            "type": "filter",
+            "path": "tenant_id"
+          },
+          {
+            "type": "filter",
+            "path": "acl"
+          },
+          {
+            "type": "filter",
+            "path": "product"
+          },
+          {
+            "type": "filter",
+            "path": "region"
+          },
+          {
+            "type": "filter",
+            "path": "firmware_range"
+          },
+          {
+            "type": "filter",
+            "path": "language"
+          },
+          {
+            "type": "filter",
+            "path": "status"
+          },
+          {
+            "type": "filter",
+            "path": "embedding_profile"
+          },
+          {
+            "type": "filter",
+            "path": "eligible"
+          },
+          {
+            "type": "filter",
+            "path": "effective_from"
+          },
+          {
+            "type": "filter",
+            "path": "expires_at"
+          },
+          {
+            "type": "filter",
+            "path": "review_due_at"
+          }
+        ]
+      }
+    }
+  ],
+  "classic_indexes": [
+    {
+      "database": "telecom_demo_knowledge",
+      "collection": "document_versions",
+      "name": "tenant_document_version_revision",
+      "key": {
+        "tenant_id": 1,
+        "document_id": 1,
+        "version_id": 1,
+        "revision": 1
+      },
+      "unique": true
+    },
+    {
+      "database": "telecom_demo_knowledge",
+      "collection": "chunks",
+      "name": "tenant_version_chunk",
+      "key": {
+        "tenant_id": 1,
+        "version_key": 1,
+        "chunk_id": 1
+      },
+      "unique": true
+    },
+    {
+      "database": "telecom_demo_knowledge",
+      "collection": "review_events",
+      "name": "tenant_review_execution",
+      "key": {
+        "tenant_id": 1,
+        "execution_id": 1,
+        "action_digest": 1
+      },
+      "unique": true
+    },
+    {
+      "database": "telecom_demo_ingestion",
+      "collection": "jobs",
+      "name": "tenant_submission",
+      "key": {
+        "tenant_id": 1,
+        "submission_key": 1
+      },
+      "unique": true
+    },
+    {
+      "database": "telecom_demo_ingestion",
+      "collection": "jobs",
+      "name": "claim_available_job",
+      "key": {
+        "status": 1,
+        "available_at": 1,
+        "_id": 1
+      }
+    }
+  ],
+  "runtime_roles": {
+    "telecomKnowledgeReader": [
+      {
+        "resource": {
+          "db": "telecom_demo_knowledge",
+          "collection": "documents"
+        },
+        "actions": [
+          "find"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_demo_knowledge",
+          "collection": "document_versions"
+        },
+        "actions": [
+          "find"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_demo_knowledge",
+          "collection": "chunks"
+        },
+        "actions": [
+          "find"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_demo_knowledge",
+          "collection": "review_events"
+        },
+        "actions": [
+          "find"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_demo_knowledge",
+          "collection": "owners"
+        },
+        "actions": [
+          "find"
+        ]
+      }
+    ],
+    "telecomKnowledgePublisher": [
+      {
+        "resource": {
+          "db": "telecom_demo_knowledge",
+          "collection": "documents"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_demo_knowledge",
+          "collection": "document_versions"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_demo_knowledge",
+          "collection": "chunks"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_demo_knowledge",
+          "collection": "review_events"
+        },
+        "actions": [
+          "find",
+          "insert"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_demo_knowledge",
+          "collection": "owners"
+        },
+        "actions": [
+          "find"
+        ]
+      }
+    ],
+    "telecomIngestionWorker": [
+      {
+        "resource": {
+          "db": "telecom_demo_ingestion",
+          "collection": "jobs"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_demo_ingestion",
+          "collection": "staged_artifacts"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update"
+        ]
+      }
+    ]
+  },
+  "runtime_users": [
+    {
+      "username": "telecom_knowledge_reader",
+      "role": "telecomKnowledgeReader"
+    },
+    {
+      "username": "telecom_knowledge_publisher",
+      "role": "telecomKnowledgePublisher"
+    },
+    {
+      "username": "telecom_ingestion_worker",
+      "role": "telecomIngestionWorker"
+    }
+  ],
+  "constraints": [
+    "Every runtime identity is scoped to the existing OpenAI-SDK cluster.",
+    "Inject generated credentials privately; no existing identity grants are expanded.",
+    "No runtime role may create indexes, delete data or access Engine-managed databases.",
+    "Operator-only owner registry provisioning; publisher cannot grant itself ownership.",
+    "Review events record domain evidence bound to native Engine review, not a new approval engine.",
+    "Search readiness, schema validators and allowed/denied role probes gate application enablement.",
+    "No shared Engine policy or tool allowlist change is authorized by this database plan."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-30T10:25:35.549584+00:00",
+  "checks": [
+    {
+      "fixture": "phase4-text-pages.json",
+      "checksum": "9afce6456aa0f1084ab9881ddfec1a3e54f9e422072466f1bd573fb67111908b",
+      "pages": 2,
+      "ocr": false,
+      "chunks": 1,
+      "aligned_pages": [
+        [
+          1,
+          2
+        ]
+      ],
+      "all_pages_known": true,
+      "dimension": 1024,
+      "reranked_indices": [
+        0
+      ]
+    },
+    {
+      "fixture": "phase4-scanned-pages.json",
+      "checksum": "ff3a8c06c46efa159170a3a1b0041008aa3192d91a41dfcd5f3f0d3b8cb869b0",
+      "pages": 2,
+      "ocr": true,
+      "chunks": 1,
+      "aligned_pages": [
+        [
+          1,
+          2
+        ]
+      ],
+      "all_pages_known": true,
+      "dimension": 1024,
+      "reranked_indices": [
+        0
+      ]
+    }
+  ],
+  "scope": "synthetic PDF extraction and provider contract; no retrieval quality claim",
+  "status": "passed",
+  "models": [
+    "voyage-context-4",
+    "rerank-3"
+  ],
+  "python_runtime": "3.15.2",
+  "parser_runtime": "Python 3.14.6 / Docling 2.143.1 CPU",
+  "database_writes": false,
+  "paid_requests": 6,
+  "limit": "One returned chunk per two-page synthetic PDF; reranker transport is proven, ranking quality is not measured."
+}

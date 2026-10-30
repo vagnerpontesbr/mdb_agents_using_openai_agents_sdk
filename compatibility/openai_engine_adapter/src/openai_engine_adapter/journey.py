@@ -46,7 +46,8 @@ class JourneyExecution:
                 or not ctx.resume and ctx.resume_data is not None):
             raise UnsupportedContract("Journey execution identity/replay mismatch")
         fresh = ctx.model_copy(update={"resume": False, "resume_data": None})
-        agent = JourneyAgent(self.bindings, lambda c, q: retrieve_context(self.app._runtime, c, q))
+        agent = JourneyAgent(self.bindings, lambda c, q: retrieve_context(self.app._runtime, c, q),
+                             knowledge_enabled=getattr(self.app, 'knowledge_enabled', False))
         result = JourneyResult.model_validate_json(
             (await agent.execute(fresh, input)).response["output"], strict=True)
         proposals = [r for r in result.results if r.kind == "proposal"]

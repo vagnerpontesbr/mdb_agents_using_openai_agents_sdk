@@ -29,7 +29,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--python-archive", type=Path)
     parser.add_argument("--compact-runtime", action="store_true")
-    parser.add_argument("--profile", choices=("invoice", "journey"), default="invoice")
+    parser.add_argument("--profile", choices=("invoice", "journey", "knowledge-review"), default="invoice")
     args = parser.parse_args()
     # Never mix a new build with stale files, keys or caches in an old stage.
     args.output.mkdir(parents=True, exist_ok=False)
@@ -40,7 +40,7 @@ def main():
         target = args.output / file.relative_to(source)
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(file, target)
-    if args.profile == "journey":
+    if args.profile in ("journey", "knowledge-review"):
         manifest = args.output / "agent.yaml"
         content = manifest.read_text()
         content = content.replace("Synthetic read-only OpenAI Runner compatibility proof",
@@ -50,6 +50,27 @@ def main():
         content = content.replace("memory: false", "memory: true")
         content = content.replace("tools: [lookup_invoice]", "tools: [telco_read_invoice, "
             "telco_check_connection, telco_offer_plan, telco_simulate_plan_change]")
+        if args.profile == "knowledge-review":
+            content = content.replace("openai_engine_adapter.journey:app",
+                                      "openai_engine_adapter.knowledge_review:app")
+            content = content.replace("telco_simulate_plan_change]",
+                "telco_simulate_plan_change, telco_publish_knowledge, telco_search_knowledge, telco_request_ingestion]")
+            content = content.replace("secrets: [OPENAI_API_KEY]",
+                "secrets: [OPENAI_API_KEY, KNOWLEDGE_READER_URI, INGESTION_MONGODB_URI, KNOWLEDGE_VOYAGE_KEY, KNOWLEDGE_VOYAGE_BASE]")
+            content += ("        - fqdn: ai.mongodb.com\n          ports: [443]\n"
+                        "        - fqdn: openai-sdk.qrmdk.mongodb.net\n          ports: [27017]\n"
+                        "        - fqdn: openai-sdk-shard-00-00.qrmdk.mongodb.net\n          ports: [27017]\n"
+                        "        - fqdn: openai-sdk-shard-00-01.qrmdk.mongodb.net\n          ports: [27017]\n"
+                        "        - fqdn: openai-sdk-shard-00-02.qrmdk.mongodb.net\n          ports: [27017]\n")
+            # One authoritative source tree, copied into the credential-free build.
+            domain = args.output / "src/openai_engine_adapter/knowledge_domain"
+            domain.mkdir()
+            (domain / "__init__.py").write_text('"""Snapshot of the tested knowledge-domain source."""\n')
+            root = Path(__file__).resolve().parents[1]
+            names = ("knowledge", "knowledge_search", "knowledge_mongo", "knowledge_voyage",
+                     "knowledge_authority", "ingestion", "ingestion_worker")
+            for name in names:
+                shutil.copyfile(root / f"src/telecom_app/{name}.py", domain / f"{name}.py")
         manifest.write_text(content)
     if args.python_archive:
         with args.python_archive.open("rb") as archive_file:

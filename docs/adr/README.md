@@ -39,3 +39,5 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0024](0024-phase-one-application-boundaries.md) | Phase 1 identity application, process ownership and typed response boundary | Implemented; validation in FND-003 |
 
 | [ADR-0025](0025-phase-two-journey.md) | Bounded SDK supervisor/specialists, native review and chained browser voice | Bounded hosted and browser acceptance passed |
+
+| [ADR-0026](0026-governed-knowledge-publication.md) | Owner-authorized native review and domain publication of governed PDFs | Selected; bounded Phase 4 evidence recorded |

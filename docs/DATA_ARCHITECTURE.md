@@ -2,6 +2,12 @@
 
 Status: two-cluster boundary and bounded identity-database/Engine-memory controls validated in Phase 0; remaining application schemas and service identities are planned. See [current evidence](compatibility/PHASE_0.md).
 
+Phase 4 implementation now uses the approved knowledge/ingestion resources in
+[RAG-001](tasks/RAG-001-KNOWLEDGE.md). Its bounded ingestion implementation uses
+`jobs` and polymorphic `staged_artifacts` (original PDFs/results and per-tenant
+admission counters), with no separate attempts/outbox collections. The planned
+namespace table below is not a claim that every listed collection exists.
+
 ## Rationale
 
 MongoDB is the integrated data platform for operational documents, full-text Search, Vector Search, and native hybrid retrieval. The asset does not require separate operational, text-search, and vector-database products. Indexing the relevant MongoDB collection data reduces application-managed replication pipelines, duplicate external stores, synchronization logic, and operational tooling.

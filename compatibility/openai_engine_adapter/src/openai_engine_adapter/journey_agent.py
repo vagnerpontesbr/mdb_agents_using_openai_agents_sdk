@@ -101,8 +101,9 @@ class JourneyModel(Model):
 
 
 class JourneyAgent:
-    def __init__(self, bindings_factory, memory_builder=None):
+    def __init__(self, bindings_factory, memory_builder=None, *, knowledge_enabled=False):
         self.bindings_factory, self.memory_builder = bindings_factory, memory_builder
+        self.knowledge_enabled = knowledge_enabled
 
     def execute(self, ctx, input):
         ctx, input = ctx.model_copy(deep=True), input.model_copy(deep=True)
@@ -152,6 +153,18 @@ class JourneyAgent:
                 return await business("telco_check_connection", EmptyQuery().model_dump())
 
             @function_tool(failure_error_function=None)
+            async def search_procedure(query: str) -> str:
+                """Find a currently approved PDF procedure for a technical question."""
+                from .knowledge_tools import KnowledgeQuery
+                return await business('telco_search_knowledge', KnowledgeQuery(query=query).model_dump())
+
+            @function_tool(failure_error_function=None)
+            async def request_pdf_ingestion(job_id: str) -> str:
+                """Register a PDF already uploaded by an administrator; use its exact job ID."""
+                from .knowledge_tools import IngestionQuery
+                return await business('telco_request_ingestion', IngestionQuery(job_id=job_id).model_dump())
+
+            @function_tool(failure_error_function=None)
             async def compare_plan(plan_id: str, propose_change: bool) -> str:
                 """Compare fiber-500/fiber-1000; propose only when the user asks to change."""
                 args = PlanQuery(plan_id=plan_id, propose_change=propose_change)
@@ -171,8 +184,15 @@ class JourneyAgent:
                  "plan-change request. Ask which plan if ambiguous.", compare_plan),
             ]
             for name, instructions, tool in definitions:
+                available_tools = [tool]
+                if name == 'technical' and self.knowledge_enabled:
+                    instructions = ('For approved procedures, PDF sources, optical/red-light instructions, '
+                        'use search_procedure. For PDF ingestion with an explicit uploaded job ID use '
+                        'request_pdf_ingestion. Use check_connection for generic connection diagnostics. '
+                        'Do not invent procedure content, citations or job IDs. Use only one tool. ')
+                    available_tools += [search_procedure, request_pdf_ingestion]
                 agent = Agent(name=f"Telecom {name}", instructions=instructions + CONTINUITY_RULES,
-                    model=JourneyModel(ctx, self.bindings_factory, budget, name), tools=[tool],
+                    model=JourneyModel(ctx, self.bindings_factory, budget, name), tools=available_tools,
                     model_settings=ModelSettings(parallel_tool_calls=False),
                     tool_use_behavior="stop_on_first_tool")
                 delegated = agent.as_tool(tool_name=f"consult_{name}",

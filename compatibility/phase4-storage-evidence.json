@@ -1,0 +1,472 @@
+{
+  "checked_at": "2026-10-30T10:42:21.728116+00:00",
+  "cluster": "OpenAI-SDK",
+  "validators": {
+    "document_versions": {
+      "$and": [
+        {
+          "$jsonSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "tenant_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "document_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "version_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "revision": {
+                "minimum": 1,
+                "bsonType": [
+                  "int",
+                  "long"
+                ]
+              },
+              "title": {
+                "maxLength": 200,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "information_owner": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "created_at": {
+                "bsonType": "date"
+              },
+              "ingested_at": {
+                "bsonType": "date"
+              },
+              "effective_from": {
+                "bsonType": "date"
+              },
+              "expires_at": {
+                "bsonType": "date"
+              },
+              "last_reviewed_at": {
+                "bsonType": "date"
+              },
+              "review_due_at": {
+                "bsonType": "date"
+              },
+              "reviewed_by": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "approved_by": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "approved_at": {
+                "bsonType": "date"
+              },
+              "source_uri": {
+                "maxLength": 512,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "source_system": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "checksum": {
+                "pattern": "^[a-f0-9]{64}$",
+                "bsonType": "string"
+              },
+              "classification": {
+                "enum": [
+                  "internal-demo"
+                ],
+                "bsonType": "string"
+              },
+              "acl": {
+                "items": {
+                  "bsonType": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "maxItems": 16,
+                "minItems": 1,
+                "bsonType": "array"
+              },
+              "language": {
+                "enum": [
+                  "en"
+                ],
+                "bsonType": "string"
+              },
+              "product": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "region": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "firmware_range": {
+                "maxLength": 64,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "supersedes": {
+                "anyOf": [
+                  {
+                    "bsonType": "string"
+                  },
+                  {
+                    "bsonType": "null"
+                  }
+                ]
+              },
+              "superseded_by": {
+                "anyOf": [
+                  {
+                    "bsonType": "string"
+                  },
+                  {
+                    "bsonType": "null"
+                  }
+                ]
+              },
+              "status": {
+                "enum": [
+                  "draft",
+                  "in_review",
+                  "approved",
+                  "published",
+                  "quarantined",
+                  "expired",
+                  "superseded",
+                  "revoked"
+                ],
+                "bsonType": "string"
+              },
+              "business_impact": {
+                "enum": [
+                  "low",
+                  "high"
+                ],
+                "bsonType": "string"
+              },
+              "change_rate": {
+                "enum": [
+                  "low",
+                  "high"
+                ],
+                "bsonType": "string"
+              },
+              "_id": {
+                "bsonType": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "tenant_id",
+              "document_id",
+              "version_id",
+              "revision",
+              "title",
+              "information_owner",
+              "created_at",
+              "ingested_at",
+              "effective_from",
+              "expires_at",
+              "last_reviewed_at",
+              "review_due_at",
+              "reviewed_by",
+              "approved_by",
+              "approved_at",
+              "source_uri",
+              "source_system",
+              "checksum",
+              "classification",
+              "acl",
+              "language",
+              "product",
+              "region",
+              "firmware_range",
+              "status",
+              "business_impact",
+              "change_rate",
+              "_id"
+            ],
+            "bsonType": "object"
+          }
+        },
+        {
+          "$expr": {
+            "$and": [
+              {
+                "$lte": [
+                  "$created_at",
+                  "$effective_from"
+                ]
+              },
+              {
+                "$lt": [
+                  "$effective_from",
+                  "$expires_at"
+                ]
+              },
+              {
+                "$lte": [
+                  "$created_at",
+                  "$last_reviewed_at"
+                ]
+              },
+              {
+                "$lt": [
+                  "$last_reviewed_at",
+                  "$review_due_at"
+                ]
+              },
+              {
+                "$lte": [
+                  "$created_at",
+                  "$approved_at"
+                ]
+              },
+              {
+                "$lte": [
+                  "$created_at",
+                  "$ingested_at"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "chunks": {
+      "$jsonSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "chunk_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "bsonType": "string"
+          },
+          "version_key": {
+            "maxLength": 128,
+            "minLength": 1,
+            "bsonType": "string"
+          },
+          "revision": {
+            "minimum": 1,
+            "bsonType": [
+              "int",
+              "long"
+            ]
+          },
+          "text": {
+            "maxLength": 8000,
+            "minLength": 1,
+            "bsonType": "string"
+          },
+          "text_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "bsonType": "string"
+          },
+          "pages": {
+            "items": {
+              "bsonType": [
+                "int",
+                "long"
+              ],
+              "minimum": 1,
+              "maximum": 10
+            },
+            "maxItems": 10,
+            "bsonType": "array",
+            "uniqueItems": true
+          },
+          "_id": {},
+          "tenant_id": {
+            "bsonType": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "acl": {
+            "items": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "maxItems": 16,
+            "minItems": 1,
+            "bsonType": "array"
+          },
+          "product": {
+            "maxLength": 128,
+            "minLength": 1,
+            "bsonType": "string"
+          },
+          "region": {
+            "maxLength": 128,
+            "minLength": 1,
+            "bsonType": "string"
+          },
+          "firmware_range": {
+            "maxLength": 64,
+            "minLength": 1,
+            "bsonType": "string"
+          },
+          "language": {
+            "enum": [
+              "en"
+            ],
+            "bsonType": "string"
+          },
+          "status": {
+            "enum": [
+              "draft",
+              "in_review",
+              "approved",
+              "published",
+              "quarantined",
+              "expired",
+              "superseded",
+              "revoked"
+            ],
+            "bsonType": "string"
+          },
+          "effective_from": {
+            "bsonType": "date"
+          },
+          "expires_at": {
+            "bsonType": "date"
+          },
+          "review_due_at": {
+            "bsonType": "date"
+          },
+          "embedding_profile": {
+            "enum": [
+              "voyage-context-4:1024:v1"
+            ]
+          },
+          "eligible": {
+            "bsonType": "bool"
+          },
+          "embedding": {
+            "bsonType": "array",
+            "minItems": 1024,
+            "maxItems": 1024,
+            "items": {
+              "bsonType": "double",
+              "minimum": -1e+308,
+              "maximum": 1e+308
+            }
+          }
+        },
+        "required": [
+          "chunk_id",
+          "version_key",
+          "revision",
+          "text",
+          "text_sha256",
+          "pages",
+          "_id",
+          "tenant_id",
+          "acl",
+          "product",
+          "region",
+          "firmware_range",
+          "language",
+          "status",
+          "effective_from",
+          "expires_at",
+          "review_due_at",
+          "embedding_profile",
+          "eligible",
+          "embedding"
+        ],
+        "bsonType": "object"
+      }
+    }
+  },
+  "schema_checks": [
+    {
+      "collection": "document_versions",
+      "case": "valid",
+      "accepted": true
+    },
+    {
+      "collection": "chunks",
+      "case": "valid",
+      "accepted": true
+    },
+    {
+      "collection": "document_versions",
+      "case": "missing-owner",
+      "accepted": false
+    },
+    {
+      "collection": "document_versions",
+      "case": "string-date",
+      "accepted": false
+    },
+    {
+      "collection": "document_versions",
+      "case": "reversed-dates",
+      "accepted": false
+    },
+    {
+      "collection": "document_versions",
+      "case": "empty-acl",
+      "accepted": false
+    },
+    {
+      "collection": "chunks",
+      "case": "wrong-dimensions",
+      "accepted": false
+    },
+    {
+      "collection": "chunks",
+      "case": "wrong-profile",
+      "accepted": false
+    },
+    {
+      "collection": "chunks",
+      "case": "missing-tenant",
+      "accepted": false
+    },
+    {
+      "collection": "chunks",
+      "case": "duplicate-pages",
+      "accepted": false
+    },
+    {
+      "collection": "chunks",
+      "case": "boolean-page",
+      "accepted": false
+    },
+    {
+      "collection": "chunks",
+      "case": "oversized-text",
+      "accepted": false
+    }
+  ],
+  "native_rank_fusion": "passed_empty_synthetic_scope",
+  "rolled_back_writes": true,
+  "persisted_synthetic_documents": 0,
+  "limitations": [
+    "No corpus ranking or tenant/ACL acceptance claim",
+    "Other five collection validators remain pending",
+    "Native review and publication remain disabled"
+  ]
+}

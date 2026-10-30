@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-10-30T11:07:48.322976+00:00",
+  "owner_id": "demo-document-owner",
+  "tenant_id": "synthetic-telecom",
+  "initial_admin_owner_registered": true,
+  "runtime_owner_write_permissions_changed": false
+}

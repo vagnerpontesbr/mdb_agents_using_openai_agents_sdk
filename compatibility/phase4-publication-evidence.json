@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-30T11:22:01.281369+00:00",
+  "document_id": "SOP-OPTICAL-DEMO",
+  "version_key": "02e6473f95464a80dd3fc15fde5a9d0eaffe9264dce9c8201079f81d45535086",
+  "job_id": "f5dd2cf86714bd581a7071d3d5c6ddd4ee0b975f6c4735bea75b7a972b8126e8",
+  "native_executions": [
+    "70b3c5e4-954a-4c5f-b008-f7772ea88405",
+    "75c5f55d-fea1-4bd1-982f-97dec3532460"
+  ],
+  "native_reject_denied_publication": true,
+  "native_approve_published": true,
+  "publication_idempotent": true,
+  "native_hybrid_cited_answer": true,
+  "tenant_acl_denials": true,
+  "original_source_verified": true,
+  "synthetic_document_retained": true,
+  "limitations": [
+    "Operator-admitted identity, not a browser login test",
+    "Hosted technical specialist integration remains pending"
+  ]
+}

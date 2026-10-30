@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-30T12:00:26.784280+00:00",
+  "checks_passed": [
+    "revoked_version_excluded",
+    "expired_version_excluded",
+    "overdue_review_excluded",
+    "changed_source_digest_excluded",
+    "changed_acl_excluded"
+  ],
+  "source_restored": true,
+  "stale_chunk_metadata_left_unchanged": true,
+  "query_embedding_calls": 1,
+  "limitations": [
+    "Controlled stale metadata, not a lag benchmark"
+  ]
+}

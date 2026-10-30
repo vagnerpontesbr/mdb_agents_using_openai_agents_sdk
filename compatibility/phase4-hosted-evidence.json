@@ -1,0 +1,89 @@
+{
+  "checked_at": "2026-10-30T12:04:01.702099+00:00",
+  "results": [
+    {
+      "case": "knowledge",
+      "execution_id": "2ef9f1f2-5ff8-4e3f-a33f-1ce912681ab8",
+      "status": "completed",
+      "specialists": [
+        "technical"
+      ],
+      "outcome": "completed",
+      "completed": true,
+      "cited_source": true
+    },
+    {
+      "case": "ingestion",
+      "execution_id": "f0370a28-dfa8-4ee8-b3ef-afbcba9ca89f",
+      "status": "completed",
+      "specialists": [
+        "technical"
+      ],
+      "outcome": "completed",
+      "completed": true,
+      "cited_source": false
+    },
+    {
+      "case": "invoice",
+      "execution_id": "d6d1e6e4-553f-4fc4-b77a-4377fab66962",
+      "status": "completed",
+      "specialists": [
+        "financial"
+      ],
+      "outcome": "completed",
+      "completed": true,
+      "cited_source": false
+    },
+    {
+      "case": "sales",
+      "execution_id": "6ce17cb1-e645-41c9-81ba-740213dae5b1",
+      "status": "completed",
+      "specialists": [
+        "sales"
+      ],
+      "outcome": "completed",
+      "completed": true,
+      "cited_source": false
+    }
+  ],
+  "deployment": "deploy-1e78b4dd",
+  "limitations": [
+    "Bounded synthetic operator-admitted identity; not a browser login test",
+    "No corpus quality or capacity claim"
+  ],
+  "final_checked_at": "2026-10-30T12:20:10.375726+00:00",
+  "replacement_regressions": [
+    {
+      "case": "knowledge",
+      "execution_id": "36f4f0e4-aa34-4b37-b794-268c3372aaa3",
+      "status": "completed",
+      "specialists": [
+        "technical"
+      ],
+      "outcome": "completed",
+      "completed": true,
+      "new_version_cited": true
+    },
+    {
+      "case": "mixed",
+      "execution_id": "dceddb0b-a35d-4cd7-8f6f-e3a80191575d",
+      "status": "completed",
+      "specialists": [
+        "financial",
+        "sales"
+      ],
+      "outcome": "completed",
+      "completed": true,
+      "new_version_cited": false
+    }
+  ],
+  "local_application_acceptance": {
+    "port": 53185,
+    "real_admin_login": true,
+    "journey_enabled": true,
+    "voice_enabled": true,
+    "knowledge_enabled": true,
+    "replacement_listed": true,
+    "voice_listening_repeated": false
+  }
+}

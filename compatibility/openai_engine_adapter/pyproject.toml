@@ -8,6 +8,7 @@ dependencies = [
   "openai-agents==0.24.0",
   "agent-engine-sdk==0.11.11",
   "agent-engine-runner-shared==0.11.11",
+  "pymongo==4.19.0",
 ]
 
 [build-system]

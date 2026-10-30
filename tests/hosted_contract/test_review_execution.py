@@ -99,6 +99,20 @@ class ReviewExecutionTests(unittest.IsolatedAsyncioTestCase):
             await self.parse()
         self.settlement.complete_execution.assert_not_called()
 
+    async def test_native_generation_pinned_answer_replays_through_aer(self):
+        for decision in ("approved", "rejected"):
+            self.client.start_activity.return_value = ActivityReplay(completed_outcome(
+                self.activity, json.dumps({"human_review": {
+                    "decision": decision, "reviewer_notes": ""}})))
+            replay = AttemptContext(workflow_identity=self.attempt.workflow_identity,
+                attempt_id="native-resume", fencing_token=2, replay_mode=True)
+            with attempt_context_scope(replay):
+                output = await self.parse(self.ctx.model_copy(update={
+                    "resume": True, "resume_data": {"review-1": {"decision": "ignored"}}}))
+            expected = self.result if decision == "approved" else (
+                '{"status":"rejected","tool_call_id":"release-1"}')
+            self.assertEqual(output.content, expected)
+
     async def test_answer_resolved_during_finalization_settles_without_obsolete_wait(self):
         self.client.start_activity.return_value = ActivityDispatch(self.activity)
         async def finalize(command):

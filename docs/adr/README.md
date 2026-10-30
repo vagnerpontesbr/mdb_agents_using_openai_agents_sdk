@@ -37,3 +37,5 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0023](0023-quiet-environment-demo-voice.md) | Limit demo voice to quiet environments with bounded manual retries | Selected by user; microphone/listening proof passed |
 
 | [ADR-0024](0024-phase-one-application-boundaries.md) | Phase 1 identity application, process ownership and typed response boundary | Implemented; validation in FND-003 |
+
+| [ADR-0025](0025-phase-two-journey.md) | Bounded SDK supervisor/specialists, native review and chained browser voice | Bounded hosted and browser acceptance passed |

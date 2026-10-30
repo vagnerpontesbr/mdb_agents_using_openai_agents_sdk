@@ -24,7 +24,8 @@ class Boundary:
                     (b"cache-control", b"no-store"),
                     (b"x-content-type-options", b"nosniff"),
                     (b"referrer-policy", b"no-referrer"),
-                    (b"content-security-policy", b"default-src 'self'; frame-ancestors 'none'; "
+                    (b"content-security-policy", b"default-src 'self'; media-src 'self' blob:; "
+                     b"frame-ancestors 'none'; "
                      b"form-action 'self'; object-src 'none'; base-uri 'none'"),
                 ])
             await send(message)
@@ -46,7 +47,7 @@ class Boundary:
             return
         self.active += 1
         try:
-            # Buffer at most 4KiB before validation, including chunked bodies.
+            # Bound JSON and the explicitly larger PCM upload, including chunked bodies.
             body = bytearray()
             try:
                 async with asyncio.timeout(10):
@@ -55,7 +56,8 @@ class Boundary:
                         if message["type"] == "http.disconnect":
                             return
                         chunk = message.get("body", b"")
-                        if len(body) + len(chunk) > 4096:
+                        maximum = 970_000 if scope.get("path") == "/api/voice/transcribe" else 8192
+                        if len(body) + len(chunk) > maximum:
                             await reject(413, "Request too large")
                             return
                         body.extend(chunk)

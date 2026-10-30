@@ -2,7 +2,7 @@
 
 ## Start here
 
-- Phase 0 bounded compatibility is complete; read the current [checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md). Phase 1 application foundation is tracked in [FND-003](docs/tasks/FND-003-FOUNDATION.md); use the [application runbook](docs/runbooks/APPLICATION.md). The full telecom journey is not implemented.
+- Phase 0 bounded compatibility is complete; read the current [checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md). Phase 1 application foundation is tracked in [FND-003](docs/tasks/FND-003-FOUNDATION.md); use the [application runbook](docs/runbooks/APPLICATION.md). Phase 2 bounded acceptance is complete: [VERT-001/002](docs/tasks/VERT-001-JOURNEY.md) and the [Phase 2 runbook](docs/runbooks/PHASE_2.md) record local checks, hosted/native review and user-confirmed voice acceptance. Manual publication remains separate; do not start Phase 3 without authorization.
 - Read [initial_plan.md](initial_plan.md) for scope, [requirements](docs/REQUIREMENTS.md) for user decisions, and the relevant [ADR](docs/adr/README.md) before changing architecture.
 - Use [the task backlog](docs/tasks/README.md) to choose a bounded deliverable and record evidence. The latest explicit user instruction takes precedence over repository guidance.
 - All code, documentation, UI, prompts, and example conversations are English.

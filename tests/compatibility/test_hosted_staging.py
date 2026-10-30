@@ -39,6 +39,18 @@ class HostedStagingTests(unittest.TestCase):
             self.assertFalse((output / ".runtime-python").exists())
             self.assertFalse((output / ".python-version").exists())
 
+    def test_journey_profile_stages_only_its_declared_tools_and_memory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "journey"
+            self.assertEqual(self.stage(output, "--profile", "journey").returncode, 0)
+            manifest = (output / "agent.yaml").read_text()
+            self.assertIn("entrypoint: openai_engine_adapter.journey:app", manifest)
+            self.assertIn("memory: true", manifest)
+            self.assertIn("tools: [telco_read_invoice, telco_check_connection, "
+                          "telco_offer_plan, telco_simulate_plan_change]", manifest)
+            self.assertIn("egress_mode: deny_all", manifest)
+            self.assertNotIn("lookup_invoice", manifest)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -15,6 +15,7 @@ class Settings:
     mongodb_uri: str = field(repr=False)
     origin: str = "http://127.0.0.1:8000"
     web_dist: Path | None = None
+    journey_enabled: bool = False
 
     def __post_init__(self) -> None:
         try:
@@ -56,8 +57,12 @@ class Settings:
         if host != APPLICATION_HOST:
             raise ValueError("APP_MONGODB_HOST must select the approved application cluster")
         dist = os.environ.get("APP_WEB_DIST")
+        journey = os.environ.get("APP_JOURNEY_ENABLED", "false")
+        if journey not in ("true", "false"):
+            raise ValueError("APP_JOURNEY_ENABLED must be true or false")
         return cls(
             mongodb_uri=os.environ.get("APP_MONGODB_URI", ""),
             origin=os.environ.get("APP_ORIGIN", "http://127.0.0.1:8000"),
             web_dist=Path(dist).resolve() if dist else None,
+            journey_enabled=journey == "true",
         )

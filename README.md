@@ -5,15 +5,17 @@ MongoDB Agent Engine for managed platform capabilities, MongoDB Atlas, Voyage AI
 and Python managed by uv. The planned full application includes a supervisor,
 financial/technical/sales specialists, React chat/voice, and governed PDF retrieval.
 
-**Phase 0 is complete and merged. Phase 1 application
-foundation is implemented and validated locally; the full telecom journey remains future work.** See [FND-003](docs/tasks/FND-003-FOUNDATION.md)
+**Phases 0 and 1 are published. Phase 2 is complete for the bounded demo, with
+hosted supervisor/specialists, native approval/replay and accepted browser voice.**
+See [VERT-001/002](docs/tasks/VERT-001-JOURNEY.md)
 for validation and [publication status](docs/runbooks/REPOSITORY_SETUP.md) for Git/CI checkpoints.
 
 ## Run the application foundation
 
 The new React account workspace supports login, administrator-only registration,
 session restoration and logout through the existing MongoDB identity boundary.
-It does not yet expose chat, specialists or voice. The [application runbook](docs/runbooks/APPLICATION.md)
+Chat, specialists and voice are opt-in under the [Phase 2 runbook](docs/runbooks/PHASE_2.md)
+and are disabled by default until configured against the accepted deployment. The [application runbook](docs/runbooks/APPLICATION.md)
 provides prerequisites, private configuration, optional index/bootstrap commands,
 and the API contract.
 
@@ -59,9 +61,9 @@ claim follows from the tests. See ADRs [0021](docs/adr/0021-demo-semantic-episod
 [0022](docs/adr/0022-demo-private-engine-cli-identity.md) and
 [0023](docs/adr/0023-quiet-environment-demo-voice.md).
 
-The complete supervisor/specialist application, chat/voice workspace, governed ingestion,
-RAG quality evaluations and load profiles remain in the [backlog](docs/tasks/README.md).
-Starting Phase 2 requires the user's phase-boundary confirmation.
+The user authorized Phase 2; [journey evidence](docs/tasks/VERT-001-JOURNEY.md)
+records local tests, live acceptance and the final audio correction. Governed ingestion, RAG quality
+evaluations and load profiles remain later phases in the [backlog](docs/tasks/README.md).
 
 ## Documentation and contribution
 

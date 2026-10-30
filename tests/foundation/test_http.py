@@ -55,7 +55,7 @@ def test_host_origin_size_and_injected_authority_are_rejected(client, identity):
         assert client.post("/api/users", json=payload, headers=headers).status_code == 403
     assert client.post("/api/users", json={**payload, "requester_id": "forged"}).status_code == 400
     assert client.post("/api/users", json={**payload, "role": "owner"}).status_code == 400
-    assert client.post("/api/login", content=b"x" * 4097,
+    assert client.post("/api/login", content=b"x" * 8193,
                        headers={"Content-Type": "application/json"}).status_code == 413
     assert "other@example.test" not in identity.store.users
 

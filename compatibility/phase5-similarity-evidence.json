@@ -1,0 +1,52 @@
+{
+  "checked_at": "2026-10-30T19:07:28.327094+00:00",
+  "threshold": 0.99,
+  "status": "completed",
+  "rows": [
+    {
+      "case_id": "exact",
+      "equivalent_label": true,
+      "score": 0.9999999999999999,
+      "admitted_by_threshold": true
+    },
+    {
+      "case_id": "paraphrase",
+      "equivalent_label": true,
+      "score": 0.9871033380626534,
+      "admitted_by_threshold": false
+    },
+    {
+      "case_id": "different-firmware",
+      "equivalent_label": false,
+      "score": 0.9867250495683761,
+      "admitted_by_threshold": false
+    },
+    {
+      "case_id": "different-alarm",
+      "equivalent_label": false,
+      "score": 0.8979252326122403,
+      "admitted_by_threshold": false
+    },
+    {
+      "case_id": "different-product",
+      "equivalent_label": false,
+      "score": 0.9915341851021162,
+      "admitted_by_threshold": true
+    },
+    {
+      "case_id": "invoice",
+      "equivalent_label": false,
+      "score": 0.5884738338552977,
+      "admitted_by_threshold": false
+    }
+  ],
+  "cost_usd": null,
+  "limits": [
+    "Seven developer-authored synthetic queries, not external SME validation",
+    "Cosine score screen only; does not measure source recall or final answers",
+    "Changed equipment must also be rejected by authoritative applicability",
+    "No threshold tuning on this small sample; no production quality guarantee"
+  ],
+  "false_hits": 1,
+  "missed_equivalents": 1
+}

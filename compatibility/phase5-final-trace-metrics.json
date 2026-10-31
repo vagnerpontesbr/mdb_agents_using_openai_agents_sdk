@@ -1,0 +1,159 @@
+{
+  "checked_at": "2026-10-31T13:30:16.679106+00:00",
+  "source_report": "phase5-journey-final-evidence.json",
+  "rows": [
+    {
+      "case_id": "invoice",
+      "execution_id": "37ac8e58-a129-4105-9f4c-a3ba871a7c8b",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 3079,
+        "output": 212,
+        "total": 3291
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "invoice",
+      "execution_id": "c39c4bb3-2028-485d-a894-8ba468a07814",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 3093,
+        "output": 262,
+        "total": 3355
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "sales",
+      "execution_id": "7a75334a-fdaf-4c7e-a19a-c1eabbaca791",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_offer_plan"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 3099,
+        "output": 267,
+        "total": 3366
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "sales",
+      "execution_id": "5c5cd1dd-451c-4fe7-815b-c73308a98c64",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_offer_plan"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 3116,
+        "output": 322,
+        "total": 3438
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "mixed",
+      "execution_id": "de1edb11-8319-4a08-af08-3c662bb84d80",
+      "correlation": "session_only",
+      "native_span_count": 8,
+      "tool_names": [
+        "telco_offer_plan",
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 5,
+      "tokens": {
+        "input": 5375,
+        "output": 605,
+        "total": 5980
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "mixed",
+      "execution_id": "46c18a16-3659-4d2f-96bf-ea567fd990df",
+      "correlation": "session_only",
+      "native_span_count": 8,
+      "tool_names": [
+        "telco_offer_plan",
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 5,
+      "tokens": {
+        "input": 5364,
+        "output": 691,
+        "total": 6055
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "knowledge",
+      "execution_id": "d2bcdd00-5cd9-49f2-a5d4-e5373bdcf5eb",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_search_knowledge"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 3526,
+        "output": 378,
+        "total": 3904
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "knowledge",
+      "execution_id": "20885720-7769-4b81-aad0-bb708e504130",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_search_knowledge"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 3527,
+        "output": 363,
+        "total": 3890
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    }
+  ],
+  "cost_usd": null,
+  "limitations": [
+    "Token counts cover observed native invoke_llm spans, not unobserved memory/provider work",
+    "Tool arguments may be redacted; unavailable is not a successful parameter grade",
+    "Native Engine traces remain primary; no input/output/span payloads are copied",
+    "Null execution roots permit session-level accounting only, not verified execution attribution"
+  ]
+}

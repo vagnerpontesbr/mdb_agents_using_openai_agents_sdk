@@ -1,5 +1,8 @@
 # Running the Phase 0 demo
 
+For the current React/SDK/knowledge demo, use [Phase 6](PHASE_6.md). This page
+retains the historical Phase 0 compatibility walkthrough.
+
 This runbook operates the bounded Phase 0 compatibility UI. The separate
 [Phase 1 React account application](APPLICATION.md) has its own startup commands. Read the [Phase 0 checkpoint](../compatibility/PHASE_0.md) for accepted
 scope and [dependency environments](../tasks/COMP-001-DEPENDENCIES.md) for setup.

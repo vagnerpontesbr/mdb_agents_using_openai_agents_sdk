@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "started_at": "2026-10-31T15:06:28.384671+00:00",
+  "provider_attempts": 3,
+  "provider_cost_usd": null,
+  "thresholds": {
+    "speech_call_seconds": 45,
+    "docling_seconds": 120
+  },
+  "limitations": [
+    "Synthetic TTS speech, no new human listening acceptance",
+    "One overlapping CPU job, not saturated OCR capacity",
+    "Provider billing is separate from this latency check"
+  ],
+  "baseline": {
+    "tts_seconds": 4.422,
+    "audio_seconds": 7.9
+  },
+  "contention": {
+    "tts": {
+      "seconds": 3.013,
+      "audio_seconds": 7.45,
+      "docling_alive_on_completion": true
+    },
+    "stt": {
+      "seconds": 1.576,
+      "invoice_amount_recognized": true,
+      "docling_alive_on_completion": true
+    },
+    "docling_seconds": 6.894,
+    "scanned_pages": 2
+  }
+}

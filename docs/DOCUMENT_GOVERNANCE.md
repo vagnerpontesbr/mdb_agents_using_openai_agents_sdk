@@ -1,6 +1,15 @@
 # Document governance and risk
 
-Status: proposed implementation contract and synthetic demonstration; no running enforcement or measured evaluations yet.
+Status: authoritative governance contract. Phase 4 implements native owner review,
+transactional publication and hosted retrieval; [RAG-001](tasks/RAG-001-KNOWLEDGE.md)
+records actual acceptance and remaining checks. [ADR-0026](adr/0026-governed-knowledge-publication.md)
+defines the owner and publication boundary. The synthetic quality demonstration
+below is not a measured retrieval evaluation. Scheduled reassessment, cached answers
+and the full diagnostic UI below remain planned; request-time eligibility is enforced.
+
+Phase 5 adds a bounded candidate-reference cache with authoritative revalidation;
+[EVAL-001](tasks/EVAL-001-QUALITY.md) records measured synthetic retrieval evidence
+and remaining quality gates. Generated answers are not cached.
 
 ## Ownership and metadata
 

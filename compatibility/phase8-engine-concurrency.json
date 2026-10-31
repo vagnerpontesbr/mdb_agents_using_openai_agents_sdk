@@ -1,0 +1,109 @@
+{
+  "status": "passed",
+  "started_at": "2026-10-31T14:05:17.823214+00:00",
+  "profile": "engine-concurrency-v1",
+  "workflow_version": "8",
+  "approved_total_phase_budget_usd": 30,
+  "cost_usd": null,
+  "stages": [
+    {
+      "name": "baseline",
+      "attempts": [
+        {
+          "session_id": "telco-6711a5c62684d088d6ed3a7055d2af26203f43cf22736bf2",
+          "conversation_id": "ff037e62-f03a-40f5-ade1-ad7ef42cef3a",
+          "actor_index": 0,
+          "status": "completed",
+          "seconds": 12.154,
+          "execution_id": "10cf5aea-dde5-46ca-b74c-c82f9038c200",
+          "other_user_denied": true,
+          "runtime_release": "released",
+          "exact_result": true,
+          "recovered_after_runtime_release": true
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "name": "distinct_sessions",
+      "attempts": [
+        {
+          "session_id": "telco-c24c35eb7123fcaee2bcc03958c8c4beef2ec22a6161da72",
+          "conversation_id": "7d888efc-52d2-4b8f-87c1-6eeb1ec0649d",
+          "actor_index": 0,
+          "status": "completed",
+          "seconds": 12.249,
+          "execution_id": "64ba2364-8a44-405a-942c-e59c899aa4be",
+          "other_user_denied": true,
+          "runtime_release": "released",
+          "exact_result": true,
+          "recovered_after_runtime_release": true
+        },
+        {
+          "session_id": "telco-32430901d2b41bd76594c21ba1193d2e9cfc8eacb3030909",
+          "conversation_id": "d775a851-e6ad-465b-a680-6e526f776272",
+          "actor_index": 1,
+          "status": "completed",
+          "seconds": 10.942,
+          "execution_id": "9474789c-cf07-42b1-9c55-eadce4559da5",
+          "other_user_denied": true,
+          "runtime_release": "released",
+          "exact_result": true,
+          "recovered_after_runtime_release": true
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "name": "same_session",
+      "attempts": [
+        {
+          "session_id": "telco-0bb1fe533aecfa0beeb42c14bd827b2fd604d87f316cca58",
+          "conversation_id": "0ab7d440-593c-4364-92ea-87a2b50a893f",
+          "actor_index": 0,
+          "status": "completed",
+          "seconds": 10.219,
+          "execution_id": "edf1ce3d-22d7-41de-91d7-4612fc5b7944",
+          "other_user_denied": true,
+          "runtime_release": "released",
+          "exact_result": true,
+          "recovered_after_runtime_release": true
+        },
+        {
+          "session_id": "telco-0bb1fe533aecfa0beeb42c14bd827b2fd604d87f316cca58",
+          "conversation_id": "0ab7d440-593c-4364-92ea-87a2b50a893f",
+          "actor_index": 0,
+          "status": "conflict",
+          "seconds": 1.265
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "name": "post_concurrency",
+      "attempts": [
+        {
+          "session_id": "telco-eb789d1e6af27dec78880173bb355b6d74d9337d8c361abb",
+          "conversation_id": "d79fd238-078e-4b1a-bcf9-44bb2b327d63",
+          "actor_index": 0,
+          "status": "completed",
+          "seconds": 9.554,
+          "execution_id": "780e57ae-bc29-4127-b812-735a75465b68",
+          "other_user_denied": true,
+          "runtime_release": "released",
+          "exact_result": true,
+          "recovered_after_runtime_release": true
+        }
+      ],
+      "status": "passed"
+    }
+  ],
+  "invoke_attempts": 6,
+  "limitations": [
+    "Existing synthetic users; shared project-managed memory is not reset",
+    "Engine preview has no charge per requester; upstream model usage remains billable",
+    "Six invoke attempts only, not a capacity/soak or full cost-accounting result",
+    "Current OpenAI direct and MongoDB gateway routes retained by requester",
+    "No inferred provider charge from invocation count"
+  ]
+}

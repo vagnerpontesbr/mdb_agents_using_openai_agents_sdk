@@ -1,0 +1,10 @@
+{
+  "status": "stopped",
+  "checked_at": "2026-10-31T14:16:52.385332+00:00",
+  "checks": [],
+  "limitations": [
+    "Schema rejection proves authorization, not valid document insertion",
+    "Tenant/ACL isolation requires separate domain tests"
+  ],
+  "error_type": "OperationFailure"
+}

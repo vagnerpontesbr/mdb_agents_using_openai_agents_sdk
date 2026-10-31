@@ -1,0 +1,32 @@
+{
+  "source_report": "phase5-calibration-evidence.json",
+  "source_sha256": "6b85f0180130fdcc4c4de0f7dee99f6145421aac566bcf1fa8735532c563a9f1",
+  "selected_threshold": 0.98,
+  "selection_frozen_before_validation": true,
+  "validation": {
+    "threshold": 0.98,
+    "cases": 8,
+    "hits": 1,
+    "harmful_hits": 0,
+    "effective_top1_correct": 8,
+    "paraphrase_hits": 0,
+    "paraphrases": 3,
+    "paraphrase_hit_rate": 0.0
+  },
+  "validation_baseline": {
+    "threshold": 0.99,
+    "cases": 8,
+    "hits": 1,
+    "harmful_hits": 0,
+    "effective_top1_correct": 8,
+    "paraphrase_hits": 0,
+    "paraphrases": 3,
+    "paraphrase_hit_rate": 0.0
+  },
+  "source_preservation_passed": true,
+  "useful_paraphrase_reuse_passed": false,
+  "demo_calibration_accepted": false,
+  "production_threshold_changed": false,
+  "cleanup_completed": true,
+  "next_step": "Expand development coverage before another frozen evaluation; do not tune on these held-out results and relabel them untouched."
+}

@@ -1,0 +1,23 @@
+{
+  "started_at": "2026-10-30T19:24:56.834503+00:00",
+  "status": "failed_preflight",
+  "dataset_sha256": "513541e4697d8b587f18af7a71444dd9ff5ffd7f1f7473b238862b051feac216",
+  "threshold": 0.99,
+  "embedding_profile": "voyage-context-4:1024:v1",
+  "rows": [],
+  "scope_checks": [],
+  "embedding_calls": 0,
+  "cleanup_completed": true,
+  "cost_usd": null,
+  "limits": [
+    "Developer-authored query-equivalence labels; not human-reviewed source relevance judgments",
+    "Real MongoDB cache index, scoped identity and production lookup implementation",
+    "Synthetic reference resolver; does not measure final answers or source recall",
+    "Scope overrides are supplied explicitly; query text is not a scope parser",
+    "Held-out partition fixed before calls, but same author and templates",
+    "No threshold tuning; no application source or Engine memory modifications"
+  ],
+  "error_type": "OperationFailure",
+  "error_code": 13,
+  "reason": "Scoped cache identity correctly denies index administration; zero embeddings or cache writes attempted"
+}

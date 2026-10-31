@@ -1,6 +1,6 @@
 # ADR-0024: Deliver the application foundation through the existing identity boundary
 
-- Status: Implemented and locally validated for Phase 1; remote publication pending
+- Status: Implemented, published and validated for Phase 1; see FND-003
 - Date: 2026-10-29
 - Owner: Repository implementation
 - Refines: [ADR-0002](0002-service-boundaries.md), [ADR-0009](0009-deterministic-responses.md), [ADR-0020](0020-demo-email-password-auth.md)

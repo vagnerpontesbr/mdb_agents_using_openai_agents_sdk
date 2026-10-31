@@ -57,6 +57,8 @@ class Boundary:
                             return
                         chunk = message.get("body", b"")
                         maximum = 970_000 if scope.get("path") == "/api/voice/transcribe" else 8192
+                        if scope.get("path") == "/api/knowledge/upload":
+                            maximum = 6_680_000
                         if len(body) + len(chunk) > maximum:
                             await reject(413, "Request too large")
                             return

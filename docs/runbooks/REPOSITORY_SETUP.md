@@ -4,11 +4,15 @@ Remote: https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk
 
 ## Current publication and work checkpoint
 
-PR #1 merged into `main` as `5dc29d87cf3584c8cd749208b0d9b1b43cfa8b08`.
-Documentation commit `1ba8c49` passed both push/PR checks; the [post-merge run](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/40953112946) also passed.
-The user subsequently authorized Phase 1. Its source, locks and new application
-CI job are local on `codex/phase-1-foundation` until separately published; see
-[FND-003](../tasks/FND-003-FOUNDATION.md). Earlier checkpoints below are history.
+Phase 2 is published on `codex/phase-2-journey` as
+`3c68530d932182b0fdba81319dc08a5a4dfb841d`. Its
+[GitHub Actions run](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41036233739)
+passed, verified on 2026-10-30. Phase 1 commit `b2ff9c7` also has successful remote CI.
+
+The user authorized Phase 3 after that publication. [MEM-001](../tasks/MEM-001-MEMORY.md)
+records its local changes and hosted evidence. Phase 3 has not been committed or
+pushed; its new remote CI remains separate. The user performs Git publication
+manually. Earlier checkpoints below are history.
 
 ## Verified Phase 0 publication checkpoint
 
@@ -84,3 +88,95 @@ unverified operations succeeded.
 Earlier initialization/network/plugin-write failures were historical setup
 constraints. They no longer describe the verified publication above. Do not
 relocate Git metadata or retry plugin writes to bypass restrictions.
+
+## PR #3 intermittent login-limit test correction
+
+The PR #3 run `41038899374` failed because
+`test_unknown_accounts_share_peer_rate_limit` used the real clock and crossed a
+minute boundary: the ninth request correctly entered a fresh counter window and
+returned 200 instead of the test's expected 429. The merge and Phase 3 commit
+subsequently passed CI, but that did not remove the timing-dependent test defect.
+
+The locally authored correction injects a fixed clock into this test, verifies
+429 after eight unknown-account attempts, then advances one second across the
+minute boundary and verifies successful login. Application rate limits and the
+shared identity fixture remain unchanged. Seven HTTP tests and Ruff passed;
+new remote CI requires the user's manual commit/push. Phase 4 work in progress is
+separate from this correction.
+
+## Verified Phase 4 publication
+
+On 2026-10-30, local HEAD and the remote `codex/phase-2-journey` branch both
+resolved to `1a52afce2815be3530d77cb7a714001f412ad206`
+(`feat: complete phase 4 governed PDF knowledge`). The working tree was clean
+before Phase 5 edits. Both repository and application jobs passed in
+[run 41062532149](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41062532149).
+The user performed publication; no merge is claimed. The preceding deterministic
+login test correction `b9e641e` also passed CI in run `41040063310`.
+
+## Phase 5 completion, Git publication pending
+
+On 2026-10-31, bounded Phase 5 acceptance passed in
+[EVAL-001](../tasks/EVAL-001-QUALITY.md). Workflow 8 is deployed as `deploy-af009ed4`
+from build `bld_01M691YPABN60FEKHW6E1KZGB5`; eight final hosted invocations passed.
+Local validation passed 128 backend tests, 86 hosted contracts, Ruff, mypy and
+repository checks. HEAD is still `1a52afc` on `codex/phase-2-journey`; no Phase 5
+commit, push, PR or CI run is claimed. The user performs Git publication manually.
+After publication, verify the new remote commit and CI before starting Phase 6.
+
+## Phase 5 publication verified
+
+On 2026-10-31 local HEAD and remote `codex/phase-2-journey` both matched
+`1a81be69cf0289f28b26def7e728c2c8f6d5619d`. Both jobs passed in
+[CI run 41205974527](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41205974527).
+This supersedes the preceding publication-pending note. The user authorized Phase 6
+experience/packaging and selected MIT; [REL-001](../tasks/REL-001-HANDOFF.md) tracks it.
+
+## Phase 6 completion, Git publication pending
+
+The requester selected MIT and accepted the automated isolated handoff rehearsal on
+2026-10-31. [REL-001](../tasks/REL-001-HANDOFF.md) records 130 backend tests, three
+frontend unit tests, ten browser tests, frozen clean installation, builds, setup
+diagnostics and tool adaptation. Phase 6 code/docs are uncommitted; no Phase 6 CI
+or push is claimed. Phase 7 has not started.
+
+## Phase 6 publication and CI correction
+
+Phase 6 is published as `9b048bb`, with correction `a4f5c4c` and passing CI `41207242615`. Phase 7 runtime acceptance is complete for the bounded demo; its documentation/evidence awaits manual publication. Phase 8 scalability/resilience has not started.
+
+[CI run 41206970479](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41206970479)
+failed in `test_source_allowlist_and_existing_destination_rejection`: the staging
+helper correctly included `LICENSE`, but the test expected only the previous files.
+The correction preserves the strict allowlist and verifies exact license content.
+All 75 compatibility tests passed locally with frozen Python dependencies and
+local-port access. The user must commit/push the correction before remote CI
+can be verified. This supersedes the preceding Phase 6 publication-pending note.
+
+## Historical checkpoint — Phase 6 CI passed, Phase 7 complete locally
+
+On 2026-10-31 the clean local branch and GitHub CI head matched
+`a4f5c4c6c0903003f53903985a1218f7cab82e94`. Both jobs passed in
+[run 41207242615](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41207242615).
+This supersedes the preceding pending correction note.
+
+[RUN-001](../tasks/RUN-001-RUNTIME.md) records fresh workflow 8 recovery, healthy
+deployment and 86 local contract tests. Phase 7 documentation/evidence and the
+decision reconciliation are local changes; no new commit, push or deployment is
+claimed. Phase 8 remains pending and must wait for the manual publication gate.
+
+## Phase 7 publication verified; Phase 8 in progress
+
+Commit `610ca8babde73ae7fa61fdc97e24dc22ca233136` is published and both jobs passed
+in [CI 41207595549](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41207595549).
+The tree was clean before Phase 8 work. This supersedes the Phase 7 publication
+pending note. [OPS-001](../tasks/OPS-001-RESILIENCE.md) contains locally authored
+Phase 8 scripts, namespace controls and measured evidence. Phase 8 source changes
+remain uncommitted and unpublished; no hosted redeployment is claimed. The approved
+Atlas provisioning was completed as recorded below. Full acceptance is pending.
+
+Phase 8 follow-up: the approved load resources were subsequently applied after
+Atlas CLI login renewal. Role/index and bounded ingestion/cache checks passed;
+see OPS-001. These remote Atlas changes are distinct from local source changes.
+No Phase 8 commit/push or hosted redeployment has been performed.
+
+Phase 8 bounded sustained, real Atlas read and speech-contention profiles subsequently passed. Local validation passed 138 backend and 86 hosted contract tests. The requester subsequently excluded production-capacity and pricing proof from acceptance, completing Phase 8 for the demo scope. No new Git/CI publication or hosted deployment is claimed. The measured reports and limitations are authoritative in OPS-001.

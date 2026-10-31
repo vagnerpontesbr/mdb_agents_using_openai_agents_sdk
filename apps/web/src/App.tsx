@@ -3,6 +3,7 @@ import type { SubmitEvent } from 'react';
 import { ApiError, principal, request } from './api';
 import type { Principal, Role } from './api';
 import Journey from './Journey';
+import Knowledge from './Knowledge';
 
 export default function App() {
   const [user, setUser] = useState<Principal | null>(null);
@@ -104,6 +105,7 @@ export default function App() {
         {notice && <p className="feedback success" role="status">{notice}</p>}
       </section>
       {user && <Journey key={user.user_id} user={user} />}
+      {user && <Knowledge key={`knowledge-${user.user_id}`} user={user} />}
     </main>
     <footer>Telecom reference asset <span>Private demo workspace</span></footer>
   </div>;

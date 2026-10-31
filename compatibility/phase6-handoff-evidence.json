@@ -1,0 +1,58 @@
+{
+  "checked_at": "2026-10-31",
+  "base_commit": "1a81be69cf0289f28b26def7e728c2c8f6d5619d",
+  "trial": "Agent-operated isolated checkout with reviewed uncommitted Phase 6 overlays",
+  "fresh_project_dependency_directories": true,
+  "shared_download_and_browser_caches": true,
+  "private_env_copied": false,
+  "checks": {
+    "frozen_python_install": true,
+    "frozen_frontend_install": true,
+    "backend_tests": 130,
+    "frontend_unit_tests": 3,
+    "browser_tests": 10,
+    "backend_sdist_and_wheel": true,
+    "frontend_build_and_types": true,
+    "frontend_lint": true,
+    "offline_setup_doctor": true,
+    "isolated_tool_adaptation": true,
+    "license_in_wheel": true,
+    "license_in_hosted_source_stage": true
+  },
+  "versions": {
+    "python": "3.15.2",
+    "node": "26.5.0",
+    "npm": "11.17.0"
+  },
+  "provider_calls": 0,
+  "database_writes": 0,
+  "independent_human_trial": false,
+  "license": "MIT",
+  "frontend_audit": {
+    "production_vulnerabilities": 0,
+    "development_moderate_reports": 10,
+    "underlying_advisory": "https://github.com/advisories/GHSA-g3hv-75wg-m249",
+    "component": "minimatch through lint tooling",
+    "dependency_pins_changed": false
+  },
+  "source_hashes": {
+    "LICENSE": "81708a18015df4ed6ed5c9db82de6b361ba66c7c4b3407c1ded1c963f496fe62",
+    ".env.example": "0a88ae73ae189fd47191a1bb05115d07548c7a7807db835ef6ce8593499e848e",
+    "scripts/check_demo_setup.py": "d30feaea2df3ee0a8d984e90fb4049e05134d19ee73852e558a8a4c5a9f98a14",
+    "scripts/check_tool_adaptation.py": "6a70bea148886b28a7507e722a59eb917b7b3ec46d5846dcd7341972ce92a86a",
+    "scripts/prepare_hosted_invoice.py": "d3116cc3847ee1b36c0d4a94665e79075e4dc44e4c1a918258909ad8c1f0f2eb",
+    "docs/runbooks/PHASE_6.md": "f9e7e4c40759bf6f5778e1573f2d6dcbed82c1a0cb832d37c1f44b2b3be0c77f"
+  },
+  "limitations": [
+    "Browser tests use synthetic provider doubles and do not verify live provider health",
+    "Application is bound to the approved Atlas/Engine targets; no arbitrary cluster self-provisioning",
+    "npm initial absolute-prefix attempt failed in sandbox; same frozen lock installed from frontend working directory with required cache access",
+    "Requester accepted automated rehearsal; no independent human trial claimed"
+  ],
+  "requester_acceptance": {
+    "date": "2026-10-31",
+    "decision": "aceito",
+    "scope": "Automated isolated rehearsal accepted instead of independent human handoff for this demo"
+  },
+  "phase6_complete_for_demo": true
+}

@@ -2,7 +2,7 @@
 
 ## Objective
 
-Deliver an executable, adaptable reference for architects, developers, and builders: a uv-managed Python backend, React frontend, MongoDB persistence, and OpenAI Agents SDK orchestration. Phase 0 bounded compatibility is complete; Phase 1 adds the application foundation ([FND-003](tasks/FND-003-FOUNDATION.md)); Phase 2 has passed bounded hosted and browser acceptance ([VERT-001/002](tasks/VERT-001-JOURNEY.md)); manual publication remains pending. See [current evidence](compatibility/PHASE_0.md) and [publication/CI status](runbooks/REPOSITORY_SETUP.md).
+Deliver an executable, adaptable reference for architects, developers, and builders: a uv-managed Python backend, React frontend, MongoDB persistence, and OpenAI Agents SDK orchestration. Phase 0 bounded compatibility is complete; Phase 1 adds the application foundation ([FND-003](tasks/FND-003-FOUNDATION.md)); Phase 2 has passed bounded hosted and browser acceptance ([VERT-001/002](tasks/VERT-001-JOURNEY.md)); its publication and CI passed. Phase 3 bounded memory/recovery acceptance passed in [MEM-001](tasks/MEM-001-MEMORY.md). See [current evidence](compatibility/PHASE_0.md) and [publication/CI status](runbooks/REPOSITORY_SETUP.md).
 
 ## Platform feature precedence — latest user decision
 
@@ -87,3 +87,38 @@ The canonical project creation plan is `initial_plan.md` at the project root.
 Use root AGENTS.md, bounded task records, contribution/review guidance, and executable repository checks. Intended GitHub repository: https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk. Authored workflow files do not establish remote configuration or successful CI. Preserve remote work when access becomes available.
 
 Include explicit typed function-calling examples for invoices, authorized ingestion jobs, and approved simulated plan changes. Evaluate semantic response quality with calibrated offline LLM judges and independent current references; online judge gating is optional, not an SDK-provided correctness guarantee.
+
+## Accepted delivery decisions and current phase
+
+MIT licensing and acceptance of the automated isolated handoff are recorded in
+[ADR-0028](adr/0028-mit-automated-demo-handoff.md). The expanded semantic validation,
+calibrated candidate cache and isolated evaluator are recorded in
+[ADR-0027](adr/0027-bounded-knowledge-evaluation-cache.md) and
+[EVAL-001](tasks/EVAL-001-QUALITY.md); these are bounded demo results.
+
+There are nine phases, numbered 0–8. Phases 0–7 are published with passing CI.
+[Phase 8](tasks/OPS-001-RESILIENCE.md) scalability/resilience is complete for the approved demo scope; manual publication is pending. User-performed commit/push
+and a pause at each completed phase remain the delivery workflow.
+
+## Decision lookup
+
+| Requester decision | Authoritative record |
+| --- | --- |
+| Engine precedence; SDK orchestration | [ADR-0018](adr/0018-engine-feature-precedence.md) |
+| Two existing Atlas clusters and domain ownership | [ADR-0017](adr/0017-two-cluster-memory-boundary.md) |
+| Requester may approve their exact action; native 30-day retention/expurgo accepted without further proof | [ADR-0019](adr/0019-requester-approval-memory-retention.md) |
+| Email/password, user/admin roles and admin-only registration | [ADR-0020](adr/0020-demo-email-password-auth.md) |
+| Demo limited to semantic/episodic continuity | [ADR-0021](adr/0021-demo-semantic-episodic-continuity.md) |
+| Private operator CLI identity allowed in demo backend | [ADR-0022](adr/0022-demo-private-engine-cli-identity.md) |
+| Quiet-environment voice and bounded retries | [ADR-0023](adr/0023-quiet-environment-demo-voice.md) |
+| Governed PDF approval/publication | [ADR-0026](adr/0026-governed-knowledge-publication.md) |
+| Expanded semantic validation and calibrated candidate cache | [ADR-0027](adr/0027-bounded-knowledge-evaluation-cache.md), [EVAL-001](tasks/EVAL-001-QUALITY.md) |
+| MIT and automated handoff accepted | [ADR-0028](adr/0028-mit-automated-demo-handoff.md) |
+
+These links index decisions; policy details remain in their authoritative records.
+
+Phase 8 budget and routing decisions are authoritative in [OPS-001](tasks/OPS-001-RESILIENCE.md): USD 30 total provider consumption supersedes USD 10; Engine preview is uncharged per requester; retain direct OpenAI model and MongoDB gateway knowledge paths. Load namespace selection is recorded in [ADR-0029](adr/0029-isolated-load-environment.md). The requester approved remote resource creation; the exact plan was applied and verified.
+
+The requester clarified Phase 8 application tests use M20 and previous phases used M10. Current cluster-specific observations and the historical limitation are recorded in [OPS-001](tasks/OPS-001-RESILIENCE.md), including the separate Engine-memory tier. The requester authorized continuing the bounded phase without further questions; this does not turn unavailable billing or unexecuted profiles into accepted results.
+
+Final Phase 8 scope: the requester explicitly excluded production-capacity and pricing proof and requested committing the work. [OPS-001](tasks/OPS-001-RESILIENCE.md) records the superseded billing gate and completed demo acceptance. Historical unknown costs and test limitations remain unchanged; manual publication is pending.

@@ -18,7 +18,7 @@ function execution(value: unknown): Execution {
 }
 
 export default function Journey({ user }: { user: Principal }) {
-  const [conversation] = useState(() => {
+  const [conversation, setConversation] = useState(() => {
     const key = `telecom-conversation-${user.user_id}`;
     const saved = sessionStorage.getItem(key);
     if (saved && /^[0-9a-f-]{36}$/.test(saved)) return saved;
@@ -28,6 +28,7 @@ export default function Journey({ user }: { user: Principal }) {
   const [voice, setVoice] = useState(false);
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
+  const [recoveryRequired, setRecoveryRequired] = useState(true);
   const [message, setMessage] = useState('Checking support availability…');
   const [current, setCurrent] = useState<Execution | null>(null);
   const [history, setHistory] = useState<{ role: string; text: string }[]>([]);
@@ -56,6 +57,23 @@ export default function Journey({ user }: { user: Principal }) {
   }, []);
 
   useEffect(() => {
+    if (!available) return;
+    let active = true;
+    request('/api/journey/latest', { conversation_id: conversation }).then(value => {
+      if (!active) return;
+      const result = execution(value);
+      const uncertain = sessionStorage.getItem(`telecom-uncertain-${conversation}`) !== null;
+      setCurrent(result); polls.current = 0;
+      setRecoveryRequired(uncertain);
+      setMessage(uncertain ? 'A previous request has an uncertain outcome. Check the latest execution before continuing.' :
+        result.status === 'empty' ? 'Ask about your invoice, connection or plans.' : 'Latest execution recovered.');
+    }).catch(() => {
+      if (active) setMessage('Could not recover the latest execution. Check again before continuing.');
+    });
+    return () => { active = false; };
+  }, [available, conversation]);
+
+  useEffect(() => {
     if (!current?.execution_id || !['running', 'resuming', 'pending'].includes(current.status)) return;
     if (polls.current >= 30) return;
     let active = true;
@@ -69,7 +87,8 @@ export default function Journey({ user }: { user: Principal }) {
   }, [current]);
 
   async function send() {
-    if (!draft.trim() || busy) return;
+    if (!draft.trim() || busy || recoveryRequired) return;
+    sessionStorage.setItem(`telecom-uncertain-${conversation}`, current?.execution_id ?? 'none');
     setBusy(true); setMessage('Connecting to your support team…');
     setHistory(items => [...items.slice(-18), { role: 'You', text: draft }]);
     const controller = new AbortController(); abort.current = controller;
@@ -96,6 +115,7 @@ export default function Journey({ user }: { user: Principal }) {
           if (kind === 'progress') setMessage(data.message);
           if (kind === 'result') {
             const result = execution(data); setCurrent(result); polls.current = 0;
+            sessionStorage.removeItem(`telecom-uncertain-${conversation}`);
             if (result.text) setHistory(items => [...items.slice(-18), { role: 'Support', text: result.text! }]);
             setMessage(result.status === 'suspended' ? 'Review the exact proposal below.' : 'Execution received.');
             complete = true;
@@ -104,6 +124,7 @@ export default function Journey({ user }: { user: Principal }) {
       }
       if (!complete) throw new Error('Execution response was interrupted.');
     } catch {
+      setRecoveryRequired(true);
       setMessage('Outcome not confirmed. Check the latest execution before sending again.');
     } finally { setBusy(false); abort.current = null; }
   }
@@ -113,10 +134,26 @@ export default function Journey({ user }: { user: Principal }) {
     try {
       const result = execution(await request('/api/journey/latest', { conversation_id: conversation }));
       setCurrent(result); polls.current = 0;
-      setMessage(result.status === 'empty' ? 'No execution found for this conversation.' : 'Latest execution recovered.');
+      // An empty lookup does not prove that an in-flight invocation was rejected.
+      const priorExecution = sessionStorage.getItem(`telecom-uncertain-${conversation}`);
+      const unresolved = priorExecution !== null &&
+        (result.status === 'empty' || result.execution_id === priorExecution);
+      setRecoveryRequired(unresolved);
+      if (!unresolved) sessionStorage.removeItem(`telecom-uncertain-${conversation}`);
+      setMessage(unresolved ? 'The uncertain request has not been recovered. Check again before continuing.' :
+        result.status === 'empty' ? 'No execution found for this conversation.' : 'Latest execution recovered.');
     }
     catch { setMessage('Could not recover the latest execution. Do not repeat an uncertain action.'); }
     finally { setBusy(false); }
+  }
+
+  function newConversation() {
+    if (busy || recording || recoveryRequired || waiting) return;
+    const id = crypto.randomUUID();
+    sessionStorage.setItem(`telecom-conversation-${user.user_id}`, id);
+    audio.current?.pause();
+    setRecoveryRequired(true); setCurrent(null); setHistory([]); setDraft('');
+    setConversation(id);
   }
 
   async function review(decision: string) {
@@ -171,7 +208,7 @@ export default function Journey({ user }: { user: Principal }) {
     finally { setBusy(false); }
   }
 
-  const waiting = current && ['suspended', 'running', 'resuming', 'pending'].includes(current.status);
+  const waiting = recoveryRequired || current && ['suspended', 'running', 'resuming', 'pending'].includes(current.status);
   return <section className="journey panel" aria-label="Support workspace">
     <p className="eyebrow">YOUR SUPPORT TEAM</p><h2>How can we help?</h2>
     <p className="muted">Financial · Technical · Sales</p>
@@ -206,7 +243,10 @@ export default function Journey({ user }: { user: Principal }) {
         <button className="secondary" onClick={() => { void finishRecording(true); }}>Cancel recording</button></>}
       {busy && abort.current && <button className="secondary" onClick={() => abort.current?.abort()}>Stop waiting</button>}
       <button className="secondary" disabled={!available || busy || recording} onClick={() => { void latest(); }}>Check latest execution</button>
+      <button className="secondary" disabled={!available || busy || recording || !!waiting}
+        onClick={newConversation}>New conversation</button>
     </div>
     <p className="hint">Stopping playback or waiting does not cancel accepted remote work. No automatic resubmission.</p>
+    <p className="hint">New conversations may recall selected earlier facts. Full chat history is not restored, and new memories may take time to become available.</p>
   </section>;
 }

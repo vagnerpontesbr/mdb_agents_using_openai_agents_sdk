@@ -1,0 +1,90 @@
+{
+  "checked_at": "2026-10-30T18:51:01.628482+00:00",
+  "source_report": "phase5-journey-cache-deployment.json",
+  "rows": [
+    {
+      "case_id": "invoice",
+      "execution_id": "b708fd08-bafd-40d4-a954-3f7966a53203",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 2953,
+        "output": 260,
+        "total": 3213
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "invoice",
+      "execution_id": "3b3e0511-b836-47db-abcb-7988fc426e26",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 2937,
+        "output": 280,
+        "total": 3217
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "sales",
+      "execution_id": "68457233-17e8-44b5-a468-ba8ab6dd29f9",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_offer_plan"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 2978,
+        "output": 268,
+        "total": 3246
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "sales",
+      "execution_id": "bd31cebc-8c52-46d2-bc73-195cbeebfe5f",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_offer_plan"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 2974,
+        "output": 285,
+        "total": 3259
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "mixed",
+      "execution_id": null,
+      "unavailable_reason": "no_execution_id"
+    }
+  ],
+  "cost_usd": null,
+  "limitations": [
+    "Token counts cover observed native invoke_llm spans, not unobserved memory/provider work",
+    "Tool arguments may be redacted; unavailable is not a successful parameter grade",
+    "Native Engine traces remain primary; no input/output/span payloads are copied",
+    "Null execution roots permit session-level accounting only, not verified execution attribution"
+  ]
+}

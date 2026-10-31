@@ -1,0 +1,1454 @@
+{
+  "status": "passed",
+  "checked_at": "2026-10-31T14:17:53.937762+00:00",
+  "checks": [
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_identity.users",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_identity.users",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_identity.users",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_identity.users",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_reader",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "insert",
+      "allowed": true,
+      "schema_rejected": true
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "update",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "insert",
+      "allowed": true,
+      "schema_rejected": true
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "update",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "insert",
+      "allowed": true,
+      "schema_rejected": true
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "update",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "insert",
+      "allowed": true,
+      "schema_rejected": true
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_identity.users",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_identity.users",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_identity.users",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_identity.users",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_knowledge_publisher",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "insert",
+      "allowed": true,
+      "schema_rejected": true
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "update",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "insert",
+      "allowed": true,
+      "schema_rejected": true
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "update",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_identity.users",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_identity.users",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_identity.users",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_identity.users",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_ingestion_worker",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "find",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "insert",
+      "allowed": true,
+      "schema_rejected": true
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "update",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "remove",
+      "allowed": true,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_identity.users",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_identity.users",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_identity.users",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_identity.users",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "find",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "update",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "user": "telecom_load_cache",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "remove",
+      "allowed": false,
+      "schema_rejected": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "KNOWLEDGE_READER_URI",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_ingestion.jobs",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_ingestion.staged_artifacts",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.chunks",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.documents",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.owners",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "identity_config": "INGESTION_MONGODB_URI",
+      "namespace": "telecom_load_knowledge.review_events",
+      "action": "insert",
+      "allowed": false
+    }
+  ],
+  "limitations": [
+    "Schema rejection proves authorization, not valid document insertion",
+    "Tenant/ACL isolation requires separate domain tests"
+  ],
+  "indexes": [
+    {
+      "namespace": "telecom_load_knowledge.chunks",
+      "name": "knowledge_lexical_v1",
+      "status": "READY",
+      "queryable": true
+    },
+    {
+      "namespace": "telecom_load_knowledge.chunks",
+      "name": "knowledge_context_1024_v1",
+      "status": "READY",
+      "queryable": true
+    },
+    {
+      "namespace": "telecom_load_knowledge.retrieval_cache",
+      "name": "retrieval_cache_context_1024_v1",
+      "status": "READY",
+      "queryable": true
+    }
+  ]
+}

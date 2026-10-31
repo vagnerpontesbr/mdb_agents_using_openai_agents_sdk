@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-10-31T14:43:08.916138+00:00",
+  "requester_statement": {
+    "current_phase": 8,
+    "current_tier": "M20",
+    "prior_phases_tier": "M10"
+  },
+  "current_observations": [
+    {
+      "cluster": "OpenAI-SDK",
+      "state": "IDLE",
+      "mongoDBVersion": "9.0.4",
+      "regions": [
+        {
+          "provider": "AWS",
+          "region": "US_EAST_1",
+          "instanceSize": "M20"
+        }
+      ]
+    },
+    {
+      "cluster": "ClusterDemoTelco",
+      "state": "IDLE",
+      "mongoDBVersion": "9.0.4",
+      "regions": [
+        {
+          "provider": "AWS",
+          "region": "US_EAST_1",
+          "instanceSize": "M30_GEN_2"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Current control-plane read does not establish the exact historical resize time",
+    "Local HTTP/Docling measurements do not use Atlas unless explicitly stated"
+  ]
+}

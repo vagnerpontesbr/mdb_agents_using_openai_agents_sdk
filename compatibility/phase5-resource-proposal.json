@@ -1,0 +1,437 @@
+{
+  "status": "proposed_not_applied",
+  "cluster": "OpenAI-SDK",
+  "project_id": "67b385a7976edf15ecc62e06",
+  "collections": [
+    {
+      "database": "telecom_demo_knowledge",
+      "name": "retrieval_cache",
+      "validationLevel": "strict",
+      "validationAction": "error",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "_id",
+            "tenant_id",
+            "scope_key",
+            "policy_version",
+            "embedding_profile",
+            "query_sha256",
+            "embedding",
+            "created_at",
+            "expires_at",
+            "sources"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "tenant_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "scope_key": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "policy_version": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "embedding_profile": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "query_sha256": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "embedding": {
+              "bsonType": "array",
+              "minItems": 1024,
+              "maxItems": 1024,
+              "items": {
+                "bsonType": [
+                  "double",
+                  "int",
+                  "long",
+                  "decimal"
+                ]
+              }
+            },
+            "created_at": {
+              "bsonType": "date"
+            },
+            "expires_at": {
+              "bsonType": "date"
+            },
+            "sources": {
+              "bsonType": "array",
+              "minItems": 1,
+              "maxItems": 20,
+              "items": {
+                "bsonType": "object",
+                "required": [
+                  "version_key",
+                  "chunk_id",
+                  "revision",
+                  "text_sha256"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "version_key": {
+                    "bsonType": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "chunk_id": {
+                    "bsonType": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "revision": {
+                    "bsonType": "int",
+                    "minimum": 1
+                  },
+                  "text_sha256": {
+                    "bsonType": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "database": "telecom_eval_knowledge",
+      "name": "phase5_chunks",
+      "validationLevel": "strict",
+      "validationAction": "error",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "_id",
+            "dataset_id",
+            "tenant_id",
+            "version_key",
+            "chunk_id",
+            "source_checksum",
+            "embedding_profile",
+            "eligible",
+            "text",
+            "embedding_256",
+            "embedding_1024"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "dataset_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "tenant_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "version_key": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "chunk_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "source_checksum": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "embedding_profile": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "eligible": {
+              "bsonType": "bool"
+            },
+            "text": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 20000
+            },
+            "embedding_256": {
+              "bsonType": "array",
+              "minItems": 256,
+              "maxItems": 256,
+              "items": {
+                "bsonType": [
+                  "double",
+                  "int",
+                  "long",
+                  "decimal"
+                ]
+              }
+            },
+            "embedding_1024": {
+              "bsonType": "array",
+              "minItems": 1024,
+              "maxItems": 1024,
+              "items": {
+                "bsonType": [
+                  "double",
+                  "int",
+                  "long",
+                  "decimal"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "search_indexes": [
+    {
+      "database": "telecom_demo_knowledge",
+      "collection": "retrieval_cache",
+      "name": "retrieval_cache_context_1024_v1",
+      "type": "vectorSearch",
+      "definition": {
+        "fields": [
+          {
+            "type": "vector",
+            "path": "embedding",
+            "numDimensions": 1024,
+            "similarity": "cosine"
+          },
+          {
+            "type": "filter",
+            "path": "tenant_id"
+          },
+          {
+            "type": "filter",
+            "path": "scope_key"
+          },
+          {
+            "type": "filter",
+            "path": "policy_version"
+          },
+          {
+            "type": "filter",
+            "path": "embedding_profile"
+          },
+          {
+            "type": "filter",
+            "path": "expires_at"
+          }
+        ]
+      }
+    },
+    {
+      "database": "telecom_eval_knowledge",
+      "collection": "phase5_chunks",
+      "name": "phase5_lexical_v1",
+      "type": "search",
+      "definition": {
+        "analyzer": "lucene.standard",
+        "mappings": {
+          "dynamic": false,
+          "fields": {
+            "text": {
+              "type": "string"
+            },
+            "dataset_id": {
+              "type": "token"
+            },
+            "tenant_id": {
+              "type": "token"
+            },
+            "eligible": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    {
+      "database": "telecom_eval_knowledge",
+      "collection": "phase5_chunks",
+      "name": "phase5_context_256_v1",
+      "type": "vectorSearch",
+      "definition": {
+        "fields": [
+          {
+            "type": "vector",
+            "path": "embedding_256",
+            "numDimensions": 256,
+            "similarity": "cosine"
+          },
+          {
+            "type": "filter",
+            "path": "dataset_id"
+          },
+          {
+            "type": "filter",
+            "path": "tenant_id"
+          },
+          {
+            "type": "filter",
+            "path": "eligible"
+          }
+        ]
+      }
+    },
+    {
+      "database": "telecom_eval_knowledge",
+      "collection": "phase5_chunks",
+      "name": "phase5_context_1024_v1",
+      "type": "vectorSearch",
+      "definition": {
+        "fields": [
+          {
+            "type": "vector",
+            "path": "embedding_1024",
+            "numDimensions": 1024,
+            "similarity": "cosine"
+          },
+          {
+            "type": "filter",
+            "path": "dataset_id"
+          },
+          {
+            "type": "filter",
+            "path": "tenant_id"
+          },
+          {
+            "type": "filter",
+            "path": "eligible"
+          }
+        ]
+      }
+    }
+  ],
+  "classic_indexes": [
+    {
+      "database": "telecom_demo_knowledge",
+      "collection": "retrieval_cache",
+      "name": "cache_expiry",
+      "key": {
+        "expires_at": 1
+      },
+      "expireAfterSeconds": 0
+    },
+    {
+      "database": "telecom_demo_knowledge",
+      "collection": "retrieval_cache",
+      "name": "cache_scope_created",
+      "key": {
+        "tenant_id": 1,
+        "scope_key": 1,
+        "created_at": 1
+      }
+    },
+    {
+      "database": "telecom_eval_knowledge",
+      "collection": "phase5_chunks",
+      "name": "evaluation_chunk_identity",
+      "key": {
+        "dataset_id": 1,
+        "version_key": 1,
+        "chunk_id": 1
+      },
+      "unique": true
+    }
+  ],
+  "runtime_identities": [
+    {
+      "username": "telecom_knowledge_cache",
+      "role": "telecom_knowledge_cache_rw",
+      "scope": {
+        "type": "CLUSTER",
+        "name": "OpenAI-SDK"
+      },
+      "privileges": [
+        {
+          "database": "telecom_demo_knowledge",
+          "collection": "retrieval_cache",
+          "actions": [
+            "FIND",
+            "INSERT",
+            "UPDATE",
+            "REMOVE"
+          ]
+        }
+      ]
+    },
+    {
+      "username": "telecom_phase5_evaluator",
+      "role": "telecom_phase5_evaluator_rw",
+      "scope": {
+        "type": "CLUSTER",
+        "name": "OpenAI-SDK"
+      },
+      "privileges": [
+        {
+          "database": "telecom_eval_knowledge",
+          "collection": "phase5_chunks",
+          "actions": [
+            "FIND",
+            "INSERT",
+            "UPDATE",
+            "REMOVE"
+          ]
+        }
+      ]
+    }
+  ],
+  "bounded_data_changes": {
+    "existing_documents_modified": 0,
+    "maximum_evaluation_chunks": 200,
+    "maximum_demo_cache_entries": 128,
+    "cache_max_age_seconds": 900,
+    "cleanup": "Only new evaluation/cache records; never Phase 0 or Engine records"
+  },
+  "runtime_configuration": {
+    "private_local_credentials": [
+      "KNOWLEDGE_CACHE_URI",
+      "EVALUATION_MONGODB_URI"
+    ],
+    "workspace_secret_additions": [
+      "KNOWLEDGE_CACHE_URI"
+    ],
+    "shared_policy_changes": [],
+    "new_tool_names": [],
+    "hosted_deployment": "Only after local and domain acceptance; current tool names retained"
+  },
+  "acceptance_requirements": [
+    "Fresh role/index/validator drift check before application",
+    "Cache holds candidate source references, not conversation memory or authoritative answers",
+    "Revalidate tenant/ACL/source versions/checksums/dates before any cached result is used",
+    "Similarity never grants authorization; cache misses/errors retain governed retrieval",
+    "Expiry enforced on reads; TTL is asynchronous physical cleanup only",
+    "Compare actual 256/1024 provider output; no unsupported vector slicing",
+    "Negative control confined to evaluation identity and collection",
+    "No new grants to current application or Engine memory identities"
+  ]
+}

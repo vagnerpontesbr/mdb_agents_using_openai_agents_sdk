@@ -1,0 +1,18 @@
+{
+  "deployment_id": "deploy-af009ed4",
+  "build_id": "bld_01M691YPABN60FEKHW6E1KZGB5",
+  "status": "succeeded",
+  "completed_at": "2026-10-31T13:25:25.79Z",
+  "health_checked_at": "2026-10-31T13:26:25.814905353Z",
+  "available": true,
+  "ready_replicas": {
+    "oe": 2,
+    "memory": 1,
+    "agent": 4,
+    "tool": 4
+  },
+  "workflow_version": "8",
+  "calibrated_threshold": 0.91,
+  "source_manifest": "phase5-final-source-manifest.json",
+  "git_publication": "uncommitted local Phase 5 changes; deployment is not a Git push"
+}

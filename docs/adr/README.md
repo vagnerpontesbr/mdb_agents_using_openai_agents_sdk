@@ -39,3 +39,11 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0024](0024-phase-one-application-boundaries.md) | Phase 1 identity application, process ownership and typed response boundary | Implemented; validation in FND-003 |
 
 | [ADR-0025](0025-phase-two-journey.md) | Bounded SDK supervisor/specialists, native review and chained browser voice | Bounded hosted and browser acceptance passed |
+
+| [ADR-0026](0026-governed-knowledge-publication.md) | Owner-authorized native review and domain publication of governed PDFs | Selected; bounded Phase 4 evidence recorded |
+
+| [ADR-0027](0027-bounded-knowledge-evaluation-cache.md) | Bounded contextual candidate cache and isolated quality evaluation | Bounded Phase 5 acceptance passed |
+
+| [ADR-0028](0028-mit-automated-demo-handoff.md) | MIT license and accepted automated demo handoff | Accepted by requester; Phase 6 and correction CI passed |
+
+| [ADR-0029](0029-isolated-load-environment.md) | Explicit isolated load namespaces and scoped identities | Approved resources applied; bounded role/domain checks passed |

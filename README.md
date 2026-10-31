@@ -2,13 +2,16 @@
 
 A telecom customer-service reference using OpenAI Agents SDK for orchestration,
 MongoDB Agent Engine for managed platform capabilities, MongoDB Atlas, Voyage AI,
-and Python managed by uv. The planned full application includes a supervisor,
+and Python managed by uv. The bounded implementation includes a supervisor,
 financial/technical/sales specialists, React chat/voice, and governed PDF retrieval.
 
-**Phases 0 and 1 are published. Phase 2 is complete for the bounded demo, with
-hosted supervisor/specialists, native approval/replay and accepted browser voice.**
-See [VERT-001/002](docs/tasks/VERT-001-JOURNEY.md)
-for validation and [publication status](docs/runbooks/REPOSITORY_SETUP.md) for Git/CI checkpoints.
+**Phases 0–7 are published with passing CI. Phase 8 scalability/resilience is complete for the approved demo scope; manual publication is pending: [OPS-001](docs/tasks/OPS-001-RESILIENCE.md) records short local HTTP
+characterization, sustained/Atlas/voice acceptance and the final requester scope decision.** Start with
+[the handoff runbook](docs/runbooks/PHASE_6.md), then read the
+[current runtime contract](docs/runbooks/PHASE_7.md) and
+[acceptance evidence](docs/tasks/RUN-001-RUNTIME.md).
+[Decisions](docs/adr/README.md) and [publication status](docs/runbooks/REPOSITORY_SETUP.md)
+distinguish accepted scope, historical checkpoints and current Git/CI results.
 
 ## Run the application foundation
 
@@ -76,3 +79,9 @@ evaluations and load profiles remain later phases in the [backlog](docs/tasks/RE
 All documentation, code and user-facing demo content is in English. Run
 `python3 scripts/check_repository.py` for repository structure and local link
 validation; it is not an application or provider test.
+
+## License
+
+Original project code is distributed under the [MIT License](LICENSE). Third-party
+dependencies and hosted services retain their own licenses and terms. This is an
+independent reference asset, not an official MongoDB product.

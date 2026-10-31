@@ -218,3 +218,33 @@ def test_pcm_is_little_endian_and_bounded():
     assert pcm_bytes(base64.b64encode(pcm).decode()) == pcm
     with pytest.raises(ValueError):
         pcm_bytes("not valid base64!")
+
+
+def test_recovery_uses_authenticated_user_even_with_same_conversation_uuid(journey, identity):
+    service, engine, row, token, conversation = journey
+    identity.register(token, email="recovery@example.test", password=PASSWORD, role="user")
+    other_token, other = identity.login("recovery@example.test", PASSWORD, "other")
+    with pytest.raises(AccessDenied):
+        service.latest(other_token, conversation)
+    engine.latest.assert_called_once_with(session_id(other.user_id, conversation))
+    assert session_id(other.user_id, conversation) != row["session_id"]
+    engine.invoke.assert_not_called()
+    engine.resume.assert_not_called()
+
+
+def test_recovery_rejects_another_conversation_of_same_user(journey):
+    service, engine, row, token, _ = journey
+    with pytest.raises(JourneyConflict):
+        service.latest(token, uuid4())
+    engine.invoke.assert_not_called()
+    engine.resume.assert_not_called()
+
+
+def test_recreated_service_recovers_engine_review_without_local_run_state(journey):
+    service, engine, row, token, conversation = journey
+    pending(row)
+    expected = service.latest(token, conversation)
+    restarted = JourneyService(service.identity, engine)
+    assert restarted.latest(token, conversation) == expected
+    engine.invoke.assert_not_called()
+    engine.resume.assert_not_called()

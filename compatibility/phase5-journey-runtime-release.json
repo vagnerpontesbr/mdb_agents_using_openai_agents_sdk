@@ -1,0 +1,474 @@
+{
+  "dataset_version": "telecom-journey-evaluation-v1",
+  "dataset_sha256": "713b43d6bd05f432ce8ff6f3df28a668d38c9c9c3f6b1382f86ffa1f165da9d0",
+  "reference_provenance": "Developer-authored synthetic expectations, not independently SME-approved labels",
+  "reference_as_of": "2026-10-30T12:17:11Z",
+  "started_at": "2026-10-30T19:05:25.708952+00:00",
+  "git_head": "1a52afce2815be3530d77cb7a714001f412ad206",
+  "versions": {
+    "openai-agents": "0.24.0",
+    "openai": "3.40.0",
+    "pymongo": "4.19.0"
+  },
+  "planned_invocations": 8,
+  "inter_invocation_pause_seconds": 5,
+  "attempts": [
+    {
+      "case_id": "invoice",
+      "repeat": 1,
+      "session_id": "telco-2256d43e539cfe94ed2afeef6afaadd9a819f48768878fbc",
+      "execution_id": "35c5c395-1abc-4f59-a464-26a013b827b8",
+      "error_type": null,
+      "elapsed_seconds": 10.964,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "6d53a88a850ccc9e6756a3d5b35abd6f39677431fc2731a120af14b5f5bb12f6",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      },
+      "runtime_release": "released"
+    },
+    {
+      "case_id": "invoice",
+      "repeat": 2,
+      "session_id": "telco-f0318782a3a1796fe49ef39946910c60bdda7635aca97355",
+      "execution_id": "4167b1b5-d69c-44fa-a9fd-c919229a7ec7",
+      "error_type": null,
+      "elapsed_seconds": 9.236,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "6d53a88a850ccc9e6756a3d5b35abd6f39677431fc2731a120af14b5f5bb12f6",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      },
+      "runtime_release": "released"
+    },
+    {
+      "case_id": "sales",
+      "repeat": 1,
+      "session_id": "telco-fd549390470b6954ecfae594b6512bcfe49a9da2e1a4cdcb",
+      "execution_id": "b9e00172-2afa-4357-8a2d-4121459f6495",
+      "error_type": null,
+      "elapsed_seconds": 10.761,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "7318f9332b5e93f2b2293fdea92451e99ac601e808813c969e6ff7ad7e64d7b8",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      },
+      "runtime_release": "released"
+    },
+    {
+      "case_id": "sales",
+      "repeat": 2,
+      "session_id": "telco-653bb9df62e54a36cbe0fcbce198d348dfd79c4afbeb55ee",
+      "execution_id": "794ad510-4028-41d4-9e1b-d8b2056682b1",
+      "error_type": null,
+      "elapsed_seconds": 9.946,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "7318f9332b5e93f2b2293fdea92451e99ac601e808813c969e6ff7ad7e64d7b8",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      },
+      "runtime_release": "released"
+    },
+    {
+      "case_id": "mixed",
+      "repeat": 1,
+      "session_id": "telco-9d21ca05b510996f25bf50ac2103e2f7b46604522810b36c",
+      "execution_id": "e72b1bdb-80d8-4acf-a761-145da6fee511",
+      "error_type": null,
+      "elapsed_seconds": 15.638,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "7260199ccb546099a9e2acb718fc79e138e4bf98588a413ff50a0bb3cd534266",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      },
+      "runtime_release": "released"
+    },
+    {
+      "case_id": "mixed",
+      "repeat": 2,
+      "session_id": "telco-2e3f21c0f00461554533cafb226f2c7ba8ce6d59d3b9687b",
+      "execution_id": "a47997ac-acdd-4747-9e40-a5cd3fac7805",
+      "error_type": null,
+      "elapsed_seconds": 14.97,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "7260199ccb546099a9e2acb718fc79e138e4bf98588a413ff50a0bb3cd534266",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      },
+      "runtime_release": "released"
+    },
+    {
+      "case_id": "knowledge",
+      "repeat": 1,
+      "session_id": "telco-e133c1d8254a27ec3d8ce102abe176d8f7c3f9a12d76a013",
+      "execution_id": "d262a391-e73e-471d-b773-320fcfd57ca8",
+      "error_type": null,
+      "elapsed_seconds": 11.904,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "b6e82c66a13ecae448de55df6eff7ade8a73fa97a5cc53d8eabde6cd51bb40f8",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      },
+      "runtime_release": "released"
+    },
+    {
+      "case_id": "knowledge",
+      "repeat": 2,
+      "session_id": "telco-31355aadd50ea496fa3e85890519c6eb021d6833e0d328c4",
+      "execution_id": "5a44ac6e-3095-45e1-87a5-e34fc55f7d5b",
+      "error_type": null,
+      "elapsed_seconds": 14.038,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "b6e82c66a13ecae448de55df6eff7ade8a73fa97a5cc53d8eabde6cd51bb40f8",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      },
+      "runtime_release": "released"
+    }
+  ],
+  "summaries": {
+    "invoice": {
+      "metrics": {
+        "final_contract_valid": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "routing_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "outcome_completed": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "exact_reference_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "tool_parameter_accuracy": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "independent_factual_correctness": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "llm_judge_score": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        }
+      },
+      "wording_repeatability": {
+        "observed": 2,
+        "unique_texts": 1,
+        "pairs": 1,
+        "matching_pairs": 1,
+        "pair_agreement": 1.0
+      },
+      "latency_seconds": {
+        "samples": 2,
+        "p50_nearest_rank": 9.236,
+        "maximum": 10.964
+      }
+    },
+    "sales": {
+      "metrics": {
+        "final_contract_valid": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "routing_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "outcome_completed": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "exact_reference_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "tool_parameter_accuracy": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "independent_factual_correctness": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "llm_judge_score": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        }
+      },
+      "wording_repeatability": {
+        "observed": 2,
+        "unique_texts": 1,
+        "pairs": 1,
+        "matching_pairs": 1,
+        "pair_agreement": 1.0
+      },
+      "latency_seconds": {
+        "samples": 2,
+        "p50_nearest_rank": 9.946,
+        "maximum": 10.761
+      }
+    },
+    "mixed": {
+      "metrics": {
+        "final_contract_valid": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "routing_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "outcome_completed": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "exact_reference_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "tool_parameter_accuracy": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "independent_factual_correctness": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "llm_judge_score": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        }
+      },
+      "wording_repeatability": {
+        "observed": 2,
+        "unique_texts": 1,
+        "pairs": 1,
+        "matching_pairs": 1,
+        "pair_agreement": 1.0
+      },
+      "latency_seconds": {
+        "samples": 2,
+        "p50_nearest_rank": 14.97,
+        "maximum": 15.638
+      }
+    },
+    "knowledge": {
+      "metrics": {
+        "final_contract_valid": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "routing_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "outcome_completed": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "exact_reference_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "tool_parameter_accuracy": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "independent_factual_correctness": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "llm_judge_score": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        }
+      },
+      "wording_repeatability": {
+        "observed": 2,
+        "unique_texts": 1,
+        "pairs": 1,
+        "matching_pairs": 1,
+        "pair_agreement": 1.0
+      },
+      "latency_seconds": {
+        "samples": 2,
+        "p50_nearest_rank": 11.904,
+        "maximum": 14.038
+      }
+    }
+  },
+  "stopped_early": false,
+  "token_usage": null,
+  "cost_usd": null,
+  "limitations": [
+    "Developer-authored synthetic references; not independent SME validation",
+    "Operator-admitted owner identity; not a browser authentication test",
+    "Fresh sessions with shared Engine memory enabled, not independent samples",
+    "Exact text match is a regression metric, not general semantic correctness",
+    "Tool parameters and usage not read from native traces in this increment",
+    "No corpus ranking, cache, Matryoshka or LLM judge acceptance in this report",
+    "At most 12 sequential Engine invocations; existing native budgets remain active",
+    "Completed evaluator runtime reservations are released natively; durable history remains"
+  ],
+  "completed_at": "2026-10-30T19:08:23.819027+00:00",
+  "not_attempted": 0
+}

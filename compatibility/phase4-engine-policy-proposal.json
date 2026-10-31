@@ -1,0 +1,123 @@
+{
+  "status": "proposed_not_applied_requires_explicit_user_approval",
+  "observed_at": "2026-10-30T11:00:49.034887+00:00",
+  "project_id": "67b385a7976edf15ecc62e06",
+  "policy_id": "6ae1ab6186dc82d1c54886b1",
+  "policy_type": "AUTHORIZED_TOOLS",
+  "scope": "Shared project policy; affects every workspace in the project",
+  "intended_deployment_workspace": "ws-6ae20f53f3b040aa65fa961a",
+  "method": "PUT",
+  "path": "/api/v1/projects/67b385a7976edf15ecc62e06/policies/6ae1ab6186dc82d1c54886b1",
+  "observed_before": [
+    "resolve_location",
+    "recall_state",
+    "remember_fact",
+    "ftth_summary",
+    "ftth_viability",
+    "ftth_port_usage",
+    "ctos_in_city",
+    "ctos_near",
+    "expansion_insights",
+    "network_summary",
+    "antennas_in_region",
+    "antennas_near",
+    "antenna_detail",
+    "find_erbs_by_address",
+    "fiber_in_region",
+    "mobile_coverage",
+    "filesystem_ls",
+    "filesystem_read",
+    "filesystem_write",
+    "filesystem_edit",
+    "filesystem_glob",
+    "filesystem_grep",
+    "filesystem_download",
+    "shell_execute",
+    "task",
+    "write_todos",
+    "lookup_invoice",
+    "telco_read_invoice",
+    "telco_check_connection",
+    "telco_offer_plan",
+    "telco_simulate_plan_change"
+  ],
+  "additions": [
+    "telco_request_ingestion",
+    "telco_search_knowledge",
+    "telco_publish_knowledge"
+  ],
+  "proposed_body": {
+    "string_list": [
+      "resolve_location",
+      "recall_state",
+      "remember_fact",
+      "ftth_summary",
+      "ftth_viability",
+      "ftth_port_usage",
+      "ctos_in_city",
+      "ctos_near",
+      "expansion_insights",
+      "network_summary",
+      "antennas_in_region",
+      "antennas_near",
+      "antenna_detail",
+      "find_erbs_by_address",
+      "fiber_in_region",
+      "mobile_coverage",
+      "filesystem_ls",
+      "filesystem_read",
+      "filesystem_write",
+      "filesystem_edit",
+      "filesystem_glob",
+      "filesystem_grep",
+      "filesystem_download",
+      "shell_execute",
+      "task",
+      "write_todos",
+      "lookup_invoice",
+      "telco_read_invoice",
+      "telco_check_connection",
+      "telco_offer_plan",
+      "telco_simulate_plan_change",
+      "telco_request_ingestion",
+      "telco_search_knowledge",
+      "telco_publish_knowledge"
+    ]
+  },
+  "tools": {
+    "telco_request_ingestion": {
+      "purpose": "Enqueue a bounded uploaded PDF for an authenticated curator",
+      "required_controls": [
+        "Server-derived tenant and curator permission",
+        "Authorized original PDF and exact metadata digest",
+        "Idempotent four-slot admission; OCR stays in the worker"
+      ]
+    },
+    "telco_search_knowledge": {
+      "purpose": "Return current authorized technical procedures with exact citations",
+      "required_controls": [
+        "Server-derived tenant, ACL and equipment applicability",
+        "Native hybrid search and authoritative eligibility rechecks",
+        "Bounded contextual embedding/reranking and extractive output"
+      ]
+    },
+    "telco_publish_knowledge": {
+      "purpose": "Publish an exact staged document version after native Engine review",
+      "required_controls": [
+        "Verified native decision, requester and action digest",
+        "Current owner, source, dates and publication permissions",
+        "Atomic version activation/replacement and idempotent receipt",
+        "Fail closed on missing, rejected, expired or mismatched review"
+      ]
+    }
+  },
+  "observed_all_policies_sha256": "fd10d28bc8a4bd678a7c91f20fd8b9d3c7a78d39458a9329028be8953e45f846",
+  "application_rules": [
+    "Re-read immediately before application and union only the approved names",
+    "Preserve every existing tool and every unrelated policy field",
+    "Verify other policies unchanged and exact policy propagation",
+    "Tool authorization alone does not enable publication or prove compatibility",
+    "Keep document tools unavailable until backend/native review controls pass",
+    "No change to model, memory, platform budgets or other workspace deployments"
+  ]
+}

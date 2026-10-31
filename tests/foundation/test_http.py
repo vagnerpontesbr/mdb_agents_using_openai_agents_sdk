@@ -1,4 +1,5 @@
 import asyncio
+from datetime import UTC, datetime, timedelta
 
 import pytest
 from fastapi.testclient import TestClient
@@ -73,13 +74,18 @@ def test_validation_and_dependency_errors_never_echo_private_input(client, ident
     assert result.headers["cache-control"] == "no-store"
 
 
-def test_unknown_accounts_share_peer_rate_limit(client):
+def test_unknown_accounts_share_peer_rate_limit(client, identity):
+    # Keep all attempts in one window even when CI crosses a real minute boundary.
+    now = datetime(2026, 10, 30, 10, 11, 59, tzinfo=UTC)
+    identity.clock = lambda: now
     for index in range(8):
         assert client.post("/api/login", json={
             "email": f"missing{index}@example.test", "password": PASSWORD,
         }).status_code == 401
     result = client.post("/api/login", json={"email": "admin@mongodb.com", "password": PASSWORD})
     assert result.status_code == 429 and result.headers["retry-after"] == "60"
+    now += timedelta(seconds=1)
+    assert login(client).status_code == 200
 
 
 def test_client_lifecycle_closes_without_provisioning(monkeypatch):

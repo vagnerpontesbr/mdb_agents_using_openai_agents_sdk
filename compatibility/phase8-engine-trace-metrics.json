@@ -1,0 +1,103 @@
+{
+  "checked_at": "2026-10-31T14:08:49.691330+00:00",
+  "source_report": "phase8-trace-input.json",
+  "rows": [
+    {
+      "case_id": "invoice",
+      "execution_id": "10cf5aea-dde5-46ca-b74c-c82f9038c200",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 2579,
+        "output": 255,
+        "total": 2834
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "invoice",
+      "execution_id": "64ba2364-8a44-405a-942c-e59c899aa4be",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 2542,
+        "output": 231,
+        "total": 2773
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "invoice",
+      "execution_id": "9474789c-cf07-42b1-9c55-eadce4559da5",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 1681,
+        "output": 222,
+        "total": 1903
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "invoice",
+      "execution_id": "edf1ce3d-22d7-41de-91d7-4612fc5b7944",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 2559,
+        "output": 229,
+        "total": 2788
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "invoice",
+      "execution_id": "780e57ae-bc29-4127-b812-735a75465b68",
+      "correlation": "session_only",
+      "native_span_count": 5,
+      "tool_names": [
+        "telco_read_invoice"
+      ],
+      "tool_selection_match": true,
+      "model_calls": 3,
+      "tokens": {
+        "input": 2537,
+        "output": 174,
+        "total": 2711
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    }
+  ],
+  "cost_usd": null,
+  "limitations": [
+    "Token counts cover observed native invoke_llm spans, not unobserved memory/provider work",
+    "Tool arguments may be redacted; unavailable is not a successful parameter grade",
+    "Native Engine traces remain primary; no input/output/span payloads are copied",
+    "Null execution roots permit session-level accounting only, not verified execution attribution"
+  ]
+}

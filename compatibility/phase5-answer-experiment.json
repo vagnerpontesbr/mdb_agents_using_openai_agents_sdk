@@ -1,0 +1,73 @@
+{
+  "started_at": "2026-10-30T19:06:10.088184+00:00",
+  "model": "gpt-5.6-luna",
+  "reference_review": "demo_reference_approved_by_requester",
+  "reference_sha256": "d234266955024a472312d618c456a94c17d54e3d46e5ef15f4f98c94648c5d1e",
+  "prompt_sha256": "72ec8742729599585abc1a354d93f04d480a562f32a05e196b3885eeb3828602",
+  "results": [
+    {
+      "case_id": "stale-negative-control",
+      "source_sha256": "4b1e37ac6be5bcb5cc276cd99eb8662d2a04856cba64c73c4b92c0d952de9744",
+      "synthetic_answer": "For Fictional FiberBox X1 running firmware 2.x, the supplied source states that resolving E17 requires performing `legacy_profile_reset`, then restarting activation.",
+      "generation_tokens": 210,
+      "judgment": {
+        "faithful_to_source": true,
+        "correct_for_current_reference": false,
+        "rationale": "The answer accurately reflects the supplied source, which says to perform `legacy_profile_reset` and restart activation. However, the current reference explicitly prohibits that reset and instead requires checking the regional provisioning incident and linking or opening a provisioning ticket."
+      },
+      "judge_usage": {
+        "response_id": "resp_0251293f1c6925c0016ae4eaa5661c87d29916b1424c4f8dd6",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 353,
+        "output_tokens": 141,
+        "total_tokens": 494
+      }
+    },
+    {
+      "case_id": "no-eligible-source",
+      "source_sha256": "88f503e16efd27bd2b1d3675355c23054e9edf02221875c3441ab715a3e21da7",
+      "synthetic_answer": "No eligible source is available for resolving E17 on the Fictional FiberBox X1 with firmware 2.x. Please escalate this issue to the appropriate technical support team.",
+      "generation_tokens": 153,
+      "judgment": {
+        "faithful_to_source": true,
+        "correct_for_current_reference": false,
+        "rationale": "The answer faithfully matches the supplied source\u2019s instruction to escalate without recommending an operational action. However, the current reference requires checking the regional provisioning incident and linking the ticket to it or opening a provisioning ticket; those steps are omitted."
+      },
+      "judge_usage": {
+        "response_id": "resp_0c65f649934257a8016ae4eaa95be487d2afcb59782a7a8cb9",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 358,
+        "output_tokens": 160,
+        "total_tokens": 518
+      }
+    },
+    {
+      "case_id": "current-replacement",
+      "source_sha256": "1abef8e9d3b04f742a89f24a48a80f248ba16d17bec5ff468d281aed14e05e27",
+      "synthetic_answer": "For E17 on the Fictional FiberBox X1 with firmware 2.x:\n\n1. Check whether there is a regional provisioning incident.\n2. Link the device to that incident, or open a provisioning ticket if needed.\n3. Do not use `legacy_profile_reset`.",
+      "generation_tokens": 188,
+      "judgment": {
+        "faithful_to_source": false,
+        "correct_for_current_reference": false,
+        "rationale": "The answer correctly includes checking the regional provisioning incident, opening a provisioning ticket, and avoiding `legacy_profile_reset`. However, it says to link the device to the incident, while the source and current reference require linking the ticket to the incident. That changes the prescribed operational action."
+      },
+      "judge_usage": {
+        "response_id": "resp_02cc0d9537f64043016ae4eaad50b487d2b2a87f23573bf400",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 398,
+        "output_tokens": 280,
+        "total_tokens": 678
+      }
+    }
+  ],
+  "cost_usd": null,
+  "limits": [
+    "Isolated source-conditioned generation, not a hosted RAG integration test",
+    "Synthetic source excerpts match reviewed fixtures, not a new retrieval run",
+    "Same model generates and judges; correlated judge error remains possible",
+    "No operational tools, production publication or memory mutations",
+    "Three generations and three grades maximum, no automatic retries"
+  ],
+  "not_attempted": 0,
+  "completed_at": "2026-10-30T19:06:25.114018+00:00"
+}

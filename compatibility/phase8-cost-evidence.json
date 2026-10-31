@@ -1,0 +1,79 @@
+{
+  "checked_at": "2026-10-31T15:08:05.872716+00:00",
+  "budget_usd": 30,
+  "billed_total_usd": null,
+  "status": "billing_unreconciled",
+  "openai_admin_key_configured": false,
+  "sources": [
+    "https://www.mongodb.com/docs/api/doc/agentengine",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://developers.openai.com/cookbook/examples/completions_usage_api"
+  ],
+  "limitations": [
+    "Engine dashboard is workspace-scoped over seven days, not Phase 8-only",
+    "Unpriced calls and unobserved managed memory/gateway usage prevent billing reconciliation",
+    "OpenAI organization Usage/Costs API requires an Admin Key",
+    "Known token estimate is not an invoice or upper bound for all provider consumption",
+    "No additional provider load should run until missing billing is reconciled"
+  ],
+  "engine_dashboard": {
+    "summary": {
+      "total_cost_usd": 0,
+      "total_tokens": 181992,
+      "total_prompt_tokens": 160841,
+      "total_completion_tokens": 21151,
+      "total_llm_calls": 211,
+      "unpriced_llm_calls": 211
+    },
+    "by_model": [
+      {
+        "model": "gpt-5.6-luna",
+        "total_cost_usd": 0,
+        "total_tokens": 181992,
+        "call_count": 211,
+        "percentage": 0
+      }
+    ],
+    "daily_trend": [
+      {
+        "date": "2026-10-28",
+        "total_cost_usd": 0,
+        "total_tokens": 1478,
+        "call_count": 7
+      },
+      {
+        "date": "2026-10-29",
+        "total_cost_usd": 0,
+        "total_tokens": 8867,
+        "call_count": 24
+      },
+      {
+        "date": "2026-10-30",
+        "total_cost_usd": 0,
+        "total_tokens": 122338,
+        "call_count": 134
+      },
+      {
+        "date": "2026-10-31",
+        "total_cost_usd": 0,
+        "total_tokens": 49309,
+        "call_count": 46
+      }
+    ]
+  },
+  "known_native_model_estimate": {
+    "model": "gpt-5.6-luna",
+    "input_tokens": 11898,
+    "output_tokens": 1111,
+    "input_usd_per_million": 0.2,
+    "output_usd_per_million": 1.2,
+    "uncached_standard_estimate_usd": 0.0037128,
+    "scope": "15 observed session-correlated model calls only"
+  },
+  "voice": {
+    "attempts": 3,
+    "billed_usd": null,
+    "tts_output_seconds": 15.350000000000001,
+    "stt_input_seconds": 7.9
+  }
+}

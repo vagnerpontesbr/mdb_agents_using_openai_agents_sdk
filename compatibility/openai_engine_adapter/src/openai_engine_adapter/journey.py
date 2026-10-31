@@ -46,7 +46,8 @@ class JourneyExecution:
                 or not ctx.resume and ctx.resume_data is not None):
             raise UnsupportedContract("Journey execution identity/replay mismatch")
         fresh = ctx.model_copy(update={"resume": False, "resume_data": None})
-        agent = JourneyAgent(self.bindings, lambda c, q: retrieve_context(self.app._runtime, c, q))
+        agent = JourneyAgent(self.bindings, lambda c, q: retrieve_context(self.app._runtime, c, q),
+                             knowledge_enabled=getattr(self.app, 'knowledge_enabled', False))
         result = JourneyResult.model_validate_json(
             (await agent.execute(fresh, input)).response["output"], strict=True)
         proposals = [r for r in result.results if r.kind == "proposal"]
@@ -105,7 +106,7 @@ class JourneyApp(OpenAIEngineApp):
     def get_agent(self, callbacks=None, *, graph=None):
         # Reuse validated model discovery; its unused single-read agent is not executed.
         super().get_agent(callbacks, graph=graph)
-        hooks.register_workflow_adapter("telecom-journey", "2")
+        hooks.register_workflow_adapter("telecom-journey", "4")
         def bindings(context, schemas):
             return EngineBindings.from_runtime(context=context, schemas=schemas,
                 llm_id=self.llm_id, model_name=self.model_name, managed_memory=True)

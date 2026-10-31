@@ -1,0 +1,39 @@
+{
+  "version": "sustained-v1",
+  "scope": "Local API/PCM/WAV transport with identity/Engine/speech doubles; real isolated CPU Docling contention",
+  "workers": 2,
+  "max_inflight": 64,
+  "request_timeout_seconds": 10,
+  "max_wall_seconds": 2400,
+  "max_journeys": 16000,
+  "sampling_seconds": 5,
+  "windows": [
+    {"name": "warmup", "seconds": 120, "rps": 5, "voice_every": 5},
+    {"name": "chat_baseline", "seconds": 30, "rps": 5, "voice_every": 0},
+    {"name": "voice_baseline", "seconds": 30, "rps": 5, "voice_every": 1},
+    {"name": "ingestion_contention", "seconds": 120, "rps": 5, "voice_every": 5, "docling": true},
+    {"name": "spike", "seconds": 10, "rps": 300, "voice_every": 0, "allow_rejection": true},
+    {"name": "recovery", "seconds": 30, "rps": 5, "voice_every": 5},
+    {"name": "soak", "seconds": 1800, "rps": 5, "voice_every": 5}
+  ],
+  "thresholds": {
+    "normal_rejections": 0,
+    "normal_errors": 0,
+    "normal_generator_drops": 0,
+    "chat_p95_ms": 500,
+    "voice_p95_ms": 1500,
+    "first_event_p95_ms": 200,
+    "loop_lag_p95_ms": 100,
+    "api_rss_limit_mb": 1024,
+    "api_rss_growth_after_warmup_mb": 128,
+    "generator_rss_limit_mb": 512,
+    "ingestion_rss_limit_mb": 3072,
+    "ingestion_max_jobs": 20,
+    "ingestion_job_seconds": 120,
+    "recovery_drain_seconds": 10
+  },
+  "threshold_basis": "Phase 8 local baseline chat p95 about 65ms at concurrency five; generous demo-only margins allow telemetry, voice encoding and CPU contention. These are not production SLOs.",
+  "external_provider_calls": 0,
+  "provider_cost_usd": 0,
+  "limitations": ["Short spike is not highest stable capacity", "No real Engine/Atlas/voice model throughput is measured", "Docling uses existing cached model weights with offline mode", "No biological speech or microphone quality measurement"]
+}

@@ -1,0 +1,53 @@
+{
+  "source_report": "phase5-calibration-v3-evidence.json",
+  "selected_threshold": 0.91,
+  "validation_groups": {
+    "held_out-0": {
+      "threshold": 0.91,
+      "cases": 7,
+      "hits": 3,
+      "harmful_hits": 0,
+      "effective_top1_correct": 7,
+      "paraphrase_hits": 2,
+      "paraphrases": 3,
+      "paraphrase_hit_rate": 0.6666666666666666
+    },
+    "held_out-1": {
+      "threshold": 0.91,
+      "cases": 7,
+      "hits": 4,
+      "harmful_hits": 0,
+      "effective_top1_correct": 7,
+      "paraphrase_hits": 3,
+      "paraphrases": 3,
+      "paraphrase_hit_rate": 1.0
+    }
+  },
+  "validation": {
+    "threshold": 0.91,
+    "cases": 14,
+    "hits": 7,
+    "harmful_hits": 0,
+    "effective_top1_correct": 14,
+    "paraphrase_hits": 5,
+    "paraphrases": 6,
+    "paraphrase_hit_rate": 0.8333333333333334
+  },
+  "baseline_099": {
+    "threshold": 0.99,
+    "cases": 14,
+    "hits": 2,
+    "harmful_hits": 0,
+    "effective_top1_correct": 14,
+    "paraphrase_hits": 0,
+    "paraphrases": 6,
+    "paraphrase_hit_rate": 0.0
+  },
+  "bounded_demo_accepted": true,
+  "cleanup_completed": true,
+  "limitations": [
+    "Same-author synthetic corpus, not production generalization",
+    "Candidate relevance and top-one ranking only; no generated-answer guarantee"
+  ],
+  "source_sha256": "564373efb1cb95617f789206070b335f8ed12377279a54cc8ea078f0203a7118"
+}

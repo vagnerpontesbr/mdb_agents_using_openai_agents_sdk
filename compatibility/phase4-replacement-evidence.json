@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-10-30T12:17:11.262384+00:00",
+  "document_id": "SOP-OPTICAL-DEMO",
+  "version_key": "8c49309bc2443324de66434eed92ac57a65a82f5894206a520f31f7eb4796cc6",
+  "job_id": "cd26968028638b674c8f8b32f79ac31b5995e88b2418cc2a8674f79a38c336de",
+  "native_executions": [
+    "1f7073f9-26b0-474d-9c9a-2f58e435bd80",
+    "aef2d118-c47d-4c44-abc8-d391447619b4"
+  ],
+  "native_reject_denied_publication": true,
+  "native_approve_published": true,
+  "publication_idempotent": true,
+  "native_hybrid_cited_answer": true,
+  "tenant_acl_denials": true,
+  "original_source_verified": true,
+  "synthetic_document_retained": true,
+  "old_version_key": "02e6473f95464a80dd3fc15fde5a9d0eaffe9264dce9c8201079f81d45535086",
+  "replacement_and_old_download_denial": true,
+  "reused_identical_staged_pdf": true,
+  "limitations": [
+    "Operator-admitted identity, not a browser login test",
+    "Identical source and embedding profile reused from the validated staged result; no new OCR or document embedding call",
+    "Transient Engine invoke HTTP 503 occurred before successful native acceptance; no availability guarantee"
+  ]
+}

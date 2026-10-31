@@ -1,0 +1,350 @@
+{
+  "started_at": "2026-10-30T17:54:42.029687+00:00",
+  "status": "completed",
+  "provider_calls": {
+    "contextual_documents": 2,
+    "contextual_queries": 4,
+    "rerank": 12
+  },
+  "rows": [
+    {
+      "case_id": "alarm",
+      "dimension": 256,
+      "ranked_versions": [
+        "current",
+        "wifi",
+        "invoice"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.93,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "incident",
+      "dimension": 256,
+      "ranked_versions": [
+        "current",
+        "wifi",
+        "invoice"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.906,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "reset",
+      "dimension": 256,
+      "ranked_versions": [
+        "current",
+        "invoice",
+        "wifi"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.871,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "unknown",
+      "dimension": 256,
+      "ranked_versions": [
+        "current",
+        "invoice",
+        "wifi"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.884,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "wifi",
+      "dimension": 256,
+      "ranked_versions": [
+        "wifi",
+        "current",
+        "invoice"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.873,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "invoice",
+      "dimension": 256,
+      "ranked_versions": [
+        "invoice",
+        "current",
+        "wifi"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.877,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "alarm",
+      "dimension": 1024,
+      "ranked_versions": [
+        "current",
+        "wifi",
+        "invoice"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.891,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "incident",
+      "dimension": 1024,
+      "ranked_versions": [
+        "current",
+        "wifi",
+        "invoice"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.917,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "reset",
+      "dimension": 1024,
+      "ranked_versions": [
+        "current",
+        "invoice",
+        "wifi"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.848,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "unknown",
+      "dimension": 1024,
+      "ranked_versions": [
+        "current",
+        "invoice",
+        "wifi"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.909,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "wifi",
+      "dimension": 1024,
+      "ranked_versions": [
+        "wifi",
+        "current",
+        "invoice"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 1.003,
+      "stale_source_exposed": false
+    },
+    {
+      "case_id": "invoice",
+      "dimension": 1024,
+      "ranked_versions": [
+        "invoice",
+        "current",
+        "wifi"
+      ],
+      "metrics_at_1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "metrics_at_3": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg": 1.0
+      },
+      "elapsed_seconds": 0.954,
+      "stale_source_exposed": false
+    }
+  ],
+  "labels": "developer-authored synthetic references; not SME-approved",
+  "cost_usd": null,
+  "sources": {
+    "legacy": {
+      "checksum": "4bcfc7d8ce339eb4bef105a60c5c86a101d868e54fc914d2c634c697df56b85b",
+      "pages": 1,
+      "chunks": 1,
+      "parser": "docling-2.143.1"
+    },
+    "current": {
+      "checksum": "d9d7a5e76515cdf786f8e30957bc1b922f7bddd5e1b207daf6542d1ad0fe479f",
+      "pages": 1,
+      "chunks": 1,
+      "parser": "docling-2.143.1"
+    },
+    "wifi": {
+      "checksum": "de6aa66280f3db369360ed468c516baa326e916fde6b9f7683e4fbc83d565561",
+      "pages": 1,
+      "chunks": 1,
+      "parser": "docling-2.143.1"
+    },
+    "invoice": {
+      "checksum": "7c910eb588616bbe096ee0768f3c3876a909c731953c2bf2be1ac05eec8d200a",
+      "pages": 1,
+      "chunks": 1,
+      "parser": "docling-2.143.1"
+    }
+  },
+  "cleanup_completed": true,
+  "inserted_chunks": 6,
+  "stale_control": {
+    "actual_retrieved_versions": [
+      "legacy"
+    ],
+    "retrieval_against_stale_gold": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "ndcg": 1.0
+    },
+    "retrieval_against_current_gold": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "reciprocal_rank": 0.0,
+      "ndcg": 0.0
+    },
+    "governed_without_replacement_abstains": true,
+    "llm_answer_generated": false,
+    "faithfulness": null,
+    "current_business_correctness": null
+  },
+  "vector_payload_bytes_float32": {
+    "256": 1024,
+    "1024": 4096
+  },
+  "limitations": [
+    "Four synthetic PDFs and six queries; no corpus generalization",
+    "Eligibility flags are experiment labels, not native publication approval",
+    "No production source, governance state, cache or memory was changed",
+    "Vector payload sizes exclude BSON/index overhead; latency is not a capacity benchmark",
+    "No generated answer or calibrated judge in this experiment"
+  ],
+  "completed_at": "2026-10-30T17:55:01.606561+00:00"
+}

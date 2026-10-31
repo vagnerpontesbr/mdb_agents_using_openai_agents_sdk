@@ -1,0 +1,339 @@
+{
+  "dataset_version": "telecom-journey-evaluation-v1",
+  "dataset_sha256": "713b43d6bd05f432ce8ff6f3df28a668d38c9c9c3f6b1382f86ffa1f165da9d0",
+  "reference_provenance": "Developer-authored synthetic expectations, not independently SME-approved labels",
+  "reference_as_of": "2026-10-30T12:17:11Z",
+  "started_at": "2026-10-30T18:00:58.111080+00:00",
+  "git_head": "1a52afce2815be3530d77cb7a714001f412ad206",
+  "versions": {
+    "openai-agents": "0.24.0",
+    "openai": "3.40.0",
+    "pymongo": "4.19.0"
+  },
+  "planned_invocations": 8,
+  "inter_invocation_pause_seconds": 15,
+  "attempts": [
+    {
+      "case_id": "invoice",
+      "repeat": 1,
+      "session_id": "telco-39e2b7a5a41f79622a11c2bf1a98c186f2586b6c6333ffe2",
+      "execution_id": "b708fd08-bafd-40d4-a954-3f7966a53203",
+      "error_type": null,
+      "elapsed_seconds": 12.574,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "6d53a88a850ccc9e6756a3d5b35abd6f39677431fc2731a120af14b5f5bb12f6",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      }
+    },
+    {
+      "case_id": "invoice",
+      "repeat": 2,
+      "session_id": "telco-18b1f0140a2e36f0e47634b208a315c713dcbcdd12fe352a",
+      "execution_id": "3b3e0511-b836-47db-abcb-7988fc426e26",
+      "error_type": null,
+      "elapsed_seconds": 10.911,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "6d53a88a850ccc9e6756a3d5b35abd6f39677431fc2731a120af14b5f5bb12f6",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      }
+    },
+    {
+      "case_id": "sales",
+      "repeat": 1,
+      "session_id": "telco-bf47a0704efe09922aa1c0992ff1d766dbf0ae8564476eaa",
+      "execution_id": "68457233-17e8-44b5-a468-ba8ab6dd29f9",
+      "error_type": null,
+      "elapsed_seconds": 9.983,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "7318f9332b5e93f2b2293fdea92451e99ac601e808813c969e6ff7ad7e64d7b8",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      }
+    },
+    {
+      "case_id": "sales",
+      "repeat": 2,
+      "session_id": "telco-3efe55ebff9b21455aea5e840d5d3dffb4ec88063aaff0d4",
+      "execution_id": "bd31cebc-8c52-46d2-bc73-195cbeebfe5f",
+      "error_type": null,
+      "elapsed_seconds": 9.576,
+      "metrics": {
+        "final_contract_valid": true,
+        "routing_match": true,
+        "outcome_completed": true,
+        "exact_reference_match": true,
+        "response_sha256": "7318f9332b5e93f2b2293fdea92451e99ac601e808813c969e6ff7ad7e64d7b8",
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      }
+    },
+    {
+      "case_id": "mixed",
+      "repeat": 1,
+      "session_id": "telco-94d4ebf64f243e290873a32e21a1a875e35135f5eef39c42",
+      "execution_id": null,
+      "error_type": "EngineUnavailable",
+      "elapsed_seconds": 0.866,
+      "metrics": {
+        "final_contract_valid": false,
+        "routing_match": null,
+        "outcome_completed": null,
+        "exact_reference_match": null,
+        "response_sha256": null,
+        "tool_parameter_accuracy": null,
+        "independent_factual_correctness": null,
+        "llm_judge_score": null
+      }
+    }
+  ],
+  "summaries": {
+    "invoice": {
+      "metrics": {
+        "final_contract_valid": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "routing_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "outcome_completed": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "exact_reference_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "tool_parameter_accuracy": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "independent_factual_correctness": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "llm_judge_score": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        }
+      },
+      "wording_repeatability": {
+        "observed": 2,
+        "unique_texts": 1,
+        "pairs": 1,
+        "matching_pairs": 1,
+        "pair_agreement": 1.0
+      },
+      "latency_seconds": {
+        "samples": 2,
+        "p50_nearest_rank": 10.911,
+        "maximum": 12.574
+      }
+    },
+    "sales": {
+      "metrics": {
+        "final_contract_valid": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "routing_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "outcome_completed": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "exact_reference_match": {
+          "attempts": 2,
+          "observed": 2,
+          "passed": 2,
+          "unavailable": 0,
+          "rate_on_observed": 1.0,
+          "passes_per_attempt": 1.0
+        },
+        "tool_parameter_accuracy": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "independent_factual_correctness": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "llm_judge_score": {
+          "attempts": 2,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 2,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        }
+      },
+      "wording_repeatability": {
+        "observed": 2,
+        "unique_texts": 1,
+        "pairs": 1,
+        "matching_pairs": 1,
+        "pair_agreement": 1.0
+      },
+      "latency_seconds": {
+        "samples": 2,
+        "p50_nearest_rank": 9.576,
+        "maximum": 9.983
+      }
+    },
+    "mixed": {
+      "metrics": {
+        "final_contract_valid": {
+          "attempts": 1,
+          "observed": 1,
+          "passed": 0,
+          "unavailable": 0,
+          "rate_on_observed": 0.0,
+          "passes_per_attempt": 0.0
+        },
+        "routing_match": {
+          "attempts": 1,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 1,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "outcome_completed": {
+          "attempts": 1,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 1,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "exact_reference_match": {
+          "attempts": 1,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 1,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "tool_parameter_accuracy": {
+          "attempts": 1,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 1,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "independent_factual_correctness": {
+          "attempts": 1,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 1,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        },
+        "llm_judge_score": {
+          "attempts": 1,
+          "observed": 0,
+          "passed": 0,
+          "unavailable": 1,
+          "rate_on_observed": null,
+          "passes_per_attempt": 0.0
+        }
+      },
+      "wording_repeatability": {
+        "observed": 0,
+        "unique_texts": 0,
+        "pairs": 0,
+        "matching_pairs": 0,
+        "pair_agreement": null
+      },
+      "latency_seconds": {
+        "samples": 1,
+        "p50_nearest_rank": 0.866,
+        "maximum": 0.866
+      }
+    }
+  },
+  "stopped_early": true,
+  "token_usage": null,
+  "cost_usd": null,
+  "limitations": [
+    "Developer-authored synthetic references; not independent SME validation",
+    "Operator-admitted owner identity; not a browser authentication test",
+    "Fresh sessions with shared Engine memory enabled, not independent samples",
+    "Exact text match is a regression metric, not general semantic correctness",
+    "Tool parameters and usage not read from native traces in this increment",
+    "No corpus ranking, cache, Matryoshka or LLM judge acceptance in this report",
+    "At most 12 sequential Engine invocations; existing native budgets remain active"
+  ],
+  "completed_at": "2026-10-30T18:02:44.568806+00:00",
+  "not_attempted": 3
+}

@@ -1,0 +1,1335 @@
+{
+  "status": "proposed_not_applied",
+  "cluster": "OpenAI-SDK",
+  "project_id": "67b385a7976edf15ecc62e06",
+  "collections": [
+    {
+      "database": "telecom_load_ingestion",
+      "name": "jobs",
+      "validator": {
+        "$and": [
+          {
+            "$jsonSchema": {
+              "bsonType": "object",
+              "additionalProperties": false,
+              "required": [
+                "_id",
+                "tenant_id",
+                "submission_key",
+                "document_id",
+                "version_id",
+                "metadata_digest",
+                "checksum",
+                "scanned",
+                "status",
+                "attempts",
+                "available_at",
+                "created_at",
+                "lease_token",
+                "lease_until",
+                "failure"
+              ],
+              "properties": {
+                "_id": {
+                  "bsonType": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "tenant_id": {
+                  "bsonType": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "submission_key": {
+                  "bsonType": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "document_id": {
+                  "bsonType": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "version_id": {
+                  "bsonType": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "metadata_digest": {
+                  "bsonType": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "checksum": {
+                  "bsonType": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "scanned": {
+                  "bsonType": "bool"
+                },
+                "status": {
+                  "enum": [
+                    "queued",
+                    "running",
+                    "staged",
+                    "failed"
+                  ]
+                },
+                "attempts": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 0,
+                  "maximum": 2
+                },
+                "available_at": {
+                  "bsonType": "date"
+                },
+                "created_at": {
+                  "bsonType": "date"
+                },
+                "lease_token": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "lease_until": {
+                  "bsonType": "date"
+                },
+                "failure": {
+                  "enum": [
+                    null,
+                    "invalid_document",
+                    "provider_failure",
+                    "worker_failure"
+                  ]
+                },
+                "metadata": {
+                  "bsonType": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "finished_at": {
+                  "bsonType": "date"
+                }
+              }
+            }
+          },
+          {
+            "$expr": {
+              "$lte": [
+                {
+                  "$bsonSize": "$$ROOT"
+                },
+                16000
+              ]
+            }
+          }
+        ]
+      },
+      "validationLevel": "strict",
+      "validationAction": "error"
+    },
+    {
+      "database": "telecom_load_ingestion",
+      "name": "staged_artifacts",
+      "validator": {
+        "$and": [
+          {
+            "$jsonSchema": {
+              "oneOf": [
+                {
+                  "bsonType": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "_id",
+                    "tenant_id",
+                    "kind",
+                    "active"
+                  ],
+                  "properties": {
+                    "_id": {
+                      "bsonType": "string",
+                      "maxLength": 140
+                    },
+                    "tenant_id": {
+                      "bsonType": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "kind": {
+                      "enum": [
+                        "quota"
+                      ]
+                    },
+                    "active": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 0,
+                      "maximum": 4
+                    }
+                  }
+                },
+                {
+                  "bsonType": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "_id",
+                    "tenant_id",
+                    "kind",
+                    "pdf",
+                    "checksum",
+                    "created_at"
+                  ],
+                  "properties": {
+                    "_id": {
+                      "bsonType": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "tenant_id": {
+                      "bsonType": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "kind": {
+                      "enum": [
+                        "pdf"
+                      ]
+                    },
+                    "pdf": {
+                      "bsonType": "binData"
+                    },
+                    "checksum": {
+                      "bsonType": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "created_at": {
+                      "bsonType": "date"
+                    },
+                    "result": {
+                      "bsonType": "object"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$lte": [
+                {
+                  "$bsonSize": "$$ROOT"
+                },
+                7000000
+              ]
+            }
+          }
+        ]
+      },
+      "validationLevel": "strict",
+      "validationAction": "error"
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "name": "chunks",
+      "validator": {
+        "$jsonSchema": {
+          "additionalProperties": false,
+          "properties": {
+            "chunk_id": {
+              "maxLength": 128,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "version_key": {
+              "maxLength": 128,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "revision": {
+              "minimum": 1,
+              "bsonType": [
+                "int",
+                "long"
+              ]
+            },
+            "text": {
+              "maxLength": 8000,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "text_sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "bsonType": "string"
+            },
+            "pages": {
+              "items": {
+                "bsonType": [
+                  "int",
+                  "long"
+                ],
+                "minimum": 1,
+                "maximum": 10
+              },
+              "maxItems": 10,
+              "bsonType": "array",
+              "uniqueItems": true
+            },
+            "_id": {},
+            "tenant_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "acl": {
+              "items": {
+                "bsonType": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "maxItems": 16,
+              "minItems": 1,
+              "bsonType": "array"
+            },
+            "product": {
+              "maxLength": 128,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "region": {
+              "maxLength": 128,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "firmware_range": {
+              "maxLength": 64,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "language": {
+              "enum": [
+                "en"
+              ],
+              "bsonType": "string"
+            },
+            "status": {
+              "enum": [
+                "draft",
+                "in_review",
+                "approved",
+                "published",
+                "quarantined",
+                "expired",
+                "superseded",
+                "revoked"
+              ],
+              "bsonType": "string"
+            },
+            "effective_from": {
+              "bsonType": "date"
+            },
+            "expires_at": {
+              "bsonType": "date"
+            },
+            "review_due_at": {
+              "bsonType": "date"
+            },
+            "embedding_profile": {
+              "enum": [
+                "voyage-context-4:1024:v1"
+              ]
+            },
+            "eligible": {
+              "bsonType": "bool"
+            },
+            "embedding": {
+              "bsonType": "array",
+              "minItems": 1024,
+              "maxItems": 1024,
+              "items": {
+                "bsonType": "double",
+                "minimum": -1e+308,
+                "maximum": 1e+308
+              }
+            }
+          },
+          "required": [
+            "chunk_id",
+            "version_key",
+            "revision",
+            "text",
+            "text_sha256",
+            "pages",
+            "_id",
+            "tenant_id",
+            "acl",
+            "product",
+            "region",
+            "firmware_range",
+            "language",
+            "status",
+            "effective_from",
+            "expires_at",
+            "review_due_at",
+            "embedding_profile",
+            "eligible",
+            "embedding"
+          ],
+          "bsonType": "object"
+        }
+      },
+      "validationLevel": "strict",
+      "validationAction": "error"
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "name": "document_versions",
+      "validator": {
+        "$and": [
+          {
+            "$jsonSchema": {
+              "additionalProperties": false,
+              "properties": {
+                "tenant_id": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "document_id": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "version_id": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "revision": {
+                  "minimum": 1,
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ]
+                },
+                "title": {
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "information_owner": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "created_at": {
+                  "bsonType": "date"
+                },
+                "ingested_at": {
+                  "bsonType": "date"
+                },
+                "effective_from": {
+                  "bsonType": "date"
+                },
+                "expires_at": {
+                  "bsonType": "date"
+                },
+                "last_reviewed_at": {
+                  "bsonType": "date"
+                },
+                "review_due_at": {
+                  "bsonType": "date"
+                },
+                "reviewed_by": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "approved_by": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "approved_at": {
+                  "bsonType": "date"
+                },
+                "source_uri": {
+                  "maxLength": 512,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "source_system": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "checksum": {
+                  "pattern": "^[a-f0-9]{64}$",
+                  "bsonType": "string"
+                },
+                "classification": {
+                  "enum": [
+                    "internal-demo"
+                  ],
+                  "bsonType": "string"
+                },
+                "acl": {
+                  "items": {
+                    "bsonType": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "maxItems": 16,
+                  "minItems": 1,
+                  "bsonType": "array"
+                },
+                "language": {
+                  "enum": [
+                    "en"
+                  ],
+                  "bsonType": "string"
+                },
+                "product": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "region": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "firmware_range": {
+                  "maxLength": 64,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "supersedes": {
+                  "anyOf": [
+                    {
+                      "bsonType": "string"
+                    },
+                    {
+                      "bsonType": "null"
+                    }
+                  ]
+                },
+                "superseded_by": {
+                  "anyOf": [
+                    {
+                      "bsonType": "string"
+                    },
+                    {
+                      "bsonType": "null"
+                    }
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "draft",
+                    "in_review",
+                    "approved",
+                    "published",
+                    "quarantined",
+                    "expired",
+                    "superseded",
+                    "revoked"
+                  ],
+                  "bsonType": "string"
+                },
+                "business_impact": {
+                  "enum": [
+                    "low",
+                    "high"
+                  ],
+                  "bsonType": "string"
+                },
+                "change_rate": {
+                  "enum": [
+                    "low",
+                    "high"
+                  ],
+                  "bsonType": "string"
+                },
+                "_id": {
+                  "bsonType": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "tenant_id",
+                "document_id",
+                "version_id",
+                "revision",
+                "title",
+                "information_owner",
+                "created_at",
+                "ingested_at",
+                "effective_from",
+                "expires_at",
+                "last_reviewed_at",
+                "review_due_at",
+                "reviewed_by",
+                "approved_by",
+                "approved_at",
+                "source_uri",
+                "source_system",
+                "checksum",
+                "classification",
+                "acl",
+                "language",
+                "product",
+                "region",
+                "firmware_range",
+                "status",
+                "business_impact",
+                "change_rate",
+                "_id"
+              ],
+              "bsonType": "object"
+            }
+          },
+          {
+            "$expr": {
+              "$and": [
+                {
+                  "$lte": [
+                    "$created_at",
+                    "$effective_from"
+                  ]
+                },
+                {
+                  "$lt": [
+                    "$effective_from",
+                    "$expires_at"
+                  ]
+                },
+                {
+                  "$lte": [
+                    "$created_at",
+                    "$last_reviewed_at"
+                  ]
+                },
+                {
+                  "$lt": [
+                    "$last_reviewed_at",
+                    "$review_due_at"
+                  ]
+                },
+                {
+                  "$lte": [
+                    "$created_at",
+                    "$approved_at"
+                  ]
+                },
+                {
+                  "$lte": [
+                    "$created_at",
+                    "$ingested_at"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "validationLevel": "strict",
+      "validationAction": "error"
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "name": "documents",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "additionalProperties": false,
+          "required": [
+            "_id",
+            "tenant_id",
+            "document_id",
+            "version_key",
+            "version_id",
+            "revision",
+            "conflict"
+          ],
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "tenant_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "document_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "version_key": {
+              "bsonType": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "version_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "revision": {
+              "bsonType": [
+                "int",
+                "long"
+              ],
+              "minimum": 1
+            },
+            "conflict": {
+              "bsonType": "bool"
+            }
+          }
+        }
+      },
+      "validationLevel": "strict",
+      "validationAction": "error"
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "name": "owners",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "additionalProperties": false,
+          "required": [
+            "_id",
+            "tenant_id",
+            "owner_id",
+            "active",
+            "user_ids"
+          ],
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "maxLength": 300
+            },
+            "tenant_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "owner_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "active": {
+              "bsonType": "bool"
+            },
+            "user_ids": {
+              "bsonType": "array",
+              "minItems": 1,
+              "maxItems": 16,
+              "uniqueItems": true,
+              "items": {
+                "bsonType": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            }
+          }
+        }
+      },
+      "validationLevel": "strict",
+      "validationAction": "error"
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "name": "retrieval_cache",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "_id",
+            "tenant_id",
+            "scope_key",
+            "policy_version",
+            "embedding_profile",
+            "query_sha256",
+            "embedding",
+            "created_at",
+            "expires_at",
+            "sources"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "tenant_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "scope_key": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "policy_version": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "embedding_profile": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "query_sha256": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "embedding": {
+              "bsonType": "array",
+              "minItems": 1024,
+              "maxItems": 1024,
+              "items": {
+                "bsonType": [
+                  "double",
+                  "int",
+                  "long",
+                  "decimal"
+                ]
+              }
+            },
+            "created_at": {
+              "bsonType": "date"
+            },
+            "expires_at": {
+              "bsonType": "date"
+            },
+            "sources": {
+              "bsonType": "array",
+              "minItems": 1,
+              "maxItems": 20,
+              "items": {
+                "bsonType": "object",
+                "required": [
+                  "version_key",
+                  "chunk_id",
+                  "revision",
+                  "text_sha256"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "version_key": {
+                    "bsonType": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "chunk_id": {
+                    "bsonType": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "revision": {
+                    "bsonType": "int",
+                    "minimum": 1
+                  },
+                  "text_sha256": {
+                    "bsonType": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "validationLevel": "strict",
+      "validationAction": "error"
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "name": "review_events",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "additionalProperties": false,
+          "required": [
+            "_id",
+            "tenant_id",
+            "execution_id",
+            "action_digest",
+            "version_key",
+            "metadata_digest",
+            "actor",
+            "source_checksum",
+            "job_id",
+            "recorded_at"
+          ],
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "tenant_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "execution_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "action_digest": {
+              "bsonType": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "version_key": {
+              "bsonType": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "metadata_digest": {
+              "bsonType": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "actor": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "source_checksum": {
+              "bsonType": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "job_id": {
+              "bsonType": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "recorded_at": {
+              "bsonType": "date"
+            }
+          }
+        }
+      },
+      "validationLevel": "strict",
+      "validationAction": "error"
+    }
+  ],
+  "classic_indexes": [
+    {
+      "database": "telecom_load_knowledge",
+      "collection": "document_versions",
+      "name": "tenant_document_version_revision",
+      "key": {
+        "tenant_id": 1,
+        "document_id": 1,
+        "version_id": 1,
+        "revision": 1
+      },
+      "unique": true
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "collection": "chunks",
+      "name": "tenant_version_chunk",
+      "key": {
+        "tenant_id": 1,
+        "version_key": 1,
+        "chunk_id": 1
+      },
+      "unique": true
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "collection": "review_events",
+      "name": "tenant_review_execution",
+      "key": {
+        "tenant_id": 1,
+        "execution_id": 1,
+        "action_digest": 1
+      },
+      "unique": true
+    },
+    {
+      "database": "telecom_load_ingestion",
+      "collection": "jobs",
+      "name": "tenant_submission",
+      "key": {
+        "tenant_id": 1,
+        "submission_key": 1
+      },
+      "unique": true
+    },
+    {
+      "database": "telecom_load_ingestion",
+      "collection": "jobs",
+      "name": "claim_available_job",
+      "key": {
+        "status": 1,
+        "available_at": 1,
+        "_id": 1
+      }
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "collection": "retrieval_cache",
+      "name": "cache_expiry",
+      "key": {
+        "expires_at": 1
+      },
+      "expireAfterSeconds": 0
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "collection": "retrieval_cache",
+      "name": "cache_scope_created",
+      "key": {
+        "tenant_id": 1,
+        "scope_key": 1,
+        "created_at": 1
+      }
+    }
+  ],
+  "search_indexes": [
+    {
+      "database": "telecom_load_knowledge",
+      "collection": "chunks",
+      "name": "knowledge_lexical_v1",
+      "type": "search",
+      "definition": {
+        "analyzer": "lucene.standard",
+        "mappings": {
+          "dynamic": false,
+          "fields": {
+            "tenant_id": {
+              "type": "token"
+            },
+            "acl": {
+              "type": "token"
+            },
+            "product": {
+              "type": "token"
+            },
+            "region": {
+              "type": "token"
+            },
+            "firmware_range": {
+              "type": "token"
+            },
+            "language": {
+              "type": "token"
+            },
+            "status": {
+              "type": "token"
+            },
+            "embedding_profile": {
+              "type": "token"
+            },
+            "eligible": {
+              "type": "boolean"
+            },
+            "effective_from": {
+              "type": "date"
+            },
+            "expires_at": {
+              "type": "date"
+            },
+            "review_due_at": {
+              "type": "date"
+            },
+            "text": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "collection": "chunks",
+      "name": "knowledge_context_1024_v1",
+      "type": "vectorSearch",
+      "definition": {
+        "fields": [
+          {
+            "type": "vector",
+            "path": "embedding",
+            "numDimensions": 1024,
+            "similarity": "cosine"
+          },
+          {
+            "type": "filter",
+            "path": "tenant_id"
+          },
+          {
+            "type": "filter",
+            "path": "acl"
+          },
+          {
+            "type": "filter",
+            "path": "product"
+          },
+          {
+            "type": "filter",
+            "path": "region"
+          },
+          {
+            "type": "filter",
+            "path": "firmware_range"
+          },
+          {
+            "type": "filter",
+            "path": "language"
+          },
+          {
+            "type": "filter",
+            "path": "status"
+          },
+          {
+            "type": "filter",
+            "path": "embedding_profile"
+          },
+          {
+            "type": "filter",
+            "path": "eligible"
+          },
+          {
+            "type": "filter",
+            "path": "effective_from"
+          },
+          {
+            "type": "filter",
+            "path": "expires_at"
+          },
+          {
+            "type": "filter",
+            "path": "review_due_at"
+          }
+        ]
+      }
+    },
+    {
+      "database": "telecom_load_knowledge",
+      "collection": "retrieval_cache",
+      "name": "retrieval_cache_context_1024_v1",
+      "type": "vectorSearch",
+      "definition": {
+        "fields": [
+          {
+            "type": "vector",
+            "path": "embedding",
+            "numDimensions": 1024,
+            "similarity": "cosine"
+          },
+          {
+            "type": "filter",
+            "path": "tenant_id"
+          },
+          {
+            "type": "filter",
+            "path": "scope_key"
+          },
+          {
+            "type": "filter",
+            "path": "policy_version"
+          },
+          {
+            "type": "filter",
+            "path": "embedding_profile"
+          },
+          {
+            "type": "filter",
+            "path": "expires_at"
+          }
+        ]
+      }
+    }
+  ],
+  "runtime_roles": {
+    "telecomLoadKnowledgeReader": [
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "documents"
+        },
+        "actions": [
+          "find"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "document_versions"
+        },
+        "actions": [
+          "find"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "chunks"
+        },
+        "actions": [
+          "find"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "review_events"
+        },
+        "actions": [
+          "find"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "owners"
+        },
+        "actions": [
+          "find"
+        ]
+      }
+    ],
+    "telecomLoadKnowledgePublisher": [
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "documents"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "document_versions"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "chunks"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "review_events"
+        },
+        "actions": [
+          "find",
+          "insert"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "owners"
+        },
+        "actions": [
+          "find"
+        ]
+      }
+    ],
+    "telecomLoadIngestionWorker": [
+      {
+        "resource": {
+          "db": "telecom_load_ingestion",
+          "collection": "jobs"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update"
+        ]
+      },
+      {
+        "resource": {
+          "db": "telecom_load_ingestion",
+          "collection": "staged_artifacts"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update"
+        ]
+      }
+    ],
+    "telecomLoadCache": [
+      {
+        "resource": {
+          "db": "telecom_load_knowledge",
+          "collection": "retrieval_cache"
+        },
+        "actions": [
+          "find",
+          "insert",
+          "update",
+          "remove"
+        ]
+      }
+    ]
+  },
+  "runtime_users": [
+    {
+      "username": "telecom_load_knowledge_reader",
+      "role": "telecomLoadKnowledgeReader"
+    },
+    {
+      "username": "telecom_load_knowledge_publisher",
+      "role": "telecomLoadKnowledgePublisher"
+    },
+    {
+      "username": "telecom_load_ingestion_worker",
+      "role": "telecomLoadIngestionWorker"
+    },
+    {
+      "username": "telecom_load_cache",
+      "role": "telecomLoadCache"
+    }
+  ],
+  "estimated_existing_documents_modified": 0,
+  "documents_inserted": 0,
+  "database_names": [
+    "telecom_load_ingestion",
+    "telecom_load_knowledge"
+  ],
+  "private_credentials_file": ".env.phase8",
+  "unchanged": [
+    "demo/evaluation identities and data",
+    "ClusterDemoTelco",
+    "Engine memory/policies/deployment",
+    "Atlas cluster tier"
+  ],
+  "pending_after_apply": [
+    "index readiness",
+    "positive and negative role probes",
+    "synthetic fixture seeding",
+    "worker/lease and source/cache concurrency tests"
+  ]
+}

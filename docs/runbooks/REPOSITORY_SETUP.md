@@ -139,3 +139,15 @@ The requester selected MIT and accepted the automated isolated handoff rehearsal
 frontend unit tests, ten browser tests, frozen clean installation, builds, setup
 diagnostics and tool adaptation. Phase 6 code/docs are uncommitted; no Phase 6 CI
 or push is claimed. Phase 7 has not started.
+
+## Phase 6 publication and CI correction
+
+Phase 6 is published as `9b048bb`; CI run `41206970479` failed because the hosted staging test omitted the newly packaged MIT license. The local test correction is ready; remote CI verification is pending. The user authorized Phase 7, but its work awaits this publication correction.
+
+[CI run 41206970479](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41206970479)
+failed in `test_source_allowlist_and_existing_destination_rejection`: the staging
+helper correctly included `LICENSE`, but the test expected only the previous files.
+The correction preserves the strict allowlist and verifies exact license content.
+All 75 compatibility tests passed locally with frozen Python dependencies and
+local-port access. The user must commit/push the correction before remote CI
+can be verified. This supersedes the preceding Phase 6 publication-pending note.

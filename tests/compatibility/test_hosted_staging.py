@@ -22,10 +22,11 @@ class HostedStagingTests(unittest.TestCase):
             output = Path(tmp) / "stage"
             self.assertEqual(self.stage(output).returncode, 0)
             files = {p.relative_to(output).as_posix() for p in output.rglob("*") if p.is_file()}
-            expected = {"pyproject.toml", "uv.lock", "agent.yaml"}
+            expected = {"pyproject.toml", "uv.lock", "agent.yaml", "LICENSE"}
             expected.update(p.relative_to(ROOT / "compatibility/openai_engine_adapter").as_posix()
                             for p in (ROOT / "compatibility/openai_engine_adapter/src").rglob("*.py"))
             self.assertEqual(files, expected)
+            self.assertEqual((output / "LICENSE").read_bytes(), (ROOT / "LICENSE").read_bytes())
             (output / ".env").write_text("SYNTHETIC_SECRET=not-a-real-key\n")
             self.assertNotEqual(self.stage(output).returncode, 0)
 

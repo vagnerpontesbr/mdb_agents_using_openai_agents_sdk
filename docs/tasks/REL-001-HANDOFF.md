@@ -1,6 +1,6 @@
 # REL-001: Reproducible demo handoff
 
-- Status: Completed for the bounded demo; requester accepted automated rehearsal on 2026-10-31; Git publication pending
+- Status: Completed for the bounded demo; requester accepted automated rehearsal on 2026-10-31; published as `9b048bb`; CI correction awaiting publication
 - Owner: Telecom demo maintainer
 - Dependencies: FND-003, VERT-001/002, MEM-001, RAG-001, EVAL-001
 - Relevant ADRs: [ADR-0017](../adr/0017-two-cluster-memory-boundary.md), [ADR-0022](../adr/0022-demo-private-engine-cli-identity.md), [ADR-0027](../adr/0027-bounded-knowledge-evaluation-cache.md)
@@ -72,3 +72,13 @@ not evidence of an independent human trial. Phase 6 is complete: MIT selected an
 packaged, current setup/configuration/docs reconciled, isolated setup/build/browser
 and tool-adaptation rehearsal passed, and limitations recorded. Phase 6 files are
 local and uncommitted; the user performs commit/push. Stop here before Phase 7.
+
+## Publication correction
+
+Phase 6 is published as `9b048bb`; CI run `41206970479` failed because the hosted staging test omitted the newly packaged MIT license. The local test correction is ready; remote CI verification is pending. The user authorized Phase 7, but its work awaits this publication correction.
+
+The exact source allowlist now includes `LICENSE` and checks its bytes against
+the repository license. All 75 compatibility tests passed locally using the frozen
+Python environment; the first sandbox attempt could not bind local voice-test
+ports and is not counted as passing. Earlier uncommitted/pending notes describe
+the historical handoff checkpoint and are superseded by this update.

@@ -1,5 +1,8 @@
 # Phase 5: Evaluation and cache
 
+Historical phase-specific evidence and versions follow. Use [Phase 7](PHASE_7.md)
+for the active runtime and [publication status](REPOSITORY_SETUP.md) for current Git/CI.
+
 The authoritative status and limits are in [EVAL-001](../tasks/EVAL-001-QUALITY.md).
 The approved Atlas resources and hosted candidate cache are applied. Phase 5 bounded
 acceptance is complete: calibration v3 passed at 0.91, and all eight final hosted

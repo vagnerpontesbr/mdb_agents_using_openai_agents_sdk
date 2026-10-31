@@ -1,6 +1,10 @@
 # MEM-001: Semantic continuity and native execution recovery
 
-- Status: Complete for the bounded demo; manual publication pending
+Dated checkpoints below preserve historical results and pending work at that time.
+[Publication status](../runbooks/REPOSITORY_SETUP.md) and [RUN-001](RUN-001-RUNTIME.md)
+identify the current published checkpoint and active runtime.
+
+- Status: Complete and published for the bounded demo; current workflow recovery is in [RUN-001](RUN-001-RUNTIME.md)
 - Scope: Phase 3, authorized after Phase 2 publication
 - Decisions: [ADR-0021](../adr/0021-demo-semantic-episodic-continuity.md),
   [ADR-0018](../adr/0018-engine-feature-precedence.md),

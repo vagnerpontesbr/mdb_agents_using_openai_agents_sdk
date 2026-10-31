@@ -1,5 +1,8 @@
 # Phase 3: Memory continuity and recovery
 
+Historical phase-specific evidence and versions follow. Use [Phase 7](PHASE_7.md)
+for the active runtime and [publication status](REPOSITORY_SETUP.md) for current Git/CI.
+
 [MEM-001](../tasks/MEM-001-MEMORY.md) is the authoritative acceptance record.
 Phase 3 passed for the bounded demo. Active build: `bld_01M6646NXQBCED02KMERQE601M`;
 deployment: `deploy-aada0f7f` (succeeded). Manual Git publication remains pending.

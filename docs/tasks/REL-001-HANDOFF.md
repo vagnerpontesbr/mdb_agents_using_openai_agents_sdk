@@ -1,5 +1,9 @@
 # REL-001: Reproducible demo handoff
 
+Dated checkpoints below preserve historical results and pending work at that time.
+[Publication status](../runbooks/REPOSITORY_SETUP.md) and [RUN-001](RUN-001-RUNTIME.md)
+identify the current published checkpoint and active runtime.
+
 - Status: Completed for the bounded demo; requester accepted automated rehearsal on 2026-10-31; published as `9b048bb`; CI correction awaiting publication
 - Owner: Telecom demo maintainer
 - Dependencies: FND-003, VERT-001/002, MEM-001, RAG-001, EVAL-001
@@ -60,8 +64,7 @@ limitation, not a claim that dependency security is permanently established.
 
 The initial plan asks for a new developer's handoff trial. The automated isolated
 rehearsal is complete, but independent human acceptance has not been observed. The
-user is being asked whether this rehearsal is sufficient for the demo's Phase 6
-acceptance or whether to keep the human trial open. No Phase 7 work has started.
+requester subsequently accepted this rehearsal; see ADR-0028 and Completion below.
 
 
 ## Completion
@@ -75,7 +78,7 @@ local and uncommitted; the user performs commit/push. Stop here before Phase 7.
 
 ## Publication correction
 
-Phase 6 is published as `9b048bb`; CI run `41206970479` failed because the hosted staging test omitted the newly packaged MIT license. The local test correction is ready; remote CI verification is pending. The user authorized Phase 7, but its work awaits this publication correction.
+Phase 6 is published as `9b048bb`, with correction `a4f5c4c` and passing CI `41207242615`. Phase 7 runtime acceptance is complete for the bounded demo; its documentation/evidence awaits manual publication. Phase 8 scalability/resilience has not started.
 
 The exact source allowlist now includes `LICENSE` and checks its bytes against
 the repository license. All 75 compatibility tests passed locally using the frozen

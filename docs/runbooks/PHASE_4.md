@@ -1,5 +1,8 @@
 # Phase 4: Governed PDF knowledge
 
+Historical phase-specific evidence and versions follow. Use [Phase 7](PHASE_7.md)
+for the active runtime and [publication status](REPOSITORY_SETUP.md) for current Git/CI.
+
 The authoritative acceptance status and portable evidence are in
 [RAG-001](../tasks/RAG-001-KNOWLEDGE.md). The approved ownership and native
 publication boundary is [ADR-0026](../adr/0026-governed-knowledge-publication.md).

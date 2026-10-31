@@ -43,3 +43,5 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0026](0026-governed-knowledge-publication.md) | Owner-authorized native review and domain publication of governed PDFs | Selected; bounded Phase 4 evidence recorded |
 
 | [ADR-0027](0027-bounded-knowledge-evaluation-cache.md) | Bounded contextual candidate cache and isolated quality evaluation | Bounded Phase 5 acceptance passed |
+
+| [ADR-0028](0028-mit-automated-demo-handoff.md) | MIT license and accepted automated demo handoff | Accepted by requester; Phase 6 and correction CI passed |

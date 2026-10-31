@@ -87,3 +87,33 @@ The canonical project creation plan is `initial_plan.md` at the project root.
 Use root AGENTS.md, bounded task records, contribution/review guidance, and executable repository checks. Intended GitHub repository: https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk. Authored workflow files do not establish remote configuration or successful CI. Preserve remote work when access becomes available.
 
 Include explicit typed function-calling examples for invoices, authorized ingestion jobs, and approved simulated plan changes. Evaluate semantic response quality with calibrated offline LLM judges and independent current references; online judge gating is optional, not an SDK-provided correctness guarantee.
+
+## Accepted delivery decisions and current phase
+
+MIT licensing and acceptance of the automated isolated handoff are recorded in
+[ADR-0028](adr/0028-mit-automated-demo-handoff.md). The expanded semantic validation,
+calibrated candidate cache and isolated evaluator are recorded in
+[ADR-0027](adr/0027-bounded-knowledge-evaluation-cache.md) and
+[EVAL-001](tasks/EVAL-001-QUALITY.md); these are bounded demo results.
+
+There are nine phases, numbered 0–8. Phases 0–6 are published with passing CI;
+[Phase 7](tasks/RUN-001-RUNTIME.md) is complete locally for the accepted runtime
+scope. Phase 8 scalability/resilience remains pending. User-performed commit/push
+and a pause at each completed phase remain the delivery workflow.
+
+## Decision lookup
+
+| Requester decision | Authoritative record |
+| --- | --- |
+| Engine precedence; SDK orchestration | [ADR-0018](adr/0018-engine-feature-precedence.md) |
+| Two existing Atlas clusters and domain ownership | [ADR-0017](adr/0017-two-cluster-memory-boundary.md) |
+| Requester may approve their exact action; native 30-day retention/expurgo accepted without further proof | [ADR-0019](adr/0019-requester-approval-memory-retention.md) |
+| Email/password, user/admin roles and admin-only registration | [ADR-0020](adr/0020-demo-email-password-auth.md) |
+| Demo limited to semantic/episodic continuity | [ADR-0021](adr/0021-demo-semantic-episodic-continuity.md) |
+| Private operator CLI identity allowed in demo backend | [ADR-0022](adr/0022-demo-private-engine-cli-identity.md) |
+| Quiet-environment voice and bounded retries | [ADR-0023](adr/0023-quiet-environment-demo-voice.md) |
+| Governed PDF approval/publication | [ADR-0026](adr/0026-governed-knowledge-publication.md) |
+| Expanded semantic validation and calibrated candidate cache | [ADR-0027](adr/0027-bounded-knowledge-evaluation-cache.md), [EVAL-001](tasks/EVAL-001-QUALITY.md) |
+| MIT and automated handoff accepted | [ADR-0028](adr/0028-mit-automated-demo-handoff.md) |
+
+These links index decisions; policy details remain in their authoritative records.

@@ -142,7 +142,7 @@ or push is claimed. Phase 7 has not started.
 
 ## Phase 6 publication and CI correction
 
-Phase 6 is published as `9b048bb`; CI run `41206970479` failed because the hosted staging test omitted the newly packaged MIT license. The local test correction is ready; remote CI verification is pending. The user authorized Phase 7, but its work awaits this publication correction.
+Phase 6 is published as `9b048bb`, with correction `a4f5c4c` and passing CI `41207242615`. Phase 7 runtime acceptance is complete for the bounded demo; its documentation/evidence awaits manual publication. Phase 8 scalability/resilience has not started.
 
 [CI run 41206970479](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41206970479)
 failed in `test_source_allowlist_and_existing_destination_rejection`: the staging
@@ -151,3 +151,15 @@ The correction preserves the strict allowlist and verifies exact license content
 All 75 compatibility tests passed locally with frozen Python dependencies and
 local-port access. The user must commit/push the correction before remote CI
 can be verified. This supersedes the preceding Phase 6 publication-pending note.
+
+## Current checkpoint — Phase 6 CI passed, Phase 7 complete locally
+
+On 2026-10-31 the clean local branch and GitHub CI head matched
+`a4f5c4c6c0903003f53903985a1218f7cab82e94`. Both jobs passed in
+[run 41207242615](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41207242615).
+This supersedes the preceding pending correction note.
+
+[RUN-001](../tasks/RUN-001-RUNTIME.md) records fresh workflow 8 recovery, healthy
+deployment and 86 local contract tests. Phase 7 documentation/evidence and the
+decision reconciliation are local changes; no new commit, push or deployment is
+claimed. Phase 8 remains pending and must wait for the manual publication gate.

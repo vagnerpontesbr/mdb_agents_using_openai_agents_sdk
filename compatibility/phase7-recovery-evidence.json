@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "workflow_version": "8",
+  "deployment_id": "deploy-af009ed4",
+  "checks": {
+    "runtime_absent_before_recovery": true,
+    "recreated_service_exact_pending_recovery": true,
+    "other_user_denied": true,
+    "stale_digest_denied": true,
+    "exact_simulation_receipt": true,
+    "duplicate_approval_denied": true,
+    "completed_recovery": true
+  },
+  "limitations": [
+    "Synthetic plan simulation only",
+    "No platform VM failure injection",
+    "Trace counts not inspected in this probe"
+  ],
+  "session_id": "telco-8c460a6126776a834b49e73cf2d853458b9a928b36b46ee1",
+  "execution_id": "10b7027d-69cd-4984-8249-95d5ca774eac"
+}

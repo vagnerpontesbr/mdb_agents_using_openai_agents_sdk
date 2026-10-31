@@ -1,5 +1,9 @@
 # VERT-001/002: Authenticated telecom journey
 
+Dated checkpoints below preserve historical results and pending work at that time.
+[Publication status](../runbooks/REPOSITORY_SETUP.md) and [RUN-001](RUN-001-RUNTIME.md)
+identify the current published checkpoint and active runtime.
+
 - Status: Phase 2 complete for the bounded demo; locally authored and Engine-deployed, manual commit/push pending
 - Owner: Repository implementation
 - Phase: 2

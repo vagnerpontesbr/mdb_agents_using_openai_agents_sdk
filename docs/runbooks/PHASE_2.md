@@ -1,5 +1,8 @@
 # Phase 2 journey: local preparation and hosted acceptance
 
+Historical phase-specific evidence and versions follow. Use [Phase 7](PHASE_7.md)
+for the active runtime and [publication status](REPOSITORY_SETUP.md) for current Git/CI.
+
 **Status:** Phase 2 is complete for the bounded demo, including the user's final
 browser audio confirmation. [Task evidence](../tasks/VERT-001-JOURNEY.md) records
 actual checks and limitations; [ADR-0025](../adr/0025-phase-two-journey.md) defines

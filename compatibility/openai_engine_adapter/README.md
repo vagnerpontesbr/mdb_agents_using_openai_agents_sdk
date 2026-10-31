@@ -14,11 +14,18 @@ complete for the [accepted demo scope](../../docs/compatibility/PHASE_0.md).
 | Application backend | Email/password identity, requester-only admission, exact-action checks and domain validation |
 | MongoDB application cluster | App-owned identity records; no duplicate Engine conversation/review store |
 
-The current request contract is one text request, one model call and at most one
-remote read tool. Tool output ends the run without another model synthesis step.
-Strict Pydantic argument/result validation rejects malformed or out-of-scope
-requests. Engine tool/model failures propagate; the adapter does not convert them
-into successful financial answers or perform an independent retry.
+The active journey uses an OpenAI SDK supervisor and three serial agents-as-tools
+(financial, technical and sales). Each specialist runs at most once per turn,
+with at most three specialists and seven model calls. The supervisor is bounded
+to four turns; each specialist stops after its first tool. Critical text comes
+from validated domain results, not supervisor paraphrasing. Knowledge retrieval
+and ingestion registration are tools of the technical specialist; OCR/ingestion
+processing remains outside interactive execution. Native review gates simulated
+plan changes and document publication. The basic invoice fixture retains its
+single-model/single-tool contract.
+
+Strict argument/result validation rejects malformed or out-of-scope requests.
+Unknown remote outcomes fail without an independent automatic retry.
 
 [adapter.py](src/openai_engine_adapter/adapter.py) implements `BaseAgent.execute`
 with a single-use awaitable/async-iterable result. [app.py](src/openai_engine_adapter/app.py)
@@ -44,23 +51,26 @@ manifests select other entrypoints explicitly; staging/building is not deploymen
 | `review_invoice` | Native approve/reject, resume and replay |
 | `expiry_invoice` | Synthetic 60-second review deadline |
 | `memory_invoice` | Engine-owned conversation projection |
-| `recall_invoice` | Semantic/episodic retrieval plus native review; restored hosted demo |
+| `recall_invoice` | Historical semantic/episodic retrieval and native review fixture |
+| `journey` | Supervisor and three specialists with native memory/review |
+| `knowledge_review` | Active journey plus governed knowledge and publication review |
 | `expiry_memory_invoice` | Combined memory/review-expiry and recovery proof |
 | `contract_probe` | Isolated Engine action/fence diagnostic; see task evidence |
 | `dependency_failure_invoice` | Isolated unavailable loopback dependency in Tool Pod; never returns an invoice |
 
-The active checkpoint is `recall_invoice:app`, restored with deployment
-`deploy-9c637560`, build `bld_01M63Y9G5090B560AYEFWA7D4K`. A positive memory/native
-review call passed afterward. [Hosted evidence](../../docs/tasks/COMP-003-HOSTED.md)
-and [fault/restoration evidence](../../docs/tasks/COMP-003-FAULTS.md) record exact
-scope, historical failures and restoration. Workflow versions are fixture-specific;
-switching entrypoints is not an in-flight workflow migration contract.
+The active checkpoint is `knowledge_review:app`, workflow `telecom-journey` version
+8, deployment `deploy-af009ed4`, build `bld_01M691YPABN60FEKHW6E1KZGB5`.
+Use staging profile `--profile knowledge-review`; the repository manifest's invoice
+fixture is intentionally not the production selection. Staging copies the
+allowlisted application knowledge-domain modules into the hosted package.
+[Phase 7](../../docs/tasks/RUN-001-RUNTIME.md) maps current and historical evidence.
+Switching entrypoints or workflow versions is not an in-flight migration contract.
 
 ## Validation and packaging
 
 Tested pins: Python 3.15.2, OpenAI Agents SDK 0.24.0, OpenAI 3.40.0, and Engine
-SDK/runner 0.11.11. The 61 hosted-contract tests passed on macOS and in the existing
-Linux/amd64 image with current source mounted. Those local tests use doubled
+SDK/runner 0.11.11. The 86 hosted-contract tests passed locally on macOS during Phase 7.
+Historical Linux and hosted results retain their recorded version/scope. Those local tests use doubled
 remote boundaries where documented; actual hosted results are recorded separately.
 
 From the project root, with the frozen hosted environment installed:
@@ -79,9 +89,9 @@ needed for documentation checks. [Demo startup](../../docs/runbooks/DEMO.md) is 
 ## Explicit limitations
 
 - Complete chronological transcript restoration is excluded by [ADR-0021](../../docs/adr/0021-demo-semantic-episodic-continuity.md).
-- General multi-turn tool loops, supervisor/specialist composition, handoffs,
-  provider continuation IDs, structured model outputs and token streaming are not
-  validated by this single-tool adapter. Native review continuation is distinct
+- Arbitrary tool loops, SDK handoffs, provider continuation IDs, structured model
+  outputs and token streaming remain unsupported. The serial supervisor and
+  agents-as-tools composition above is the bounded validated contract. Native review continuation is distinct
   from arbitrary OpenAI conversation continuation.
 - The local app uses the private operator CLI identity under [ADR-0022](../../docs/adr/0022-demo-private-engine-cli-identity.md);
   this is not an unattended least-privilege Engine credential solution.

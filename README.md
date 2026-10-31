@@ -2,17 +2,17 @@
 
 A telecom customer-service reference using OpenAI Agents SDK for orchestration,
 MongoDB Agent Engine for managed platform capabilities, MongoDB Atlas, Voyage AI,
-and Python managed by uv. The planned full application includes a supervisor,
+and Python managed by uv. The bounded implementation includes a supervisor,
 financial/technical/sales specialists, React chat/voice, and governed PDF retrieval.
 
-**Phases 0–4 are published with passing CI. Phase 5 bounded evaluation and calibrated
-candidate cache are complete, deployed and published with passing CI. Phase 6
-experience/packaging is complete with MIT licensing and a verified automated handoff;
-its Git publication is pending. Start with [the handoff runbook](docs/runbooks/PHASE_6.md). See
-[EVAL-001](docs/tasks/EVAL-001-QUALITY.md).** See
-[RAG-001](docs/tasks/RAG-001-KNOWLEDGE.md) and the
-[Phase 4 runbook](docs/runbooks/PHASE_4.md) for current checks and limitations.
-The [publication status](docs/runbooks/REPOSITORY_SETUP.md) records earlier Git/CI checkpoints.
+**Phases 0–6 are published with passing CI. Phase 7 runtime acceptance is complete
+for the bounded demo, with documentation/evidence awaiting manual publication.
+Phase 8 scalability/resilience remains pending.** Start with
+[the handoff runbook](docs/runbooks/PHASE_6.md), then read the
+[current runtime contract](docs/runbooks/PHASE_7.md) and
+[acceptance evidence](docs/tasks/RUN-001-RUNTIME.md).
+[Decisions](docs/adr/README.md) and [publication status](docs/runbooks/REPOSITORY_SETUP.md)
+distinguish accepted scope, historical checkpoints and current Git/CI results.
 
 ## Run the application foundation
 

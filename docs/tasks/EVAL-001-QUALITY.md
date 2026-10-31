@@ -1,6 +1,10 @@
 # EVAL-001: Quality, repetition and governed cache
 
-- Status: Completed for the approved bounded demo; final workflow 8 acceptance passed; Git publication pending
+Dated checkpoints below preserve historical results and pending work at that time.
+[Publication status](../runbooks/REPOSITORY_SETUP.md) and [RUN-001](RUN-001-RUNTIME.md)
+identify the current published checkpoint and active runtime.
+
+- Status: Completed for the approved bounded demo; final workflow 8 acceptance passed; published as `1a81be6` with passing CI
 - Owner: Telecom demo maintainer
 - Dependencies: RAG-001, MEM-001, scoped Atlas resources and provider access
 - Relevant ADRs: [ADR-0006](../adr/0006-evaluation-truth.md), [ADR-0009](../adr/0009-deterministic-responses.md), [ADR-0018](../adr/0018-engine-feature-precedence.md)
@@ -356,7 +360,7 @@ Remaining limitations are not hidden phase failures: labels and corpus are synth
 review is demo-owner review rather than an external SME study, source top-one
 metrics do not guarantee every top-three citation or generated answer is correct,
 load/capacity and dollar costs are not measured, and redacted tool arguments cannot
-be graded. These boundaries are explicit in each evidence report. Phase 6 load and
+be graded. These boundaries are explicit in each evidence report. Phase 8 load and
 resilience work has not started.
 
 Git publication is the user's next manual action. HEAD remains Phase 4 `1a52afc`;

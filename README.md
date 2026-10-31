@@ -5,8 +5,9 @@ MongoDB Agent Engine for managed platform capabilities, MongoDB Atlas, Voyage AI
 and Python managed by uv. The planned full application includes a supervisor,
 financial/technical/sales specialists, React chat/voice, and governed PDF retrieval.
 
-**Phases 0–3 are published. Phase 4 governed PDF knowledge is complete for the bounded
-demo; manual Git publication is pending.** See
+**Phases 0–4 are published with passing CI. Phase 5 bounded evaluation and calibrated
+candidate cache are complete and deployed; Git publication is pending. See
+[EVAL-001](docs/tasks/EVAL-001-QUALITY.md).** See
 [RAG-001](docs/tasks/RAG-001-KNOWLEDGE.md) and the
 [Phase 4 runbook](docs/runbooks/PHASE_4.md) for current checks and limitations.
 The [publication status](docs/runbooks/REPOSITORY_SETUP.md) records earlier Git/CI checkpoints.

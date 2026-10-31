@@ -1,0 +1,9 @@
+{
+  "source_report": "phase5-journey-cache-deployment.json",
+  "case_id": "mixed",
+  "session_id": "telco-94d4ebf64f243e290873a32e21a1a875e35135f5eef39c42",
+  "execution_id": "05182a77-906e-4671-aa0a-640eca9e4577",
+  "status": "error",
+  "error_code": "POOL_EXHAUSTED",
+  "resubmitted": false
+}

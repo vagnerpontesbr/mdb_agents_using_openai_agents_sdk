@@ -1,0 +1,561 @@
+{
+  "started_at": "2026-10-30T19:25:26.128812+00:00",
+  "status": "completed",
+  "dataset_sha256": "513541e4697d8b587f18af7a71444dd9ff5ffd7f1f7473b238862b051feac216",
+  "threshold": 0.99,
+  "embedding_profile": "voyage-context-4:1024:v1",
+  "rows": [
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "exact",
+      "category": "exact",
+      "equivalent": true,
+      "hit": true
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "paraphrase-0",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "paraphrase-1",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "paraphrase-2",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "contrast-0",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": true
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "contrast-1",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "contrast-2",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "contrast-3",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "contrast-4",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "contrast-5",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "contrast-6",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "provisioning",
+      "split": "development",
+      "case_id": "contrast-7",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "exact",
+      "category": "exact",
+      "equivalent": true,
+      "hit": true
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "paraphrase-0",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "paraphrase-1",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "paraphrase-2",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "contrast-0",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "contrast-1",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "contrast-2",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "contrast-3",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "contrast-4",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "contrast-5",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "contrast-6",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "optical",
+      "split": "development",
+      "case_id": "contrast-7",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "exact",
+      "category": "exact",
+      "equivalent": true,
+      "hit": true
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "paraphrase-0",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "paraphrase-1",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "paraphrase-2",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "contrast-0",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "contrast-1",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "contrast-2",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "contrast-3",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "contrast-4",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "contrast-5",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "contrast-6",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "billing",
+      "split": "held_out",
+      "case_id": "contrast-7",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "exact",
+      "category": "exact",
+      "equivalent": true,
+      "hit": true
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "paraphrase-0",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "paraphrase-1",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "paraphrase-2",
+      "category": "paraphrase",
+      "equivalent": true,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "contrast-0",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "contrast-1",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "contrast-2",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "contrast-3",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "contrast-4",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "contrast-5",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "contrast-6",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    },
+    {
+      "group": "wifi",
+      "split": "held_out",
+      "case_id": "contrast-7",
+      "category": "changed_operational_need",
+      "equivalent": false,
+      "hit": false
+    }
+  ],
+  "scope_checks": [
+    {
+      "group": "provisioning",
+      "field": "tenant_id",
+      "denied": true
+    },
+    {
+      "group": "provisioning",
+      "field": "readers",
+      "denied": true
+    },
+    {
+      "group": "provisioning",
+      "field": "product",
+      "denied": true
+    },
+    {
+      "group": "provisioning",
+      "field": "firmware_range",
+      "denied": true
+    },
+    {
+      "group": "provisioning",
+      "field": "region",
+      "denied": true
+    },
+    {
+      "group": "provisioning",
+      "field": "language",
+      "denied": true
+    },
+    {
+      "group": "optical",
+      "field": "tenant_id",
+      "denied": true
+    },
+    {
+      "group": "optical",
+      "field": "readers",
+      "denied": true
+    },
+    {
+      "group": "optical",
+      "field": "product",
+      "denied": true
+    },
+    {
+      "group": "optical",
+      "field": "firmware_range",
+      "denied": true
+    },
+    {
+      "group": "optical",
+      "field": "region",
+      "denied": true
+    },
+    {
+      "group": "optical",
+      "field": "language",
+      "denied": true
+    },
+    {
+      "group": "billing",
+      "field": "tenant_id",
+      "denied": true
+    },
+    {
+      "group": "billing",
+      "field": "readers",
+      "denied": true
+    },
+    {
+      "group": "billing",
+      "field": "product",
+      "denied": true
+    },
+    {
+      "group": "billing",
+      "field": "firmware_range",
+      "denied": true
+    },
+    {
+      "group": "billing",
+      "field": "region",
+      "denied": true
+    },
+    {
+      "group": "billing",
+      "field": "language",
+      "denied": true
+    },
+    {
+      "group": "wifi",
+      "field": "tenant_id",
+      "denied": true
+    },
+    {
+      "group": "wifi",
+      "field": "readers",
+      "denied": true
+    },
+    {
+      "group": "wifi",
+      "field": "product",
+      "denied": true
+    },
+    {
+      "group": "wifi",
+      "field": "firmware_range",
+      "denied": true
+    },
+    {
+      "group": "wifi",
+      "field": "region",
+      "denied": true
+    },
+    {
+      "group": "wifi",
+      "field": "language",
+      "denied": true
+    }
+  ],
+  "embedding_calls": 12,
+  "cleanup_completed": true,
+  "cost_usd": null,
+  "limits": [
+    "Developer-authored query-equivalence labels; not human-reviewed source relevance judgments",
+    "Real MongoDB cache index, scoped identity and production lookup implementation",
+    "Synthetic reference resolver; does not measure final answers or source recall",
+    "Scope overrides are supplied explicitly; query text is not a scope parser",
+    "Held-out partition fixed before calls, but same author and templates",
+    "No threshold tuning; no application source or Engine memory modifications"
+  ],
+  "index_name": "retrieval_cache_context_1024_v1",
+  "summaries": {
+    "development": {
+      "comparisons": 24,
+      "equivalent": 8,
+      "different": 16,
+      "true_hits": 2,
+      "false_hits": 1,
+      "missed_equivalents": 6,
+      "precision": 0.6666666666666666,
+      "equivalent_recall": 0.25
+    },
+    "held_out": {
+      "comparisons": 24,
+      "equivalent": 8,
+      "different": 16,
+      "true_hits": 2,
+      "false_hits": 0,
+      "missed_equivalents": 6,
+      "precision": 1.0,
+      "equivalent_recall": 0.25
+    }
+  },
+  "overall": {
+    "comparisons": 48,
+    "equivalent": 16,
+    "different": 32,
+    "true_hits": 4,
+    "false_hits": 1,
+    "missed_equivalents": 12,
+    "precision": 0.8,
+    "equivalent_recall": 0.25
+  },
+  "scope_denials": 24,
+  "completed_at": "2026-10-30T19:26:17.356254+00:00"
+}

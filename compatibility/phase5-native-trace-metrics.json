@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-10-30T18:01:33.512763+00:00",
+  "source_report": "phase5-journey-evaluation-live.json",
+  "rows": [
+    {
+      "case_id": "invoice",
+      "execution_id": "d139f108-7256-42e4-8d2e-2dfebc5b23cf",
+      "native_span_count": 0,
+      "tool_names": [],
+      "tool_selection_match": null,
+      "model_calls": 0,
+      "tokens": {
+        "input": null,
+        "output": null,
+        "total": null
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "invoice",
+      "execution_id": "fc86bda6-5514-4fc2-9787-7eef12dadf79",
+      "native_span_count": 0,
+      "tool_names": [],
+      "tool_selection_match": null,
+      "model_calls": 0,
+      "tokens": {
+        "input": null,
+        "output": null,
+        "total": null
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "invoice",
+      "execution_id": "6cb0aef8-df02-4354-b258-e5b10311368c",
+      "native_span_count": 0,
+      "tool_names": [],
+      "tool_selection_match": null,
+      "model_calls": 0,
+      "tokens": {
+        "input": null,
+        "output": null,
+        "total": null
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "sales",
+      "execution_id": "3a49472a-3e2c-43ed-84ab-9ca16e84e996",
+      "native_span_count": 0,
+      "tool_names": [],
+      "tool_selection_match": null,
+      "model_calls": 0,
+      "tokens": {
+        "input": null,
+        "output": null,
+        "total": null
+      },
+      "parameter_accuracy": null,
+      "argument_payloads_available": false
+    },
+    {
+      "case_id": "sales",
+      "execution_id": null,
+      "unavailable_reason": "no_execution_id"
+    }
+  ],
+  "cost_usd": null,
+  "limitations": [
+    "Token counts cover observed native invoke_llm spans, not unobserved memory/provider work",
+    "Tool arguments may be redacted; unavailable is not a successful parameter grade",
+    "Native Engine traces remain primary; no input/output/span payloads are copied"
+  ]
+}

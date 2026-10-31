@@ -1,7 +1,7 @@
 # RAG-001: Governed PDF knowledge
 
-- Status: Complete for the bounded demo; manual Git publication pending
-- Scope: Phase 4 only; Phase 5 has not started
+- Status: Complete for the bounded demo; published as `1a52afc`, CI passed
+- Scope: Phase 4 acceptance; subsequent Phase 5 work is tracked in [EVAL-001](EVAL-001-QUALITY.md)
 - Decision: [ADR-0026](../adr/0026-governed-knowledge-publication.md)
 - Contracts: [governance](../DOCUMENT_GOVERNANCE.md), [runbook](../runbooks/PHASE_4.md)
 
@@ -60,12 +60,11 @@ or resilience guarantee. No bypass of Engine approval was used.
 The local application was restarted on port 53185 with both knowledge and journey
 flags enabled. A real HTTP administrator login confirmed all three capabilities
 (journey, voice and knowledge) and listed the replacement version. Audio listening
-was not repeated in this phase. All source changes remain local; the specifically recorded Atlas
-resources and Engine deployment are remote. No commit or push was performed.
-Stop here for the user's manual commit; do not start Phase 5.
+was not repeated in this phase. The Phase 4 source was subsequently committed and pushed by the user as `1a52afc`; the specifically recorded Atlas
+resources and Engine deployment are remote. The assistant performed no Git writes. See [publication status](../runbooks/REPOSITORY_SETUP.md) for verification.
 
 ## Limits
 
 This proves a bounded synthetic workflow, not corpus ranking quality, production
 capacity or OCR fidelity for arbitrary documents. See the runbook for PDF, scope,
-queue, retention and retry limits. Do not start Phase 5 at this checkpoint.
+queue, retention and retry limits. Later quality work is tracked separately in EVAL-001.

@@ -12,6 +12,7 @@ from .document_review import DocumentReview
 from .identity import IdentityService
 from .ingestion import MongoIngestion
 from .journey import EngineAPI
+from .knowledge_cache import MongoCandidateCache
 from .knowledge_mongo import MongoKnowledgeReader
 from .knowledge_publication import MongoKnowledgePublisher
 from .knowledge_voyage import VoyageKnowledge
@@ -22,11 +23,14 @@ def configure(
 ) -> tuple[CurationService, list[MongoClient[dict[str, Any]]]]:
     clients: list[MongoClient[dict[str, Any]]] = []
     try:
-        for variable, user in (
+        identities = [
             ("INGESTION_MONGODB_URI", "telecom_ingestion_worker"),
             ("KNOWLEDGE_PUBLISHER_URI", "telecom_knowledge_publisher"),
             ("KNOWLEDGE_READER_URI", "telecom_knowledge_reader"),
-        ):
+        ]
+        if os.environ.get("KNOWLEDGE_CACHE_URI"):
+            identities.append(("KNOWLEDGE_CACHE_URI", "telecom_knowledge_cache"))
+        for variable, user in identities:
             uri = os.environ[variable]
             Settings(mongodb_uri=uri)
             if urlsplit(uri).username != user:
@@ -42,13 +46,17 @@ def configure(
                     appname="telecom-" + user,
                 )
             )
+        reader = MongoKnowledgeReader(clients[2].telecom_demo_knowledge)
+        cache = MongoCandidateCache(clients[3].telecom_demo_knowledge, reader) if (
+            len(clients) == 4) else None
         return CurationService(
             identity,
             MongoIngestion(clients[0].telecom_demo_ingestion),
             MongoKnowledgePublisher(clients[1].telecom_demo_knowledge),
-            MongoKnowledgeReader(clients[2].telecom_demo_knowledge),
+            reader,
             DocumentReview(identity, EngineAPI()),
             VoyageKnowledge(os.environ["VOYAGE_API_KEY"], os.environ["VOYAGE_BASE_URL"]),
+            cache,
         ), clients
     except Exception:
         for client in clients:

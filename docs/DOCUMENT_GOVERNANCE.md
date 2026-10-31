@@ -7,6 +7,10 @@ defines the owner and publication boundary. The synthetic quality demonstration
 below is not a measured retrieval evaluation. Scheduled reassessment, cached answers
 and the full diagnostic UI below remain planned; request-time eligibility is enforced.
 
+Phase 5 adds a bounded candidate-reference cache with authoritative revalidation;
+[EVAL-001](tasks/EVAL-001-QUALITY.md) records measured synthetic retrieval evidence
+and remaining quality gates. Generated answers are not cached.
+
 ## Ownership and metadata
 
 Store governance on an immutable document version, with inherited eligibility metadata on chunks. Preserve the authoritative record and recheck it before answering because search indexes and caches can lag. Dates are UTC instants; source creation is never inferred from upload time.

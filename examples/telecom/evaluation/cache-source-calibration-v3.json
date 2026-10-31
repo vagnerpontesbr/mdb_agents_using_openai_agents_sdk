@@ -1,0 +1,449 @@
+{
+  "version": "cache-source-calibration-v3",
+  "labels": "Developer-authored synthetic exact equipment/alarm applicability; not independent SME validation",
+  "sources": [
+    {
+      "id": "X1-E17",
+      "text": "Synthetic evaluation procedure X1-E17. Applies only to FiberBox X1, firmware 2.x, alarm E17. Confirm the device and alarm identifiers. Check the provisioning incident for queue X1-E17. Link or open a support ticket in queue X1-E17. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X1-E18",
+      "text": "Synthetic evaluation procedure X1-E18. Applies only to FiberBox X1, firmware 2.x, alarm E18. Confirm the device and alarm identifiers. Check the provisioning incident for queue X1-E18. Link or open a support ticket in queue X1-E18. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X2-E17",
+      "text": "Synthetic evaluation procedure X2-E17. Applies only to FiberBox X2, firmware 2.x, alarm E17. Confirm the device and alarm identifiers. Check the provisioning incident for queue X2-E17. Link or open a support ticket in queue X2-E17. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X2-E18",
+      "text": "Synthetic evaluation procedure X2-E18. Applies only to FiberBox X2, firmware 2.x, alarm E18. Confirm the device and alarm identifiers. Check the provisioning incident for queue X2-E18. Link or open a support ticket in queue X2-E18. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X3-E17",
+      "text": "Synthetic evaluation procedure X3-E17. Applies only to FiberBox X3, firmware 2.x, alarm E17. Confirm the device and alarm identifiers. Check the provisioning incident for queue X3-E17. Link or open a support ticket in queue X3-E17. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X3-E18",
+      "text": "Synthetic evaluation procedure X3-E18. Applies only to FiberBox X3, firmware 2.x, alarm E18. Confirm the device and alarm identifiers. Check the provisioning incident for queue X3-E18. Link or open a support ticket in queue X3-E18. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X4-E17",
+      "text": "Synthetic evaluation procedure X4-E17. Applies only to FiberBox X4, firmware 2.x, alarm E17. Confirm the device and alarm identifiers. Check the provisioning incident for queue X4-E17. Link or open a support ticket in queue X4-E17. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X4-E18",
+      "text": "Synthetic evaluation procedure X4-E18. Applies only to FiberBox X4, firmware 2.x, alarm E18. Confirm the device and alarm identifiers. Check the provisioning incident for queue X4-E18. Link or open a support ticket in queue X4-E18. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X5-E17",
+      "text": "Synthetic evaluation procedure X5-E17. Applies only to FiberBox X5, firmware 2.x, alarm E17. Confirm the device and alarm identifiers. Check the provisioning incident for queue X5-E17. Link or open a support ticket in queue X5-E17. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X5-E18",
+      "text": "Synthetic evaluation procedure X5-E18. Applies only to FiberBox X5, firmware 2.x, alarm E18. Confirm the device and alarm identifiers. Check the provisioning incident for queue X5-E18. Link or open a support ticket in queue X5-E18. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X6-E17",
+      "text": "Synthetic evaluation procedure X6-E17. Applies only to FiberBox X6, firmware 2.x, alarm E17. Confirm the device and alarm identifiers. Check the provisioning incident for queue X6-E17. Link or open a support ticket in queue X6-E17. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X6-E18",
+      "text": "Synthetic evaluation procedure X6-E18. Applies only to FiberBox X6, firmware 2.x, alarm E18. Confirm the device and alarm identifiers. Check the provisioning incident for queue X6-E18. Link or open a support ticket in queue X6-E18. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X7-E17",
+      "text": "Synthetic evaluation procedure X7-E17. Applies only to FiberBox X7, firmware 2.x, alarm E17. Confirm the device and alarm identifiers. Check the provisioning incident for queue X7-E17. Link or open a support ticket in queue X7-E17. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X7-E18",
+      "text": "Synthetic evaluation procedure X7-E18. Applies only to FiberBox X7, firmware 2.x, alarm E18. Confirm the device and alarm identifiers. Check the provisioning incident for queue X7-E18. Link or open a support ticket in queue X7-E18. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X8-E17",
+      "text": "Synthetic evaluation procedure X8-E17. Applies only to FiberBox X8, firmware 2.x, alarm E17. Confirm the device and alarm identifiers. Check the provisioning incident for queue X8-E17. Link or open a support ticket in queue X8-E17. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "X8-E18",
+      "text": "Synthetic evaluation procedure X8-E18. Applies only to FiberBox X8, firmware 2.x, alarm E18. Confirm the device and alarm identifiers. Check the provisioning incident for queue X8-E18. Link or open a support ticket in queue X8-E18. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M1-E23",
+      "text": "Synthetic evaluation procedure M1-E23. Applies only to MeshBox M1, firmware 2.x, alarm E23. Confirm the device and alarm identifiers. Check the provisioning incident for queue M1-E23. Link or open a support ticket in queue M1-E23. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M1-E24",
+      "text": "Synthetic evaluation procedure M1-E24. Applies only to MeshBox M1, firmware 2.x, alarm E24. Confirm the device and alarm identifiers. Check the provisioning incident for queue M1-E24. Link or open a support ticket in queue M1-E24. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M2-E23",
+      "text": "Synthetic evaluation procedure M2-E23. Applies only to MeshBox M2, firmware 2.x, alarm E23. Confirm the device and alarm identifiers. Check the provisioning incident for queue M2-E23. Link or open a support ticket in queue M2-E23. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M2-E24",
+      "text": "Synthetic evaluation procedure M2-E24. Applies only to MeshBox M2, firmware 2.x, alarm E24. Confirm the device and alarm identifiers. Check the provisioning incident for queue M2-E24. Link or open a support ticket in queue M2-E24. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M3-E23",
+      "text": "Synthetic evaluation procedure M3-E23. Applies only to MeshBox M3, firmware 2.x, alarm E23. Confirm the device and alarm identifiers. Check the provisioning incident for queue M3-E23. Link or open a support ticket in queue M3-E23. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M3-E24",
+      "text": "Synthetic evaluation procedure M3-E24. Applies only to MeshBox M3, firmware 2.x, alarm E24. Confirm the device and alarm identifiers. Check the provisioning incident for queue M3-E24. Link or open a support ticket in queue M3-E24. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M4-E23",
+      "text": "Synthetic evaluation procedure M4-E23. Applies only to MeshBox M4, firmware 2.x, alarm E23. Confirm the device and alarm identifiers. Check the provisioning incident for queue M4-E23. Link or open a support ticket in queue M4-E23. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M4-E24",
+      "text": "Synthetic evaluation procedure M4-E24. Applies only to MeshBox M4, firmware 2.x, alarm E24. Confirm the device and alarm identifiers. Check the provisioning incident for queue M4-E24. Link or open a support ticket in queue M4-E24. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M5-E23",
+      "text": "Synthetic evaluation procedure M5-E23. Applies only to MeshBox M5, firmware 2.x, alarm E23. Confirm the device and alarm identifiers. Check the provisioning incident for queue M5-E23. Link or open a support ticket in queue M5-E23. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M5-E24",
+      "text": "Synthetic evaluation procedure M5-E24. Applies only to MeshBox M5, firmware 2.x, alarm E24. Confirm the device and alarm identifiers. Check the provisioning incident for queue M5-E24. Link or open a support ticket in queue M5-E24. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M6-E23",
+      "text": "Synthetic evaluation procedure M6-E23. Applies only to MeshBox M6, firmware 2.x, alarm E23. Confirm the device and alarm identifiers. Check the provisioning incident for queue M6-E23. Link or open a support ticket in queue M6-E23. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M6-E24",
+      "text": "Synthetic evaluation procedure M6-E24. Applies only to MeshBox M6, firmware 2.x, alarm E24. Confirm the device and alarm identifiers. Check the provisioning incident for queue M6-E24. Link or open a support ticket in queue M6-E24. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M7-E23",
+      "text": "Synthetic evaluation procedure M7-E23. Applies only to MeshBox M7, firmware 2.x, alarm E23. Confirm the device and alarm identifiers. Check the provisioning incident for queue M7-E23. Link or open a support ticket in queue M7-E23. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M7-E24",
+      "text": "Synthetic evaluation procedure M7-E24. Applies only to MeshBox M7, firmware 2.x, alarm E24. Confirm the device and alarm identifiers. Check the provisioning incident for queue M7-E24. Link or open a support ticket in queue M7-E24. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M8-E23",
+      "text": "Synthetic evaluation procedure M8-E23. Applies only to MeshBox M8, firmware 2.x, alarm E23. Confirm the device and alarm identifiers. Check the provisioning incident for queue M8-E23. Link or open a support ticket in queue M8-E23. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "M8-E24",
+      "text": "Synthetic evaluation procedure M8-E24. Applies only to MeshBox M8, firmware 2.x, alarm E24. Confirm the device and alarm identifiers. Check the provisioning incident for queue M8-E24. Link or open a support ticket in queue M8-E24. Do not apply this source to a different device or alarm. Do not perform a legacy reset or promise a restoration time."
+    },
+    {
+      "id": "billing-1",
+      "text": "Synthetic billing evaluation source 1. For account category B1, disputed invoice charges must be reviewed by billing queue B1. Verify the invoice line and route the dispute; never promise a refund before review."
+    },
+    {
+      "id": "billing-2",
+      "text": "Synthetic billing evaluation source 2. For account category B2, disputed invoice charges must be reviewed by billing queue B2. Verify the invoice line and route the dispute; never promise a refund before review."
+    },
+    {
+      "id": "billing-3",
+      "text": "Synthetic billing evaluation source 3. For account category B3, disputed invoice charges must be reviewed by billing queue B3. Verify the invoice line and route the dispute; never promise a refund before review."
+    },
+    {
+      "id": "billing-4",
+      "text": "Synthetic billing evaluation source 4. For account category B4, disputed invoice charges must be reviewed by billing queue B4. Verify the invoice line and route the dispute; never promise a refund before review."
+    },
+    {
+      "id": "wifi-1",
+      "text": "Synthetic wifi evaluation source 1. For Wi-Fi router model W1, indoor coverage improves with central placement away from metal. Route unresolved coverage problems to wireless queue W1. This is not a provisioning alarm procedure."
+    },
+    {
+      "id": "wifi-2",
+      "text": "Synthetic wifi evaluation source 2. For Wi-Fi router model W2, indoor coverage improves with central placement away from metal. Route unresolved coverage problems to wireless queue W2. This is not a provisioning alarm procedure."
+    },
+    {
+      "id": "wifi-3",
+      "text": "Synthetic wifi evaluation source 3. For Wi-Fi router model W3, indoor coverage improves with central placement away from metal. Route unresolved coverage problems to wireless queue W3. This is not a provisioning alarm procedure."
+    },
+    {
+      "id": "wifi-4",
+      "text": "Synthetic wifi evaluation source 4. For Wi-Fi router model W4, indoor coverage improves with central placement away from metal. Route unresolved coverage problems to wireless queue W4. This is not a provisioning alarm procedure."
+    }
+  ],
+  "groups": [
+    {
+      "id": "development-0",
+      "anchor": "How should I resolve E17 on FiberBox X1 firmware 2.x?",
+      "cases": [
+        {
+          "id": "exact",
+          "query": "How should I resolve E17 on FiberBox X1 firmware 2.x?",
+          "relevant_sources": [
+            "X1-E17"
+          ]
+        },
+        {
+          "id": "paraphrase",
+          "query": "What steps resolve error E17 on my FiberBox X1 running firmware 2.x?",
+          "relevant_sources": [
+            "X1-E17"
+          ]
+        },
+        {
+          "id": "same-source-new-question",
+          "query": "Which support queue handles E17 for FiberBox X1 firmware 2.x?",
+          "relevant_sources": [
+            "X1-E17"
+          ]
+        },
+        {
+          "id": "changed-product",
+          "query": "How should I resolve E17 on FiberBox X2 firmware 2.x?",
+          "relevant_sources": [
+            "X2-E17"
+          ]
+        },
+        {
+          "id": "distant-product",
+          "query": "How should I resolve E17 on FiberBox X8 firmware 2.x?",
+          "relevant_sources": [
+            "X8-E17"
+          ]
+        },
+        {
+          "id": "changed-alarm",
+          "query": "How should I resolve E18 on FiberBox X1 firmware 2.x?",
+          "relevant_sources": [
+            "X1-E18"
+          ]
+        },
+        {
+          "id": "paraphrase-2",
+          "query": "My FiberBox X1 with firmware 2.x reports E17. Which troubleshooting steps should I follow?",
+          "relevant_sources": [
+            "X1-E17"
+          ]
+        },
+        {
+          "id": "paraphrase-3",
+          "query": "For FiberBox X1 on firmware 2.x, what is the procedure to address alarm E17?",
+          "relevant_sources": [
+            "X1-E17"
+          ]
+        },
+        {
+          "id": "billing-negative",
+          "query": "How can I dispute an incorrect invoice charge for account category B1?",
+          "relevant_sources": [
+            "billing-1"
+          ]
+        },
+        {
+          "id": "wifi-negative",
+          "query": "Where should I place my Wi-Fi W1 router to improve indoor coverage?",
+          "relevant_sources": [
+            "wifi-1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "development-1",
+      "anchor": "What is the support procedure for E23 on MeshBox M3 firmware 2.x?",
+      "cases": [
+        {
+          "id": "exact",
+          "query": "What is the support procedure for E23 on MeshBox M3 firmware 2.x?",
+          "relevant_sources": [
+            "M3-E23"
+          ]
+        },
+        {
+          "id": "paraphrase",
+          "query": "My MeshBox M3 running firmware 2.x reports alarm E23. How should support handle it?",
+          "relevant_sources": [
+            "M3-E23"
+          ]
+        },
+        {
+          "id": "paraphrase-2",
+          "query": "MeshBox M3, firmware 2.x: what troubleshooting process applies to E23?",
+          "relevant_sources": [
+            "M3-E23"
+          ]
+        },
+        {
+          "id": "paraphrase-3",
+          "query": "How do I get help for an E23 alarm affecting MeshBox M3 on version 2.x?",
+          "relevant_sources": [
+            "M3-E23"
+          ]
+        },
+        {
+          "id": "same-source-new-question",
+          "query": "Which incident queue should receive an E23 ticket for MeshBox M3 firmware 2.x?",
+          "relevant_sources": [
+            "M3-E23"
+          ]
+        },
+        {
+          "id": "changed-product",
+          "query": "What is the support procedure for E23 on MeshBox M4 firmware 2.x?",
+          "relevant_sources": [
+            "M4-E23"
+          ]
+        },
+        {
+          "id": "distant-product",
+          "query": "What is the support procedure for E23 on MeshBox M8 firmware 2.x?",
+          "relevant_sources": [
+            "M8-E23"
+          ]
+        },
+        {
+          "id": "changed-alarm",
+          "query": "What is the support procedure for E24 on MeshBox M3 firmware 2.x?",
+          "relevant_sources": [
+            "M3-E24"
+          ]
+        },
+        {
+          "id": "billing-negative",
+          "query": "How can I dispute an incorrect invoice charge for account category B1?",
+          "relevant_sources": [
+            "billing-1"
+          ]
+        },
+        {
+          "id": "wifi-negative",
+          "query": "Where should I place my Wi-Fi W1 router to improve indoor coverage?",
+          "relevant_sources": [
+            "wifi-1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "held_out-0",
+      "anchor": "Please explain how support should handle E18 for FiberBox X6 running firmware 2.x.",
+      "cases": [
+        {
+          "id": "exact",
+          "query": "Please explain how support should handle E18 for FiberBox X6 running firmware 2.x.",
+          "relevant_sources": [
+            "X6-E18"
+          ]
+        },
+        {
+          "id": "paraphrase",
+          "query": "My FiberBox X6 has error E18 on firmware 2.x. What steps should support follow?",
+          "relevant_sources": [
+            "X6-E18"
+          ]
+        },
+        {
+          "id": "paraphrase-2",
+          "query": "FiberBox X6, version 2.x: how do I troubleshoot alarm E18?",
+          "relevant_sources": [
+            "X6-E18"
+          ]
+        },
+        {
+          "id": "paraphrase-3",
+          "query": "What procedure applies when E18 appears on a FiberBox X6 using firmware 2.x?",
+          "relevant_sources": [
+            "X6-E18"
+          ]
+        },
+        {
+          "id": "same-source-new-question",
+          "query": "Which queue handles an incident for FiberBox X6, firmware 2.x, alarm E18?",
+          "relevant_sources": [
+            "X6-E18"
+          ]
+        },
+        {
+          "id": "billing-negative",
+          "query": "Which team reviews a wrong fee on a B3 category account invoice?",
+          "relevant_sources": [
+            "billing-3"
+          ]
+        },
+        {
+          "id": "wifi-negative",
+          "query": "How can I improve indoor wireless coverage with a model W4 router?",
+          "relevant_sources": [
+            "wifi-4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "held_out-1",
+      "anchor": "Please explain how support should handle E24 for MeshBox M7 running firmware 2.x.",
+      "cases": [
+        {
+          "id": "exact",
+          "query": "Please explain how support should handle E24 for MeshBox M7 running firmware 2.x.",
+          "relevant_sources": [
+            "M7-E24"
+          ]
+        },
+        {
+          "id": "paraphrase",
+          "query": "My MeshBox M7 has error E24 on firmware 2.x. What steps should support follow?",
+          "relevant_sources": [
+            "M7-E24"
+          ]
+        },
+        {
+          "id": "paraphrase-2",
+          "query": "MeshBox M7, version 2.x: how do I troubleshoot alarm E24?",
+          "relevant_sources": [
+            "M7-E24"
+          ]
+        },
+        {
+          "id": "paraphrase-3",
+          "query": "What procedure applies when E24 appears on a MeshBox M7 using firmware 2.x?",
+          "relevant_sources": [
+            "M7-E24"
+          ]
+        },
+        {
+          "id": "same-source-new-question",
+          "query": "Which queue handles an incident for MeshBox M7, firmware 2.x, alarm E24?",
+          "relevant_sources": [
+            "M7-E24"
+          ]
+        },
+        {
+          "id": "billing-negative",
+          "query": "Which team reviews a wrong fee on a B3 category account invoice?",
+          "relevant_sources": [
+            "billing-3"
+          ]
+        },
+        {
+          "id": "wifi-negative",
+          "query": "How can I improve indoor wireless coverage with a model W4 router?",
+          "relevant_sources": [
+            "wifi-4"
+          ]
+        }
+      ]
+    }
+  ],
+  "calibration_policy": {
+    "thresholds": [
+      0.99,
+      0.98,
+      0.97,
+      0.96,
+      0.95,
+      0.94,
+      0.93,
+      0.92,
+      0.91,
+      0.9,
+      0.89,
+      0.88
+    ],
+    "minimum_paraphrase_hit_rate": 0.5,
+    "minimum_per_group": true,
+    "selection": "Highest threshold with at least 50% paraphrase reuse in EACH development anchor group, no relevant-source or top-one loss, all effective top-one correct. Prior v2 validation is explicitly development now; new held-out queries never select thresholds."
+  }
+}

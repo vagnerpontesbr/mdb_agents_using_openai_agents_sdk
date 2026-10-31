@@ -18,7 +18,7 @@ from .ingestion import MongoIngestion
 from .knowledge import Scope, Version, assess, utc_now
 from .knowledge_mongo import MongoKnowledgeReader
 from .knowledge_publication import MongoKnowledgePublisher, PublicationConflict
-from .knowledge_search import retrieve
+from .knowledge_search import CandidateCache, retrieve
 from .knowledge_voyage import VoyageKnowledge
 
 TENANT = "synthetic-telecom"
@@ -50,9 +50,11 @@ class CurationService:
         reader: MongoKnowledgeReader,
         review: DocumentReview,
         voyage: VoyageKnowledge,
+        cache: CandidateCache | None = None,
     ) -> None:
         self.identity, self.ingestion, self.publisher = identity, ingestion, publisher
         self.reader, self.review, self.voyage = reader, review, voyage
+        self.cache = cache
         self._worker: subprocess.Popen[bytes] | None = None
         self._worker_lock = threading.Lock()
 
@@ -182,7 +184,8 @@ class CurationService:
     def search(self, token: str, query: str) -> str:
         self.identity.principal(token)
         response = retrieve(
-            self.reader, self.publisher, self.voyage, SCOPE, query, self.voyage.embed_query(query)
+            self.reader, self.publisher, self.voyage, SCOPE, query, self.voyage.embed_query(query),
+            cache=self.cache,
         )
         self.identity.principal(token)
         return response

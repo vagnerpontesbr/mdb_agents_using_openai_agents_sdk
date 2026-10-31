@@ -41,3 +41,5 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0025](0025-phase-two-journey.md) | Bounded SDK supervisor/specialists, native review and chained browser voice | Bounded hosted and browser acceptance passed |
 
 | [ADR-0026](0026-governed-knowledge-publication.md) | Owner-authorized native review and domain publication of governed PDFs | Selected; bounded Phase 4 evidence recorded |
+
+| [ADR-0027](0027-bounded-knowledge-evaluation-cache.md) | Bounded contextual candidate cache and isolated quality evaluation | Bounded Phase 5 acceptance passed |

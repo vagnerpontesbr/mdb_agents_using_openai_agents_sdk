@@ -103,3 +103,23 @@ minute boundary and verifies successful login. Application rate limits and the
 shared identity fixture remain unchanged. Seven HTTP tests and Ruff passed;
 new remote CI requires the user's manual commit/push. Phase 4 work in progress is
 separate from this correction.
+
+## Verified Phase 4 publication
+
+On 2026-10-30, local HEAD and the remote `codex/phase-2-journey` branch both
+resolved to `1a52afce2815be3530d77cb7a714001f412ad206`
+(`feat: complete phase 4 governed PDF knowledge`). The working tree was clean
+before Phase 5 edits. Both repository and application jobs passed in
+[run 41062532149](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41062532149).
+The user performed publication; no merge is claimed. The preceding deterministic
+login test correction `b9e641e` also passed CI in run `41040063310`.
+
+## Phase 5 completion, Git publication pending
+
+On 2026-10-31, bounded Phase 5 acceptance passed in
+[EVAL-001](../tasks/EVAL-001-QUALITY.md). Workflow 8 is deployed as `deploy-af009ed4`
+from build `bld_01M691YPABN60FEKHW6E1KZGB5`; eight final hosted invocations passed.
+Local validation passed 128 backend tests, 86 hosted contracts, Ruff, mypy and
+repository checks. HEAD is still `1a52afc` on `codex/phase-2-journey`; no Phase 5
+commit, push, PR or CI run is claimed. The user performs Git publication manually.
+After publication, verify the new remote commit and CI before starting Phase 6.

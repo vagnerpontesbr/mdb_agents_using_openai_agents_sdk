@@ -56,7 +56,7 @@ def main():
             content = content.replace("telco_simulate_plan_change]",
                 "telco_simulate_plan_change, telco_publish_knowledge, telco_search_knowledge, telco_request_ingestion]")
             content = content.replace("secrets: [OPENAI_API_KEY]",
-                "secrets: [OPENAI_API_KEY, KNOWLEDGE_READER_URI, INGESTION_MONGODB_URI, KNOWLEDGE_VOYAGE_KEY, KNOWLEDGE_VOYAGE_BASE]")
+                "secrets: [OPENAI_API_KEY, KNOWLEDGE_READER_URI, INGESTION_MONGODB_URI, KNOWLEDGE_VOYAGE_KEY, KNOWLEDGE_VOYAGE_BASE, KNOWLEDGE_CACHE_URI]")
             content += ("        - fqdn: ai.mongodb.com\n          ports: [443]\n"
                         "        - fqdn: openai-sdk.qrmdk.mongodb.net\n          ports: [27017]\n"
                         "        - fqdn: openai-sdk-shard-00-00.qrmdk.mongodb.net\n          ports: [27017]\n"
@@ -68,7 +68,7 @@ def main():
             (domain / "__init__.py").write_text('"""Snapshot of the tested knowledge-domain source."""\n')
             root = Path(__file__).resolve().parents[1]
             names = ("knowledge", "knowledge_search", "knowledge_mongo", "knowledge_voyage",
-                     "knowledge_authority", "ingestion", "ingestion_worker")
+                     "knowledge_authority", "knowledge_cache", "ingestion", "ingestion_worker")
             for name in names:
                 shutil.copyfile(root / f"src/telecom_app/{name}.py", domain / f"{name}.py")
         manifest.write_text(content)

@@ -1,0 +1,323 @@
+{
+  "version": "semantic-cache-v2",
+  "labels": "Developer-authored query-equivalence labels; not human-reviewed source relevance judgments",
+  "threshold_policy": "Fixed production 0.99; no tuning on either partition",
+  "groups": [
+    {
+      "id": "provisioning",
+      "split": "development",
+      "anchor": "How should I resolve E17 on FiberBox X1 firmware 2.x?",
+      "cases": [
+        {
+          "id": "exact",
+          "query": "How should I resolve E17 on FiberBox X1 firmware 2.x?",
+          "equivalent": true,
+          "category": "exact"
+        },
+        {
+          "id": "paraphrase-0",
+          "query": "What steps resolve E17 on the FiberBox X1 with firmware 2.x?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "paraphrase-1",
+          "query": "My FiberBox X1 runs firmware 2.x and shows E17. What should I do?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "paraphrase-2",
+          "query": "How do I troubleshoot error E17 for FiberBox X1 on firmware 2.x?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "contrast-0",
+          "query": "How should I resolve E17 on FiberBox X2 firmware 2.x?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-1",
+          "query": "How should I resolve E17 on FiberBox X1 firmware 1.x?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-2",
+          "query": "How should I resolve E18 on FiberBox X1 firmware 2.x?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-3",
+          "query": "Can I ignore E17 on FiberBox X1 firmware 2.x?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-4",
+          "query": "Will E17 on FiberBox X1 firmware 2.x resolve in five minutes?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-5",
+          "query": "How do I enable legacy_profile_reset on FiberBox X1 firmware 2.x?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-6",
+          "query": "How do I prevent E17 on FiberBox X1 firmware 2.x before activation?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-7",
+          "query": "What caused E17 on FiberBox X1 firmware 2.x yesterday?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        }
+      ]
+    },
+    {
+      "id": "optical",
+      "split": "development",
+      "anchor": "What should I do if the red optical light remains on?",
+      "cases": [
+        {
+          "id": "exact",
+          "query": "What should I do if the red optical light remains on?",
+          "equivalent": true,
+          "category": "exact"
+        },
+        {
+          "id": "paraphrase-0",
+          "query": "The optical indicator stays red. What steps should I take?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "paraphrase-1",
+          "query": "How can I troubleshoot a persistently red optical light?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "paraphrase-2",
+          "query": "My optical light will not stop showing red. What should I do?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "contrast-0",
+          "query": "What should I do if the green optical light remains on?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-1",
+          "query": "What should I do if the red power light remains on?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-2",
+          "query": "What should I do if the red optical light turns off?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-3",
+          "query": "What should I do if the red optical light blinks intermittently?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-4",
+          "query": "Can I look directly into the fiber to check the red optical light?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-5",
+          "query": "Can I factory reset the router when the red optical light remains on?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-6",
+          "query": "How much does repairing the red optical light cost?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-7",
+          "query": "Can I ignore the red optical light if the internet still works?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        }
+      ]
+    },
+    {
+      "id": "billing",
+      "split": "held_out",
+      "anchor": "How can I dispute an incorrect charge on my monthly invoice?",
+      "cases": [
+        {
+          "id": "exact",
+          "query": "How can I dispute an incorrect charge on my monthly invoice?",
+          "equivalent": true,
+          "category": "exact"
+        },
+        {
+          "id": "paraphrase-0",
+          "query": "I see a wrong fee on my monthly bill. How do I dispute it?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "paraphrase-1",
+          "query": "What is the process for contesting an incorrect monthly invoice charge?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "paraphrase-2",
+          "query": "How do I challenge a billing error on my monthly invoice?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "contrast-0",
+          "query": "How can I pay an incorrect charge on my monthly invoice?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-1",
+          "query": "How can I dispute a correct charge on my monthly invoice?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-2",
+          "query": "How can I delete an incorrect charge from another customer invoice?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-3",
+          "query": "How can I refund an incorrect charge on my monthly invoice immediately?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-4",
+          "query": "How can I cancel the service because of my monthly invoice?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-5",
+          "query": "How can I change my monthly invoice due date?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-6",
+          "query": "How can I dispute an incorrect charge on my annual tax return?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-7",
+          "query": "Will disputing an incorrect charge automatically waive all payments?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        }
+      ]
+    },
+    {
+      "id": "wifi",
+      "split": "held_out",
+      "anchor": "Where should I place my Wi-Fi router for better indoor coverage?",
+      "cases": [
+        {
+          "id": "exact",
+          "query": "Where should I place my Wi-Fi router for better indoor coverage?",
+          "equivalent": true,
+          "category": "exact"
+        },
+        {
+          "id": "paraphrase-0",
+          "query": "What is the best indoor router location to improve Wi-Fi coverage?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "paraphrase-1",
+          "query": "How should I position my Wi-Fi router for stronger coverage indoors?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "paraphrase-2",
+          "query": "Where in my home should the wireless router sit for better coverage?",
+          "equivalent": true,
+          "category": "paraphrase"
+        },
+        {
+          "id": "contrast-0",
+          "query": "Where should I place my Wi-Fi router for better outdoor coverage?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-1",
+          "query": "Where should I place my Wi-Fi repeater for better indoor coverage?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-2",
+          "query": "Where should I place my Wi-Fi router to reduce indoor coverage?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-3",
+          "query": "How do I change my Wi-Fi password for better indoor security?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-4",
+          "query": "Can I put my Wi-Fi router inside a metal cabinet for better indoor coverage?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-5",
+          "query": "Will moving my Wi-Fi router resolve a provisioning incident?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-6",
+          "query": "Which router should I buy for better indoor coverage?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        },
+        {
+          "id": "contrast-7",
+          "query": "How do I disable Wi-Fi on my router indoors?",
+          "equivalent": false,
+          "category": "changed_operational_need"
+        }
+      ]
+    }
+  ]
+}

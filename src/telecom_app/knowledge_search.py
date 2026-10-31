@@ -87,12 +87,31 @@ class Reranker(Protocol):
     def rank(self, query: str, texts: list[str]) -> list[int]: ...
 
 
+class CandidateCache(Protocol):
+    def lookup(self, scope: Scope, query: str, vector: Sequence[float],
+               now: datetime) -> list[Candidate] | None: ...
+    def store(self, scope: Scope, query: str, vector: Sequence[float],
+              candidates: list[Candidate], now: datetime) -> None: ...
+
+
 def retrieve(reader: KnowledgeReader, authority: Authority, reranker: Reranker,
              scope: Scope, query: str, vector: Sequence[float],
-             clock: Callable[[], datetime] = utc_now, *, max_response_chars: int = 7500) -> str:
+             clock: Callable[[], datetime] = utc_now, *, max_response_chars: int = 7500,
+             cache: CandidateCache | None = None) -> str:
     if type(max_response_chars) is not int or not 256 <= max_response_chars <= 7500:
         raise ValueError("Invalid citation response budget")
-    candidates = reader.search(hybrid_pipeline(scope, query, vector, clock()))
+    pipeline = hybrid_pipeline(scope, query, vector, clock())
+    cached = None
+    if cache is not None:
+        try:
+            cached = cache.lookup(scope, query, vector, clock())
+        except Exception:
+            # Optional optimization failure must retain the governed retrieval path.
+            cached = None
+    if cached and (len(cached) > 20 or len({(c.version_key, c.chunk_id, c.revision)
+                                          for c in cached}) != len(cached)):
+        cached = None
+    candidates = cached if cached else reader.search(pipeline)
     if len(candidates) > 20 or len({(c.version_key, c.chunk_id, c.revision)
                                    for c in candidates}) != len(candidates):
         raise ValueError("Unbounded or duplicate search result")
@@ -110,6 +129,19 @@ def retrieve(reader: KnowledgeReader, authority: Authority, reranker: Reranker,
         return version
 
     valid = [candidate for candidate in candidates if verified(candidate)]
+    if cached and len(valid) != len(candidates):
+        # Any stale cached source discards the entire set and refreshes from search.
+        candidates = reader.search(pipeline)
+        if len(candidates) > 20 or len({(c.version_key, c.chunk_id, c.revision)
+                                       for c in candidates}) != len(candidates):
+            raise ValueError("Unbounded or duplicate search result")
+        valid = [candidate for candidate in candidates if verified(candidate)]
+        cached = None
+    if not cached and cache is not None and valid:
+        try:
+            cache.store(scope, query, vector, valid, clock())
+        except Exception:
+            pass  # A cache write never authorizes or prevents authoritative release.
     if not valid:
         return "No currently approved procedure matches your access and equipment. Contact support."
     order = reranker.rank(query, [candidate.text for candidate in valid])

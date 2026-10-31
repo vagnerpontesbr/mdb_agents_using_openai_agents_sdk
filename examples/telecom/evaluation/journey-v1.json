@@ -1,0 +1,31 @@
+{
+  "dataset_version": "telecom-journey-evaluation-v1",
+  "reference_provenance": "Developer-authored synthetic expectations, not independently SME-approved labels",
+  "reference_as_of": "2026-10-30T12:17:11Z",
+  "cases": [
+    {
+      "case_id": "invoice",
+      "question": "Show my current invoice.",
+      "specialists": ["financial"],
+      "expected_text": "Your synthetic invoice total is USD 79.90, due on 2026-12-01."
+    },
+    {
+      "case_id": "sales",
+      "question": "Compare available fiber plans.",
+      "specialists": ["sales"],
+      "expected_text": "The synthetic fiber-500 plan offers 500 Mbps for USD 89.90 per month. This demo account is eligible. No plan change has been requested."
+    },
+    {
+      "case_id": "mixed",
+      "question": "Show my current invoice and compare the available fiber plans.",
+      "specialists": ["financial", "sales"],
+      "expected_text": "Your synthetic invoice total is USD 79.90, due on 2026-12-01.\n\nThe synthetic fiber-500 plan offers 500 Mbps for USD 89.90 per month. This demo account is eligible. No plan change has been requested."
+    },
+    {
+      "case_id": "knowledge",
+      "question": "Find the approved PDF procedure for the red optical light remaining on. Include the source citation.",
+      "specialists": ["technical"],
+      "expected_text": "Optical signal procedure Synthetic fixture - no customer data Check the optical cable before restarting the router. Page 1 Escalation procedure Synthetic fixture - no customer data Open a support ticket if the red light remains on. Page 2\n[SOP-OPTICAL-DEMO, version 20261030T120402, pages 1, 2]"
+    }
+  ]
+}

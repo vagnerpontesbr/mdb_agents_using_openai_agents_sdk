@@ -18,7 +18,7 @@ class IngestionQuery(Contract):
     job_id: str = Field(pattern=r"^[a-f0-9]{64}$")
 
 
-@lru_cache(maxsize=2)
+@lru_cache(maxsize=3)
 def domain_client(variable, username):
     from pymongo import MongoClient
     uri = os.environ[variable]
@@ -40,9 +40,15 @@ def search_knowledge(query):
     user = subject(get_current_user_id())
     database = domain_client('KNOWLEDGE_READER_URI', 'telecom_knowledge_reader').telecom_demo_knowledge
     voyage = VoyageKnowledge(os.environ['KNOWLEDGE_VOYAGE_KEY'], os.environ['KNOWLEDGE_VOYAGE_BASE'])
+    from .knowledge_domain.knowledge_cache import MongoCandidateCache
+    reader = MongoKnowledgeReader(database)
+    cache = None
+    if os.environ.get('KNOWLEDGE_CACHE_URI'):
+        cache = MongoCandidateCache(domain_client('KNOWLEDGE_CACHE_URI',
+            'telecom_knowledge_cache').telecom_demo_knowledge, reader)
     scope = Scope('synthetic-telecom', frozenset({'synthetic-support'}), 'FiberBox', 'demo', '2.x')
-    text = retrieve(MongoKnowledgeReader(database), MongoKnowledgeAuthority(database), voyage,
-                    scope, query, voyage.embed_query(query), max_response_chars=1800)
+    text = retrieve(reader, MongoKnowledgeAuthority(database), voyage,
+                    scope, query, voyage.embed_query(query), max_response_chars=1800, cache=cache)
     return BusinessResult(kind='technical', account_ref=user, reference='knowledge-current', text=text).model_dump()
 
 

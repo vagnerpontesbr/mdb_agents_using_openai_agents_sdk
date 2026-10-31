@@ -15,8 +15,8 @@ The [initial plan](../../initial_plan.md) defines scope; this backlog sequences 
 | VERT-001 | First authenticated financial request | FND-003 | Typed intent, validated tool, simulated invoice, approved template, denied access and idempotency cases | Complete for bounded demo; [journey evidence](VERT-001-JOURNEY.md) |
 | VERT-002 | Three specialists plus browser voice | VERT-001, COMP-004 | Mixed-intent route, mic/transcript/playback, shared context, cancellation and failure cases | Complete for bounded demo; [journey evidence](VERT-001-JOURNEY.md) |
 | MEM-001 | Memory and interrupted-run persistence | COMP-002, VERT-001 | Continuity, isolated tenants, concurrency and resume evidence; native expurgo accepted by user | [Passed for bounded demo; manual publication pending](MEM-001-MEMORY.md) |
-| RAG-001 | Governed PDF ingestion and retrieval | COMP-004, FND-003 | Text/scanned PDFs, version publication, owner/risk enforcement, native search/rerank citations | [Complete for the bounded demo: curation, native publication/replacement and hosted search passed; manual Git publication pending](RAG-001-KNOWLEDGE.md) |
-| EVAL-001 | Stale-document/cache/determinism experiments | RAG-001, MEM-001 | Independent current truth; actual metrics; invalidation and repeated-run reports | Ready |
+| RAG-001 | Governed PDF ingestion and retrieval | COMP-004, FND-003 | Text/scanned PDFs, version publication, owner/risk enforcement, native search/rerank citations | [Published as 1a52afc; bounded acceptance and CI passed](RAG-001-KNOWLEDGE.md) |
+| EVAL-001 | Stale-document/cache/determinism experiments | RAG-001, MEM-001 | Independent current truth; actual metrics; invalidation and repeated-run reports | [Completed for bounded demo; workflow 8 verified, Git publication pending](EVAL-001-QUALITY.md) |
 | OPS-001 | Load and resilience profiles | VERT-002, RAG-001, EVAL-001 | Separate mocks/live-provider results; budgets, resource contention and invariants across the approved cluster boundaries | Ready |
 | REL-001 | Reproducible client handoff | Prior accepted tasks | Fresh setup/demo/adaptation trial, license/notice decision, deployment caveats and runbooks | Ready |
 
@@ -28,7 +28,7 @@ those are not claims of full application or production acceptance. Implementatio
 
 Implementation tasks can be subdivided before coding. Failed compatibility gates should drive explicit decisions, not speculative implementations. Remote review and publishing remain distinct from local completion.
 
-User-defined phase gate: stop after each completed phase, provide manual commit commands, and wait for confirmation before the next phase. [Phase 0 evidence and runbook](../compatibility/PHASE_0.md) records the completed bounded checkpoint; Phase 0 commit/push/merge completed; the user authorized Phase 1. Phase 1 was published and the user explicitly authorized Phase 2. Phase 2 and Phase 3 were subsequently published; Phase 4 is authorized. Stop at the completed Phase 4 checkpoint.
+User-defined phase gate: stop after each completed phase, provide manual commit commands, and wait for confirmation before the next phase. [Phase 0 evidence and runbook](../compatibility/PHASE_0.md) records the completed bounded checkpoint; Phase 0 commit/push/merge completed; the user authorized Phase 1. Phase 1 was published and the user explicitly authorized Phase 2. Phase 2 and Phase 3 were subsequently published; Phase 4 is authorized. Phase 4 was subsequently published with passing CI; the user authorized Phase 5. Stop at the completed Phase 5 checkpoint.
 
 VERT-001 includes an explicit `@function_tool` invoice walkthrough; VERT-002 includes approved simulated plan changes; RAG-001 includes curator-only ingestion jobs. EVAL-001 implements calibrated offline LLM-as-judge grading with independent time-valid references. Online judge gating is optional and disabled by default; deterministic policy checks remain mandatory.
 

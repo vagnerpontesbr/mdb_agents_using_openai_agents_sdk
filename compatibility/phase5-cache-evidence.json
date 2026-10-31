@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-30T14:37:47.302544+00:00",
+  "actual_query_embeddings": 1,
+  "actual_rerank_calls": 3,
+  "cold_then_warm_exact_answer": true,
+  "warm_reused_candidate_set": true,
+  "scope_denials": 3,
+  "expired_row_rejected": true,
+  "changed_provenance_rejected": true,
+  "corrupt_cache_refreshed_from_search": true,
+  "future_source_dates_excluded": true,
+  "published_sources_modified": 0,
+  "limits": [
+    "One synthetic query; no semantic hit-quality claim",
+    "Concurrent source revocation is covered by deterministic tests, not this probe"
+  ]
+}

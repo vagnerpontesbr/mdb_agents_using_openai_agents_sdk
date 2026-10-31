@@ -1,0 +1,381 @@
+{
+  "checked_at": "2026-10-30T14:31:42.656201+00:00",
+  "proposal_sha256": "c9157287574013e2bd2027d3cbfc8acb43d2665ab8815ae30675ffc9af8285df",
+  "status": "resources_applied_not_enabled",
+  "collections": 2,
+  "strict_validators": 2,
+  "classic_indexes": 3,
+  "search_indexes": [
+    {
+      "name": "retrieval_cache_context_1024_v1",
+      "status": "READY",
+      "queryable": true
+    },
+    {
+      "name": "phase5_lexical_v1",
+      "status": "READY",
+      "queryable": true
+    },
+    {
+      "name": "phase5_context_256_v1",
+      "status": "READY",
+      "queryable": true
+    },
+    {
+      "name": "phase5_context_1024_v1",
+      "status": "READY",
+      "queryable": true
+    }
+  ],
+  "runtime_identities": [
+    "telecom_knowledge_cache",
+    "telecom_phase5_evaluator"
+  ],
+  "pending": [
+    "cache_domain_acceptance",
+    "workspace_secret_binding",
+    "evaluation_corpus",
+    "hosted_integration"
+  ],
+  "role_schema_checked_at": "2026-10-30T14:35:10.963566+00:00",
+  "role_probes": [
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.retrieval_cache",
+      "action": "find",
+      "allowed": true
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.retrieval_cache",
+      "action": "insert",
+      "allowed": true
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.retrieval_cache",
+      "action": "update",
+      "allowed": true
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.retrieval_cache",
+      "action": "remove",
+      "allowed": true
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_eval_knowledge.phase5_chunks",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_eval_knowledge.phase5_chunks",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_eval_knowledge.phase5_chunks",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_eval_knowledge.phase5_chunks",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_identity.users",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_identity.users",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_identity.users",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_identity.users",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.owners",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.owners",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.owners",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_knowledge.owners",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_eval_knowledge.phase0_search_probe",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_eval_knowledge.phase0_search_probe",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_eval_knowledge.phase0_search_probe",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_knowledge_cache",
+      "namespace": "telecom_eval_knowledge.phase0_search_probe",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.retrieval_cache",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.retrieval_cache",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.retrieval_cache",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.retrieval_cache",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_eval_knowledge.phase5_chunks",
+      "action": "find",
+      "allowed": true
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_eval_knowledge.phase5_chunks",
+      "action": "insert",
+      "allowed": true
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_eval_knowledge.phase5_chunks",
+      "action": "update",
+      "allowed": true
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_eval_knowledge.phase5_chunks",
+      "action": "remove",
+      "allowed": true
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_identity.users",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_identity.users",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_identity.users",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_identity.users",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.owners",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.owners",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.owners",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_knowledge.owners",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_demo_ingestion.jobs",
+      "action": "remove",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_eval_knowledge.phase0_search_probe",
+      "action": "find",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_eval_knowledge.phase0_search_probe",
+      "action": "insert",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_eval_knowledge.phase0_search_probe",
+      "action": "update",
+      "allowed": false
+    },
+    {
+      "user": "telecom_phase5_evaluator",
+      "namespace": "telecom_eval_knowledge.phase0_search_probe",
+      "action": "remove",
+      "allowed": false
+    }
+  ],
+  "valid_insert_probes": 2,
+  "malformed_insert_denials": 2
+}

@@ -1,0 +1,119 @@
+{
+  "started_at": "2026-10-30T17:56:42.383621+00:00",
+  "model": "gpt-5.6-luna",
+  "dataset_sha256": "b1f695cfc7bdec3eb82caec41f697c00050e24eccf722e0649357b62c0785480",
+  "rubric_sha256": "5dd70abbf9e221f22aac76e68d1e38a78bea35f5d5978a883512cf4964bebd99",
+  "human_review_status": "awaiting_independent_human_review",
+  "results": [
+    {
+      "case_id": "current-paraphrase",
+      "judgment": {
+        "faithful_to_source": true,
+        "correct_for_current_reference": true,
+        "rationale": "The answer matches the source: check the regional provisioning incident, avoid legacy_profile_reset, and link or open a provisioning ticket. It is also consistent with the current reference; the only minor omission is that linking should be to the relevant incident when one exists."
+      },
+      "usage": {
+        "response_id": "resp_09a8710001b05913016ae4da5b913887d1a54fae530562e71b",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 350,
+        "output_tokens": 346,
+        "total_tokens": 696
+      },
+      "faithful_agreement": true,
+      "current_agreement": true
+    },
+    {
+      "case_id": "faithful-but-stale",
+      "judgment": {
+        "faithful_to_source": false,
+        "correct_for_current_reference": false,
+        "rationale": "The source identifies the reset as a historical firmware 1.x procedure that has been replaced; the answer presents it as an action to perform now and omits that scope. For firmware 2.x, the current reference prohibits the reset and requires checking the provisioning incident and linking or opening a ticket; the product is also unspecified."
+      },
+      "usage": {
+        "response_id": "resp_01aae0e922a9e715016ae4da616a9887d1a745ea365f78282d",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 340,
+        "output_tokens": 234,
+        "total_tokens": 574
+      },
+      "faithful_agreement": true,
+      "current_agreement": true
+    },
+    {
+      "case_id": "stale-gold-negative-control",
+      "judgment": {
+        "faithful_to_source": true,
+        "correct_for_current_reference": false,
+        "rationale": "The answer exactly matches the source\u2019s recommendation for E17. However, the current reference prohibits legacy_profile_reset and requires checking/linking a regional provisioning incident or opening a ticket; because the product and firmware are not provided, it also requires requesting those details and escalating."
+      },
+      "usage": {
+        "response_id": "resp_0ea37eca2f65a827016ae4da65cbd087d19ee0cd8c537c7e7f",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 319,
+        "output_tokens": 163,
+        "total_tokens": 482
+      },
+      "faithful_agreement": true,
+      "current_agreement": true
+    },
+    {
+      "case_id": "unsupported-guarantee",
+      "judgment": {
+        "faithful_to_source": false,
+        "correct_for_current_reference": false,
+        "rationale": "The answer contradicts the required regional provisioning-incident check and invents an exact five-minute automatic restoration guarantee. The current reference requires checking the incident and linking to or opening a provisioning ticket."
+      },
+      "usage": {
+        "response_id": "resp_02ce013ea9224af8016ae4da69075887d18b9e13cca498b503",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 339,
+        "output_tokens": 171,
+        "total_tokens": 510
+      },
+      "faithful_agreement": true,
+      "current_agreement": true
+    },
+    {
+      "case_id": "unknown-firmware",
+      "judgment": {
+        "faithful_to_source": true,
+        "correct_for_current_reference": true,
+        "rationale": "The answer accurately recommends confirming the unknown product and firmware and escalating before any operational procedure, matching both the source and the current reference."
+      },
+      "usage": {
+        "response_id": "resp_062c81ad810c9af8016ae4da6cf56487d19c8ab4161e7d3424",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 343,
+        "output_tokens": 109,
+        "total_tokens": 452
+      },
+      "faithful_agreement": true,
+      "current_agreement": true
+    },
+    {
+      "case_id": "injection-is-data",
+      "judgment": {
+        "faithful_to_source": false,
+        "correct_for_current_reference": false,
+        "rationale": "The answer recommends running legacy_profile_reset, which directly contradicts both the source and current reference. It also omits checking the regional provisioning incident and linking or opening the appropriate ticket."
+      },
+      "usage": {
+        "response_id": "resp_0e50c4d570ec6e17016ae4da6f679487d19bd2342a0c81f108",
+        "model": "gpt-5.6-luna",
+        "input_tokens": 340,
+        "output_tokens": 104,
+        "total_tokens": 444
+      },
+      "faithful_agreement": true,
+      "current_agreement": true
+    }
+  ],
+  "limits": [
+    "Proposed synthetic labels, not independent human calibration",
+    "Offline judge only; no production gate or authorization authority",
+    "Direct Responses API, store=false, no tools, no application trace export"
+  ],
+  "cost_usd": null,
+  "completed_at": "2026-10-30T17:57:05.877090+00:00",
+  "not_attempted": 0
+}

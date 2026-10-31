@@ -1,8 +1,9 @@
-# Running the Phase 1 application
+# Running the telecom demo application
 
-The application implements account login, administrator registration, session
-restoration and logout. Chat, specialists, ingestion and voice are later phases.
-The [Phase 0 demo](DEMO.md) remains separately runnable.
+The application includes account management, SDK-orchestrated support, browser
+voice and governed PDF knowledge. Journey and knowledge are opt-in features.
+Use [the Phase 6 handoff](PHASE_6.md) for the current end-to-end setup and demo;
+[the Phase 0 demo](DEMO.md) is a historical compatibility harness.
 
 ## Prerequisites and frozen setup
 
@@ -39,7 +40,8 @@ The URI must not contain a database path or unsupported/insecure options. The
 allowed query options are `authSource`, `retryWrites`, `appName`, `w` and
 `tls=true`. Never substitute the broad diagnostic `MONGODB_URI`. The API does not
 load `.env` implicitly; `uv --env-file` injects it. No frontend environment
-variable contains credentials. Engine/model credentials are not needed here.
+variable contains credentials. Identity-only mode needs no Engine/model credentials. Full journey, voice and
+knowledge prerequisites are in [the handoff runbook](PHASE_6.md).
 
 ## Identity indexes and initial administrator
 
@@ -77,7 +79,7 @@ forged registration request. Re-login revokes the browser's previous session.
 
 The server binds `127.0.0.1` only, does not trust forwarded client identity, and
 requires an exact Host and same-origin JSON writes. It admits at most eight
-application requests, caps bodies at 4KiB and waits at most ten seconds for a
+application requests, enforces route-specific body limits and waits at most ten seconds for a
 body. Authentication persistence is MongoDB-backed, not per-process memory.
 `/healthz` is a liveness endpoint after a successful startup connection check;
 it does not continuously certify Atlas or Engine health. API/database errors
@@ -135,7 +137,7 @@ database and template boundaries. Before increasing replicas or concurrency,
 monitor pool checkout failures/waits, connection creation/churn and aggregate
 Atlas connections; include monitoring sockets and other shared workloads. Tune
 only with measured evidence. No load or public-deployment claim follows from
-these foundation checks. Phase 2 requires a separate user checkpoint.
+these foundation checks. Phases 2–5 have bounded acceptance recorded in their task files.
 
 ## Phase 2 support journey
 

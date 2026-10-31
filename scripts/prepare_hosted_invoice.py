@@ -33,6 +33,8 @@ def main():
     args = parser.parse_args()
     # Never mix a new build with stale files, keys or caches in an old stage.
     args.output.mkdir(parents=True, exist_ok=False)
+    # Preserve the selected project license in every distributed hosted source archive.
+    shutil.copyfile(Path(__file__).resolve().parents[1] / "LICENSE", args.output / "LICENSE")
     source = Path(__file__).resolve().parents[1] / "compatibility/openai_engine_adapter"
     files = [source / n for n in ("pyproject.toml", "uv.lock", "agent.yaml")]
     files += sorted((source / "src").rglob("*.py"))

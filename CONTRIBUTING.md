@@ -1,6 +1,6 @@
 # Contributing
 
-The intended repository is [vagnerpontesbr/mdb_agents_using_openai_agents_sdk](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk). Read [AGENTS.md](AGENTS.md) and the relevant task/ADR before working. Phase 0 bounded compatibility is complete; Phase 1 foundation is implemented locally; see [FND-003](docs/tasks/FND-003-FOUNDATION.md). The full application journey has not started. See the [current checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md).
+The intended repository is [vagnerpontesbr/mdb_agents_using_openai_agents_sdk](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk). Read [AGENTS.md](AGENTS.md) and the relevant task/ADR before working. Phases 0–5 are implemented and accepted for the bounded demo; Phase 6 packages the current application. Start with [the handoff runbook](docs/runbooks/PHASE_6.md). See the [current checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md).
 
 ## Application validation
 

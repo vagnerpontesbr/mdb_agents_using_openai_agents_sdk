@@ -1,10 +1,13 @@
 # Best Practices for the Telecom Agent Asset
 
-This is the architecture and implementation guide for the planned asset. Controls below are planned unless explicitly backed by a completed test or artifact; documentation does not establish production readiness. See the [plan](../initial_plan.md), [ADRs](adr/README.md), and [document governance specification](DOCUMENT_GOVERNANCE.md).
+This guide separates implemented demo controls from future production recommendations.
+Phases 0–5 have bounded acceptance; load/scaling, broad source quality and production
+identity remain future work. Documentation alone does not establish production readiness. See the [plan](../initial_plan.md), [ADRs](adr/README.md), and [document governance specification](DOCUMENT_GOVERNANCE.md).
 
 ## 1. Separate agent framework from agent platform
 
-The framework defines agent orchestration, typed tools, handoffs, and workflow contracts. The platform supplies hosting, identity, memory services, secrets, policies, audit, and operations. OpenAI Agents SDK is the selected orchestration framework; MongoDB Agent Engine is a platform integration target. An OpenAI model provider adapter is not proof of SDK runtime compatibility.
+The framework defines agent orchestration, typed tools, handoffs, and workflow contracts. The platform supplies hosting, identity, memory services, secrets, policies, audit, and operations. OpenAI Agents SDK is the selected orchestration framework; MongoDB Agent Engine hosts the validated adapter and owns memory, native review,
+recovery and primary traces. An OpenAI model provider adapter is not proof of SDK runtime compatibility.
 
 Prefer Engine for overlapping capabilities according to [ADR-0018](adr/0018-engine-feature-precedence.md); do not create competing platform owners. Keep platform dependencies behind explicit adapters; independently prove memory and hosted execution support. Preserve required audit/replay wrappers. Avoid an abstraction that promises identical semantics across incompatible runtimes. Record supported capabilities and fail clearly for missing ones.
 
@@ -113,3 +116,24 @@ Apply Twelve-Factor to config, backing services, stateless processes, releases, 
 ## 18. Make Codex practices executable
 
 Use root AGENTS.md for concise, automatically discoverable working guidance and link the detailed plan/ADRs. Maintain task scope, dependency, acceptance, and evidence separately from conversation history. The standard-library repository checker is available now; add frozen uv builds, lint/types, and behavior tests with application code. Keep real-provider and load validation separate. Review diffs and remote history before integration; distinguish authored files, local checks, commits, PRs, and deployments. See [CONTRIBUTING.md](../CONTRIBUTING.md) and ADRs 0012–0014. Global configuration and custom skills are optional, not prerequisites for this workflow.
+
+## Current evidence and practical handoff
+
+Use [Phase 6](runbooks/PHASE_6.md) for clean setup, the browser walkthrough and an
+isolated tool adaptation exercise. Original project code is [MIT licensed](../LICENSE);
+provider products, SDKs and other dependencies retain their respective terms.
+
+| Concern | Verified bounded behavior | Limit |
+| --- | --- | --- |
+| Orchestration | SDK supervisor/specialists hosted on Engine; native review/recovery | Fixed demo targets; not arbitrary deployment portability |
+| Governance | Owner-bound publication and current-source checks | Synthetic documents and fixed applicability scope |
+| Cache | Candidate references, 128 slots, at most 15-minute logical lifetime, calibrated 0.91 | 5/6 new synthetic paraphrases reused; not universal semantic accuracy |
+| Observability | Native session-correlated tool selection and token counts | Tool arguments redacted; dollar costs and full billable usage unavailable |
+| Voice | Browser flow and prior human listening in quiet conditions | No noisy-environment guarantee |
+| Scale | Bounded admission and isolated ingestion processes | Load/capacity/RPO/RTO not established |
+
+Keep experimental findings visible: 0.99/0.98 did not generalize in the earlier
+cache experiments. The final calibration selected 0.91 on development data before
+new validation. Retrieved text and judge scores cannot authorize business actions.
+An expiring cache entry, deleted runtime reservation and Engine memory retention
+are separate lifecycle mechanisms.

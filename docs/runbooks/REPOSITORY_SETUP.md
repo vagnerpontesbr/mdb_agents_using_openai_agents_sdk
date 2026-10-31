@@ -123,3 +123,19 @@ Local validation passed 128 backend tests, 86 hosted contracts, Ruff, mypy and
 repository checks. HEAD is still `1a52afc` on `codex/phase-2-journey`; no Phase 5
 commit, push, PR or CI run is claimed. The user performs Git publication manually.
 After publication, verify the new remote commit and CI before starting Phase 6.
+
+## Phase 5 publication verified
+
+On 2026-10-31 local HEAD and remote `codex/phase-2-journey` both matched
+`1a81be69cf0289f28b26def7e728c2c8f6d5619d`. Both jobs passed in
+[CI run 41205974527](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41205974527).
+This supersedes the preceding publication-pending note. The user authorized Phase 6
+experience/packaging and selected MIT; [REL-001](../tasks/REL-001-HANDOFF.md) tracks it.
+
+## Phase 6 completion, Git publication pending
+
+The requester selected MIT and accepted the automated isolated handoff rehearsal on
+2026-10-31. [REL-001](../tasks/REL-001-HANDOFF.md) records 130 backend tests, three
+frontend unit tests, ten browser tests, frozen clean installation, builds, setup
+diagnostics and tool adaptation. Phase 6 code/docs are uncommitted; no Phase 6 CI
+or push is claimed. Phase 7 has not started.

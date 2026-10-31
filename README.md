@@ -6,7 +6,9 @@ and Python managed by uv. The planned full application includes a supervisor,
 financial/technical/sales specialists, React chat/voice, and governed PDF retrieval.
 
 **Phases 0–4 are published with passing CI. Phase 5 bounded evaluation and calibrated
-candidate cache are complete and deployed; Git publication is pending. See
+candidate cache are complete, deployed and published with passing CI. Phase 6
+experience/packaging is complete with MIT licensing and a verified automated handoff;
+its Git publication is pending. Start with [the handoff runbook](docs/runbooks/PHASE_6.md). See
 [EVAL-001](docs/tasks/EVAL-001-QUALITY.md).** See
 [RAG-001](docs/tasks/RAG-001-KNOWLEDGE.md) and the
 [Phase 4 runbook](docs/runbooks/PHASE_4.md) for current checks and limitations.
@@ -78,3 +80,9 @@ evaluations and load profiles remain later phases in the [backlog](docs/tasks/RE
 All documentation, code and user-facing demo content is in English. Run
 `python3 scripts/check_repository.py` for repository structure and local link
 validation; it is not an application or provider test.
+
+## License
+
+Original project code is distributed under the [MIT License](LICENSE). Third-party
+dependencies and hosted services retain their own licenses and terms. This is an
+independent reference asset, not an official MongoDB product.

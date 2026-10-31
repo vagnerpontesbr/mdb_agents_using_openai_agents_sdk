@@ -10,8 +10,11 @@ from .knowledge_search import Candidate
 
 
 class MongoKnowledgeReader:
-    def __init__(self, database: Database[dict[str, Any]]) -> None:
-        if database.name != "telecom_demo_knowledge":
+    def __init__(self, database: Database[dict[str, Any]], *,
+                 load_environment: bool = False) -> None:
+        # Trusted process construction only; HTTP callers cannot select a namespace.
+        expected = "telecom_load_knowledge" if load_environment else "telecom_demo_knowledge"
+        if type(load_environment) is not bool or database.name != expected:
             raise ValueError("Unexpected knowledge database")
         # Reuse the caller's client/pool. BSON UTC dates must remain timezone-aware.
         self.database: Database[dict[str, Any]] = database.with_options(

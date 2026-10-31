@@ -33,8 +33,11 @@ class MongoIngestion:
     """
 
     def __init__(self, database: Database[dict[str, Any]],
-                 clock: Callable[[], datetime] = utc_now) -> None:
-        if database.name != "telecom_demo_ingestion":
+                 clock: Callable[[], datetime] = utc_now, *,
+                 load_environment: bool = False) -> None:
+        # Trusted process construction only; HTTP callers cannot select a namespace.
+        expected = "telecom_load_ingestion" if load_environment else "telecom_demo_ingestion"
+        if type(load_environment) is not bool or database.name != expected:
             raise ValueError("Unexpected ingestion database")
         self.db: Database[dict[str, Any]] = database.with_options(
             codec_options=CodecOptions(tz_aware=True))

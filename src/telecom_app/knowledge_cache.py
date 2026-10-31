@@ -28,8 +28,11 @@ def scope_key(scope: Scope) -> str:
 
 
 class MongoCandidateCache:
-    def __init__(self, database: Database[dict[str, Any]], reader: KnowledgeReader) -> None:
-        if database.name != "telecom_demo_knowledge":
+    def __init__(self, database: Database[dict[str, Any]], reader: KnowledgeReader, *,
+                 load_environment: bool = False) -> None:
+        # Trusted process construction only; HTTP callers cannot select a namespace.
+        expected = "telecom_load_knowledge" if load_environment else "telecom_demo_knowledge"
+        if type(load_environment) is not bool or database.name != expected:
             raise ValueError("Unexpected cache database")
         self.collection: Collection[dict[str, Any]] = database.with_options(
             codec_options=CodecOptions(tz_aware=True)).retrieval_cache

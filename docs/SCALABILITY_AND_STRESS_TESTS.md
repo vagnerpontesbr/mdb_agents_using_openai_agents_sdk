@@ -1,6 +1,6 @@
 # Service boundaries and stress-test plan
 
-Status: design only; no benchmark has been run and no capacity is claimed.
+Status: Phase 8 complete for the approved demo scope; manual publication pending. [OPS-001](tasks/OPS-001-RESILIENCE.md) records completed short local HTTP characterization and bounded real Engine concurrency controls. Bounded sustained/soak, Atlas and voice profiles passed; production-capacity and pricing proof are excluded from demo acceptance by the final requester decision; no production capacity is claimed.
 
 ## Deployable boundaries
 

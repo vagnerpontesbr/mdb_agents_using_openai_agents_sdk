@@ -23,8 +23,10 @@ def document_key(tenant: str, document: str) -> str:
 
 
 class MongoKnowledgeAuthority:
-    def __init__(self, database: Database[dict[str, Any]]) -> None:
-        if database.name != "telecom_demo_knowledge":
+    def __init__(self, database: Database[dict[str, Any]], *,
+                 load_environment: bool = False) -> None:
+        expected = "telecom_load_knowledge" if load_environment else "telecom_demo_knowledge"
+        if type(load_environment) is not bool or database.name != expected:
             raise ValueError("Unexpected knowledge database")
         self.db: Database[dict[str, Any]] = database.with_options(
             codec_options=CodecOptions(tz_aware=True)

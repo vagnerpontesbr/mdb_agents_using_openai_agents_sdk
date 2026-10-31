@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Telecom HTTP characterization</title>
+<style>body{font:16px system-ui;
+max-width:1100px;margin:40px auto;padding:20px}
+table{border-collapse:collapse;width:100%}
+td,th{text-align:left;padding:10px;border-bottom:1px solid #ccc}
+code{overflow-wrap:anywhere}</style>
+<h1>Local HTTP/SSE characterization</h1>
+<p>Real API processes; identity and Engine doubles; SQLite fixture state. 
+No Atlas, LLM, voice, ingestion, provider cost or production capacity measurement.</p>
+<p>Status: characterized</p><p>Commit: <code>610ca8babde73ae7fa61fdc97e24dc22ca233136</code>
+</p>
+<table>
+<thead>
+<tr>
+<th>Workers</th>
+<th>Concurrency</th>
+<th>Completed</th>
+<th>Rejected</th>
+<th>Requests/s</th>
+<th>First event p95 ms</th>
+<th>Complete p95 ms</th>
+<th>Complete p99 ms</th>
+<th>Scope denials</th>
+<th>Observed processes</th>
+</tr>
+</thead>
+<tbody><tr><td>1</td><td>1</td><td>2</td><td>0</td><td>15.664</td><td>1.932</td><td>59.724</td><td>59.724</td><td>2</td><td>1</td></tr><tr><td>1</td><td>5</td><td>10</td><td>0</td><td>78.892</td><td>4.635</td><td>64.755</td><td>64.755</td><td>10</td><td>1</td></tr><tr><td>1</td><td>10</td><td>8</td><td>12</td><td>112.906</td><td>5.542</td><td>64.446</td><td>64.446</td><td>8</td><td>1</td></tr><tr><td>1</td><td>25</td><td>8</td><td>42</td><td>58.041</td><td>15.902</td><td>112.559</td><td>112.559</td><td>8</td><td>1</td></tr><tr><td>1</td><td>50</td><td>8</td><td>92</td><td>56.135</td><td>24.867</td><td>116.607</td><td>116.607</td><td>8</td><td>1</td></tr><tr><td>2</td><td>1</td><td>2</td><td>0</td><td>17.061</td><td>2.316</td><td>57.11</td><td>57.11</td><td>2</td><td>1</td></tr><tr><td>2</td><td>5</td><td>10</td><td>0</td><td>81.945</td><td>4.966</td><td>62.858</td><td>62.858</td><td>10</td><td>2</td></tr><tr><td>2</td><td>10</td><td>19</td><td>1</td><td>152.38</td><td>8.842</td><td>65.143</td><td>65.143</td><td>19</td><td>2</td></tr><tr><td>2</td><td>25</td><td>16</td><td>34</td><td>86.135</td><td>9.541</td><td>155.412</td><td>155.412</td><td>16</td><td>2</td></tr><tr><td>2</td><td>50</td><td>16</td><td>84</td><td>147.285</td><td>17.796</td><td>88.474</td><td>88.474</td><td>16</td><td>2</td></tr><tr><td>4</td><td>1</td><td>2</td><td>0</td><td>17.616</td><td>2.08</td><td>55.259</td><td>55.259</td><td>2</td><td>1</td></tr><tr><td>4</td><td>5</td><td>10</td><td>0</td><td>79.578</td><td>10.652</td><td>64.609</td><td>64.609</td><td>10</td><td>4</td></tr><tr><td>4</td><td>10</td><td>20</td><td>0</td><td>144.234</td><td>10.179</td><td>70.149</td><td>70.149</td><td>20</td><td>4</td></tr><tr><td>4</td><td>25</td><td>44</td><td>6</td><td>311.085</td><td>12.581</td><td>105.703</td><td>130.125</td><td>44</td><td>4</td></tr><tr><td>4</td><td>50</td><td>32</td><td>68</td><td>342.343</td><td>20.712</td><td>86.52</td><td>87.196</td><td>32</td><td>4</td></tr></tbody></table><p>Short closed-loop characterization; percentiles are descriptive with the listed sample counts. No SLO or highest stable load claim.</p></html>

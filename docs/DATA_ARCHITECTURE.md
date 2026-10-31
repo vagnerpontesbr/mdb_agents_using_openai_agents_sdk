@@ -69,3 +69,13 @@ Twelve-Factor governs application delivery and processes; it does not prescribe 
 Verify application data targets OpenAI-SDK and project-managed Engine memory targets ClusterDemoTelco. Validate each connection independently; topology approval does not resolve Engine service failures. Test allowed and denied access per identity, forbidden demo-to-eval access, tenant filtering, migration permissions, and operational-to-search visibility lag. Measure shared contention during bounded load; stop on isolation violations.
 
 References: [MongoDB research](research/mongodb-engine.md), [MongoDB collection guidance](https://www.mongodb.com/docs/manual/data-modeling/design-antipatterns/reduce-collections/), [Twelve-Factor](https://12factor.net/).
+
+## Phase 8 isolated load resources
+
+[ADR-0029](adr/0029-isolated-load-environment.md) defines explicit load-only
+constructor selection. [The resource plan](../compatibility/phase8-resource-plan.json)
+defines `telecom_load_ingestion` and `telecom_load_knowledge` on OpenAI-SDK,
+with four scoped identities and existing schema/index definitions. The requester approved the plan, and both namespaces and the four scoped roles/users
+were created. Strict validators, 208 role controls and index readiness passed.
+Demo defaults and the Engine memory cluster remain unchanged; logical isolation
+does not establish physical resource isolation.

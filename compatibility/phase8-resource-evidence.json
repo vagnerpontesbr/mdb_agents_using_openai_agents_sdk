@@ -1,0 +1,13 @@
+{
+  "status": "applied_roles_validators_indexes_verified",
+  "plan_sha256": "08d5205f05d39fc2b5604e4bc500b91456488f070ef508c03d039dd7adcb91cd",
+  "collections_created": 8,
+  "classic_indexes_created": 7,
+  "search_indexes_created": 3,
+  "pending": [
+    "sustained contention and capacity acceptance",
+    "complete provider billing reconciliation"
+  ],
+  "role_checks": 208,
+  "readiness_evidence": "phase8-role-evidence.json"
+}

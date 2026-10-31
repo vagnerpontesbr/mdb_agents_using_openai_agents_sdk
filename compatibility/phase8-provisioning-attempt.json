@@ -1,0 +1,8 @@
+{
+  "status": "blocked_on_atlas_cli_login",
+  "plan_approved": true,
+  "plan_sha256": "08d5205f05d39fc2b5604e4bc500b91456488f070ef508c03d039dd7adcb91cd",
+  "failed_stage": "initial_role_inventory",
+  "remote_mutations_reached": false,
+  "diagnostic": "Atlas CLI session expired; unrestricted read confirmed authentication failure"
+}

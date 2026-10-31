@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "tenant": "phase8-efbb489c073e4103981d183c6cdaaf9c",
+  "checks": {
+    "concurrent_identical_admission_deduplicated": true,
+    "queue_capped_at_four": true,
+    "other_tenant_claim_denied": true,
+    "real_worker_process_terminated_after_claim": true,
+    "reclaimed_job_fences_stale_worker": true,
+    "duplicate_finish_denied": true,
+    "attempt_budget_and_exact_quota_release": true
+  },
+  "provider_calls": 0,
+  "limitations": [
+    "Worker is terminated after claim, before OCR/provider work",
+    "Lease expiry uses injected domain clock, not a six-minute wall wait",
+    "Synthetic failed jobs retained only in isolated load namespaces"
+  ]
+}

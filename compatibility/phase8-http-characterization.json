@@ -1,0 +1,485 @@
+{
+  "status": "characterized",
+  "profile": {
+    "version": "http-mock-v1",
+    "purpose": "characterization, not SLO or production capacity acceptance",
+    "workers": [
+      1,
+      2,
+      4
+    ],
+    "concurrency": [
+      1,
+      5,
+      10,
+      25,
+      50
+    ],
+    "requests_per_client": 2,
+    "timeout_seconds": 10,
+    "max_chat_requests": 600,
+    "max_wall_seconds": 180,
+    "provider_delay_seconds": 0.05,
+    "expected_text": "Synthetic transport response.",
+    "invariants": [
+      "exact synthetic result",
+      "other user denied",
+      "latest execution recovered",
+      "injected failure never reported as success"
+    ],
+    "external_provider_calls": 0,
+    "external_cost_usd": 0
+  },
+  "profile_sha256": "dc82bbe2401e143b943c5dc3ca90f296348014bf855da0198ad27c91fad85729",
+  "git_head": "610ca8babde73ae7fa61fdc97e24dc22ca233136",
+  "started_at": "2026-10-31T13:59:29.186959+00:00",
+  "source_sha256": {
+    "scripts/run_phase8_http.py": "80c437abe3df26900401215531fea990d60777e0f304b873cd3c382437e4dcc8",
+    "tests/load/http_fixture.py": "32ab5f6dd4fd6d33dda0cde2aa73512a7e5fe691112a1f92f0496a717f4e46d6",
+    "src/telecom_app/api.py": "bd5402bb01e684952b9f198951c6854b83110b2e8c3855dd63edc28c0ca7aea8",
+    "src/telecom_app/journey.py": "aa54664bae3f069fb445a9be7376f1a287a66bbe9f902ddd6c6bcb15b803e090",
+    "src/telecom_app/security.py": "e1a40a37e9c05430e0518d165b7b8cfc1ca6fe72b445284e502984bda4e001dc",
+    "src/telecom_app/config.py": "8ba063cb5eb460c7095a724adb61d02cd0730d6f433b8b3b1df2a9fb007ad733"
+  },
+  "environment": {
+    "python": "3.15.2",
+    "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+    "cpu_count": 12,
+    "loop": "closed",
+    "providers": "doubles"
+  },
+  "lock_sha256": "2bfcd0fd1ecffebfded95a62e1496c6dabb3728db1b40c4c02218420317a1190",
+  "stages": [
+    {
+      "concurrency": 1,
+      "offered": 2,
+      "completed": 2,
+      "admission_rejected": 0,
+      "post_load_health": true,
+      "other_user_denials": 2,
+      "recoveries": 2,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1277,
+      "throughput_rps": 15.664,
+      "first_event": {
+        "p50_ms": 1.932,
+        "p95_ms": 1.932,
+        "p99_ms": 1.932
+      },
+      "complete": {
+        "p50_ms": 59.724,
+        "p95_ms": 59.724,
+        "p99_ms": 59.724
+      },
+      "processes": [
+        "92323"
+      ],
+      "cross_process_recoveries": 0,
+      "workers": 1
+    },
+    {
+      "concurrency": 5,
+      "offered": 10,
+      "completed": 10,
+      "admission_rejected": 0,
+      "post_load_health": true,
+      "other_user_denials": 10,
+      "recoveries": 10,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1268,
+      "throughput_rps": 78.892,
+      "first_event": {
+        "p50_ms": 4.267,
+        "p95_ms": 4.635,
+        "p99_ms": 4.635
+      },
+      "complete": {
+        "p50_ms": 60.957,
+        "p95_ms": 64.755,
+        "p99_ms": 64.755
+      },
+      "processes": [
+        "92323"
+      ],
+      "cross_process_recoveries": 0,
+      "workers": 1
+    },
+    {
+      "concurrency": 10,
+      "offered": 20,
+      "completed": 8,
+      "admission_rejected": 12,
+      "post_load_health": true,
+      "other_user_denials": 8,
+      "recoveries": 8,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.0709,
+      "throughput_rps": 112.906,
+      "first_event": {
+        "p50_ms": 5.263,
+        "p95_ms": 5.542,
+        "p99_ms": 5.542
+      },
+      "complete": {
+        "p50_ms": 62.319,
+        "p95_ms": 64.446,
+        "p99_ms": 64.446
+      },
+      "processes": [
+        "92323"
+      ],
+      "cross_process_recoveries": 0,
+      "workers": 1
+    },
+    {
+      "concurrency": 25,
+      "offered": 50,
+      "completed": 8,
+      "admission_rejected": 42,
+      "post_load_health": true,
+      "other_user_denials": 8,
+      "recoveries": 8,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1378,
+      "throughput_rps": 58.041,
+      "first_event": {
+        "p50_ms": 15.657,
+        "p95_ms": 15.902,
+        "p99_ms": 15.902
+      },
+      "complete": {
+        "p50_ms": 74.332,
+        "p95_ms": 112.559,
+        "p99_ms": 112.559
+      },
+      "processes": [
+        "92323"
+      ],
+      "cross_process_recoveries": 0,
+      "workers": 1
+    },
+    {
+      "concurrency": 50,
+      "offered": 100,
+      "completed": 8,
+      "admission_rejected": 92,
+      "post_load_health": true,
+      "other_user_denials": 8,
+      "recoveries": 8,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1425,
+      "throughput_rps": 56.135,
+      "first_event": {
+        "p50_ms": 23.478,
+        "p95_ms": 24.867,
+        "p99_ms": 24.867
+      },
+      "complete": {
+        "p50_ms": 79.052,
+        "p95_ms": 116.607,
+        "p99_ms": 116.607
+      },
+      "processes": [
+        "92323"
+      ],
+      "cross_process_recoveries": 0,
+      "workers": 1
+    },
+    {
+      "concurrency": 1,
+      "offered": 2,
+      "completed": 2,
+      "admission_rejected": 0,
+      "post_load_health": true,
+      "other_user_denials": 2,
+      "recoveries": 2,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1172,
+      "throughput_rps": 17.061,
+      "first_event": {
+        "p50_ms": 2.316,
+        "p95_ms": 2.316,
+        "p99_ms": 2.316
+      },
+      "complete": {
+        "p50_ms": 57.11,
+        "p95_ms": 57.11,
+        "p99_ms": 57.11
+      },
+      "processes": [
+        "92328"
+      ],
+      "cross_process_recoveries": 1,
+      "workers": 2
+    },
+    {
+      "concurrency": 5,
+      "offered": 10,
+      "completed": 10,
+      "admission_rejected": 0,
+      "post_load_health": true,
+      "other_user_denials": 10,
+      "recoveries": 10,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.122,
+      "throughput_rps": 81.945,
+      "first_event": {
+        "p50_ms": 2.573,
+        "p95_ms": 4.966,
+        "p99_ms": 4.966
+      },
+      "complete": {
+        "p50_ms": 59.287,
+        "p95_ms": 62.858,
+        "p99_ms": 62.858
+      },
+      "processes": [
+        "92328",
+        "92329"
+      ],
+      "cross_process_recoveries": 5,
+      "workers": 2
+    },
+    {
+      "concurrency": 10,
+      "offered": 20,
+      "completed": 19,
+      "admission_rejected": 1,
+      "post_load_health": true,
+      "other_user_denials": 19,
+      "recoveries": 19,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1247,
+      "throughput_rps": 152.38,
+      "first_event": {
+        "p50_ms": 3.074,
+        "p95_ms": 8.842,
+        "p99_ms": 8.842
+      },
+      "complete": {
+        "p50_ms": 61.136,
+        "p95_ms": 65.143,
+        "p99_ms": 65.143
+      },
+      "processes": [
+        "92328",
+        "92329"
+      ],
+      "cross_process_recoveries": 6,
+      "workers": 2
+    },
+    {
+      "concurrency": 25,
+      "offered": 50,
+      "completed": 16,
+      "admission_rejected": 34,
+      "post_load_health": true,
+      "other_user_denials": 16,
+      "recoveries": 16,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1858,
+      "throughput_rps": 86.135,
+      "first_event": {
+        "p50_ms": 8.09,
+        "p95_ms": 9.541,
+        "p99_ms": 9.541
+      },
+      "complete": {
+        "p50_ms": 64.865,
+        "p95_ms": 155.412,
+        "p99_ms": 155.412
+      },
+      "processes": [
+        "92328",
+        "92329"
+      ],
+      "cross_process_recoveries": 7,
+      "workers": 2
+    },
+    {
+      "concurrency": 50,
+      "offered": 100,
+      "completed": 16,
+      "admission_rejected": 84,
+      "post_load_health": true,
+      "other_user_denials": 16,
+      "recoveries": 16,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1086,
+      "throughput_rps": 147.285,
+      "first_event": {
+        "p50_ms": 14.888,
+        "p95_ms": 17.796,
+        "p99_ms": 17.796
+      },
+      "complete": {
+        "p50_ms": 70.104,
+        "p95_ms": 88.474,
+        "p99_ms": 88.474
+      },
+      "processes": [
+        "92328",
+        "92329"
+      ],
+      "cross_process_recoveries": 8,
+      "workers": 2
+    },
+    {
+      "concurrency": 1,
+      "offered": 2,
+      "completed": 2,
+      "admission_rejected": 0,
+      "post_load_health": true,
+      "other_user_denials": 2,
+      "recoveries": 2,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1135,
+      "throughput_rps": 17.616,
+      "first_event": {
+        "p50_ms": 2.08,
+        "p95_ms": 2.08,
+        "p99_ms": 2.08
+      },
+      "complete": {
+        "p50_ms": 55.259,
+        "p95_ms": 55.259,
+        "p99_ms": 55.259
+      },
+      "processes": [
+        "92339"
+      ],
+      "cross_process_recoveries": 1,
+      "workers": 4
+    },
+    {
+      "concurrency": 5,
+      "offered": 10,
+      "completed": 10,
+      "admission_rejected": 0,
+      "post_load_health": true,
+      "other_user_denials": 10,
+      "recoveries": 10,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1257,
+      "throughput_rps": 79.578,
+      "first_event": {
+        "p50_ms": 2.593,
+        "p95_ms": 10.652,
+        "p99_ms": 10.652
+      },
+      "complete": {
+        "p50_ms": 59.591,
+        "p95_ms": 64.609,
+        "p99_ms": 64.609
+      },
+      "processes": [
+        "92336",
+        "92337",
+        "92338",
+        "92339"
+      ],
+      "cross_process_recoveries": 8,
+      "workers": 4
+    },
+    {
+      "concurrency": 10,
+      "offered": 20,
+      "completed": 20,
+      "admission_rejected": 0,
+      "post_load_health": true,
+      "other_user_denials": 20,
+      "recoveries": 20,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1387,
+      "throughput_rps": 144.234,
+      "first_event": {
+        "p50_ms": 4.468,
+        "p95_ms": 10.179,
+        "p99_ms": 10.179
+      },
+      "complete": {
+        "p50_ms": 64.351,
+        "p95_ms": 70.149,
+        "p99_ms": 70.149
+      },
+      "processes": [
+        "92336",
+        "92337",
+        "92338",
+        "92339"
+      ],
+      "cross_process_recoveries": 13,
+      "workers": 4
+    },
+    {
+      "concurrency": 25,
+      "offered": 50,
+      "completed": 44,
+      "admission_rejected": 6,
+      "post_load_health": true,
+      "other_user_denials": 44,
+      "recoveries": 44,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1414,
+      "throughput_rps": 311.085,
+      "first_event": {
+        "p50_ms": 7.77,
+        "p95_ms": 12.581,
+        "p99_ms": 12.674
+      },
+      "complete": {
+        "p50_ms": 65.636,
+        "p95_ms": 105.703,
+        "p99_ms": 130.125
+      },
+      "processes": [
+        "92336",
+        "92337",
+        "92338",
+        "92339"
+      ],
+      "cross_process_recoveries": 34,
+      "workers": 4
+    },
+    {
+      "concurrency": 50,
+      "offered": 100,
+      "completed": 32,
+      "admission_rejected": 68,
+      "post_load_health": true,
+      "other_user_denials": 32,
+      "recoveries": 32,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.0935,
+      "throughput_rps": 342.343,
+      "first_event": {
+        "p50_ms": 15.162,
+        "p95_ms": 20.712,
+        "p99_ms": 20.75
+      },
+      "complete": {
+        "p50_ms": 70.808,
+        "p95_ms": 86.52,
+        "p99_ms": 87.196
+      },
+      "processes": [
+        "92336",
+        "92337",
+        "92338",
+        "92339"
+      ],
+      "cross_process_recoveries": 24,
+      "workers": 4
+    }
+  ],
+  "external_calls": 0,
+  "cost_usd": 0,
+  "limitations": [
+    "No Atlas or real Engine state/SDK/model execution",
+    "No production authentication/password hashing workload",
+    "No CPU/RAM telemetry, open-loop arrival, soak, OCR or voice workload",
+    "Throughput measures chat burst only; scope/recovery checks follow after load",
+    "Native session admission and idempotency are not simulated or proved"
+  ],
+  "wall_seconds": 4.662
+}

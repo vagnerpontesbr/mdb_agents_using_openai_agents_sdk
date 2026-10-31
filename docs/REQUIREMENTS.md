@@ -96,9 +96,8 @@ calibrated candidate cache and isolated evaluator are recorded in
 [ADR-0027](adr/0027-bounded-knowledge-evaluation-cache.md) and
 [EVAL-001](tasks/EVAL-001-QUALITY.md); these are bounded demo results.
 
-There are nine phases, numbered 0–8. Phases 0–6 are published with passing CI;
-[Phase 7](tasks/RUN-001-RUNTIME.md) is complete locally for the accepted runtime
-scope. Phase 8 scalability/resilience remains pending. User-performed commit/push
+There are nine phases, numbered 0–8. Phases 0–7 are published with passing CI.
+[Phase 8](tasks/OPS-001-RESILIENCE.md) scalability/resilience is complete for the approved demo scope; manual publication is pending. User-performed commit/push
 and a pause at each completed phase remain the delivery workflow.
 
 ## Decision lookup
@@ -117,3 +116,9 @@ and a pause at each completed phase remain the delivery workflow.
 | MIT and automated handoff accepted | [ADR-0028](adr/0028-mit-automated-demo-handoff.md) |
 
 These links index decisions; policy details remain in their authoritative records.
+
+Phase 8 budget and routing decisions are authoritative in [OPS-001](tasks/OPS-001-RESILIENCE.md): USD 30 total provider consumption supersedes USD 10; Engine preview is uncharged per requester; retain direct OpenAI model and MongoDB gateway knowledge paths. Load namespace selection is recorded in [ADR-0029](adr/0029-isolated-load-environment.md). The requester approved remote resource creation; the exact plan was applied and verified.
+
+The requester clarified Phase 8 application tests use M20 and previous phases used M10. Current cluster-specific observations and the historical limitation are recorded in [OPS-001](tasks/OPS-001-RESILIENCE.md), including the separate Engine-memory tier. The requester authorized continuing the bounded phase without further questions; this does not turn unavailable billing or unexecuted profiles into accepted results.
+
+Final Phase 8 scope: the requester explicitly excluded production-capacity and pricing proof and requested committing the work. [OPS-001](tasks/OPS-001-RESILIENCE.md) records the superseded billing gate and completed demo acceptance. Historical unknown costs and test limitations remain unchanged; manual publication is pending.

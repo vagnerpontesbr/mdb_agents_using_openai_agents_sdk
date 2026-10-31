@@ -45,3 +45,5 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0027](0027-bounded-knowledge-evaluation-cache.md) | Bounded contextual candidate cache and isolated quality evaluation | Bounded Phase 5 acceptance passed |
 
 | [ADR-0028](0028-mit-automated-demo-handoff.md) | MIT license and accepted automated demo handoff | Accepted by requester; Phase 6 and correction CI passed |
+
+| [ADR-0029](0029-isolated-load-environment.md) | Explicit isolated load namespaces and scoped identities | Approved resources applied; bounded role/domain checks passed |

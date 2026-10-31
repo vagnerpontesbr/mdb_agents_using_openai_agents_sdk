@@ -152,7 +152,7 @@ All 75 compatibility tests passed locally with frozen Python dependencies and
 local-port access. The user must commit/push the correction before remote CI
 can be verified. This supersedes the preceding Phase 6 publication-pending note.
 
-## Current checkpoint — Phase 6 CI passed, Phase 7 complete locally
+## Historical checkpoint — Phase 6 CI passed, Phase 7 complete locally
 
 On 2026-10-31 the clean local branch and GitHub CI head matched
 `a4f5c4c6c0903003f53903985a1218f7cab82e94`. Both jobs passed in
@@ -163,3 +163,20 @@ This supersedes the preceding pending correction note.
 deployment and 86 local contract tests. Phase 7 documentation/evidence and the
 decision reconciliation are local changes; no new commit, push or deployment is
 claimed. Phase 8 remains pending and must wait for the manual publication gate.
+
+## Phase 7 publication verified; Phase 8 in progress
+
+Commit `610ca8babde73ae7fa61fdc97e24dc22ca233136` is published and both jobs passed
+in [CI 41207595549](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41207595549).
+The tree was clean before Phase 8 work. This supersedes the Phase 7 publication
+pending note. [OPS-001](../tasks/OPS-001-RESILIENCE.md) contains locally authored
+Phase 8 scripts, namespace controls and measured evidence. Phase 8 source changes
+remain uncommitted and unpublished; no hosted redeployment is claimed. The approved
+Atlas provisioning was completed as recorded below. Full acceptance is pending.
+
+Phase 8 follow-up: the approved load resources were subsequently applied after
+Atlas CLI login renewal. Role/index and bounded ingestion/cache checks passed;
+see OPS-001. These remote Atlas changes are distinct from local source changes.
+No Phase 8 commit/push or hosted redeployment has been performed.
+
+Phase 8 bounded sustained, real Atlas read and speech-contention profiles subsequently passed. Local validation passed 138 backend and 86 hosted contract tests. The requester subsequently excluded production-capacity and pricing proof from acceptance, completing Phase 8 for the demo scope. No new Git/CI publication or hosted deployment is claimed. The measured reports and limitations are authoritative in OPS-001.

@@ -1,6 +1,6 @@
 # RUN-001: Engine runtime target
 
-- Status: Complete for the bounded demo; Phase 7 documentation/evidence awaiting manual publication
+- Status: Complete and published as `610ca8b` with passing CI `41207595549`
 - Owner: Telecom demo maintainer
 - Dependencies: COMP-003, VERT-001/002, MEM-001, RAG-001, EVAL-001, REL-001
 - Decisions: [ADR-0018](../adr/0018-engine-feature-precedence.md), [ADR-0021](../adr/0021-demo-semantic-episodic-continuity.md), [ADR-0022](../adr/0022-demo-private-engine-cli-identity.md), [ADR-0025](../adr/0025-phase-two-journey.md)
@@ -60,3 +60,5 @@ not a runtime code change. Stop for manual commit/push before Phase 8.
 Final documentation checks passed: 80 Markdown files, 28 ADRs and `git diff --check`.
 The initial ADR validation identified missing standard sections; these were added
 and the checker then passed. No application code changed in this phase.
+
+Phase 7 publication was subsequently verified; [OPS-001](OPS-001-RESILIENCE.md) owns ongoing Phase 8 work. The source hashes and runtime observations above describe the Phase 7 checkpoint, not later local edits.

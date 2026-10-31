@@ -1,0 +1,15 @@
+{
+  "version": "http-mock-v1",
+  "purpose": "characterization, not SLO or production capacity acceptance",
+  "workers": [1, 2, 4],
+  "concurrency": [1, 5, 10, 25, 50],
+  "requests_per_client": 2,
+  "timeout_seconds": 10,
+  "max_chat_requests": 600,
+  "max_wall_seconds": 180,
+  "provider_delay_seconds": 0.05,
+  "expected_text": "Synthetic transport response.",
+  "invariants": ["exact synthetic result", "other user denied", "latest execution recovered", "injected failure never reported as success"],
+  "external_provider_calls": 0,
+  "external_cost_usd": 0
+}

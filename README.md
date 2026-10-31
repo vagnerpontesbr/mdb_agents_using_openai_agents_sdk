@@ -5,9 +5,8 @@ MongoDB Agent Engine for managed platform capabilities, MongoDB Atlas, Voyage AI
 and Python managed by uv. The bounded implementation includes a supervisor,
 financial/technical/sales specialists, React chat/voice, and governed PDF retrieval.
 
-**Phases 0–6 are published with passing CI. Phase 7 runtime acceptance is complete
-for the bounded demo, with documentation/evidence awaiting manual publication.
-Phase 8 scalability/resilience remains pending.** Start with
+**Phases 0–7 are published with passing CI. Phase 8 scalability/resilience is complete for the approved demo scope; manual publication is pending: [OPS-001](docs/tasks/OPS-001-RESILIENCE.md) records short local HTTP
+characterization, sustained/Atlas/voice acceptance and the final requester scope decision.** Start with
 [the handoff runbook](docs/runbooks/PHASE_6.md), then read the
 [current runtime contract](docs/runbooks/PHASE_7.md) and
 [acceptance evidence](docs/tasks/RUN-001-RUNTIME.md).

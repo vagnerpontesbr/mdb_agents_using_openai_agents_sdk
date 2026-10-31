@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "tenant": "phase8-cache-b912528dcbbb4c7b8f9e7dc00f0c99f0",
+  "checks": {
+    "native_cache_positive_control": true,
+    "tenant_and_acl_cache_denials": true,
+    "four_inflight_cache_responses_blocked_after_revocation": true
+  },
+  "provider_calls": 0,
+  "limitations": [
+    "Synthetic vectors do not measure embedding/retrieval quality",
+    "Reranking uses a controlled barrier, not a provider call",
+    "Synthetic approval receipts are fixtures, not new native-review evidence",
+    "Fixtures remain only in isolated load namespaces"
+  ]
+}

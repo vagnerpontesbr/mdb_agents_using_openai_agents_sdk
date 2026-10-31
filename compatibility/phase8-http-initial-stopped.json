@@ -1,0 +1,107 @@
+{
+  "status": "stopped",
+  "profile": {
+    "version": "http-mock-v1",
+    "purpose": "characterization, not SLO or production capacity acceptance",
+    "workers": [
+      1,
+      2,
+      4
+    ],
+    "concurrency": [
+      1,
+      5,
+      10,
+      25,
+      50
+    ],
+    "requests_per_client": 2,
+    "timeout_seconds": 10,
+    "max_requests": 600,
+    "max_wall_seconds": 180,
+    "provider_delay_seconds": 0.05,
+    "expected_text": "Synthetic transport response.",
+    "invariants": [
+      "exact synthetic result",
+      "other user denied",
+      "latest execution recovered",
+      "injected failure never reported as success"
+    ],
+    "external_provider_calls": 0,
+    "external_cost_usd": 0
+  },
+  "profile_sha256": "ebebfceedff5d7b0659df5d2f54af650d5c2fea3b148d3765834225b44c90602",
+  "git_head": "610ca8babde73ae7fa61fdc97e24dc22ca233136",
+  "started_at": "2026-10-31T13:55:40.848393+00:00",
+  "environment": {
+    "python": "3.15.2",
+    "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+    "cpu_count": 12,
+    "loop": "closed",
+    "providers": "doubles"
+  },
+  "lock_sha256": "2bfcd0fd1ecffebfded95a62e1496c6dabb3728db1b40c4c02218420317a1190",
+  "stages": [
+    {
+      "concurrency": 1,
+      "offered": 2,
+      "completed": 2,
+      "other_user_denials": 2,
+      "recoveries": 2,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1409,
+      "throughput_rps": 14.19,
+      "first_event": {
+        "p50_ms": 1.772,
+        "p95_ms": 1.772,
+        "p99_ms": 1.772
+      },
+      "complete": {
+        "p50_ms": 56.879,
+        "p95_ms": 56.879,
+        "p99_ms": 56.879
+      },
+      "processes": [
+        "91461"
+      ],
+      "cross_process_recoveries": 0,
+      "workers": 1
+    },
+    {
+      "concurrency": 5,
+      "offered": 10,
+      "completed": 10,
+      "other_user_denials": 10,
+      "recoveries": 10,
+      "injected_failure_correct": true,
+      "wall_seconds": 0.1477,
+      "throughput_rps": 67.711,
+      "first_event": {
+        "p50_ms": 5.0,
+        "p95_ms": 6.291,
+        "p99_ms": 6.291
+      },
+      "complete": {
+        "p50_ms": 61.158,
+        "p95_ms": 64.982,
+        "p99_ms": 64.982
+      },
+      "processes": [
+        "91461"
+      ],
+      "cross_process_recoveries": 0,
+      "workers": 1
+    }
+  ],
+  "external_calls": 0,
+  "cost_usd": 0,
+  "limitations": [
+    "No Atlas or real Engine state/SDK/model execution",
+    "No production authentication/password hashing workload",
+    "No CPU/RAM telemetry, open-loop arrival, soak, OCR or voice workload",
+    "Throughput includes scope/recovery verification traffic",
+    "Native session admission and idempotency are not simulated or proved"
+  ],
+  "error_type": "AssertionError",
+  "wall_seconds": 0.912
+}

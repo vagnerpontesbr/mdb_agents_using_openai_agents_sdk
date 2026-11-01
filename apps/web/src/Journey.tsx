@@ -26,7 +26,7 @@ function execution(value: unknown): Execution {
 }
 
 export default function Journey({ user, active = true }: { user: Principal; active?: boolean }) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [conversation, setConversation] = useState(() => {
     const key = `telecom-conversation-${user.user_id}`;
     const saved = sessionStorage.getItem(key);
@@ -36,6 +36,9 @@ export default function Journey({ user, active = true }: { user: Principal; acti
   const [available, setAvailable] = useState(false);
   const [voice, setVoice] = useState(false);
   const [draft, setDraft] = useState('');
+  const [draftLocale, setDraftLocale] = useState<Locale | null>(null);
+  const recordingLocale = useRef<Locale>('en-US');
+  const playbackGeneration = useRef(0);
   const [busy, setBusy] = useState(false);
   const [recoveryRequired, setRecoveryRequired] = useState(true);
   const [message, setMessage] = useState('Checking support availability…');
@@ -53,7 +56,7 @@ export default function Journey({ user, active = true }: { user: Principal; acti
     visible.current = active;
     if (!active) {
       const recorder = capture.current; capture.current = null;
-      void recorder?.cancel(); audio.current?.pause();
+      void recorder?.cancel(); playbackGeneration.current++; audio.current?.pause();
       setRecording(false);
       if (recorder) setMessage('Recording discarded when leaving Support.');
     }
@@ -114,11 +117,12 @@ export default function Journey({ user, active = true }: { user: Principal; acti
     try {
       const response = await fetch('/api/journey/chat', { method: 'POST', credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ conversation_id: conversation, message: draft }),
+        body: JSON.stringify({ conversation_id: conversation, message: draft,
+          ...(draftLocale ? { audio_locale: draftLocale } : {}) }),
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(150_000)]) });
       if (response.status === 401) window.dispatchEvent(new Event('telecom-session-expired'));
       if (!response.ok || !response.body) throw new Error('Support request was not accepted.');
-      setDraft('');
+      setDraft(''); setDraftLocale(null);
       const reader = response.body.getReader(); const decoder = new TextDecoder();
       let buffer = ''; let complete = false;
       while (true) {
@@ -172,7 +176,7 @@ export default function Journey({ user, active = true }: { user: Principal; acti
     const id = crypto.randomUUID();
     sessionStorage.setItem(`telecom-conversation-${user.user_id}`, id);
     audio.current?.pause();
-    setRecoveryRequired(true); setCurrent(null); setHistory([]); setDraft('');
+    setRecoveryRequired(true); setCurrent(null); setHistory([]); setDraft(''); setDraftLocale(null);
     setConversation(id);
   }
 
@@ -191,28 +195,33 @@ export default function Journey({ user, active = true }: { user: Principal; acti
     const active = capture.current; capture.current = null; setRecording(false);
     if (!active) return;
     if (cancel) { await active.cancel(); setMessage('Recording discarded.'); return; }
+    const capturedLocale = recordingLocale.current;
     setBusy(true);
     try {
       const pcm = await active.finish();
-      const result = await request('/api/voice/transcribe', { pcm_base64: pcm }) as { text: string };
-      setDraft(result.text); setMessage('Review the transcript, then choose Send.');
+      const result = await request('/api/voice/transcribe', { pcm_base64: pcm, locale: capturedLocale }) as { text: string; locale: Locale };
+      if (!mounted.current || !visible.current) return;
+      if (result.locale !== capturedLocale || typeof result.text !== 'string') throw new Error('Invalid transcript');
+      setDraft(result.text); setDraftLocale(capturedLocale); setMessage('Review the transcript, then choose Send.');
     } catch { setMessage('Speech could not be recognized. Try once more in a quiet room or use text.'); }
     finally { setBusy(false); }
   }
 
   async function record() {
+    recordingLocale.current = locale;
     setBusy(true);
     try {
       const active = await startRecording(() => { void finishRecording(); });
       if (!mounted.current || !visible.current) { await active.cancel(); return; }
       capture.current = active;
-      setRecording(true); setMessage('Recording — speak in English. Maximum 15 seconds.');
+      setRecording(true); setMessage('Recording. Maximum 15 seconds.');
     } catch { setMessage('Microphone unavailable or permission denied. You can continue with text.'); }
     finally { setBusy(false); }
   }
 
   async function speak() {
     if (!current?.execution_id) return;
+    const generation = ++playbackGeneration.current;
     setBusy(true);
     try {
       const response = await fetch('/api/voice/speak', { method: 'POST', credentials: 'same-origin',
@@ -221,7 +230,7 @@ export default function Journey({ user, active = true }: { user: Principal; acti
       if (response.status === 401) window.dispatchEvent(new Event('telecom-session-expired'));
       if (!response.ok) throw new Error();
       const blob = await response.blob();
-      if (!mounted.current || !visible.current) return;
+      if (!mounted.current || !visible.current || generation !== playbackGeneration.current) return;
       audio.current?.pause(); if (audioUrl.current) URL.revokeObjectURL(audioUrl.current);
       audioUrl.current = URL.createObjectURL(blob);
       audio.current = new Audio(audioUrl.current); await audio.current.play();
@@ -251,11 +260,12 @@ export default function Journey({ user, active = true }: { user: Principal; acti
         <p className="result" lang={current.locale}>{current.text}</p></>}
       {voice && current.status === 'completed' && <div className="actions">
         <button disabled={busy} onClick={() => { void speak(); }}>{t("Play response")}</button>
-        <button className="secondary" onClick={() => audio.current?.pause()}>{t("Stop playback")}</button>
+        <button className="secondary" onClick={() => { playbackGeneration.current++; audio.current?.pause(); }}>{t("Stop playback")}</button>
       </div>}
     </div>}
+    {(recording || draftLocale) && <p className="audio-language">{t("Audio language:")} {t(languageNames[recording ? recordingLocale.current : draftLocale!])}</p>}
     <label>{t("Your message")}<textarea value={draft} maxLength={4000} rows={3}
-      onChange={event => setDraft(event.target.value)} disabled={!available || busy || !!waiting || recording}
+      onChange={event => { setDraft(event.target.value); if (!event.target.value) setDraftLocale(null); }} disabled={!available || busy || !!waiting || recording}
       placeholder={t("Read invoice demo-1 and check my slow connection.")} /></label>
     <div className="actions">
       <button disabled={!available || busy || !!waiting || recording || !draft.trim()} onClick={() => { void send(); }}>{t("Send")}</button>
@@ -268,6 +278,7 @@ export default function Journey({ user, active = true }: { user: Principal; acti
       <button className="secondary" disabled={!available || busy || recording || !!waiting}
         onClick={newConversation}>{t("New conversation")}</button>
     </div>
+    {voice && <p className="hint">{t("The spoken response is AI-generated.")}</p>}
     <p className="hint">{t("Leaving Support discards microphone recording and stops playback. Your conversation remains active.")}</p>
     <p className="hint">{t("Stopping playback or waiting does not cancel accepted remote work. No automatic resubmission.")}</p>
     <p className="hint">{t("New conversations may recall selected earlier facts. Full chat history is not restored, and new memories may take time to become available.")}</p>

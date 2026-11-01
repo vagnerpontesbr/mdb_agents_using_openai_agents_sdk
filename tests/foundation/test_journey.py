@@ -3,7 +3,7 @@
 import base64
 import copy
 import json
-from unittest.mock import Mock
+from unittest.mock import AsyncMock, Mock
 from uuid import uuid4
 
 import pytest
@@ -315,3 +315,55 @@ def test_localized_invocation_requires_native_input_roundtrip(journey):
     with pytest.raises(JourneyConflict, match="Invocation message mismatch"):
         service.send(token, conversation, "demo-1")
     engine.invoke.assert_called_once()
+
+
+@pytest.mark.parametrize("locale", ["en-US", "pt-BR", "es-ES"])
+def test_audio_locale_survives_profile_change_and_tts_uses_execution(identity, journey, locale):
+    from telecom_app.turn_locale import Turn
+    from telecom_app.voice import VoiceService
+
+    service, engine, row, _, conversation = journey
+    service.localized_turns = True
+    speech = Mock(spec=VoiceService)
+    speech.transcribe = AsyncMock(return_value="Read demo-1")
+    speech.speak = AsyncMock(return_value=b"synthetic WAV")
+    app = create_app(Settings(URI), identity, service)
+    with TestClient(app, base_url=ORIGIN, headers={"Origin": ORIGIN}) as client:
+        app.state.voice = speech
+        body = {"pcm_base64": "synthetic", "locale": locale}
+        assert client.post("/api/voice/transcribe", json=body).status_code == 401
+        speech.transcribe.assert_not_called()
+        login(client)
+        assert client.post("/api/voice/transcribe", json=body).json() == {
+            "text": "Read demo-1", "locale": locale}
+        speech.transcribe.assert_awaited_once_with("synthetic", locale)
+        wire = Turn(locale=locale, message="Read demo-1").wire()
+        row["message"] = wire
+        result = json.loads(row["result"])
+        result["locale"] = locale
+        row["result"] = json.dumps(result)
+        # Profile remains English; voice snapshot is independent presentation context.
+        response = client.post("/api/journey/chat", json={
+            "conversation_id": str(conversation), "message": "Read demo-1", "audio_locale": locale})
+        assert "event: result" in response.text
+        assert engine.invoke.call_args.args[-1] == wire
+        response = client.post("/api/voice/speak", json={"execution_id": row["execution_id"]})
+        assert response.status_code == 200 and response.headers["Content-Language"] == locale
+        speech.speak.assert_awaited_once_with("Verified fixture.", locale)
+        row["user_id"] = "other"
+        assert client.post("/api/voice/speak", json={
+            "execution_id": row["execution_id"]}).status_code == 403
+        assert speech.speak.await_count == 1
+        for path, invalid in [
+            ("/api/voice/transcribe", {**body, "locale": "fr-FR"}),
+            ("/api/journey/chat", {"conversation_id": str(conversation),
+                                    "message": "x", "audio_locale": "fr-FR"}),
+        ]:
+            assert client.post(path, json=invalid).status_code == 400
+        service.localized_turns = False
+        assert client.post("/api/voice/transcribe", json={
+            **body, "locale": "pt-BR"}).status_code == 409
+        assert client.post("/api/journey/chat", json={
+            "conversation_id": str(conversation), "message": "x", "audio_locale": "pt-BR"
+        }).status_code == 409
+        assert speech.transcribe.await_count == 1

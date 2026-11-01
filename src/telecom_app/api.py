@@ -43,6 +43,7 @@ from .journey import (
 from .knowledge_publication import PublicationConflict
 from .profile import PasswordInput, ProfileInput, ProfileView
 from .security import Boundary
+from .turn_locale import validated_locale
 from .voice import AudioInput, VoiceService
 
 COOKIE = "telecom_session"
@@ -326,6 +327,10 @@ def create_app(
         handler = journey_service(request)
         session_token = token(request)
         locale = handler.turn_locale(session_token)
+        if data.audio_locale is not None:
+            if not handler.localized_turns and data.audio_locale != "en-US":
+                raise JourneyConflict("Localized voice is not enabled")
+            locale = data.audio_locale
 
         async def stream() -> AsyncIterator[str]:
             yield (
@@ -365,13 +370,15 @@ def create_app(
 
     @app.post("/api/voice/transcribe")
     async def transcribe(data: AudioInput, request: Request) -> dict[str, str]:
-        journey_service(request)
+        handler = journey_service(request)
+        if not handler.localized_turns and data.locale != "en-US":
+            raise JourneyConflict("Localized voice is not enabled")
         speech: VoiceService | None = app.state.voice
         if speech is None:
             raise EngineUnavailable("Voice is not configured")
-        result = await speech.transcribe(data.pcm_base64)
+        result = await speech.transcribe(data.pcm_base64, data.locale)
         service().principal(token(request))
-        return {"text": result}
+        return {"text": result, "locale": data.locale}
 
     @app.post("/api/voice/speak")
     async def speak(data: ExecutionInput, request: Request) -> Response:
@@ -380,9 +387,11 @@ def create_app(
         speech: VoiceService | None = app.state.voice
         if result["status"] != "completed" or speech is None:
             raise JourneyConflict("Only a completed result can be spoken")
-        audio = await speech.speak(str(result["text"]))
+        locale = validated_locale(result.get("locale", "en-US"))
+        audio = await speech.speak(str(result["text"]), locale)
         service().principal(token(request))
-        return Response(audio, media_type="audio/wav")
+        return Response(audio, media_type="audio/wav",
+                        headers={"Content-Language": locale})
 
     if settings.web_dist is not None:
         index = settings.web_dist / "index.html"

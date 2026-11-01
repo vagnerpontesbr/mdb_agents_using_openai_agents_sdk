@@ -1,6 +1,6 @@
 # UI-001: Profile navigation and application Control Plane
 
-- Status: UI-0 through UI-2c merged; multilingual inventory in progress
+- Status: UI-0 through UI-2c merged; LANG-3 bounded demo accepted, publication pending; UI-3 next
 - Owner: Telecom demo maintainer
 - Requested: 2026-11-01
 - Branch: `codex/ui-profiles-control-plane`
@@ -593,3 +593,9 @@ UI-2c source commit `8ccc58b` passed both repository/application jobs in CI runs
 `41328839804` and `41328845361`. PR #9 merged as `16681b9`; no remote check failed.
 This is integration evidence, not deployment to existing identity-serving processes.
 The next bounded work is LANG-0; see the [multilingual rollout](../runbooks/MULTILINGUAL.md).
+
+
+LANG-3 scope exception: the requester explicitly accepted the real three-language
+voice demo and regression evidence in place of the complete nine-case matrix.
+[I18N-001](I18N-001-MULTILINGUAL.md) records the decision and limitations. This does
+not waive UI-3, Tokenomics, memory-migration or UI-4 gates.

@@ -30,12 +30,12 @@ from telecom_app.voice import pcm_bytes
 class VoiceDouble:
     """Validate real PCM/WAV transport with a tone, without claiming speech quality."""
 
-    async def transcribe(self, encoded):
+    async def transcribe(self, encoded, locale="en-US"):
         pcm_bytes(encoded)
         await asyncio.sleep(0.05)
         return "Synthetic transport request."
 
-    async def speak(self, text):
+    async def speak(self, text, locale="en-US"):
         if text != "Synthetic transport response.":
             raise ValueError("Unexpected synthetic speech source")
         await asyncio.sleep(0.05)

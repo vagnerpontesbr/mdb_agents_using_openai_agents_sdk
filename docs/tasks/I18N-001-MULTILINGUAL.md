@@ -1,6 +1,6 @@
 # I18N-001: Portuguese, English and Spanish across UI, responses and voice
 
-- Status: LANG-0, LANG-2a and LANG-2b merged; LANG-2c source contracts locally validated, approved Atlas validators applied and three multilingual sources published/verified; LANG-2 hosted/HTTP acceptance passed; PR integration and LANG-3 pending
+- Status: LANG-3 accepted for bounded three-language demo; publication/CI pending; full nine-case matrix explicitly excluded from this acceptance
 - Date: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 profile preferences, existing journey/voice contracts
@@ -453,3 +453,208 @@ The first staged diff check treated the ASCII-compatible PDF containers as text
 and flagged required PDF cross-reference whitespace. Added `*.pdf binary` in
 .gitattributes to preserve exact governed bytes and prevent text/EOL transformations;
 no approved PDF bytes or hashes were changed. The staged diff check then passed.
+
+
+### LANG-3 captured voice locale — local implementation
+
+LANG-2c merged in PR #13 (`c52e2de`); source `d082518` passed repository/application
+CI runs 41353158850 and 41353163271 with no failures. Those runs do not validate LANG-3.
+
+[LANG-3 runbook](../runbooks/LANG_3_VOICE.md) owns the new voice transport, draft
+snapshot, TTS execution-locale contract and concrete live acceptance proposal.
+Recording language survives profile changes during capture and transcription;
+editing the transcript retains its language, while clearing it resets text admission.
+No new model, Engine workflow, memory store or provider routing is introduced.
+
+Local checks on 2026-11-01:
+
+| Command | Result / scope |
+| --- | --- |
+| `uv run --frozen pytest -q` | 236 passed before adding evaluator safety tests; final results below |
+| `uv run --frozen ruff check src/telecom_app tests/foundation` | Passed after correcting two E501 lines |
+| `uv run --frozen mypy` | Passed, 30 source files |
+| `npm --prefix apps/web run lint` | Passed |
+| `npm --prefix apps/web test` | 6 passed; catalogs and interface contract |
+| `npm --prefix apps/web run build` | TypeScript and production build passed |
+| `TELECOM_TEST_PORT=53189 npm --prefix apps/web run test:e2e` | 23 passed; original regressions plus three recording/transcription locale switches; expanded cancellation/error cases rerun below |
+
+Failure record: the first uv invocation was blocked by sandbox cache access; the
+approved escalation ran successfully. The first focused backend run passed 37 tests
+and failed `test_voice_transport_retains_pcm_validation_and_execution_scope`: it
+expected text alone, while the new endpoint correctly also returns `locale: en-US`.
+Updated the fixture contract; the complete 236-test rerun passed. Ruff reported two
+E501 lines (API speech call and test signature); wrapping them fixed the check. No
+provider evaluation or human listening occurred. Browser doubles and generated WAV
+tones establish transport/lifecycle only. Hosted contracts were not rerun because
+no hosted adapter/workflow changed; their previous 96-test result is not new evidence.
+
+Remaining gate: authorize the exact bounded live proposal, execute it and obtain
+actual human listening acceptance, then publish/verify CI. Do not declare LANG-3
+complete or start the next phase while that gate remains open.
+
+
+Final backend rerun: **238 passed**, including evaluator call bounds, refusal to
+reuse an existing evidence directory and immediate stop after an uncertain provider
+failure with sanitized error evidence. Ruff (application/tests and evaluator F/I)
+passed. The evaluator dry-run printed the exact three synthetic texts and six-call
+cap with zero provider requests. Expanded browser rerun passed all three locale
+cases with microphone denial, explicit cancellation, preserved drafts, one-send
+semantics and failed transcription without retry. Repository check passed for
+95 Markdown files / 33 ADRs, and diff whitespace check passed.
+
+
+`TELECOM_TEST_PORT=53189 npm --prefix apps/web run test:e2e -- --grep 'voice snapshot'`
+passed three expanded cases. `TELECOM_TEST_PORT=53189 npm --prefix apps/web run
+test:e2e -- --grep 'stop playback prevents'` passed the additional pending-download
+cancellation case. These targeted runs supplement the previous full 23-test suite;
+there was no subsequent full 24-test run. Frontend lint passed after these additions.
+No browser behavior test failed. Final repository/diff checks passed. Changes remain
+local and uncommitted; no LANG-3 remote CI or live speech acceptance is claimed.
+
+
+### LANG-3 authorized live gate — failed semantic amount check
+
+The requester approved the exact envelope with "sim autorizo". Executed
+`uv run --env-file .env --frozen python scripts/check_multilingual_voice.py --allow-provider-calls`:
+six speech requests completed in 11.85 seconds, without retries. No hosted invocation
+was made. English USD 79.90 returned as USD 7,990; Portuguese Marta returned as
+Martha. Spanish transcript semantics passed, with human listening still pending.
+This is a real provider semantic failure, not a fixture or infrastructure failure.
+No correction or successful rerun is claimed. Continued live work stopped pending
+listening to identify TTS versus STT responsibility. Full results, limits and exact
+hashes: [LANG-3 runbook](../runbooks/LANG_3_VOICE.md) and
+[reviewed evidence](../../compatibility/lang3-voice-evidence.json).
+
+
+Requester subsequently reported Spanish speech in en-US.wav: English human listening
+failed. Original hashes match. Added real-SDK HTTP serialization tests (MockTransport,
+zero provider calls); all three show correct text/language instructions on the wire.
+A stronger single-language/monetary-decimal TTS instruction is locally authored,
+not live-validated. `uv run --frozen pytest -q tests/foundation/test_voice.py` passed
+28 tests and Ruff passed. No behavioral check failed in this follow-up; a tool-call
+JavaScript syntax error occurred before execution and was corrected without effects.
+A one-request English retest is prepared in `/tmp/telecom_lang3_english_retest.py`,
+but remains unexecuted pending explicit bounded retry approval. See LANG-3 runbook.
+
+
+### Authorized single English TTS retest
+
+The requester approved the bounded retest with "sim". Executed
+`uv run --env-file .env --frozen python /tmp/telecom_lang3_english_retest.py`.
+Exactly one TTS request returned in 2.71 seconds; zero STT requests,
+zero hosted invocations and no retry. Local WAV inspection verified mono 24kHz
+16-bit audio (8.95 seconds) and the recorded SHA-256.
+[Retest evidence](../../compatibility/lang3-english-retest-evidence.json) records transport only: requester listening for English
+and USD 79.90 remains pending. The original failed audio/evidence was preserved.
+No commit, deployment or successful semantic correction is claimed.
+
+
+The requester subsequently answered "sim" to the explicit checks for English speech
+and 79 dollars / 90 cents. The single English TTS retest therefore passed human
+listening for language and amount. This does not supersede the original failed
+round-trip evidence or establish corrected STT, Portuguese/Spanish listening, or
+the nine-case microphone walkthrough. No additional provider request was made.
+
+
+The requester confirmed "sim os dois audios estao corretos" for the existing
+Portuguese and Spanish samples, explicitly asked about language, clarity and
+USD 79.90. Both original samples passed human listening for those criteria.
+Together with the separate corrected English sample, all three languages now have
+listening evidence. Portuguese/Spanish were generated before the revised TTS
+instruction; this is not acceptance of the revised instruction across all locales.
+The original English STT amount failure and Portuguese name spelling difference
+remain recorded. Corrected English STT and the browser microphone walkthrough
+remain unperformed. No provider calls or deployments occurred in this update.
+
+
+### Renewed microphone acceptance window
+
+Requester approved 19 speech requests and 9 hosted invocations within 30 minutes.
+One STT request transcribed the corrected English WAV in 2.61 seconds:
+Marta, fiber 500, USD 79.90, December 1st 2026 and the negation were preserved.
+[Evidence](../../compatibility/lang3-stt-retest-evidence.json) records semantic review.
+The initial read-only Engine preflight failed with EngineUnavailable; the existing
+private CLI refresh succeeded, and a second read verified deploy-f11e4d01 healthy.
+No deployment was performed and no credentials were printed.
+
+Started a temporary loopback application at http://127.0.0.1:53191; startup and
+GET / returned HTTP 200. Existing servers were preserved. Its temporary wrapper
+limits further speech admissions to 18 and chat admissions to 9, until 19:42:47
+America/Sao_Paulo on 2026-11-01; counters conservatively count even rejected requests.
+Approval decisions are blocked; rejection remains available for test simulations.
+No raw microphone audio or transcript is logged by the wrapper. Admission counts
+live in ignored artifacts/lang3-browser-window/http-admissions.json. The wrapper
+is an operator test harness, not a shipped application rate-limit implementation.
+Browser microphone/listening acceptance remains pending requester participation.
+
+
+### Requester browser feedback — coverage reconciliation pending
+
+The requester reported "os testes foram ok". The isolated server ledger recorded
+4 transcription admissions, 4 chat admissions and 2 playback admissions, all HTTP
+200. [Snapshot evidence](../../compatibility/lang3-browser-evidence.json) retains
+only counts/routes/statuses. It cannot identify locale/case or establish a successful
+SSE result from HTTP status alone. This is less than the proposed nine-case script,
+so explicit mapping of the completed cases was requested before closing the gate.
+Do not report nine passed browser voice cases or silently waive the remaining
+coverage. The server remains open within its original deadline for clarification;
+no additional provider calls were initiated by the agent in this update.
+
+
+Final local regression after the revised TTS instruction and HTTP serialization
+tests: `uv run --frozen pytest -q` passed **241 tests**; Ruff passed and mypy passed
+for 30 source files. Frontend lint passed, Vitest passed **6 tests**, and TypeScript/
+Vite production build passed. The complete isolated Playwright suite
+(`TELECOM_TEST_PORT=53189 npm --prefix apps/web run test:e2e`) passed **24 tests**,
+including all expanded voice cases. No check in this rerun failed. Repository links/
+ADR structure and diff whitespace checks passed. This is local evidence only;
+remote CI/publication and the live nine-case coverage reconciliation remain pending.
+
+
+### Three-language browser confirmation
+
+The requester clarified that the initial working tests were English and Portuguese,
+then tested the Spanish invoice prompt and reported that it worked. The updated
+ledger shows 5 transcription admissions, 5 chat admissions and 3 playback admissions,
+all HTTP 200. Semantic success and the language mapping come from requester feedback,
+not from HTTP status. Browser microphone/response functionality is now requester-
+confirmed in all three locales.
+
+The renewed window used one separate English STT request plus eight browser speech
+admissions and five chat admissions, within the authorized 19/9 caps. No new calls
+were initiated during this evidence update. The complete nine-case invoice/negation/
+simulation matrix is not established by these observations and must not be reported
+as nine passed cases. The original failure and subsequent corrections remain intact.
+No new automated test rerun is needed for this documentation-only update; repository
+and diff checks are run separately. Changes remain local, without LANG-3 remote CI.
+
+
+### Phase-boundary review
+
+The requester asked to continue to the end of the plan. Because UI-001 gate rule 1
+requires every agreed scenario and the nine-case voice matrix is not established,
+asked whether to accept the demonstrated three-language demo scope or retain the
+full matrix. No waiver is inferred from the general instruction to continue.
+Next-phase implementation and phase completion remain pending that decision.
+
+`uv build --no-build-isolation` produced wheel and source distribution; `uv pip check`
+passed for 59 packages. The first compatibility run reported four failures in
+VoiceHttpFaultTests: disconnect preservation, input rejection attempt bounds,
+provider timeout and silent/malformed PCM. Each failed waiting for server readiness
+because sandbox socket binding raised PermissionError; no behavioral assertion
+was reached. The identical approved escalation rerun passed all 75 compatibility
+tests without code changes. GitHub PR read initially failed sandbox network access;
+the approved rerun succeeded and found no LANG-3 PR. No publication was attempted.
+
+The same validation command also passed all 15 demo-authentication tests.
+
+
+### Final scope decision — requester accepted
+
+The requester answered "sim aceito" to closing LANG-3 with the demonstrated English,
+Portuguese and Spanish demo plus deterministic regression gates, while retaining
+incomplete nine-case coverage as an explicit limitation. This supersedes the broader
+LANG-3 matrix requirement for this demo only; other phase gates remain unchanged.
+Functional acceptance is complete. Publication and remote CI remain separate gates.
+Original speech failures, Portuguese name spelling variation and non-deterministic
+pronunciation remain documented; no guarantee of error-free speech is claimed.

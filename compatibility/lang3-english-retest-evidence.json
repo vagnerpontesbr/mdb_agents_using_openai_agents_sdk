@@ -1,0 +1,23 @@
+{
+  "status": "requester_listening_passed",
+  "tts_requests_started": 1,
+  "stt_requests": 0,
+  "hosted_invocations": 0,
+  "listening": {
+    "status": "passed",
+    "reviewer": "requester",
+    "response": "sim",
+    "confirmed": [
+      "English speech",
+      "USD 79.90 pronounced as 79 dollars and 90 cents"
+    ],
+    "scope": "Single English TTS retest; not STT or microphone walkthrough acceptance"
+  },
+  "locale": "en-US",
+  "elapsed_seconds": 2.71,
+  "wav_sha256": "3b4fefa01e324ca6c74f1924d7f980376447337e17352c41a6a3c87cd15ab9cf",
+  "duration_seconds": 8.95,
+  "authorization": "Requester explicitly approved one English TTS request, two minutes, no STT or hosted execution.",
+  "budget_ceiling_increased": false,
+  "source_text": "Marta, do not change fiber-500. The total is USD 79.90, due December 1, 2026."
+}

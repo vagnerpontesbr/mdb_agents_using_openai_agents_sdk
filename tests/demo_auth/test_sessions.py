@@ -18,8 +18,17 @@ class SessionStore(Store):
         if (not user or user["user_id"] != user_id or user.get("active") is not True
                 or user.get("profile_revision", 0) != expected_revision):
             return False
-        user["profile"] = copy.deepcopy(values)
+        user.setdefault("profile", {}).update(copy.deepcopy(values))
         user["profile_revision"] = expected_revision + 1
+        return True
+
+    def update_avatar(self, email, user_id, expected_revision, content):
+        if not self.update_profile(email, user_id, expected_revision, {}):
+            return False
+        if content is None:
+            self.users[email]["profile"].pop("avatar", None)
+        else:
+            self.users[email]["profile"]["avatar"] = content
         return True
 
     def insert_session(self, session):

@@ -5,7 +5,7 @@
 - Additional planned tracks: [MEM-002](docs/tasks/MEM-002-MYMEMORY-MIGRATION.md) for Engine memory on mymemory and [TOK-001](docs/tasks/TOK-001-TOKENOMICS.md) for Control Plane dashboards. Verify shared-project impact and supported migration before a live switch. Do not expose private URIs or invent missing usage/prices.
 
 
-- Current requested work: [UI-001](docs/tasks/UI-001-PROFILES-CONTROL-PLANE.md). UI-0 merged in PR #5 (`f43a10f`); UI-1 merged in PR #6 (`95d2982`) after 332 remote tests passed. UI-2a own-profile persistence and interface catalogs passed local and live Atlas acceptance on `codex/ui-2a-profile`; PR #7 awaits final evidence CI/merge. The requester-approved UPDATE grant on telecom_identity.users is applied and verified; the synthetic account and test records were removed. UI-001 owns evidence and rollback. LANG-2/3 responses/voice, photo/password, settings, actual-cost dashboards and mymemory migration remain later phases.
+- Current requested work: [UI-001](docs/tasks/UI-001-PROFILES-CONTROL-PLANE.md). UI-0, UI-1 and UI-2a merged (PRs #5, #6 and #7; latest base `c62b99a`). UI-2b profile photo is implemented on `codex/ui-2b-avatar`, local gates passed and publication pending. The approved identity UPDATE permission remains scoped to telecom_identity.users. Password, remaining multilingual gates, settings, actual-cost dashboards and mymemory migration remain subsequent phases.
 
 
 - Phases 0–8 are complete for the approved demo scope and integrated through PR #4 (`e524a57`). Use [the task backlog](docs/tasks/README.md) and linked runbooks for historical evidence and limitations. Use UI-001 for current UI progress; multilingual, Tokenomics data and mymemory migration remain planned.

@@ -40,3 +40,4 @@ class ProfileView(PrincipalView):
     timezone: str
     locale: Locale
     revision: int
+    has_avatar: bool = False

@@ -3,11 +3,13 @@ import type { ReactNode } from 'react';
 import type { Principal } from './api';
 import Journey from './Journey';
 import Knowledge from './Knowledge';
-import Profile, { parseProfile } from './Profile';
-import type { ProfileData } from './Profile';
+import Profile from './Profile';
+import { parseProfile } from './profileApi';
+import type { ProfileData } from './profileApi';
 import { request } from './api';
 import type { Locale } from './catalogs';
 import { useI18n } from './i18n';
+import { AvatarImage } from './Avatar';
 
 const adminPages = ['overview', 'users', 'capabilities', 'integrations', 'tokenomics'];
 const routeNow = () => location.hash.slice(1) || '/support';
@@ -67,6 +69,7 @@ export default function WorkspaceLayout({ user, account, busy, logout, feedback 
         <button ref={profileButton} aria-expanded={profile} aria-controls="profile-links"
           onClick={() => setProfile(!profile)}>{t('Profile')} <span aria-hidden="true">▾</span></button>
         {profile && <div id="profile-links" className="profile-links">
+          {profileData && <AvatarImage key={`${profileData.user_id}-${profileData.revision}`} data={profileData} />}
           <strong>{profileData?.display_name || user.email}</strong><span className="role">{t(user.role)}</span>
           {link('/profile', 'My profile')}
           <label>{t('Language')}<select value={locale} disabled={!profileData || savingLocale} onChange={async event => {

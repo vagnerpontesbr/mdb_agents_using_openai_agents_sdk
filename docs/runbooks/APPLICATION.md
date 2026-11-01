@@ -78,7 +78,9 @@ account. Refresh to verify session restoration; use Profile → Sign out.
 Navigation preserves the conversation; leaving Support discards local microphone
 recording and stops playback. Profile supports name, IANA timezone and interface language (English, Portuguese
 Brazil or Spanish). Inline language selection in Profile preserves active conversation
-and audio objects. Photo/password editing and other Control Plane views are planned.
+and audio objects. Profile photo supports JPEG/PNG up to 2 MiB, normalized privately on the backend;
+use Choose photo or Remove photo. Password editing and other Control Plane views
+remain planned.
 Agent response and speech localization remain separate phases; current voice still
 expects English. The runtime role now includes UPDATE only on telecom_identity.users
 for profile persistence; see UI-001 for verified scope and rollback. Ordinary users see their

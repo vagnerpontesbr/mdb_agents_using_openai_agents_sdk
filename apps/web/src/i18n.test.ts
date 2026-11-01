@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { catalogs, locales } from './catalogs';
 import { formatTimestamp } from './i18n';
-import { parseProfile } from './Profile';
+import { parseProfile } from './profileApi';
 
 test('all catalogs preserve keys and interpolation placeholders', () => {
   const keys = Object.keys(catalogs['en-US']).sort();

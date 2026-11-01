@@ -192,7 +192,19 @@ export const catalogs: Record<Locale, Record<string, string>> = {
     "technical": "technical",
     "sales": "sales",
     "admin": "admin",
-    "user": "user"
+    "user": "user",
+    "Your profile photo": "Your profile photo",
+    "Profile initials": "Profile initials",
+    "Profile photo": "Profile photo",
+    "Choose photo": "Choose photo",
+    "Remove photo": "Remove photo",
+    "Photo saved.": "Photo saved.",
+    "Photo removed.": "Photo removed.",
+    "Choose a JPEG or PNG up to 2 MiB.": "Choose a JPEG or PNG up to 2 MiB.",
+    "Choose a valid JPEG or PNG within the image limits.": "Choose a valid JPEG or PNG within the image limits.",
+    "Photo change could not be confirmed. Reload your profile before trying again.": "Photo change could not be confirmed. Reload your profile before trying again.",
+    "JPEG or PNG up to 2 MiB, 4096 pixels per side and 4 million pixels. Metadata is removed.": "JPEG or PNG up to 2 MiB, 4096 pixels per side and 4 million pixels. Metadata is removed.",
+    "Password editing is coming in the next profile phase.": "Password editing is coming in the next profile phase."
   },
   "pt-BR": {
     "Support": "Suporte",
@@ -386,7 +398,19 @@ export const catalogs: Record<Locale, Record<string, string>> = {
     "technical": "técnico",
     "sales": "vendas",
     "admin": "administrador",
-    "user": "usuário"
+    "user": "usuário",
+    "Your profile photo": "Sua foto de perfil",
+    "Profile initials": "Iniciais do perfil",
+    "Profile photo": "Foto do perfil",
+    "Choose photo": "Escolher foto",
+    "Remove photo": "Remover foto",
+    "Photo saved.": "Foto salva.",
+    "Photo removed.": "Foto removida.",
+    "Choose a JPEG or PNG up to 2 MiB.": "Escolha um JPEG ou PNG de até 2 MiB.",
+    "Choose a valid JPEG or PNG within the image limits.": "Escolha um JPEG ou PNG válido dentro dos limites da imagem.",
+    "Photo change could not be confirmed. Reload your profile before trying again.": "Não foi possível confirmar a alteração da foto. Recarregue o perfil antes de tentar novamente.",
+    "JPEG or PNG up to 2 MiB, 4096 pixels per side and 4 million pixels. Metadata is removed.": "JPEG ou PNG de até 2 MiB, 4096 pixels por lado e 4 milhões de pixels. Os metadados são removidos.",
+    "Password editing is coming in the next profile phase.": "A edição de senha virá na próxima fase do perfil."
   },
   "es-ES": {
     "Support": "Soporte",
@@ -580,7 +604,19 @@ export const catalogs: Record<Locale, Record<string, string>> = {
     "technical": "técnico",
     "sales": "ventas",
     "admin": "administrador",
-    "user": "usuario"
+    "user": "usuario",
+    "Your profile photo": "Tu foto de perfil",
+    "Profile initials": "Iniciales del perfil",
+    "Profile photo": "Foto del perfil",
+    "Choose photo": "Elegir foto",
+    "Remove photo": "Eliminar foto",
+    "Photo saved.": "Foto guardada.",
+    "Photo removed.": "Foto eliminada.",
+    "Choose a JPEG or PNG up to 2 MiB.": "Elige un JPEG o PNG de hasta 2 MiB.",
+    "Choose a valid JPEG or PNG within the image limits.": "Elige un JPEG o PNG válido dentro de los límites de imagen.",
+    "Photo change could not be confirmed. Reload your profile before trying again.": "No se pudo confirmar el cambio de foto. Recarga el perfil antes de volver a intentarlo.",
+    "JPEG or PNG up to 2 MiB, 4096 pixels per side and 4 million pixels. Metadata is removed.": "JPEG o PNG de hasta 2 MiB, 4096 píxeles por lado y 4 millones de píxeles. Se eliminan los metadatos.",
+    "Password editing is coming in the next profile phase.": "La edición de contraseña llegará en la próxima fase del perfil."
   }
 };
 export type Locale = "en-US" | "pt-BR" | "es-ES";

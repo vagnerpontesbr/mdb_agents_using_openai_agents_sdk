@@ -9,6 +9,7 @@ dependencies = [
   "pymongo==4.19.0",
   "openai-agents[voice]==0.24.0",
   "openai==3.40.0",
+  "pillow==13.0.0",
 ]
 
 [project.scripts]

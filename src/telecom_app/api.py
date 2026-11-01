@@ -17,6 +17,7 @@ from starlette.concurrency import run_in_threadpool
 from compatibility.demo_auth.auth import AccessDenied, UserExists
 from compatibility.demo_auth.sessions import SESSION_SECONDS, ProfileConflict, RateLimited
 
+from .avatar import AvatarRevision, AvatarUpload, normalize_avatar
 from .config import Settings
 from .contracts import LoginRequest, PrincipalView, RegistrationRequest
 from .curation import CurationService, Upload
@@ -149,6 +150,27 @@ def create_app(
     @app.exception_handler(ProfileConflict)
     async def profile_conflict(request: Request, error: ProfileConflict) -> JSONResponse:
         return JSONResponse({"error": "Profile changed; reload before saving"}, status_code=409)
+
+    @app.get("/api/profile/avatar")
+    def avatar(request: Request) -> Response:
+        content = service().avatar(token(request))
+        return Response(
+            content=content, media_type="image/jpeg", status_code=200 if content else 404,
+        )
+
+    @app.post("/api/profile/avatar", response_model=ProfileView)
+    def save_avatar(request: Request, body: AvatarUpload) -> ProfileView:
+        service().principal(token(request))
+        content = normalize_avatar(body)
+        return ProfileView.model_validate(service().save_avatar(
+            token(request), content=content, expected_revision=body.expected_revision,
+        ))
+
+    @app.post("/api/profile/avatar/remove", response_model=ProfileView)
+    def remove_avatar(request: Request, body: AvatarRevision) -> ProfileView:
+        return ProfileView.model_validate(service().save_avatar(
+            token(request), content=None, expected_revision=body.expected_revision,
+        ))
 
     @app.get("/api/profile", response_model=ProfileView)
     def profile(request: Request) -> ProfileView:

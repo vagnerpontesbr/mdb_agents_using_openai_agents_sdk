@@ -1,6 +1,6 @@
 # UI-001: Profile navigation and application Control Plane
 
-- Status: UI-0, UI-1 and UI-2a merged; UI-2b local gates passed, publication pending
+- Status: UI-0, UI-1, UI-2a and UI-2b merged; UI-2c local gates passed, publication pending
 - Owner: Telecom demo maintainer
 - Requested: 2026-11-01
 - Branch: `codex/ui-profiles-control-plane`
@@ -197,7 +197,7 @@ reported. No repeated load, pricing or production-capacity proof is part of this
 | --- | --- | --- | --- |
 | UI-0 | Design and migration inventory complete; requester decisions recorded | Local and remote gates passed | PR #5 merged as `f43a10f` |
 | UI-1 | Responsive workspace, profile disclosure, fixed routes, preserved journey | Local gates and 332 remote tests passed | PR #6 merged as `95d2982` |
-| UI-2 | UI-2a merged; UI-2b photo implemented; password pending | UI-2a Atlas gate passed; UI-2b local gates passed | PR #7 merged as `c62b99a`; UI-2b publication pending |
+| UI-2 | UI-2a and UI-2b merged; UI-2c password implemented | Local UI-2c gates passed | PR #8 merged as `9f466e5`; UI-2c publication pending |
 | UI-3 | Not started | Not run | None |
 | UI-4 | Not started | Not run | None |
 
@@ -541,3 +541,49 @@ and errors have three-locale catalog entries.
   phase as password-change or multilingual speech completion. Required CI remains
   the final publication gate; rollback can revert UI/API while retaining harmless
   normalized profile fields until a separately approved deletion is requested.
+
+
+## UI-2c password change — 2026-11-01
+
+UI-2b commit `ce3c01a` passed repository/application CI in runs `41326753953` and
+`41326781298`; PR #8 merged as `9f466e5`. UI-2c branches from that integrated main.
+
+POST `/api/profile/password` requires an authenticated session, current password,
+8–128-character new password and matching confirmation. Extra identity/role fields
+are rejected. The password hash and credential version change atomically through
+an expected-hash update on the same user. Every session authorization rereads the
+user credential version; legacy users/sessions default to version 0. Thus all old
+sessions become unusable immediately without waiting for deletion or TTL.
+
+Login captures the version from the same verified credential snapshot and rechecks
+the newly inserted session. A login racing a password change cannot acquire the new
+version using the old password. Password attempts are capped at five per account
+per 15-minute window, shared across sessions. Existing PBKDF2 parameters, two roles,
+user identity and Engine approval ownership remain unchanged.
+
+The three-language form uses transient form fields, clears them after every result,
+never stores passwords in browser storage and requires fresh login after success.
+Uncertain requests are not retried or presented as successful. No forgotten-password
+email or admin reset flow is introduced. No new role or Atlas write was performed.
+
+### Validation and deployment boundary
+
+- Ruff and mypy (29 source files) passed. Initial import-order and line-length lint
+  findings were corrected; no behavioral test failed.
+- **174 foundation tests** passed, including all-old-session invalidation, current
+  password/confirmation/policy failures, field injection, account-scoped throttling,
+  a racing login, competing password updates and user isolation.
+- **15 identity/admission tests** passed, including revocation before Engine resume.
+- Frontend lint/types/build and **6 unit tests** passed; **19 browser tests** passed.
+  The password browser test covers failure-field clearing, successful sign-out,
+  rejection of the stale cookie and new-password login. Its isolated synthetic
+  fixture session avoids weakening/exhausting the real peer login limiter.
+- No real user password or live Atlas credential/session was changed. This validates
+  application behavior with local fixtures; it is not a deployed password rollover.
+- Deployment must restart/upgrade **every identity-serving process** before enabling
+  password changes. Mixed old/new processes are unsafe because old code ignores the
+  credential version. Roll back UI/forms independently, but retain version checks;
+  reverting to pre-version authentication after a password change could revive old
+  sessions. Any physical live-session cleanup requires its own approved scope.
+- Required remote CI remains the publication gate. Provider-language, settings,
+  Tokenomics, memory migration and final integrated acceptance remain separate work.

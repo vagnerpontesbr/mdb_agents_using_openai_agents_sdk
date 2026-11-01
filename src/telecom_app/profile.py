@@ -4,7 +4,7 @@ import unicodedata
 from typing import Literal
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from pydantic import Field, field_validator
+from pydantic import Field, SecretStr, field_validator, model_validator
 
 from .contracts import Contract, PrincipalView
 
@@ -41,3 +41,15 @@ class ProfileView(PrincipalView):
     locale: Locale
     revision: int
     has_avatar: bool = False
+
+
+class PasswordInput(Contract):
+    current_password: SecretStr = Field(min_length=8, max_length=128)
+    new_password: SecretStr = Field(min_length=8, max_length=128)
+    confirmation: SecretStr = Field(min_length=8, max_length=128)
+
+    @model_validator(mode="after")
+    def matching_confirmation(self) -> PasswordInput:
+        if self.new_password.get_secret_value() != self.confirmation.get_secret_value():
+            raise ValueError("Passwords do not match")
+        return self

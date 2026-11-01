@@ -70,3 +70,9 @@ class MongoUserStore:
             {"_id": email, "user_id": user_id, "active": True, **revision},
             {**changes, "$inc": {"profile_revision": 1}},
         ).modified_count == 1
+
+    def replace_password(self, email, user_id, expected_hash, replacement):
+        return self.collection.update_one(
+            {"_id": email, "user_id": user_id, "active": True, "password_hash": expected_hash},
+            {"$set": {"password_hash": replacement}, "$inc": {"credential_version": 1}},
+        ).modified_count == 1

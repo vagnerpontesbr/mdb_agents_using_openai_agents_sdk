@@ -13,6 +13,7 @@ export default function App() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [passwordChanged, setPasswordChanged] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -27,8 +28,13 @@ export default function App() {
 
   useEffect(() => {
     const expired = () => { setUser(null); setNotice(''); setError('Your session expired. Sign in again.'); };
+    const changed = () => { setUser(null); setNotice(''); setError(''); setPasswordChanged(true); };
     window.addEventListener('telecom-session-expired', expired);
-    return () => window.removeEventListener('telecom-session-expired', expired);
+    window.addEventListener('telecom-password-changed', changed);
+    return () => {
+      window.removeEventListener('telecom-session-expired', expired);
+      window.removeEventListener('telecom-password-changed', changed);
+    };
   }, []);
 
   async function submit(event: SubmitEvent<HTMLFormElement>, register: boolean) {
@@ -46,7 +52,7 @@ export default function App() {
       const result = principal(await request(register ? '/api/users' : '/api/login', payload));
       form.reset();
       if (register) setNotice(result.email);
-      else setUser(result);
+      else { setUser(result); setPasswordChanged(false); }
     } catch (reason) {
       setError(reason instanceof InterfaceError ? reason.key : 'Request failed.');
       if (register && reason instanceof ApiError && reason.status === 401) setUser(null);
@@ -107,6 +113,7 @@ export default function App() {
               <button disabled={busy} type="submit">{t(busy ? 'Signing in…' : 'Sign in')}</button>
             </form>
         </>}
+        {passwordChanged && <p className="feedback success" role="status">{t('Password changed. Sign in with your new password.')}</p>}
         {error && <p className="feedback error" role="alert">{t(error)}</p>}
         {notice && <p className="feedback success" role="status">{notice && t('Account created for {email}.').replace('{email}', notice)}</p>}
       </section>

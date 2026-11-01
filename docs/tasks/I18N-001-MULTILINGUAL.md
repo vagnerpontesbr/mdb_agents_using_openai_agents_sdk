@@ -1,6 +1,6 @@
 # I18N-001: Portuguese, English and Spanish across UI, responses and voice
 
-- Status: LANG-0 and LANG-2a merged; LANG-2b application propagation locally validated, remote gate pending; full LANG acceptance pending
+- Status: LANG-0, LANG-2a and LANG-2b merged; LANG-2c source contracts locally validated, approved Atlas validators applied and three multilingual sources published/verified; LANG-2 hosted/HTTP acceptance passed; PR integration and LANG-3 pending
 - Date: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 profile preferences, existing journey/voice contracts
@@ -231,3 +231,225 @@ Keep the compatibility switch false until the exact deployed agent, read-tool sc
 original-message recovery and provider behavior pass the controlled rehearsal. Do not
 roll out while old active/suspended executions lack a verified replay path. LANG-3,
 admin configuration, actual costs and memory migration remain subsequent work.
+
+
+### LANG-2c source-contract gate
+
+LANG-2b merged in PR #12 as `e0c9d4f`. Source commit `da82565` passed repository and
+application jobs in runs `41342524087` and `41342543625`; no remote check failed.
+The Engine CLI initially returned HTTP 401 during read-only workspace inventory.
+The existing refresh-token flow succeeded without exposing credentials; subsequent
+reads found agentsdk and geo-intelligence-network in the same project. No workspace,
+policy, deployment or memory setting was mutated.
+
+[ADR-0033](../adr/0033-governed-language-source-lineage.md) records additive language
+and original-source lineage rules. Local upload metadata can represent en/pt/es and
+an optional translation_of original-version key. The old English approval hash and
+serialized review metadata remain unchanged when that field is absent. Parent
+eligibility is rechecked before source release, including cached translations.
+
+Read-only Atlas inspection compared both current validators to the baseline and
+counted documents incompatible with the proposed validators: zero. The exact
+[proposal](../../compatibility/lang2c-validator-proposal.json) changes only validators
+on telecom_demo_knowledge.document_versions and telecom_demo_knowledge.chunks.
+The requester approved exactly these two validators. Both were applied and verified
+by readback in strict/error mode; zero existing documents were incompatible. See
+[applied evidence](../../compatibility/lang2c-validator-evidence.json). No documents,
+roles, indexes, policies, deployments or memory were written. The executed command was:
+
+```sh
+uv run --env-file .env --frozen python scripts/apply_language_validators.py \
+  --proposal compatibility/lang2c-validator-proposal.json --apply-approved-change
+```
+
+Local validation: the final full suite passed **209 foundation tests** and **96 hosted
+contracts**. All 19 language/migration cases passed, including preflight-before-write,
+proposal tampering, partial application and absence of an explicit apply flag.
+Ruff initially found an import-order issue and four overlong lines; these were
+corrected. The repository check also initially rejected three missing required ADR
+sections; alternatives, consequences and revisit triggers were added. No behavioral
+test failed. These tests use database doubles; the Atlas
+readback verifies the configured validators but does not establish actual invalid-insert rejection.
+
+Localized retrieval now captures the authenticated profile locale, applies the same
+language to lexical/vector filters, and preserves tenant/ACL/equipment restrictions.
+The hosted tool receives the captured turn locale. Extracted source text is unchanged;
+citation labels and safe refusals are localized. Missing matches do not claim an
+English original exists. The source library preserves access to eligible historical
+citations across locale changes. Upload and native-review UI expose source language
+and original-version linkage; translations are excluded as parent choices.
+
+Actual reviewed multilingual sources and bounded provider/hosted acceptance remain
+pending inside LANG-2c. Keep new locale admission disabled until its live gate passes.
+The validator authorization does not authorize arbitrary source publication or other
+Atlas changes. No translated source has been published and no hosted rollout occurred.
+
+Continuation validation (2026-11-01; local working tree, not remote CI):
+
+| Command | Result and scope |
+| --- | --- |
+| `uv run --frozen pytest -q` | 213 passed; source authority, language filters, cache and application regression |
+| `uv run --frozen pytest -q tests/foundation/test_knowledge_languages.py` | 17 passed after removing an unsupported English-source assertion from the safe refusal |
+| `uv run --project compatibility/openai_engine_adapter --frozen python -m unittest discover -s tests/hosted_contract -q` | 96 passed; native tool contracts and captured locale dispatch, with doubles |
+| `uv run --frozen ruff check src/telecom_app tests/foundation` | Passed |
+| `uv run --frozen mypy` | Passed, 30 source files |
+| `npm --prefix apps/web run lint` | Passed |
+| `npm --prefix apps/web test` | 6 passed |
+| `npm --prefix apps/web run build` | TypeScript and production build passed |
+| `TELECOM_TEST_PORT=53189 npm --prefix apps/web run test:e2e` | 20 passed, isolated server; upload locale/parent payload, native review and existing continuity regressions |
+| `python3 scripts/check_repository.py` | Passed, 92 Markdown files and 33 ADRs in the final check |
+| `git diff --check` | Passed |
+
+Failures and corrections: the initial TypeScript build rejected rendering unknown
+translation metadata (TS2322); a string type guard corrected it and the build passed.
+Ruff reported six E501 lines in retrieval/tests; wrapping fixed them and Ruff passed.
+The first browser run passed 19 tests but the new translation-upload case timed out
+on an exact `getByLabel` lookup for the nested select. The control was present with
+the correct accessible name; `getByRole('combobox', {name: 'Source language', exact:
+true})` selects it correctly. The complete rerun passed all 20, including the exact
+Portuguese language/original-key payload assertion. No live provider, invalid-insert,
+translation-fidelity or human listening acceptance is implied by these results.
+
+### LANG-2c synthetic source packet
+
+Prepared [three one-page PDFs and a bounded publication proposal](../../examples/telecom/governance/multilingual/README.md).
+The original is English; Portuguese/Spanish declare exact original-version lineage.
+Local Docling 2.143.1 extraction passed for all three with identical checksums and
+all four operational steps/negations preserved. Poppler visual inspection passed
+for all three. [Evidence](../../compatibility/lang2c-source-evidence.json) explicitly
+records zero provider calls, zero Atlas writes and no native approval in this step.
+ReportLab 4.4.3 lives in an isolated script lock, not the application dependencies.
+The first verification invocation encountered a sandbox uv-cache permission error;
+the authorized escalation rerun passed without altering the validation.
+
+The knowledge-review source profile was staged locally (26 source files), without
+a Linux interpreter bundle, upload or deployment. A deployable runtime build and
+in-flight replay gate are still required. PR #13 is draft; remote repository and
+application checks passed for 834e28e in runs 41343579558/41343610424. These checks
+do not validate the later uncommitted source/UI/packet changes.
+
+The requester subsequently approved this exact three-source publication and provider
+envelope with "sim aprovo". The ceiling was not increased. See the executed gate
+below; hosted deployment remains outside that authorization.
+
+
+### LANG-2c live publication and direct retrieval gate — passed
+
+[Live evidence](../../compatibility/lang2c-publication-evidence.json) records three
+native owner approvals and published SOP-LANG-OPTICAL-EN/PT/ES, version 20261101-1.
+The translations reference the exact published English original. The frozen proposal
+retains its original draft status so its approved SHA-256 remains stable; evidence
+records authorization and actual state separately.
+
+Executed `uv run --env-file .env --frozen python scripts/publish_multilingual_sources.py`
+for read-only preflight, then the same command with `--apply-approved-change
+--allow-provider-calls`. It verified unused IDs, source bytes, current dates, owner,
+cluster, exact strict/error validators and deployment deploy-af009ed4 before writes.
+The native review's complete metadata was compared with the uploaded version before
+each approval; publication and original-byte retrieval then passed. No existing
+source was replaced, no schema/policy/role/index changed and no deployment occurred.
+
+Exactly nine Voyage/gateway calls ran: three document embeddings, three query
+embeddings and three reranks; no automatic provider retry. Total elapsed time was
+124.81 seconds, below the approved 20 minutes. All three direct retrievals returned
+their source citation and complete operational steps/negations within the hosted
+response bound. Wrong-tenant and wrong-ACL searches returned no candidates for each
+language, reusing vectors without additional provider calls.
+
+The initial preflight failed with EngineUnavailable before any writes or provider
+calls. Refreshing the existing private CLI session succeeded; repeated preflight
+passed. Ruff initially found import ordering in the new operator script; corrected
+and rerun successfully. A read-only metadata helper hit the uv cache sandbox boundary;
+the approved escalation succeeded. No provider or publication execution failed.
+
+Additional local checks: 23 tests passed across test_knowledge_languages.py,
+test_curation.py and test_document_review.py; script Ruff F/I and repository/diff
+checks passed. These targeted reruns do not represent a new complete CI run.
+
+Remaining LANG-2c gate: controlled hosted locale rollout, original-message/replay
+acceptance, cross-language memory continuity and bounded semantic chat evaluation.
+APP_JOURNEY_LOCALE_ENABLED remains disabled. Operator-admitted publication is not
+browser authentication acceptance. Voice/listening remains LANG-3. Billing is still
+unreconciled; the successful bounded exercise is not proof of a measured dollar cost.
+
+
+### LANG-2c hosted rollout preparation
+
+The [exact rollout proposal](../runbooks/LANG_2_HOSTED_ROLLOUT.md) and
+[Linux build evidence](../../compatibility/lang2c-hosted-build-evidence.json) are ready.
+Local knowledge-review registration now uses workflow 9, separating changed locale
+semantics from the deployed workflow 8. The staged manifest matches the recorded
+Phase 7 manifest byte-for-byte; no tool, secret or egress scope was added.
+
+Executed the compact Python staging command, pinned Docker Linux/amd64 build with
+uv frozen dependencies, and all 96 hosted contracts inside that container. All passed.
+A separate container loader check returned Python 3.15.2/x86_64, KnowledgeExecution,
+telecom-journey version 9 and seven tools. The 213-test foundation suite also passed.
+The first exploratory `agentengine execution --help` returned unknown command;
+o execution was changed. Official execution-list/cancel API documentation supplied
+the supported interface. Read-only uv helpers initially hit the sandbox cache
+restriction and succeeded after approved escalation; no behavioral test failed.
+
+[Inventory](../../compatibility/lang2c-rollout-inventory.json) found one legacy
+suspended release_synthetic_recall execution from October 29. The three runtime
+reservations match completed publication tests; no other reserved sessions were
+found. Neither cancellation nor runtime release has been performed. Runtime-session
+counts alone would have missed the suspended execution, so rollout must recheck
+both native execution statuses and runtime reservations.
+
+Pending requester decision: cancel the exact legacy suspended execution; release
+only the three completed test runtimes; build/deploy the reviewed stage in agentsdk
+and run the proposed 20-invocation/30-minute acceptance envelope without increasing
+the USD30 ceiling. No memory configuration or geo-intelligence-network change is
+proposed. All files remain local; remote CI for the later working tree is pending.
+
+
+### LANG-2c hosted and HTTP acceptance — passed
+
+The requester approved the exact rollout with "sim autorizo". Build
+bld_01M6CCNAB7QA912HBH54FB63ZP and deployment deploy-f11e4d01 succeeded.
+[Remote rollout](../../compatibility/lang2c-remote-rollout.json) and
+[hosted acceptance](../../compatibility/lang2c-hosted-acceptance.json) record all
+20 planned cases passing in 486.41 seconds, with no invocation retries.
+
+Coverage: exact invoice templates in all locales (including the 4,000-character
+message carrier); governed PDF excerpts/citations; information-only negation;
+authorization injection; same-user English-to-Portuguese/Spanish memory continuity
+and other-user isolation; three native simulations (one rejection, two approvals);
+Portuguese runtime-stop/recreation with identical pending action; stale, cross-user
+and duplicate approval denial; and legacy unwrapped English input. Every completed
+result was recovered after a profile-language switch with its original locale.
+Both synthetic profiles were restored. These are bounded synthetic cases, not
+statistical multilingual-quality or cross-version-replay guarantees.
+
+[HTTP evidence](../../compatibility/lang2c-http-recovery-evidence.json) additionally
+records an isolated loopback server backed by the real identity and Engine services:
+20 stored results matched their hashes/locales and all 20 cross-user reads returned
+403. It added zero provider calls. The server was stopped; existing demo processes
+were not restarted. Native active-status counts were zero after the evaluator and
+the other workspace's active deployment remained deploy-e5f6797e.
+
+The private local .env now enables APP_JOURNEY_LOCALE_ENABLED for the next backend
+start. The checked-in default remains false so a different deployment cannot admit
+new locale envelopes before its own gate. Text localization is validated; STT hints
+and human voice listening remain LANG-3. No password change or memory configuration
+change occurred. Provider monetary billing is still unavailable; the USD30 ceiling
+was not reset or increased.
+
+Failures: the first evaluation preflight used stale workspace deployment metadata,
+failed before any invocation and is preserved separately. Official
+`deployments/current` verified the exact new active build and complete health;
+correcting the preflight to use that endpoint allowed the full evaluation.
+`agentengine status` continued showing the old summary; this is a diagnostic
+limitation, not evidence that the old build handled the successful localized calls.
+No live behavioral case failed. See the rollout runbook for the earlier CLI/import
+and sandbox errors and their successful corrections.
+
+Repository/diff checks and script Ruff passed. The earlier local 213 foundation,
+96 Linux hosted, 6 frontend unit and 20 browser checks remain recorded above;
+remote CI must validate the final published commit before merging PR #13.
+
+The first staged diff check treated the ASCII-compatible PDF containers as text
+and flagged required PDF cross-reference whitespace. Added `*.pdf binary` in
+.gitattributes to preserve exact governed bytes and prevent text/EOL transformations;
+no approved PDF bytes or hashes were changed. The staged diff check then passed.

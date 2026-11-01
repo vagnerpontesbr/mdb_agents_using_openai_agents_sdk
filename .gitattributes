@@ -1,0 +1,2 @@
+# Governed PDF source bytes and checksums must survive checkout unchanged.
+*.pdf binary

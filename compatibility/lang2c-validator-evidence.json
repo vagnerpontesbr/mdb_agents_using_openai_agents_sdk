@@ -1,0 +1,36 @@
+{
+  "status": "approved_applied_and_readback_verified",
+  "verified_at": "2026-11-01T19:52:33.706268+00:00",
+  "approval": "Sim, aplicar esses dois validadores",
+  "cluster": "OpenAI-SDK",
+  "proposal_sha256": "1598ae8bf251c8f8766f6be8f008251ce3df8fb7d33e86e3011e6c18f9b4bbac",
+  "checks": [
+    {
+      "namespace": "telecom_demo_knowledge.document_versions",
+      "exact_validator_match": true,
+      "validation_level": "strict",
+      "validation_action": "error",
+      "incompatible_existing_documents": 0,
+      "validator_sha256": "a0679e866b362f1c932024447269e360ab491d98dc2bda1044e28da44c43b3f7"
+    },
+    {
+      "namespace": "telecom_demo_knowledge.chunks",
+      "exact_validator_match": true,
+      "validation_level": "strict",
+      "validation_action": "error",
+      "incompatible_existing_documents": 0,
+      "validator_sha256": "126800488ce410d00fb4224d10a4c80f338bc65aee963fc89be01996c74c52a2"
+    }
+  ],
+  "operations_applied": [
+    "collMod document_versions",
+    "collMod chunks"
+  ],
+  "document_writes": 0,
+  "index_or_role_changes": 0,
+  "engine_configuration_changes": 0,
+  "limitations": [
+    "No live invalid-insert test was authorized or performed",
+    "No translated source was published and no hosted deployment occurred"
+  ]
+}

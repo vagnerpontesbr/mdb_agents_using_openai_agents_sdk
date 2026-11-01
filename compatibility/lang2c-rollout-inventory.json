@@ -1,0 +1,44 @@
+{
+  "checked_at": "2026-11-01T20:18:58.863083+00:00",
+  "workspace_id": "ws-6ae20f53f3b040aa65fa961a",
+  "active_statuses": {
+    "pending": 0,
+    "running": 0,
+    "suspended": 1,
+    "resuming": 0
+  },
+  "publication_sessions": [
+    {
+      "execution_id": "e761d287-1abb-4d22-8430-309166327f5f",
+      "session_id": "telco-938b484af0d32b8fb7dd42bad2cfe8bbe3c783138ef955bf",
+      "status": "completed",
+      "runtime_reserved": true
+    },
+    {
+      "execution_id": "21849e1d-2b80-45c9-b235-4560f313c9da",
+      "session_id": "telco-61ef68350b600e136bc2ed76c5da620fd449167ab7b47e7e",
+      "status": "completed",
+      "runtime_reserved": true
+    },
+    {
+      "execution_id": "f85b269c-053b-40f0-894e-0c6b03446d51",
+      "session_id": "telco-7a97f657b6e8db62f2a3b48a07c9fcf3c7a5f6f4e42cee8e",
+      "status": "completed",
+      "runtime_reserved": true
+    }
+  ],
+  "unrelated_reserved_sessions": 0,
+  "status": "read_only_inventory_complete",
+  "suspended_execution": {
+    "execution_id": "e1616bc3-b2a3-4974-bdf8-d4cc3c598da1",
+    "created_at": "2026-10-29T17:54:47.35Z",
+    "session_id": "demo-invoice-a1416fe44ee243278e3d5fa40dade46f",
+    "tool_name": "release_synthetic_recall",
+    "status": "suspended",
+    "cancelled": false
+  },
+  "workspace_deployments": {
+    "agentsdk": "deploy-af009ed4",
+    "geo-intelligence-network": "deploy-e5f6797e"
+  }
+}

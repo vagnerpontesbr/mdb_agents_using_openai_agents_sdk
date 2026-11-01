@@ -1,0 +1,94 @@
+{
+  "status": "proposed_not_authorized",
+  "cluster": "OpenAI-SDK",
+  "tenant_id": "synthetic-telecom",
+  "information_owner": "demo-document-owner",
+  "scope": {
+    "product": "FiberBox",
+    "region": "demo",
+    "firmware_range": "2.x",
+    "acl": [
+      "synthetic-support"
+    ]
+  },
+  "source_manifest": "output/pdf/lang2c-manifest.json",
+  "documents": [
+    {
+      "document_id": "SOP-LANG-OPTICAL-EN",
+      "title": "FiberBox: persistent red optical light",
+      "language": "en",
+      "version_id": "20261101-1",
+      "created_at": "2026-11-01T00:00:00Z",
+      "effective_from": "2026-11-01T00:00:00Z",
+      "expires_at": "2026-12-01T00:00:00Z",
+      "review_due_at": "2026-11-08T00:00:00Z",
+      "pdf": "output/pdf/lang2c-optical-en.pdf",
+      "checksum": "e5f4a8472969e66b4271067f814999fc5b6fe15c66887f39109c52125a759443",
+      "version_key": "53ffb3ee9e98e4bb6edef7cec696a0f09cd77cbd6bdbfb59a14c2d12ff4172c2",
+      "supersedes": null
+    },
+    {
+      "document_id": "SOP-LANG-OPTICAL-PT",
+      "title": "FiberBox: luz óptica vermelha persistente",
+      "language": "pt",
+      "version_id": "20261101-1",
+      "created_at": "2026-11-01T00:00:00Z",
+      "effective_from": "2026-11-01T00:00:00Z",
+      "expires_at": "2026-12-01T00:00:00Z",
+      "review_due_at": "2026-11-08T00:00:00Z",
+      "pdf": "output/pdf/lang2c-optical-pt.pdf",
+      "checksum": "ea7bb994ef513404628f578ad60709481fa271585dc6dc32ab97091c87ec8a14",
+      "version_key": "55db2a743d5b1d0c5cc4a26f953a03cde6153ab26f77d4478659b531f7e4d1e1",
+      "supersedes": null,
+      "translation_of": "53ffb3ee9e98e4bb6edef7cec696a0f09cd77cbd6bdbfb59a14c2d12ff4172c2"
+    },
+    {
+      "document_id": "SOP-LANG-OPTICAL-ES",
+      "title": "FiberBox: luz óptica roja persistente",
+      "language": "es",
+      "version_id": "20261101-1",
+      "created_at": "2026-11-01T00:00:00Z",
+      "effective_from": "2026-11-01T00:00:00Z",
+      "expires_at": "2026-12-01T00:00:00Z",
+      "review_due_at": "2026-11-08T00:00:00Z",
+      "pdf": "output/pdf/lang2c-optical-es.pdf",
+      "checksum": "71a0957141370d84396d45f9d163796b75dffeb19ee3671c08283e8f3771201a",
+      "version_key": "82a6e84fa2eedfb6347a2b9386e6bb53c192dbf84252ebd7430f7fff3443a7c4",
+      "supersedes": null,
+      "translation_of": "53ffb3ee9e98e4bb6edef7cec696a0f09cd77cbd6bdbfb59a14c2d12ff4172c2"
+    }
+  ],
+  "write_namespaces": [
+    "telecom_demo_ingestion.jobs",
+    "telecom_demo_ingestion.staged_artifacts",
+    "telecom_demo_knowledge.documents",
+    "telecom_demo_knowledge.document_versions",
+    "telecom_demo_knowledge.chunks",
+    "telecom_demo_knowledge.review_events"
+  ],
+  "native_review_workspace": "agentsdk",
+  "limits": {
+    "sources": 3,
+    "contextual_embedding_requests": 3,
+    "direct_retrieval_queries": 3,
+    "query_embedding_requests": 3,
+    "rerank_requests": 3,
+    "native_publication_reviews": 3,
+    "wall_clock_minutes": 20,
+    "automatic_provider_retries": 0
+  },
+  "review_requirement": "Review exact source PDFs and metadata, then use native owner approval separately for each source; no direct approval fabrication",
+  "stop_conditions": [
+    "Existing document ID or metadata conflict",
+    "Unexpected owner, scope, deployment or validator",
+    "Expired source or approval",
+    "Provider error or declared call/time cap reached"
+  ],
+  "excluded": [
+    "Role, index, validator, policy or memory changes",
+    "Replacement or revocation of any existing source",
+    "Hosted deployment and chat/voice evaluation",
+    "Physical deletion or cleanup"
+  ],
+  "budget": "No new calls until requester resolves the unreconciled remaining USD30 budget; no automatic budget reset"
+}

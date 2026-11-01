@@ -37,6 +37,8 @@ def hybrid_pipeline(scope: Scope, query: str, vector: Sequence[float],
                     now: datetime) -> list[dict[str, Any]]:
     import math
 
+    if scope.language not in ("en", "pt", "es"):
+        raise ValueError("Unsupported source language")
     if not query.strip() or len(query) > 2000 or not scope.readers or now.tzinfo is None:
         raise ValueError("Bounded query and authenticated scope required")
     if len(vector) != DIMENSIONS or any(not math.isfinite(v) for v in vector):
@@ -94,6 +96,35 @@ class CandidateCache(Protocol):
               candidates: list[Candidate], now: datetime) -> None: ...
 
 
+
+_MESSAGES = {
+    "empty": {
+        "en": "No currently approved procedure matches your access and equipment. Contact support.",
+        "pt": ("Nenhum procedimento aprovado em português corresponde ao seu acesso e equipamento. "
+               "Contate o suporte."),
+        "es": ("Ningún procedimiento aprobado en español corresponde a tu acceso y equipo. "
+               "Contacta con soporte."),
+    },
+    "oversize": {
+        "en": "The approved procedure exceeds the response limit. Contact support.",
+        "pt": "O procedimento aprovado excede o limite da resposta. Contate o suporte.",
+        "es": "El procedimiento aprobado supera el límite de respuesta. Contacta con soporte.",
+    },
+    "changed": {
+        "en": "The procedure changed before release. Contact support for current guidance.",
+        "pt": ("O procedimento mudou antes da resposta. "
+               "Contate o suporte para obter orientação atual."),
+        "es": ("El procedimiento cambió antes de la respuesta. "
+               "Contacta con soporte para obtener ayuda actual."),
+    },
+}
+
+
+def knowledge_message(kind: str, language: str) -> str:
+    if language not in ("en", "pt", "es"):
+        raise ValueError("Unsupported source language")
+    return _MESSAGES[kind][language]
+
 def retrieve(reader: KnowledgeReader, authority: Authority, reranker: Reranker,
              scope: Scope, query: str, vector: Sequence[float],
              clock: Callable[[], datetime] = utc_now, *, max_response_chars: int = 7500,
@@ -143,7 +174,7 @@ def retrieve(reader: KnowledgeReader, authority: Authority, reranker: Reranker,
         except Exception:
             pass  # A cache write never authorizes or prevents authoritative release.
     if not valid:
-        return "No currently approved procedure matches your access and equipment. Contact support."
+        return knowledge_message("empty", scope.language)
     order = reranker.rank(query, [candidate.text for candidate in valid])
     if (len(order) > 3 or len(set(order)) != len(order)
             or any(type(i) is not int or not 0 <= i < len(valid) for i in order)):
@@ -154,14 +185,16 @@ def retrieve(reader: KnowledgeReader, authority: Authority, reranker: Reranker,
         version = verified(candidate)
         if version is None:
             continue
-        pages = ", ".join(map(str, candidate.pages)) if candidate.pages else "unknown"
-        excerpt = (f"{candidate.text}\n[{version.document_id}, version {version.version_id}, "
-                   f"pages {pages}]")
+        labels = {"en": ("version", "pages", "unknown"),
+                  "pt": ("versão", "páginas", "desconhecidas"),
+                  "es": ("versión", "páginas", "desconocidas")}[scope.language]
+        pages = ", ".join(map(str, candidate.pages)) if candidate.pages else labels[2]
+        excerpt = (f"{candidate.text}\n[{version.document_id}, {labels[0]} {version.version_id}, "
+                   f"{labels[1]} {pages}]")
         # Never truncate a procedure: an omitted final step can change its meaning.
         # Leave headroom within the existing 8,000-character journey/voice contract.
         if len("\n\n".join([*result, excerpt])) > max_response_chars:
-            return "The approved procedure exceeds the response limit. Contact support."
+            return knowledge_message("oversize", scope.language)
         result.append(excerpt)
     # No second model gets to rewrite operational instructions or invent citations.
-    return "\n\n".join(result) if result else (
-        "The procedure changed before release. Contact support for current guidance.")
+    return "\n\n".join(result) if result else knowledge_message("changed", scope.language)

@@ -1,9 +1,12 @@
 # Phase 7: Engine runtime target
 
 [RUN-001](../tasks/RUN-001-RUNTIME.md) is the authoritative acceptance record.
-The active hosted entrypoint is `openai_engine_adapter.knowledge_review:app`,
+The Phase 7 hosted entrypoint was `openai_engine_adapter.knowledge_review:app`,
 workflow `telecom-journey` version 8. Deployment `deploy-af009ed4` uses build
 `bld_01M691YPABN60FEKHW6E1KZGB5`. The repository invoice manifest remains a fixture.
+
+Current rollout: [LANG-2 workflow 9](LANG_2_HOSTED_ROLLOUT.md) uses deployment
+`deploy-f11e4d01`; Phase 7 evidence below remains historical.
 
 ## Reproduce packaging and local contracts
 

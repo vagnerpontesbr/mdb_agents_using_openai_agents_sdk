@@ -38,7 +38,9 @@ class Version(BaseModel):
     checksum: str = Field(pattern=r"^[a-f0-9]{64}$")
     classification: Literal["internal-demo"]
     acl: tuple[str, ...] = Field(min_length=1, max_length=16)
-    language: Literal["en"]
+    language: Literal["en", "pt", "es"]
+    translation_of: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$",
+                                      exclude_if=lambda value: value is None)
     product: str = Field(min_length=1, max_length=128)
     region: str = Field(min_length=1, max_length=128)
     firmware_range: str = Field(min_length=1, max_length=64)
@@ -92,6 +94,7 @@ class Authority(Protocol):
     def source_verified(self, version: Version) -> bool: ...
     def current_version(self, tenant: str, document: str) -> tuple[str, int] | None: ...
     def conflict_confirmed(self, tenant: str, document: str) -> bool: ...
+    def translation_valid(self, version: Version, scope: Scope, now: datetime) -> bool: ...
 
 
 @dataclass(frozen=True)
@@ -148,6 +151,8 @@ def assess(version: Version, scope: Scope, now: datetime, authority: Authority,
     score = min(100, sum(factors.values()))
     band = ("low" if score < 20 else "moderate" if score < 40
             else "high" if score < 70 else "critical")
+    if version.translation_of is not None and not authority.translation_valid(version, scope, now):
+        blockers.append("translation_source_invalid")
     if score >= 40:
         blockers.append("quarantined_risk")
     return Assessment(score, band, factors, tuple(blockers), now)

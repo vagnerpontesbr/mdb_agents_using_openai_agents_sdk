@@ -17,7 +17,7 @@ integrated `16681b9` on 2026-11-01. This document describes gates, not a deploym
 | Invoice, diagnosis, offers, receipts | adapter `journey_domain.py` | Versioned protected templates; same validated values, IDs and eligibility |
 | Local invoice renderer | `src/telecom_app/rendering.py` | Same locale semantics; this path alone does not prove hosted support |
 | Rejection, expiry and uncertain outcome | adapter and API `journey.py` | Localized templates; no successful-action claim from an uncertain result |
-| Knowledge retrieval/publication/cache | `knowledge.py`, `curation.py`, `knowledge_search.py`, `knowledge_cache.py`, adapter `knowledge_tools.py` | Source language is currently en-only; retain ACL, applicability, validity and language filters |
+| Knowledge retrieval/publication/cache | `knowledge.py`, `curation.py`, `knowledge_search.py`, `knowledge_cache.py`, adapter `knowledge_tools.py` | LANG-2c local contracts support en/pt/es; approved Atlas validators applied; three live sources/direct retrieval verified; hosted acceptance pending |
 | Speech input/output | `src/telecom_app/voice.py`, API speech routes | STT currently en; capture recording locale, use the execution locale for TTS |
 | Errors | `api.ts`, API exception handlers | Add stable safe codes; localize known codes without matching raw provider prose |
 
@@ -50,9 +50,10 @@ currency. All final financial and operational text bypasses LLM rewriting.
 
 ## Governed source strategy
 
-Current Version.language is Literal["en"], curation creates English versions,
-Scope defaults to en, and retrieval/cache keys include language. Merely translating
-a query or changing a prompt cannot satisfy multilingual source acceptance.
+The original inventory found English-only Version/curation contracts. LANG-2c now
+supports en/pt/es and original-version lineage locally, with the two approved Atlas
+validators applied. Scope still defaults to en; retrieval/cache keys include language.
+Merely translating a query or changing a prompt cannot satisfy source acceptance.
 
 LANG-2 must expand local contracts and tests before any live publication. Localized
 synthetic documents require independent version/checksum/page lineage, an active
@@ -61,11 +62,19 @@ Translations must refer to their original source/version; changing either source
 requires fresh approval. Do not mark a translated fixture approved in Atlas.
 
 When an approved localized procedure is missing, return a deterministic localized
-unavailable explanation identifying the available source language. Do not silently
+unavailable explanation. Identify another source's language only if its existence
+and the reader's access have been verified; never assume an English original. Do not silently
 serve translated operational steps or weaken the exact language filter. Test cache
 isolation by locale plus tenant/ACL, revoked translations, expired originals and
 missing translation lineage. Live validators/publication remain separately scoped
 Atlas operations.
+
+The [three-PDF review packet](../../examples/telecom/governance/multilingual/README.md)
+now includes exact source bytes/checksums, original linkage, a publication proposal
+and passed local Docling/visual checks. The requester approved its exact publication and provider envelope; all three
+sources were published through native owner review and direct retrieval passed.
+[Execution evidence](../../compatibility/lang2c-publication-evidence.json) records
+nine calls in 124.81 seconds. This does not authorize deployment or voice evaluation.
 
 ## Pinned speech API inspection
 
@@ -146,3 +155,12 @@ drain affected in-flight executions or prove old-version replay, and verify nati
 message/result recovery with a bounded synthetic run. Only then enable the switch
 in the private backend configuration. Do not deploy a memory cutover in this rollout.
 Disabling new localized admission does not delete existing executions or memories.
+
+
+## Validated local activation
+
+LANG-2 workflow 9 is deployed as deploy-f11e4d01. All 20 hosted cases and 20 HTTP
+recovery/isolation checks passed; see [rollout](LANG_2_HOSTED_ROLLOUT.md). The private
+local .env enables the locale flag for the next backend start. Existing servers were
+not restarted. The repository default remains false for other unvalidated deployments.
+Speech remains LANG-3: do not claim multilingual STT or listening acceptance yet.

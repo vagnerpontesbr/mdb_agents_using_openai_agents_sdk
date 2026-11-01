@@ -62,3 +62,12 @@ The initial ADR validation identified missing standard sections; these were adde
 and the checker then passed. No application code changed in this phase.
 
 Phase 7 publication was subsequently verified; [OPS-001](OPS-001-RESILIENCE.md) owns ongoing Phase 8 work. The source hashes and runtime observations above describe the Phase 7 checkpoint, not later local edits.
+
+
+## Subsequent multilingual deployment
+
+LANG-2 deployed workflow 9 as deploy-f11e4d01 from build
+bld_01M6CCNAB7QA912HBH54FB63ZP after the authorized legacy cancellation and drain.
+[LANG-2 rollout](../runbooks/LANG_2_HOSTED_ROLLOUT.md) owns current acceptance.
+The workflow-8 evidence in this task remains a historical Phase 7 result; it is not
+a claim of cross-version migration or proof of workflow-9 acceptance.

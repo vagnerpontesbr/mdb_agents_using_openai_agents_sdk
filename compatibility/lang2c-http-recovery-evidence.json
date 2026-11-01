@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "port": 64141,
+  "provider_calls": 0,
+  "recovered": 20,
+  "other_user_denials": 20,
+  "existing_servers_restarted": false
+}

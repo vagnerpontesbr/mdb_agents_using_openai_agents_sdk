@@ -247,6 +247,7 @@ coverage/
 
 # Generated data and reports (synthetic source fixtures stay versioned)
 artifacts/
+tmp/pdfs/
 test-results/
 playwright-report/
 *.log

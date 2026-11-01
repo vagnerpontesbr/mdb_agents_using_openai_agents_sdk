@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "approval": "sim aprovo",
+  "proposal_sha256": "6266f9c071a58a2f72e9f6da938dc8e7064b9966c2c552a4a9e0a872708f52ea",
+  "started_at": "2026-11-01T20:11:45.340728+00:00",
+  "provider_attempts": {
+    "document": 3,
+    "query": 3,
+    "rerank": 3
+  },
+  "sources": [
+    {
+      "document_id": "SOP-LANG-OPTICAL-EN",
+      "language": "en",
+      "job_id": "dbb0bfcbe3bd14631f66270f48c7e27d4fd4f0af1ddb6b1e60cd71ffc22c28d1",
+      "execution_id": "e761d287-1abb-4d22-8430-309166327f5f",
+      "version_key": "53ffb3ee9e98e4bb6edef7cec696a0f09cd77cbd6bdbfb59a14c2d12ff4172c2",
+      "status": "published",
+      "all_steps_and_citation_verified": true,
+      "tenant_acl_denials": true
+    },
+    {
+      "document_id": "SOP-LANG-OPTICAL-PT",
+      "language": "pt",
+      "job_id": "5539eb92bce3fb72adff4ade685a21ad8324c1c1790218d724fabc36c1eb4923",
+      "execution_id": "21849e1d-2b80-45c9-b235-4560f313c9da",
+      "version_key": "55db2a743d5b1d0c5cc4a26f953a03cde6153ab26f77d4478659b531f7e4d1e1",
+      "status": "published",
+      "all_steps_and_citation_verified": true,
+      "tenant_acl_denials": true
+    },
+    {
+      "document_id": "SOP-LANG-OPTICAL-ES",
+      "language": "es",
+      "job_id": "a2f5ffd84172e0c7c3ed8a3b4ee570394140bf33de9a57346c9ec1c867ecc62f",
+      "execution_id": "f85b269c-053b-40f0-894e-0c6b03446d51",
+      "version_key": "82a6e84fa2eedfb6347a2b9386e6bb53c192dbf84252ebd7430f7fff3443a7c4",
+      "status": "published",
+      "all_steps_and_citation_verified": true,
+      "tenant_acl_denials": true
+    }
+  ],
+  "stage": "complete",
+  "limitations": [
+    "Operator-admitted owner; not browser authentication",
+    "No hosted deployment, chat, memory or voice acceptance",
+    "Billed cost remains unavailable; USD30 ceiling not increased"
+  ],
+  "deployment_id": "deploy-af009ed4",
+  "elapsed_seconds": 124.81
+}

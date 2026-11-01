@@ -2,12 +2,14 @@
 
 import hashlib
 import json
+from dataclasses import replace
+from datetime import datetime
 from typing import Any
 
 from bson.codec_options import CodecOptions
 from pymongo.database import Database
 
-from .knowledge import Version
+from .knowledge import Scope, Version, assess
 
 
 def version_key(version: Version) -> str:
@@ -85,3 +87,26 @@ class MongoKnowledgeAuthority:
         return bool(row and row.get("conflict", True))
 
 
+
+    def translation_valid(self, version: Version, scope: Scope, now: datetime) -> bool:
+        if version.translation_of is None:
+            return True
+        row = self.db.document_versions.find_one(
+            {"tenant_id": version.tenant_id, "_id": version.translation_of},
+            {"_id": 0}, max_time_ms=15000,
+        )
+        if row is None:
+            return False
+        try:
+            original = Version.model_validate(row)
+        except ValueError:
+            return False
+        if (version_key(original) != version.translation_of
+                or original.tenant_id != version.tenant_id
+                or original.document_id == version.document_id
+                or original.language == version.language
+                or original.translation_of is not None):
+            return False
+        # Exactly one reference: no cycles/chains or recursively growing reads.
+        # Both original and translated source must satisfy the same reader ACLs.
+        return assess(original, replace(scope, language=original.language), now, self).eligible

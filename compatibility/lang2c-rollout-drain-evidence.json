@@ -1,0 +1,23 @@
+{
+  "approval": "sim autorizo",
+  "started_at": "2026-11-01T20:25:38.137475+00:00",
+  "status": "passed",
+  "released_sessions": [
+    "telco-938b484af0d32b8fb7dd42bad2cfe8bbe3c783138ef955bf",
+    "telco-61ef68350b600e136bc2ed76c5da620fd449167ab7b47e7e",
+    "telco-7a97f657b6e8db62f2a3b48a07c9fcf3c7a5f6f4e42cee8e"
+  ],
+  "prior_preflight_failure": {
+    "started_at": "2026-11-01T20:25:04.071120+00:00",
+    "error_type": "EngineUnavailable"
+  },
+  "legacy_execution": "e1616bc3-b2a3-4974-bdf8-d4cc3c598da1",
+  "legacy_status": "cancelled",
+  "active_status_counts": {
+    "pending": 0,
+    "running": 0,
+    "suspended": 0,
+    "resuming": 0
+  },
+  "other_workspace_unchanged": true
+}

@@ -160,14 +160,8 @@ class JourneyAgent:
             @function_tool(failure_error_function=None)
             async def search_procedure(query: str) -> str:
                 """Find a currently approved PDF procedure for a technical question."""
-                if locale != "en-US":
-                    result = BusinessResult(kind="technical", account_ref=ctx.user_id,
-                        reference="localized-source-unavailable",
-                        text=render("source_unavailable.v1", locale))
-                    budget.results.append(result)
-                    return result.model_dump_json()
                 from .knowledge_tools import KnowledgeQuery
-                return await business('telco_search_knowledge', KnowledgeQuery(query=query).model_dump())
+                return await business('telco_search_knowledge', KnowledgeQuery(query=query, locale=locale).model_dump(exclude_defaults=True))
 
             @function_tool(failure_error_function=None)
             async def request_pdf_ingestion(job_id: str) -> str:

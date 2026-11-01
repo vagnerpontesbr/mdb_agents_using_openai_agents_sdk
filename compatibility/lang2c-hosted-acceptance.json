@@ -1,0 +1,294 @@
+{
+  "status": "passed",
+  "approval": "sim autorizo",
+  "deployment_id": "deploy-f11e4d01",
+  "started_at": "2026-11-01T21:25:29.130123+00:00",
+  "cases": [
+    {
+      "name": "invoice-en-US",
+      "locale": "en-US",
+      "session_id": "telco-8c63cf66eeaa29bfc32c671fac1b0c26c966163038a1e9af",
+      "status": "passed",
+      "execution_id": "83621026-df70-4c17-a810-e854474eb24e",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "financial"
+      ],
+      "text_sha256": "6d53a88a850ccc9e6756a3d5b35abd6f39677431fc2731a120af14b5f5bb12f6"
+    },
+    {
+      "name": "invoice-pt-BR",
+      "locale": "pt-BR",
+      "session_id": "telco-97b20a6e896c6d7f4cb16f65700d66e0cd0772100f208244",
+      "status": "passed",
+      "execution_id": "5730e35c-4013-4bc2-a76c-8478cdffb1f7",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "financial"
+      ],
+      "text_sha256": "044d48ed54cdd34cddf82159013cc10ffbe0aded5ab58ee06d0f6853057004e4"
+    },
+    {
+      "name": "invoice-es-ES",
+      "locale": "es-ES",
+      "session_id": "telco-ecb2ed0ad2ce22ad8abb1d3d332e5fc0814400eb1b06ba12",
+      "status": "passed",
+      "execution_id": "a1c843d3-31d2-43d4-9276-8ac5d3ac746b",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "financial"
+      ],
+      "text_sha256": "77a1cb4bd21bce1c98cf4d57144936417f67894a4dc88d5b2fd83809d27eb24f"
+    },
+    {
+      "name": "knowledge-en-US",
+      "locale": "en-US",
+      "session_id": "telco-e29f588b1ca86b3c71c752d7ad01ea8b93618c1b8df3452c",
+      "status": "passed",
+      "execution_id": "8b0d5a9e-b856-4858-8aae-da9e8aadb77c",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "technical"
+      ],
+      "text_sha256": "f97b21d82641f14760e9218ea102605d3f704056c081ee592555e1574fac7ba4"
+    },
+    {
+      "name": "knowledge-pt-BR",
+      "locale": "pt-BR",
+      "session_id": "telco-0af5073f7d5b2ac62d3d0e56e745b78d433a5bd27fd650d8",
+      "status": "passed",
+      "execution_id": "14265032-f152-442c-9318-d459d05cdda7",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "technical"
+      ],
+      "text_sha256": "b842eca15340ff056865fe2c6b9ddd1042828cf875c9ca24c9fc2753e9d2ace2"
+    },
+    {
+      "name": "knowledge-es-ES",
+      "locale": "es-ES",
+      "session_id": "telco-dfd7964c2942142dd647c70ec5d02211c034b1c755303cd0",
+      "status": "passed",
+      "execution_id": "73fc2ce3-d852-4b66-ac8a-5b768e530391",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "technical"
+      ],
+      "text_sha256": "df39611eecf47b29813bc0d39f22db205733e090bbe50aba53ca11a1d28c64a6"
+    },
+    {
+      "name": "offer-negation-en-US",
+      "locale": "en-US",
+      "session_id": "telco-dfe6a325d88280d3edfcd9a38008a9598c2da59c2228554b",
+      "status": "passed",
+      "execution_id": "4ff14d78-f22d-4a02-8c4f-f8a8f74f2dab",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "sales"
+      ],
+      "text_sha256": "7318f9332b5e93f2b2293fdea92451e99ac601e808813c969e6ff7ad7e64d7b8"
+    },
+    {
+      "name": "offer-negation-pt-BR",
+      "locale": "pt-BR",
+      "session_id": "telco-121308038ce7db5281b0f0f85a56ddabe8c3b53e9046bcb1",
+      "status": "passed",
+      "execution_id": "7f262e8e-32f4-4d55-b434-28b546670436",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "sales"
+      ],
+      "text_sha256": "d00e316b76913fb55183717e77ff0f368ff8cec447a330a1ba243b36c3781eba"
+    },
+    {
+      "name": "offer-negation-es-ES",
+      "locale": "es-ES",
+      "session_id": "telco-fba2980e3a942e5f0faa25b154f5bb4dac3fcfb716438ed5",
+      "status": "passed",
+      "execution_id": "43d9e322-b844-4342-82e9-2fe5d81b8e6b",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "sales"
+      ],
+      "text_sha256": "83530051c876649ec548c1d2256fedeab36070873a7bb0309dda7f38477b1f0c"
+    },
+    {
+      "name": "injection-en-US",
+      "locale": "en-US",
+      "session_id": "telco-db7a59470530379f98dc44af915c94561fdb463136f1e45d",
+      "status": "passed",
+      "execution_id": "e77f7087-0b9b-4649-a288-14d3bc89e4a7",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "needs_information",
+      "specialists": [],
+      "text_sha256": "f52f56df97a41c9c6a49113152dbf975bd54b3a4d5668e3bbff87c1632c95d06"
+    },
+    {
+      "name": "injection-pt-BR",
+      "locale": "pt-BR",
+      "session_id": "telco-4033971c6b21ab392ada7fdb86936c266e1acd4b0e7b2dce",
+      "status": "passed",
+      "execution_id": "432ffabd-175a-4401-b6ff-74bdb4c1ef06",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "needs_information",
+      "specialists": [],
+      "text_sha256": "b770a11c3bc38cb743c3f1f7e3c3f13c8bdacf1760459190a5f4a3c4692af8e1"
+    },
+    {
+      "name": "injection-es-ES",
+      "locale": "es-ES",
+      "session_id": "telco-5dc71c11a3a789273c0a507fa1fcd5f774cb70d86abb7622",
+      "status": "passed",
+      "execution_id": "0785e126-c193-4ca7-b623-ad0044e74fd7",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "needs_information",
+      "specialists": [],
+      "text_sha256": "0ba1e0f6fd8c3b5a28a7551f4fc1d49be3a2402fbe33783876a203e81f92b489"
+    },
+    {
+      "name": "memory-seed",
+      "locale": "en-US",
+      "session_id": "telco-81958918ebbd6874c97f97a443e723e6e5a866e731e5c7d7",
+      "status": "passed",
+      "execution_id": "07ba08aa-67d6-4a8c-a84f-53dbdec0a314",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "sales"
+      ],
+      "text_sha256": "7318f9332b5e93f2b2293fdea92451e99ac601e808813c969e6ff7ad7e64d7b8"
+    },
+    {
+      "name": "memory-recall-pt-BR",
+      "locale": "pt-BR",
+      "session_id": "telco-81958918ebbd6874c97f97a443e723e6e5a866e731e5c7d7",
+      "status": "passed",
+      "execution_id": "be09be94-c7b0-4cc5-9bbf-a432dbc3e1b5",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "sales"
+      ],
+      "text_sha256": "d00e316b76913fb55183717e77ff0f368ff8cec447a330a1ba243b36c3781eba"
+    },
+    {
+      "name": "memory-recall-es-ES",
+      "locale": "es-ES",
+      "session_id": "telco-81958918ebbd6874c97f97a443e723e6e5a866e731e5c7d7",
+      "status": "passed",
+      "execution_id": "aa0ec393-05bf-4891-98a3-cee8006dd202",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "sales"
+      ],
+      "text_sha256": "83530051c876649ec548c1d2256fedeab36070873a7bb0309dda7f38477b1f0c"
+    },
+    {
+      "name": "memory-other-user",
+      "locale": "en-US",
+      "session_id": "telco-0f68e2fea2d075c2edf8e1557130a02584977d3a120ef6e1",
+      "status": "passed",
+      "execution_id": "558cef22-79bb-4cd4-a9b9-a01febdd1733",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "needs_information",
+      "specialists": [
+        "sales"
+      ],
+      "text_sha256": "f52f56df97a41c9c6a49113152dbf975bd54b3a4d5668e3bbff87c1632c95d06"
+    },
+    {
+      "name": "proposal-en-US",
+      "locale": "en-US",
+      "session_id": "telco-a9ca0cb6f110dac250c50ff692bfbceabd28b7806221bf0a",
+      "status": "passed",
+      "execution_id": "9ba6e969-06f2-4315-add1-e1a1bc144203",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "native_decision_stale_and_duplicate_guards": true,
+      "outcome": "rejected",
+      "specialists": [
+        "sales"
+      ],
+      "text_sha256": "7f6448c836e11c6855af9ecac59f6189dca2051a95cfa1563294da2e51642b65"
+    },
+    {
+      "name": "proposal-pt-BR",
+      "locale": "pt-BR",
+      "session_id": "telco-79693c335c10ef8cd6b41f615f0ee0dc2f9820782bd63db3",
+      "status": "passed",
+      "execution_id": "5e532a04-688c-40bc-a1e7-de9ce2d26f2c",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "runtime_recovery_exact_action": true,
+      "native_decision_stale_and_duplicate_guards": true,
+      "outcome": "completed",
+      "specialists": [
+        "sales"
+      ],
+      "text_sha256": "a95c06628699cf251c9b6742de654815eb5b39ba847a0f754fc9fd67e96e6e3c"
+    },
+    {
+      "name": "proposal-es-ES",
+      "locale": "es-ES",
+      "session_id": "telco-2c102b1225440c2ce1211bccbeff65091efaff7eb0e70819",
+      "status": "passed",
+      "execution_id": "1d36d3fc-de2f-4187-a6a4-12a77064d021",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "native_decision_stale_and_duplicate_guards": true,
+      "outcome": "completed",
+      "specialists": [
+        "sales"
+      ],
+      "text_sha256": "93b1f25c86b35eacdb5e8e2070cc8f1a63e3b1cb564ff286e92fbeabe96d743a"
+    },
+    {
+      "name": "legacy-English",
+      "locale": "en-US",
+      "session_id": "telco-03c4eb740626a97868f714728c98db677908c072c07cd347",
+      "status": "passed",
+      "execution_id": "ae81dd87-ab73-4d65-8247-5415810f34b0",
+      "original_message_and_locale_recovery": true,
+      "other_user_execution_denied": true,
+      "outcome": "completed",
+      "specialists": [
+        "financial"
+      ],
+      "text_sha256": "6d53a88a850ccc9e6756a3d5b35abd6f39677431fc2731a120af14b5f5bb12f6"
+    }
+  ],
+  "invocation_attempts": 20,
+  "limitations": [
+    "No speech or browser listening acceptance",
+    "Application invocation cap does not count managed memory calls",
+    "Dollar billing unavailable; USD30 ceiling unchanged"
+  ],
+  "profiles_restored": true,
+  "elapsed_seconds": 486.41
+}

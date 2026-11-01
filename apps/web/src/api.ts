@@ -29,6 +29,9 @@ export async function request(path: string, data?: Record<string, unknown>): Pro
     // Never retry account writes automatically after an uncertain network outcome.
     throw new Error('Connection unavailable. Check your session before trying again.');
   }
+  if (response.status === 401 && !['/api/login', '/api/me'].includes(path) && typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('telecom-session-expired'));
+  }
   const result: unknown = await response.json();
   if (!response.ok) {
     const messages: Record<number, string> = {

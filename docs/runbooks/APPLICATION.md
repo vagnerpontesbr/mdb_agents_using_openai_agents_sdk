@@ -72,8 +72,12 @@ grant; separating the command does not claim that Atlas grants were changed.
 uv run --frozen --env-file .env telecom-api --port 8000
 ```
 
-Open `http://127.0.0.1:8000`. Sign in, create a synthetic account as administrator,
-refresh to verify session restoration, then sign out. Ordinary users see their
+Open `http://127.0.0.1:8000`. Sign in and use Support/Knowledge in the workspace
+navigation. As administrator, open Control Plane → Users to create a synthetic
+account. Refresh to verify session restoration; use Profile → Sign out.
+Navigation preserves the conversation; leaving Support discards local microphone
+recording and stops playback. Profile editing and other Control Plane views are
+planned, not enabled by their navigation links. Ordinary users see their
 account without administration controls; the backend independently denies a
 forged registration request. Re-login revokes the browser's previous session.
 

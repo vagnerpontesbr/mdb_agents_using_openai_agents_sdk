@@ -17,7 +17,7 @@ function execution(value: unknown): Execution {
   return value as Execution;
 }
 
-export default function Journey({ user }: { user: Principal }) {
+export default function Journey({ user, active = true }: { user: Principal; active?: boolean }) {
   const [conversation, setConversation] = useState(() => {
     const key = `telecom-conversation-${user.user_id}`;
     const saved = sessionStorage.getItem(key);
@@ -39,6 +39,16 @@ export default function Journey({ user }: { user: Principal }) {
   const audioUrl = useRef<string | null>(null);
   const polls = useRef(0);
   const mounted = useRef(true);
+  const visible = useRef(active);
+  useEffect(() => {
+    visible.current = active;
+    if (!active) {
+      const recorder = capture.current; capture.current = null;
+      void recorder?.cancel(); audio.current?.pause();
+      setRecording(false);
+      if (recorder) setMessage('Recording discarded when leaving Support.');
+    }
+  }, [active]);
 
   useEffect(() => {
     mounted.current = true;
@@ -97,6 +107,7 @@ export default function Journey({ user }: { user: Principal }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ conversation_id: conversation, message: draft }),
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(150_000)]) });
+      if (response.status === 401) window.dispatchEvent(new Event('telecom-session-expired'));
       if (!response.ok || !response.body) throw new Error('Support request was not accepted.');
       setDraft('');
       const reader = response.body.getReader(); const decoder = new TextDecoder();
@@ -184,7 +195,7 @@ export default function Journey({ user }: { user: Principal }) {
     setBusy(true);
     try {
       const active = await startRecording(() => { void finishRecording(); });
-      if (!mounted.current) { await active.cancel(); return; }
+      if (!mounted.current || !visible.current) { await active.cancel(); return; }
       capture.current = active;
       setRecording(true); setMessage('Recording — speak in English. Maximum 15 seconds.');
     } catch { setMessage('Microphone unavailable or permission denied. You can continue with text.'); }
@@ -198,9 +209,10 @@ export default function Journey({ user }: { user: Principal }) {
       const response = await fetch('/api/voice/speak', { method: 'POST', credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ execution_id: current.execution_id }), signal: AbortSignal.timeout(120_000) });
+      if (response.status === 401) window.dispatchEvent(new Event('telecom-session-expired'));
       if (!response.ok) throw new Error();
       const blob = await response.blob();
-      if (!mounted.current) return;
+      if (!mounted.current || !visible.current) return;
       audio.current?.pause(); if (audioUrl.current) URL.revokeObjectURL(audioUrl.current);
       audioUrl.current = URL.createObjectURL(blob);
       audio.current = new Audio(audioUrl.current); await audio.current.play();
@@ -246,6 +258,7 @@ export default function Journey({ user }: { user: Principal }) {
       <button className="secondary" disabled={!available || busy || recording || !!waiting}
         onClick={newConversation}>New conversation</button>
     </div>
+    <p className="hint">Leaving Support discards microphone recording and stops playback. Your conversation remains active.</p>
     <p className="hint">Stopping playback or waiting does not cancel accepted remote work. No automatic resubmission.</p>
     <p className="hint">New conversations may recall selected earlier facts. Full chat history is not restored, and new memories may take time to become available.</p>
   </section>;

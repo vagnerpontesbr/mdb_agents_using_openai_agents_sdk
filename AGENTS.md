@@ -5,9 +5,10 @@
 - Additional planned tracks: [MEM-002](docs/tasks/MEM-002-MYMEMORY-MIGRATION.md) for Engine memory on mymemory and [TOK-001](docs/tasks/TOK-001-TOKENOMICS.md) for Control Plane dashboards. Verify shared-project impact and supported migration before a live switch. Do not expose private URIs or invent missing usage/prices.
 
 
-- Current requested work: [UI-001](docs/tasks/UI-001-PROFILES-CONTROL-PLANE.md), profile menus and application Control Plane, planned on `codex/ui-profiles-control-plane` from merged PR #4. Follow UI-0–UI-4 quality gates. UI-0 local design/baseline gates are complete; publication is pending. [ADR-0030](docs/adr/0030-ui-profiles-control-plane.md) is accepted for implementation; no UI implementation is claimed.
+- Current requested work: [UI-001](docs/tasks/UI-001-PROFILES-CONTROL-PLANE.md). UI-0 merged through PR #5 (`f43a10f`) with passing CI. UI-1 workspace navigation is implemented on `codex/ui-1-workspace`, with local gates passed and publication pending. Profile editing, multilingual behavior, settings editing, actual-cost dashboards and mymemory migration remain later phases. ADR-0030 is the accepted design.
 
-- Phases 0–8 are complete for the approved demo scope and integrated through PR #4 (`e524a57`). Use [the task backlog](docs/tasks/README.md) and linked runbooks for historical evidence and limitations. Current UI, multilingual, Tokenomics and mymemory tracks are planned, not implemented.
+
+- Phases 0–8 are complete for the approved demo scope and integrated through PR #4 (`e524a57`). Use [the task backlog](docs/tasks/README.md) and linked runbooks for historical evidence and limitations. Use UI-001 for current UI progress; multilingual, Tokenomics data and mymemory migration remain planned.
 - Read [initial_plan.md](initial_plan.md) for scope, [requirements](docs/REQUIREMENTS.md) for user decisions, and the relevant [ADR](docs/adr/README.md) before changing architecture.
 - Use [the task backlog](docs/tasks/README.md) to choose a bounded deliverable and record evidence. The latest explicit user instruction takes precedence over repository guidance.
 - Source identifiers and developer documentation remain English. The requester now requires pt-BR, en-US and es-ES for UI, agent responses and voice; localized catalogs/templates/fixtures are expected. Follow [I18N-001](docs/tasks/I18N-001-MULTILINGUAL.md).

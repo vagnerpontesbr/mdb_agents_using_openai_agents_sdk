@@ -6,7 +6,7 @@ import os
 import subprocess
 import threading
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 
@@ -39,6 +39,8 @@ class Upload(BaseModel):
     last_reviewed_at: AwareDatetime
     supersedes: str | None = Field(default=None, max_length=128)
     scanned: bool = False
+    language: Literal["en", "pt", "es"] = "en"
+    translation_of: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
 
 
 class CurationService:
@@ -101,7 +103,8 @@ class CurationService:
             checksum=checksum,
             classification="internal-demo",
             acl=("synthetic-support",),
-            language="en",
+            language=data.language,
+            translation_of=data.translation_of,
             product=SCOPE.product,
             region=SCOPE.region,
             firmware_range=SCOPE.firmware_range,

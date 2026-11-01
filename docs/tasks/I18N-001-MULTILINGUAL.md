@@ -1,6 +1,6 @@
 # I18N-001: Portuguese, English and Spanish across UI, responses and voice
 
-- Status: LANG-0 and LANG-2a merged; LANG-2b application propagation locally validated, remote gate pending; full LANG acceptance pending
+- Status: LANG-0, LANG-2a and LANG-2b merged; LANG-2c source contracts locally validated, Atlas approval pending; full LANG acceptance pending
 - Date: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 profile preferences, existing journey/voice contracts
@@ -231,3 +231,46 @@ Keep the compatibility switch false until the exact deployed agent, read-tool sc
 original-message recovery and provider behavior pass the controlled rehearsal. Do not
 roll out while old active/suspended executions lack a verified replay path. LANG-3,
 admin configuration, actual costs and memory migration remain subsequent work.
+
+
+### LANG-2c source-contract gate
+
+LANG-2b merged in PR #12 as `e0c9d4f`. Source commit `da82565` passed repository and
+application jobs in runs `41342524087` and `41342543625`; no remote check failed.
+The Engine CLI initially returned HTTP 401 during read-only workspace inventory.
+The existing refresh-token flow succeeded without exposing credentials; subsequent
+reads found agentsdk and geo-intelligence-network in the same project. No workspace,
+policy, deployment or memory setting was mutated.
+
+[ADR-0033](../adr/0033-governed-language-source-lineage.md) records additive language
+and original-source lineage rules. Local upload metadata can represent en/pt/es and
+an optional translation_of original-version key. The old English approval hash and
+serialized review metadata remain unchanged when that field is absent. Parent
+eligibility is rechecked before source release, including cached translations.
+
+Read-only Atlas inspection compared both current validators to the baseline and
+counted documents incompatible with the proposed validators: zero. The exact
+[proposal](../../compatibility/lang2c-validator-proposal.json) changes only validators
+on telecom_demo_knowledge.document_versions and telecom_demo_knowledge.chunks.
+No data, roles, indexes, policies, deployments or memory were written. The guarded
+application command, not yet executed, is:
+
+```sh
+uv run --env-file .env --frozen python scripts/apply_language_validators.py \
+  --proposal compatibility/lang2c-validator-proposal.json --apply-approved-change
+```
+
+Local validation: the final full suite passed **209 foundation tests** and **96 hosted
+contracts**. All 19 language/migration cases passed, including preflight-before-write,
+proposal tampering, partial application and absence of an explicit apply flag.
+Ruff initially found an import-order issue and four overlong lines; these were
+corrected. The repository check also initially rejected three missing required ADR
+sections; alternatives, consequences and revisit triggers were added. No behavioral
+test failed. These tests use database doubles; the Atlas
+inspection is read-only and does not establish actual write enforcement.
+
+This is a pending gate inside LANG-2c, not completion of the phase. Localized source
+selection/UI, actual reviewed sources and bounded provider/hosted acceptance remain.
+Keep new locale admission disabled until its live gate passes. MongoDB Schema Design
+requires explicit approval of the exact database write; do not apply this proposal
+based solely on an instruction to keep implementing local work.

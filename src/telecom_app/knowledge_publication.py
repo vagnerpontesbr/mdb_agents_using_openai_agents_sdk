@@ -2,6 +2,7 @@
 
 import hashlib
 import time
+from datetime import datetime
 from typing import Any
 
 from pymongo.client_session import ClientSession
@@ -80,6 +81,7 @@ class MongoKnowledgePublisher(MongoKnowledgeAuthority):
                 raise PublicationConflict("Replacement must bind the exact current version")
             now = utc_now()
 
+            publisher = self
             # The transaction has just verified native approval, original bytes and owner.
             # Eligibility still uses the same canonical domain assessment.
             class PublicationAuthority:
@@ -97,6 +99,10 @@ class MongoKnowledgePublisher(MongoKnowledgeAuthority):
 
                 def conflict_confirmed(self, tenant: str, document: str) -> bool:
                     return False
+
+                def translation_valid(self, candidate: Version, scope: Scope,
+                                      now: datetime) -> bool:
+                    return publisher.translation_valid(candidate, scope, now)
 
             approved = version.model_copy(update={"status": "approved"})
             scope = Scope(

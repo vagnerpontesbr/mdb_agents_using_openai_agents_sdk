@@ -50,3 +50,5 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | [ADR-0028](0028-mit-automated-demo-handoff.md) | MIT license and accepted automated demo handoff | Accepted by requester; Phase 6 and correction CI passed |
 
 | [ADR-0029](0029-isolated-load-environment.md) | Explicit isolated load namespaces and scoped identities | Approved resources applied; bounded role/domain checks passed |
+
+| [ADR-0033](0033-governed-language-source-lineage.md) | Additive source languages and bounded translation lineage | Local validation passed; Atlas approval pending |

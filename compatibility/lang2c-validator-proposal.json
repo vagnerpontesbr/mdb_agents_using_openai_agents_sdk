@@ -1,0 +1,847 @@
+{
+  "status": "proposed_not_applied_requires_approval",
+  "observed_at": "2026-11-01T19:43:45.619525+00:00",
+  "cluster": "OpenAI-SDK",
+  "host": "openai-sdk.qrmdk.mongodb.net",
+  "commands": [
+    {
+      "database": "telecom_demo_knowledge",
+      "collection": "document_versions",
+      "expected_before": {
+        "$and": [
+          {
+            "$jsonSchema": {
+              "additionalProperties": false,
+              "properties": {
+                "tenant_id": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "document_id": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "version_id": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "revision": {
+                  "minimum": 1,
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ]
+                },
+                "title": {
+                  "maxLength": 200,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "information_owner": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "created_at": {
+                  "bsonType": "date"
+                },
+                "ingested_at": {
+                  "bsonType": "date"
+                },
+                "effective_from": {
+                  "bsonType": "date"
+                },
+                "expires_at": {
+                  "bsonType": "date"
+                },
+                "last_reviewed_at": {
+                  "bsonType": "date"
+                },
+                "review_due_at": {
+                  "bsonType": "date"
+                },
+                "reviewed_by": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "approved_by": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "approved_at": {
+                  "bsonType": "date"
+                },
+                "source_uri": {
+                  "maxLength": 512,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "source_system": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "checksum": {
+                  "pattern": "^[a-f0-9]{64}$",
+                  "bsonType": "string"
+                },
+                "classification": {
+                  "enum": [
+                    "internal-demo"
+                  ],
+                  "bsonType": "string"
+                },
+                "acl": {
+                  "items": {
+                    "bsonType": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "maxItems": 16,
+                  "minItems": 1,
+                  "bsonType": "array"
+                },
+                "language": {
+                  "enum": [
+                    "en"
+                  ],
+                  "bsonType": "string"
+                },
+                "product": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "region": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "firmware_range": {
+                  "maxLength": 64,
+                  "minLength": 1,
+                  "bsonType": "string"
+                },
+                "supersedes": {
+                  "anyOf": [
+                    {
+                      "bsonType": "string"
+                    },
+                    {
+                      "bsonType": "null"
+                    }
+                  ]
+                },
+                "superseded_by": {
+                  "anyOf": [
+                    {
+                      "bsonType": "string"
+                    },
+                    {
+                      "bsonType": "null"
+                    }
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "draft",
+                    "in_review",
+                    "approved",
+                    "published",
+                    "quarantined",
+                    "expired",
+                    "superseded",
+                    "revoked"
+                  ],
+                  "bsonType": "string"
+                },
+                "business_impact": {
+                  "enum": [
+                    "low",
+                    "high"
+                  ],
+                  "bsonType": "string"
+                },
+                "change_rate": {
+                  "enum": [
+                    "low",
+                    "high"
+                  ],
+                  "bsonType": "string"
+                },
+                "_id": {
+                  "bsonType": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "tenant_id",
+                "document_id",
+                "version_id",
+                "revision",
+                "title",
+                "information_owner",
+                "created_at",
+                "ingested_at",
+                "effective_from",
+                "expires_at",
+                "last_reviewed_at",
+                "review_due_at",
+                "reviewed_by",
+                "approved_by",
+                "approved_at",
+                "source_uri",
+                "source_system",
+                "checksum",
+                "classification",
+                "acl",
+                "language",
+                "product",
+                "region",
+                "firmware_range",
+                "status",
+                "business_impact",
+                "change_rate",
+                "_id"
+              ],
+              "bsonType": "object"
+            }
+          },
+          {
+            "$expr": {
+              "$and": [
+                {
+                  "$lte": [
+                    "$created_at",
+                    "$effective_from"
+                  ]
+                },
+                {
+                  "$lt": [
+                    "$effective_from",
+                    "$expires_at"
+                  ]
+                },
+                {
+                  "$lte": [
+                    "$created_at",
+                    "$last_reviewed_at"
+                  ]
+                },
+                {
+                  "$lt": [
+                    "$last_reviewed_at",
+                    "$review_due_at"
+                  ]
+                },
+                {
+                  "$lte": [
+                    "$created_at",
+                    "$approved_at"
+                  ]
+                },
+                {
+                  "$lte": [
+                    "$created_at",
+                    "$ingested_at"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "command": {
+        "collMod": "document_versions",
+        "validator": {
+          "$and": [
+            {
+              "$jsonSchema": {
+                "additionalProperties": false,
+                "properties": {
+                  "tenant_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "document_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "version_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "revision": {
+                    "minimum": 1,
+                    "bsonType": [
+                      "int",
+                      "long"
+                    ]
+                  },
+                  "title": {
+                    "maxLength": 200,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "information_owner": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "created_at": {
+                    "bsonType": "date"
+                  },
+                  "ingested_at": {
+                    "bsonType": "date"
+                  },
+                  "effective_from": {
+                    "bsonType": "date"
+                  },
+                  "expires_at": {
+                    "bsonType": "date"
+                  },
+                  "last_reviewed_at": {
+                    "bsonType": "date"
+                  },
+                  "review_due_at": {
+                    "bsonType": "date"
+                  },
+                  "reviewed_by": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "approved_by": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "approved_at": {
+                    "bsonType": "date"
+                  },
+                  "source_uri": {
+                    "maxLength": 512,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "source_system": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "checksum": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "bsonType": "string"
+                  },
+                  "classification": {
+                    "enum": [
+                      "internal-demo"
+                    ],
+                    "bsonType": "string"
+                  },
+                  "acl": {
+                    "items": {
+                      "bsonType": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "maxItems": 16,
+                    "minItems": 1,
+                    "bsonType": "array"
+                  },
+                  "language": {
+                    "enum": [
+                      "en",
+                      "pt",
+                      "es"
+                    ],
+                    "bsonType": "string"
+                  },
+                  "translation_of": {
+                    "anyOf": [
+                      {
+                        "pattern": "^[a-f0-9]{64}$",
+                        "bsonType": "string"
+                      },
+                      {
+                        "bsonType": "null"
+                      }
+                    ]
+                  },
+                  "product": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "region": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "firmware_range": {
+                    "maxLength": 64,
+                    "minLength": 1,
+                    "bsonType": "string"
+                  },
+                  "supersedes": {
+                    "anyOf": [
+                      {
+                        "bsonType": "string"
+                      },
+                      {
+                        "bsonType": "null"
+                      }
+                    ]
+                  },
+                  "superseded_by": {
+                    "anyOf": [
+                      {
+                        "bsonType": "string"
+                      },
+                      {
+                        "bsonType": "null"
+                      }
+                    ]
+                  },
+                  "status": {
+                    "enum": [
+                      "draft",
+                      "in_review",
+                      "approved",
+                      "published",
+                      "quarantined",
+                      "expired",
+                      "superseded",
+                      "revoked"
+                    ],
+                    "bsonType": "string"
+                  },
+                  "business_impact": {
+                    "enum": [
+                      "low",
+                      "high"
+                    ],
+                    "bsonType": "string"
+                  },
+                  "change_rate": {
+                    "enum": [
+                      "low",
+                      "high"
+                    ],
+                    "bsonType": "string"
+                  },
+                  "_id": {
+                    "bsonType": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  }
+                },
+                "required": [
+                  "tenant_id",
+                  "document_id",
+                  "version_id",
+                  "revision",
+                  "title",
+                  "information_owner",
+                  "created_at",
+                  "ingested_at",
+                  "effective_from",
+                  "expires_at",
+                  "last_reviewed_at",
+                  "review_due_at",
+                  "reviewed_by",
+                  "approved_by",
+                  "approved_at",
+                  "source_uri",
+                  "source_system",
+                  "checksum",
+                  "classification",
+                  "acl",
+                  "language",
+                  "product",
+                  "region",
+                  "firmware_range",
+                  "status",
+                  "business_impact",
+                  "change_rate",
+                  "_id"
+                ],
+                "bsonType": "object"
+              }
+            },
+            {
+              "$expr": {
+                "$and": [
+                  {
+                    "$lte": [
+                      "$created_at",
+                      "$effective_from"
+                    ]
+                  },
+                  {
+                    "$lt": [
+                      "$effective_from",
+                      "$expires_at"
+                    ]
+                  },
+                  {
+                    "$lte": [
+                      "$created_at",
+                      "$last_reviewed_at"
+                    ]
+                  },
+                  {
+                    "$lt": [
+                      "$last_reviewed_at",
+                      "$review_due_at"
+                    ]
+                  },
+                  {
+                    "$lte": [
+                      "$created_at",
+                      "$approved_at"
+                    ]
+                  },
+                  {
+                    "$lte": [
+                      "$created_at",
+                      "$ingested_at"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "validationLevel": "strict",
+        "validationAction": "error"
+      },
+      "existing_documents_requiring_rewrite": 0
+    },
+    {
+      "database": "telecom_demo_knowledge",
+      "collection": "chunks",
+      "expected_before": {
+        "$jsonSchema": {
+          "additionalProperties": false,
+          "properties": {
+            "chunk_id": {
+              "maxLength": 128,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "version_key": {
+              "maxLength": 128,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "revision": {
+              "minimum": 1,
+              "bsonType": [
+                "int",
+                "long"
+              ]
+            },
+            "text": {
+              "maxLength": 8000,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "text_sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "bsonType": "string"
+            },
+            "pages": {
+              "items": {
+                "bsonType": [
+                  "int",
+                  "long"
+                ],
+                "minimum": 1,
+                "maximum": 10
+              },
+              "maxItems": 10,
+              "bsonType": "array",
+              "uniqueItems": true
+            },
+            "_id": {},
+            "tenant_id": {
+              "bsonType": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "acl": {
+              "items": {
+                "bsonType": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "maxItems": 16,
+              "minItems": 1,
+              "bsonType": "array"
+            },
+            "product": {
+              "maxLength": 128,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "region": {
+              "maxLength": 128,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "firmware_range": {
+              "maxLength": 64,
+              "minLength": 1,
+              "bsonType": "string"
+            },
+            "language": {
+              "enum": [
+                "en"
+              ],
+              "bsonType": "string"
+            },
+            "status": {
+              "enum": [
+                "draft",
+                "in_review",
+                "approved",
+                "published",
+                "quarantined",
+                "expired",
+                "superseded",
+                "revoked"
+              ],
+              "bsonType": "string"
+            },
+            "effective_from": {
+              "bsonType": "date"
+            },
+            "expires_at": {
+              "bsonType": "date"
+            },
+            "review_due_at": {
+              "bsonType": "date"
+            },
+            "embedding_profile": {
+              "enum": [
+                "voyage-context-4:1024:v1"
+              ]
+            },
+            "eligible": {
+              "bsonType": "bool"
+            },
+            "embedding": {
+              "bsonType": "array",
+              "minItems": 1024,
+              "maxItems": 1024,
+              "items": {
+                "bsonType": "double",
+                "minimum": -1e+308,
+                "maximum": 1e+308
+              }
+            }
+          },
+          "required": [
+            "chunk_id",
+            "version_key",
+            "revision",
+            "text",
+            "text_sha256",
+            "pages",
+            "_id",
+            "tenant_id",
+            "acl",
+            "product",
+            "region",
+            "firmware_range",
+            "language",
+            "status",
+            "effective_from",
+            "expires_at",
+            "review_due_at",
+            "embedding_profile",
+            "eligible",
+            "embedding"
+          ],
+          "bsonType": "object"
+        }
+      },
+      "command": {
+        "collMod": "chunks",
+        "validator": {
+          "$jsonSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "chunk_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "version_key": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "revision": {
+                "minimum": 1,
+                "bsonType": [
+                  "int",
+                  "long"
+                ]
+              },
+              "text": {
+                "maxLength": 8000,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "text_sha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "bsonType": "string"
+              },
+              "pages": {
+                "items": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 1,
+                  "maximum": 10
+                },
+                "maxItems": 10,
+                "bsonType": "array",
+                "uniqueItems": true
+              },
+              "_id": {},
+              "tenant_id": {
+                "bsonType": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "acl": {
+                "items": {
+                  "bsonType": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "maxItems": 16,
+                "minItems": 1,
+                "bsonType": "array"
+              },
+              "product": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "region": {
+                "maxLength": 128,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "firmware_range": {
+                "maxLength": 64,
+                "minLength": 1,
+                "bsonType": "string"
+              },
+              "language": {
+                "enum": [
+                  "en",
+                  "pt",
+                  "es"
+                ],
+                "bsonType": "string"
+              },
+              "status": {
+                "enum": [
+                  "draft",
+                  "in_review",
+                  "approved",
+                  "published",
+                  "quarantined",
+                  "expired",
+                  "superseded",
+                  "revoked"
+                ],
+                "bsonType": "string"
+              },
+              "effective_from": {
+                "bsonType": "date"
+              },
+              "expires_at": {
+                "bsonType": "date"
+              },
+              "review_due_at": {
+                "bsonType": "date"
+              },
+              "embedding_profile": {
+                "enum": [
+                  "voyage-context-4:1024:v1"
+                ]
+              },
+              "eligible": {
+                "bsonType": "bool"
+              },
+              "embedding": {
+                "bsonType": "array",
+                "minItems": 1024,
+                "maxItems": 1024,
+                "items": {
+                  "bsonType": "double",
+                  "minimum": -1e+308,
+                  "maximum": 1e+308
+                }
+              }
+            },
+            "required": [
+              "chunk_id",
+              "version_key",
+              "revision",
+              "text",
+              "text_sha256",
+              "pages",
+              "_id",
+              "tenant_id",
+              "acl",
+              "product",
+              "region",
+              "firmware_range",
+              "language",
+              "status",
+              "effective_from",
+              "expires_at",
+              "review_due_at",
+              "embedding_profile",
+              "eligible",
+              "embedding"
+            ],
+            "bsonType": "object"
+          }
+        },
+        "validationLevel": "strict",
+        "validationAction": "error"
+      },
+      "existing_documents_requiring_rewrite": 0
+    }
+  ],
+  "effects": [
+    "Allow en/pt/es source language in existing version/chunk collections",
+    "Allow optional original-version key on document_versions",
+    "Preserve strict/error validation and every other field constraint"
+  ],
+  "not_included": [
+    "Document insert/update/delete",
+    "Indexes or roles",
+    "Engine policy/memory configuration",
+    "Other databases or clusters"
+  ],
+  "rollback": "Restore only these validators after confirming no new-language or lineage documents were written. Otherwise retain compatible validators and disable new uploads; do not delete documents."
+}

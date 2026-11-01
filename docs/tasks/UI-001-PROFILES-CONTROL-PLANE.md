@@ -1,6 +1,6 @@
 # UI-001: Profile navigation and application Control Plane
 
-- Status: UI-0 local design/baseline gate complete; publication pending; UI-1 not started
+- Status: UI-0 merged in PR #5; UI-1 local gates passed, publication pending
 - Owner: Telecom demo maintainer
 - Requested: 2026-11-01
 - Branch: `codex/ui-profiles-control-plane`
@@ -195,8 +195,8 @@ reported. No repeated load, pricing or production-capacity proof is part of this
 
 | Phase | Code status | Validation evidence | Publication |
 | --- | --- | --- | --- |
-| UI-0 | Design and migration inventory complete; requester decisions recorded | Local gate passed; see UI-0 baseline below | Publication pending; no new CI run |
-| UI-1 | Not started | Not run | None |
+| UI-0 | Design and migration inventory complete; requester decisions recorded | Local and remote gates passed | PR #5 merged as `f43a10f` |
+| UI-1 | Responsive workspace, profile disclosure, fixed routes, preserved journey | Local gates passed; see evidence below | Pending |
 | UI-2 | Not started | Not run | None |
 | UI-3 | Not started | Not run | None |
 | UI-4 | Not started | Not run | None |
@@ -352,3 +352,51 @@ and subsequent-operation Save/Apply semantics, without restart/deploy controls.
 The UI-0 local design/baseline gate is complete. Publication and required remote CI
 remain pending; UI-1 has not started. Actual-cost source discovery remains TOK-0
 work; no access or actual monetary coverage is inferred from this baseline.
+
+
+## UI-1 implementation and evidence — 2026-11-01
+
+UI-0 was published in PR #5 and merged as `f43a10f04304d8f9687a273922c8c4b83141ae5a`.
+Both repository/application jobs passed in runs `41309363443` and `41309381580`.
+UI-1 starts from that integrated main on `codex/ui-1-workspace`.
+
+Implemented a responsive WorkspaceLayout with fixed hash routes, profile disclosure,
+keyboard Escape/focus return, skip link, selected navigation and mobile disclosure.
+Existing account creation moved into the admin Users route; no new backend endpoint
+or privilege was added. Profile editing and other Control Plane views are explicitly
+pending. Unknown routes and forbidden admin routes have separate views.
+
+Journey remains mounted above route visibility: messages, draft, conversation ID,
+transport and pending action survive navigation. Leaving Support cancels local
+recording and pauses playback, but does not cancel accepted work. Late microphone
+permission or audio responses cannot start capture/playback while Support is hidden.
+Authenticated 401 responses clear the current workspace; initial login/session checks
+are excluded from the expiration event. No provider/Atlas changes were made.
+
+### Local validation
+
+- Frontend ESLint, TypeScript and production build passed.
+- Vitest: all 3 existing API contract tests passed.
+- Playwright: all 15 browser tests passed (10 regression and 5 workspace tests).
+  New coverage: draft/conversation preservation during an in-flight request with
+  exactly one invocation; deep-link/reload/back/forward; user denial for admin routes;
+  unknown routes; mobile and keyboard disclosures; expired-session cleanup;
+  exact pending approval after navigation; no late offscreen audio playback.
+- A focused rerun of the keyboard/layout case passed after adding 200% CSS zoom
+  coverage. Desktop 1440px, mobile 390px, narrow 720px reflow and CSS zoom 2 were
+  inspected; no clipping/overlap was found. CSS zoom is recorded explicitly, not
+  claimed as a manual browser-menu zoom test.
+- Screenshots are generated under ignored `apps/web/test-results`; only synthetic
+  fixture identities are used. They are local visual evidence, not hosted screenshots.
+- Two non-escalated browser attempts could not initialize uv's cache in the sandbox;
+  no tests started in either attempt. Permission-enabled reruns passed. This is an
+  environment failure, not a failed behavior assertion. No behavioral test failed.
+- Backend source is unchanged. The UI-0 backend baseline is historical; remote CI
+  reruns backend and hosted-contract suites before integration. No live voice,
+  Atlas schema/roles or multilingual provider test is represented as performed.
+
+Review disposition: no unresolved critical/high finding in the scoped diff. User/admin
+menu restrictions complement the unchanged backend authorization; UI route checks
+alone are not claimed as backend permission proof. No routes expose configuration,
+secrets, invented cost/health values or a second memory owner. Subsequent UI-2/LANG
+work must preserve the mounted journey and the existing action/session identities.

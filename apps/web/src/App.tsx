@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import type { SubmitEvent } from 'react';
 import { ApiError, principal, request } from './api';
 import type { Principal, Role } from './api';
-import Journey from './Journey';
-import Knowledge from './Knowledge';
+import WorkspaceLayout from './WorkspaceLayout';
 
 export default function App() {
   const [user, setUser] = useState<Principal | null>(null);
@@ -21,6 +20,12 @@ export default function App() {
         }
       }).finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    const expired = () => { setUser(null); setNotice(''); setError('Your session expired. Sign in again.'); };
+    window.addEventListener('telecom-session-expired', expired);
+    return () => window.removeEventListener('telecom-session-expired', expired);
   }, []);
 
   async function submit(event: SubmitEvent<HTMLFormElement>, register: boolean) {
@@ -59,6 +64,19 @@ export default function App() {
     } finally { setBusy(false); }
   }
 
+  if (user) return <WorkspaceLayout key={user.user_id} user={user} busy={busy}
+    logout={() => { void logout(); }} feedback={error && <p role="alert" className="feedback error">{error}</p>} account={<>
+      <h2>Create an account</h2><p className="muted">Give a team member access to this demo.</p>
+      <form onSubmit={event => { void submit(event, true); }}>
+        <Credentials register disabled={busy} />
+        <label>Role<select name="role" defaultValue="user" disabled={busy}>
+          <option value="user">User</option><option value="admin">Administrator</option>
+        </select></label>
+        <button disabled={busy} type="submit">{busy ? 'Working…' : 'Create account'}</button>
+      </form>
+      {notice && <p role="status" className="feedback success">{notice}</p>}
+    </>} />;
+
   return <div className="shell">
     <header><a className="brand" href="/" aria-label="Telecom workspace home">
       <span className="brand-mark" aria-hidden="true">◒</span> Telecom<span> / workspace</span>
@@ -76,36 +94,16 @@ export default function App() {
       </section>
       <section className="panel" aria-busy={busy || loading}>
         {loading ? <p role="status">Checking your session…</p> : <>
-          {user ? <>
-            <p className="eyebrow">YOUR ACCOUNT</p><h2>Welcome back</h2>
-            <div className="account"><strong>{user.email}</strong><span className="role">{user.role}</span></div>
-            <p className="muted">You’re signed in. Your support workspace is below.</p>
-            {user.role === 'admin' && <div className="registration">
-              <h3>Create an account</h3><p className="muted">Give a team member access to this demo.</p>
-              <form onSubmit={event => { void submit(event, true); }}>
-                <Credentials register disabled={busy} />
-                <label>Role<select name="role" defaultValue="user" disabled={busy}>
-                  <option value="user">User</option><option value="admin">Administrator</option>
-                </select></label>
-                <p className="hint">Administrators can create other accounts.</p>
-                <button disabled={busy} type="submit">{busy ? 'Working…' : 'Create account'}</button>
-              </form>
-            </div>}
-            <button className="secondary" disabled={busy} onClick={() => { void logout(); }}>Sign out</button>
-          </> : <>
             <p className="eyebrow">YOUR WORKSPACE</p><h2>Sign in</h2>
             <p className="muted">Use the account provided by your administrator.</p>
             <form onSubmit={event => { void submit(event, false); }}>
               <Credentials register={false} disabled={busy} />
               <button disabled={busy} type="submit">{busy ? 'Signing in…' : 'Sign in'}</button>
             </form>
-          </>}
         </>}
         {error && <p className="feedback error" role="alert">{error}</p>}
         {notice && <p className="feedback success" role="status">{notice}</p>}
       </section>
-      {user && <Journey key={user.user_id} user={user} />}
-      {user && <Knowledge key={`knowledge-${user.user_id}`} user={user} />}
     </main>
     <footer>Telecom reference asset <span>Private demo workspace</span></footer>
   </div>;

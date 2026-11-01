@@ -28,6 +28,7 @@ test('curation displays the exact native review before publication (UI doubles)'
   await page.getByLabel('Email', { exact: true }).fill('admin@mongodb.com');
   await page.getByLabel('Password', { exact: true }).fill('synthetic-browser-only');
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await page.getByRole('link', { name: 'Knowledge', exact: true }).click();
   await page.getByRole('button', { name: 'Owner: request publication review' }).click();
   await expect(page.getByRole('heading', { name: 'Review this exact publication' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Publish approved version' })).toHaveCount(0);

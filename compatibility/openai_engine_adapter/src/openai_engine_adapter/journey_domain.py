@@ -5,20 +5,24 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from .journey_locale import Locale, price, render
+
 
 class Contract(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
 
 class InvoiceQuery(Contract):
+    locale: Locale = "en-US"
     invoice_id: str = Field(min_length=1, max_length=64)
 
 
 class EmptyQuery(Contract):
-    pass
+    locale: Locale = "en-US"
 
 
 class PlanQuery(Contract):
+    locale: Locale = "en-US"
     plan_id: Literal["fiber-500", "fiber-1000"]
     propose_change: bool
 
@@ -53,31 +57,25 @@ def proposal_id(user, plan):
     return hashlib.sha256(f"telecom-simulation-v1|{subject(user)}|{plan}".encode()).hexdigest()
 
 
-def read_invoice(user, invoice_id):
+def read_invoice(user, invoice_id, locale="en-US"):
     subject(user)
     if invoice_id != "demo-1":
         raise ValueError("Invoice outside the authenticated synthetic fixture")
     return BusinessResult(kind="invoice", account_ref=user, reference="demo-1",
-                          text="Your synthetic invoice total is USD 79.90, due on 2026-12-01.")
+                          text=render("invoice.v1", locale))
 
 
-def check_connection(user):
+def check_connection(user, locale="en-US"):
     subject(user)
     return BusinessResult(kind="technical", account_ref=user, reference="network-fixture-v1",
-        text="The synthetic network reports no regional outage. Check the router power and cables, "
-             "then compare a wired connection with Wi-Fi. If the problem persists, contact support.")
+        text=render("connection.v1", locale))
 
 
-def offer_plan(user, plan_id, propose_change):
+def offer_plan(user, plan_id, propose_change, locale="en-US"):
     subject(user)
     speed, amount = PLANS[plan_id]
-    price = f"USD {amount // 100}.{amount % 100:02d}"
-    if propose_change:
-        text = (f"Simulate a change to {plan_id} ({speed} Mbps) at {price} per month? "
-                "Approval produces a simulation receipt only; no live plan or charge changes.")
-    else:
-        text = (f"The synthetic {plan_id} plan offers {speed} Mbps for {price} per month. "
-                "This demo account is eligible. No plan change has been requested.")
+    text = render("proposal.v1" if propose_change else "offer.v1", locale,
+                  plan=plan_id, speed=speed, price=price(amount, locale))
     return BusinessResult(kind="proposal" if propose_change else "offer", account_ref=user,
         reference=proposal_id(user, plan_id), text=text, plan_id=plan_id, monthly_minor=amount)
 
@@ -95,6 +93,7 @@ def simulate_change(user, plan_id, monthly_minor, proposal_id_value):
 
 
 class JourneyResult(Contract):
+    locale: Locale = "en-US"
     contract: Literal["telecom-journey-v1"] = "telecom-journey-v1"
     status: Literal["completed", "rejected", "expired", "needs_information"]
     text: str = Field(min_length=1, max_length=8000)

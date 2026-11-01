@@ -13,6 +13,7 @@ from agent_engine_sdk.models import (
 from agent_engine_runner_shared.execution import AgentExecutionResult
 from openai.types.responses import ResponseFunctionToolCall, ResponseOutputMessage, ResponseOutputText
 
+from .journey_locale import LANGUAGES, read_turn, render
 from .adapter import UnsupportedContract
 from .journey_domain import (
     BusinessResult, EmptyQuery, InvoiceQuery, JourneyResult, PlanQuery,
@@ -113,8 +114,12 @@ class JourneyAgent:
             raise UnsupportedContract("Journey requires fresh authenticated Engine context")
         if (not isinstance(input.payload, dict) or set(input.payload) != {"message"}
                 or not isinstance(input.payload["message"], str)
-                or not 1 <= len(input.payload["message"].strip()) <= 4000):
+                or not 1 <= len(input.payload["message"]) <= 25000):
             raise UnsupportedContract("Expected a bounded user message")
+        try:
+            locale, user_message = read_turn(input.payload["message"])
+        except ValueError as error:
+            raise UnsupportedContract("Invalid journey locale/message") from error
         consumed = False
 
         async def invoke():
@@ -123,7 +128,7 @@ class JourneyAgent:
                 raise UnsupportedContract("Journey result is single-use")
             consumed = True
             budget = Budget()
-            message = input.payload["message"]
+            message = user_message
             if self.memory_builder:
                 historical = await asyncio.to_thread(self.memory_builder, ctx, message)
                 if not isinstance(historical, str) or len(historical) > 16000:
@@ -144,17 +149,23 @@ class JourneyAgent:
             @function_tool(failure_error_function=None)
             async def read_invoice(invoice_id: str) -> str:
                 """Read the authenticated user's synthetic invoice, ID demo-1."""
-                args = InvoiceQuery(invoice_id=invoice_id)
-                return await business("telco_read_invoice", args.model_dump())
+                args = InvoiceQuery(invoice_id=invoice_id, locale=locale)
+                return await business("telco_read_invoice", args.model_dump(exclude_defaults=True))
 
             @function_tool(failure_error_function=None)
             async def check_connection() -> str:
                 """Check the authenticated synthetic connection and safe troubleshooting steps."""
-                return await business("telco_check_connection", EmptyQuery().model_dump())
+                return await business("telco_check_connection", EmptyQuery(locale=locale).model_dump(exclude_defaults=True))
 
             @function_tool(failure_error_function=None)
             async def search_procedure(query: str) -> str:
                 """Find a currently approved PDF procedure for a technical question."""
+                if locale != "en-US":
+                    result = BusinessResult(kind="technical", account_ref=ctx.user_id,
+                        reference="localized-source-unavailable",
+                        text=render("source_unavailable.v1", locale))
+                    budget.results.append(result)
+                    return result.model_dump_json()
                 from .knowledge_tools import KnowledgeQuery
                 return await business('telco_search_knowledge', KnowledgeQuery(query=query).model_dump())
 
@@ -167,8 +178,8 @@ class JourneyAgent:
             @function_tool(failure_error_function=None)
             async def compare_plan(plan_id: str, propose_change: bool) -> str:
                 """Compare fiber-500/fiber-1000; propose only when the user asks to change."""
-                args = PlanQuery(plan_id=plan_id, propose_change=propose_change)
-                return await business("telco_offer_plan", args.model_dump())
+                args = PlanQuery(plan_id=plan_id, propose_change=propose_change, locale=locale)
+                return await business("telco_offer_plan", args.model_dump(exclude_defaults=True))
 
             delegates = []
             definitions = [
@@ -191,7 +202,7 @@ class JourneyAgent:
                         'request_pdf_ingestion. Use check_connection for generic connection diagnostics. '
                         'Do not invent procedure content, citations or job IDs. Use only one tool. ')
                     available_tools += [search_procedure, request_pdf_ingestion]
-                agent = Agent(name=f"Telecom {name}", instructions=instructions + CONTINUITY_RULES,
+                agent = Agent(name=f"Telecom {name}", instructions=instructions + CONTINUITY_RULES + " Respond in " + LANGUAGES[locale] + ".",
                     model=JourneyModel(ctx, self.bindings_factory, budget, name), tools=available_tools,
                     model_settings=ModelSettings(parallel_tool_calls=False),
                     tool_use_behavior="stop_on_first_tool")
@@ -221,17 +232,15 @@ class JourneyAgent:
                 "Do not invent account facts. After all relevant specialists "
                 "return, finish. The backend renders all critical facts; your prose cannot authorize "
                 "actions. Preserve the user's explicit invoice/plan IDs in delegated requests. "
-                + CONTINUITY_RULES),
+                + CONTINUITY_RULES + " Respond in " + LANGUAGES[locale] + "."),
                 tools=delegates, model=JourneyModel(ctx, self.bindings_factory, budget, "supervisor"),
                 model_settings=ModelSettings(parallel_tool_calls=False))
             await Runner.run(supervisor, message, context=ctx, max_turns=4,
                              run_config=RunConfig(tracing_disabled=True))
             # Never expose supervisor rewording of money, offers or confirmation.
-            text = "\n\n".join(item.text for item in budget.results) or (
-                "Please specify your invoice ID or whether you need connection help, "
-                "a plan comparison, or a simulated change to fiber-500 or fiber-1000.")
+            text = "\n\n".join(item.text for item in budget.results) or render("clarification.v1", locale)
             result = JourneyResult(status="completed" if budget.results else "needs_information",
-                text=text, specialists=budget.specialists, results=budget.results)
+                text=text, specialists=budget.specialists, results=budget.results, locale=locale)
             return AgentOutput(response={"output": result.model_dump_json()})
 
         async def stream():

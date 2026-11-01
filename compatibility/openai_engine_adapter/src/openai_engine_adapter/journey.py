@@ -1,7 +1,6 @@
 """Telecom journey deployment entrypoint; Engine owns durable work and review."""
 
 import asyncio
-import json
 
 from agent_engine_runner_shared import hooks
 from agent_engine_runner_shared.context import get_current_oe_url, get_current_user_id
@@ -15,6 +14,7 @@ from agent_engine_sdk.models import StreamEvent
 from .adapter import EngineBindings, RemoteReadTool, UnsupportedContract
 from .app import OpenAIEngineApp
 from .journey_agent import JourneyAgent
+from .journey_locale import price, render
 from .journey_domain import (
     BusinessResult, ChangeQuery, EmptyQuery, InvoiceQuery, JourneyResult, PlanQuery,
     check_connection, offer_plan, read_invoice, simulate_change,
@@ -82,7 +82,7 @@ class JourneyExecution:
                 other_text = [r.text for r in result.results if r.kind != "proposal"]
                 result = result.model_copy(update={"status": status,
                     "text": "\n\n".join([*other_text,
-                        f"The plan-change simulation was {status}. No plan or charge changed."])})
+                        render(status + ".v1", result.locale)])})
             else:
                 raw = await asyncio.to_thread(self.bindings(fresh, []).tools.execute_tool,
                     "telco_simulate_plan_change", action.arguments,
@@ -93,6 +93,9 @@ class JourneyExecution:
                         or receipt.kind != "simulation" or receipt.plan_id != proposal.plan_id
                         or receipt.monthly_minor != proposal.monthly_minor):
                     raise UnsupportedContract("Simulation receipt scope mismatch")
+                if result.locale != "en-US":
+                    receipt = receipt.model_copy(update={"text": render("simulation.v1", result.locale,
+                        plan=receipt.plan_id, price=price(receipt.monthly_minor, result.locale))})
                 result = result.model_copy(update={"text": "\n\n".join([
                     *[r.text for r in result.results if r.kind != "proposal"], receipt.text]),
                                                    "results": [*result.results, receipt]})
@@ -120,20 +123,20 @@ app = JourneyApp(name="agentsdk", instructions="Telecom journey", llm_id="invoic
 
 @app.tool(contract=RemoteReadTool("telco_read_invoice", "Read own synthetic invoice",
                                 InvoiceQuery, BusinessResult))
-def telco_read_invoice(invoice_id):
-    return read_invoice(get_current_user_id(), invoice_id).model_dump()
+def telco_read_invoice(invoice_id, locale="en-US"):
+    return read_invoice(get_current_user_id(), invoice_id, locale).model_dump()
 
 
 @app.tool(contract=RemoteReadTool("telco_check_connection", "Check synthetic connection",
                                 EmptyQuery, BusinessResult))
-def telco_check_connection():
-    return check_connection(get_current_user_id()).model_dump()
+def telco_check_connection(locale="en-US"):
+    return check_connection(get_current_user_id(), locale).model_dump()
 
 
 @app.tool(contract=RemoteReadTool("telco_offer_plan", "Compare/propose eligible synthetic plan",
                                 PlanQuery, BusinessResult))
-def telco_offer_plan(plan_id, propose_change):
-    return offer_plan(get_current_user_id(), plan_id, propose_change).model_dump()
+def telco_offer_plan(plan_id, propose_change, locale="en-US"):
+    return offer_plan(get_current_user_id(), plan_id, propose_change, locale).model_dump()
 
 
 @app.tool(contract=RemoteReadTool("telco_simulate_plan_change", "Produce approved simulation receipt",

@@ -1,0 +1,60 @@
+{
+  "contract": "telecom-multilingual-source-draft-v1",
+  "status": "draft_requires_native_owner_review",
+  "tenant_id": "synthetic-telecom",
+  "version_id": "20261101-1",
+  "created_at": "2026-11-01T00:00:00Z",
+  "effective_from": "2026-11-01T00:00:00Z",
+  "expires_at": "2026-12-01T00:00:00Z",
+  "review_due_at": "2026-11-08T00:00:00Z",
+  "scope": {"product": "FiberBox", "region": "demo", "firmware_range": "2.x", "acl": ["synthetic-support"]},
+  "sources": [
+    {
+      "language": "en",
+      "document_id": "SOP-LANG-OPTICAL-EN",
+      "title": "FiberBox: persistent red optical light",
+      "notice": "Synthetic demo only. Publication requires the information owner's review.",
+      "scope_text": "Applies only to FiberBox, demo region, firmware 2.x.",
+      "steps": [
+        "Confirm the product and firmware before using this procedure. If either is unknown, stop and contact support.",
+        "Check whether the red optical light remains on. Report the observed light status to support.",
+        "Do not disconnect the optical cable, open the device, or perform a factory reset.",
+        "If the red light remains on, open a support ticket with the product, firmware and observed light status. Do not claim that service has been restored."
+      ],
+      "question": "For FiberBox firmware 2.x in the demo region, what should I do if the red optical light remains on?",
+      "required_phrases": ["stop and contact support", "Do not disconnect", "factory reset", "open a support ticket", "Do not claim that service has been restored"]
+    },
+    {
+      "language": "pt",
+      "document_id": "SOP-LANG-OPTICAL-PT",
+      "translation_of_document": "SOP-LANG-OPTICAL-EN",
+      "title": "FiberBox: luz óptica vermelha persistente",
+      "notice": "Somente demonstração sintética. A publicação exige revisão pelo responsável pela informação.",
+      "scope_text": "Aplica-se somente ao FiberBox, região demo, firmware 2.x.",
+      "steps": [
+        "Confirme o produto e o firmware antes de usar este procedimento. Se algum deles for desconhecido, pare e contate o suporte.",
+        "Verifique se a luz óptica vermelha permanece acesa. Informe ao suporte o estado observado da luz.",
+        "Não desconecte o cabo óptico, não abra o equipamento e não restaure as configurações de fábrica.",
+        "Se a luz vermelha permanecer acesa, abra um chamado de suporte com o produto, o firmware e o estado observado da luz. Não afirme que o serviço foi restabelecido."
+      ],
+      "question": "No FiberBox com firmware 2.x, na região demo, o que devo fazer se a luz óptica vermelha permanecer acesa?",
+      "required_phrases": ["pare e contate o suporte", "Não desconecte", "configurações de fábrica", "abra um chamado de suporte", "Não afirme que o serviço foi restabelecido"]
+    },
+    {
+      "language": "es",
+      "document_id": "SOP-LANG-OPTICAL-ES",
+      "translation_of_document": "SOP-LANG-OPTICAL-EN",
+      "title": "FiberBox: luz óptica roja persistente",
+      "notice": "Solo demostración sintética. La publicación requiere la revisión del responsable de la información.",
+      "scope_text": "Se aplica únicamente a FiberBox, región demo, firmware 2.x.",
+      "steps": [
+        "Confirma el producto y el firmware antes de usar este procedimiento. Si alguno es desconocido, detente y contacta con soporte.",
+        "Comprueba si la luz óptica roja permanece encendida. Informa a soporte del estado observado de la luz.",
+        "No desconectes el cable óptico, no abras el equipo ni restablezcas la configuración de fábrica.",
+        "Si la luz roja permanece encendida, abre un ticket de soporte con el producto, el firmware y el estado observado de la luz. No afirmes que el servicio se ha restablecido."
+      ],
+      "question": "En FiberBox con firmware 2.x, en la región demo, ¿qué debo hacer si la luz óptica roja permanece encendida?",
+      "required_phrases": ["detente y contacta con soporte", "No desconectes", "configuración de fábrica", "abre un ticket de soporte", "No afirmes que el servicio se ha restablecido"]
+    }
+  ]
+}

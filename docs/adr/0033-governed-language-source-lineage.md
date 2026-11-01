@@ -1,6 +1,6 @@
 # ADR-0033: Governed language source lineage
 
-- Status: Implemented locally; Atlas validator application and multilingual acceptance pending
+- Status: Implemented; approved Atlas validators and three governed sources verified; hosted multilingual acceptance pending
 - Date: 2026-11-01
 - Owner: Telecom demo maintainer
 - Refines: [ADR-0026](0026-governed-knowledge-publication.md), [ADR-0032](0032-multilingual-profile.md)
@@ -46,7 +46,10 @@ OpenAI-SDK, retaining strict/error mode and every unrelated constraint. Read-onl
 Atlas inspection found no drift and zero existing documents requiring a rewrite.
 No role, index, Engine policy or memory configuration change is included.
 
-Apply only after explicit approval and a fresh drift/data preflight. Two collMod
+The requester explicitly approved both validators; they were applied after drift/data
+preflight and verified by readback on 2026-11-01. See the
+[application evidence](../../compatibility/lang2c-validator-evidence.json).
+No document insertion test was performed. Future writes require their own scope review. Two collMod
 operations are not atomic together; the script verifies each and supports resuming
 an already partially applied proposal. Do not silently downgrade validators after
 new-language documents exist. Before any such writes, exact old validators can be
@@ -58,8 +61,10 @@ compatible readers/validators until an explicitly reviewed rollback is available
 Local tests cover the old approval hash, both language enums, exact tenant/key lookup,
 expired/revoked/replaced originals, wrong ACL/tenant, bounded lineage, cached-source
 revocation before release, and migration preflight/scope enforcement. They do not
-claim Atlas enforcement, published translations, hosted semantic quality or speech
-acceptance. I18N-001 remains the authoritative phase record.
+claim hosted semantic quality or speech acceptance. The subsequent
+[live publication gate](../../compatibility/lang2c-publication-evidence.json) verifies
+three sources, native approval, translation lineage and direct localized retrieval.
+I18N-001 remains the authoritative phase record.
 
 
 ## Alternatives considered

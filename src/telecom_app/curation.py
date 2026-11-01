@@ -5,6 +5,7 @@ import hashlib
 import os
 import subprocess
 import threading
+from dataclasses import replace
 from pathlib import Path
 from typing import Any, Literal
 
@@ -20,6 +21,7 @@ from .knowledge_mongo import MongoKnowledgeReader
 from .knowledge_publication import MongoKnowledgePublisher, PublicationConflict
 from .knowledge_search import CandidateCache, retrieve
 from .knowledge_voyage import VoyageKnowledge
+from .turn_locale import validated_locale
 
 TENANT = "synthetic-telecom"
 OWNER = "demo-document-owner"
@@ -186,8 +188,10 @@ class CurationService:
 
     def search(self, token: str, query: str) -> str:
         self.identity.principal(token)
+        locale = validated_locale(self.identity.profile(token)["locale"])
+        scope = replace(SCOPE, language={"en-US": "en", "pt-BR": "pt", "es-ES": "es"}[locale])
         response = retrieve(
-            self.reader, self.publisher, self.voyage, SCOPE, query, self.voyage.embed_query(query),
+            self.reader, self.publisher, self.voyage, scope, query, self.voyage.embed_query(query),
             cache=self.cache,
         )
         self.identity.principal(token)
@@ -240,13 +244,16 @@ class CurationService:
         documents = []
         for row in self.publisher.db.documents.find({"tenant_id": TENANT}).limit(50):
             version = self.reader.version(TENANT, row["version_key"])
-            if version and assess(version, SCOPE, utc_now(), self.publisher).eligible:
+            if version and assess(version, replace(SCOPE, language=version.language),
+                                  utc_now(), self.publisher).eligible:
                 documents.append(
                     {
                         "version_key": row["version_key"],
                         "title": version.title,
                         "document_id": version.document_id,
                         "version_id": version.version_id,
+                        "language": version.language,
+                        "translation_of": version.translation_of or "",
                     }
                 )
         return documents
@@ -254,7 +261,8 @@ class CurationService:
     def source(self, token: str, key: str) -> bytes:
         self.identity.principal(token)
         version = self.reader.version(TENANT, key)
-        if version is None or not assess(version, SCOPE, utc_now(), self.publisher).eligible:
+        if version is None or not assess(version, replace(SCOPE, language=version.language),
+                                         utc_now(), self.publisher).eligible:
             raise AccessDenied("Document access denied")
         event = self.publisher.db.review_events.find_one(
             {"tenant_id": TENANT, "version_key": key, "metadata_digest": version.approval_digest()}
@@ -267,6 +275,7 @@ class CurationService:
         pdf = self.ingestion.source(job)
         self.identity.principal(token)
         current = self.reader.version(TENANT, key)
-        if current != version or not assess(version, SCOPE, utc_now(), self.publisher).eligible:
+        if current != version or not assess(version, replace(SCOPE, language=version.language),
+                                           utc_now(), self.publisher).eligible:
             raise AccessDenied("Document access denied")
         return pdf

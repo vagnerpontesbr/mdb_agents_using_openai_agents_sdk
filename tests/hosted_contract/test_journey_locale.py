@@ -60,7 +60,8 @@ class LocaleTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(calls, [("user", "session", "demo-1")])
             self.assertEqual(result["text"], read_invoice("user", "demo-1", locale).text)
 
-    async def test_missing_localized_procedure_returns_safe_text_without_search_or_translation(self):
+    async def test_localized_procedure_uses_scoped_remote_tool_without_rewriting(self):
+        from openai_engine_adapter.journey_domain import BusinessResult
         for locale in ("pt-BR", "es-ES"):
             case = harness.JourneyTests()
             case.setUp()
@@ -71,10 +72,16 @@ class LocaleTests(unittest.IsolatedAsyncioTestCase):
             responses = list(case.llm.invoke.side_effect)
             responses[1] = harness.call("search_procedure", {"query": "red light"})
             case.llm.invoke.side_effect = responses
+            case.tools.execute_tool.side_effect = None
+            text = "Procedimento revisado. [SOP-PT, versão 1, páginas 1]" if locale == "pt-BR" else (
+                "Procedimiento revisado. [SOP-ES, versión 1, páginas 1]")
+            case.tools.execute_tool.return_value = BusinessResult(kind="technical", account_ref="user",
+                reference="knowledge-current", text=text).model_dump_json()
             result = await case.result()
-            self.assertEqual(result["text"], render("source_unavailable.v1", locale))
-            self.assertEqual(result["results"][0]["reference"], "localized-source-unavailable")
-            case.tools.execute_tool.assert_not_called()
+            self.assertEqual(result["text"], text)
+            self.assertEqual(result["locale"], locale)
+            call = case.tools.execute_tool.call_args
+            self.assertEqual(call.args, ("telco_search_knowledge", {"query": "red light", "locale": locale}))
 
     async def test_wrong_subject_is_denied_in_each_language(self):
         for locale in LANGUAGES:

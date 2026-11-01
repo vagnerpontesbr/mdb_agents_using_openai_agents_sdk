@@ -132,5 +132,56 @@ def test_cached_translation_is_not_released_after_original_revocation():
     output = retrieve(reader, current, reranker, replace(SCOPE, language="pt"),
                       "roteador", [0.1] * 1024, clock=lambda: NOW, cache=cache)
     assert text not in output
-    assert "changed before release" in output
+    assert output == ("O procedimento mudou antes da resposta. "
+                      "Contate o suporte para obter orientação atual.")
     reader.search.assert_not_called()
+
+
+@pytest.mark.parametrize('language,expected', [
+    ('pt', 'Verifique o cabo.\n[SOP-PT, versão 2, páginas 1]'),
+    ('es', 'Comprueba el cable.\n[SOP-ES, versión 2, páginas 1]'),
+])
+def test_retrieval_preserves_localized_source_and_citation(language, expected):
+    import hashlib
+
+    from telecom_app.knowledge_search import Candidate, retrieve
+
+    source = version(document_id='SOP-' + language.upper(), language=language)
+    excerpt = expected.split('\n')[0]
+    candidate = Candidate(chunk_id='0', version_key=version_key(source), revision=1,
+                          text=excerpt, text_sha256=hashlib.sha256(excerpt.encode()).hexdigest(),
+                          pages=(1,))
+    reader, reranker = Mock(), Mock()
+    reader.search.return_value = [candidate]
+    reader.chunk.return_value = candidate
+    reader.version.return_value = source
+    reranker.rank.return_value = [0]
+    result = retrieve(reader, authority(source), reranker, replace(SCOPE, language=language),
+                      'cabo', [0.1] * 1024, clock=lambda: NOW)
+    assert result == expected
+    pipelines = reader.search.call_args.args[0][0]['$rankFusion']['input']['pipelines']
+    assert {'language': {'$eq': language}} in (
+        pipelines['semantic'][0]['$vectorSearch']['filter']['$and'])
+    assert {'equals': {'path': 'language', 'value': language}} in (
+        pipelines['lexical'][0]['$search']['compound']['filter'])
+
+
+def test_missing_localized_source_never_returns_an_english_procedure():
+    import hashlib
+
+    from telecom_app.knowledge_search import Candidate, retrieve
+
+    source = version()
+    text = 'English instructions must not leak through the language filter.'
+    candidate = Candidate(chunk_id='0', version_key=version_key(source), revision=1,
+                          text=text, text_sha256=hashlib.sha256(text.encode()).hexdigest(),
+                          pages=(1,))
+    reader, reranker = Mock(), Mock()
+    reader.search.return_value = [candidate]
+    reader.chunk.return_value = candidate
+    reader.version.return_value = source
+    result = retrieve(reader, authority(source), reranker, replace(SCOPE, language='pt'),
+                      'cabo', [0.1] * 1024, clock=lambda: NOW)
+    assert result == ('Nenhum procedimento aprovado em português corresponde ao seu acesso '
+                      'e equipamento. Contate o suporte.')
+    reranker.rank.assert_not_called()

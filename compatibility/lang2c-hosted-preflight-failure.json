@@ -1,0 +1,16 @@
+{
+  "status": "stopped",
+  "approval": "sim autorizo",
+  "deployment_id": "deploy-f11e4d01",
+  "started_at": "2026-11-01T21:23:50.286055+00:00",
+  "cases": [],
+  "invocation_attempts": 0,
+  "limitations": [
+    "No speech or browser listening acceptance",
+    "Application invocation cap does not count managed memory calls",
+    "Dollar billing unavailable; USD30 ceiling unchanged"
+  ],
+  "error_type": "AssertionError",
+  "profiles_restored": true,
+  "elapsed_seconds": 0.85
+}

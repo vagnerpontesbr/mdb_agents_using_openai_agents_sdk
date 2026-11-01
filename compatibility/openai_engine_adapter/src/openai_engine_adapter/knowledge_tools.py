@@ -8,9 +8,11 @@ from pydantic import Field
 from agent_engine_runner_shared.context import get_current_user_id
 
 from .journey_domain import BusinessResult, Contract, subject
+from .journey_locale import Locale, LANGUAGES
 
 
 class KnowledgeQuery(Contract):
+    locale: Locale = "en-US"
     query: str = Field(min_length=1, max_length=2000)
 
 
@@ -31,7 +33,9 @@ def domain_client(variable, username):
                        waitQueueTimeoutMS=2000, appname='telecom-engine-knowledge')
 
 
-def search_knowledge(query):
+def search_knowledge(query, locale="en-US"):
+    if locale not in LANGUAGES:
+        raise ValueError("Unsupported locale")
     from .knowledge_domain.knowledge import Scope
     from .knowledge_domain.knowledge_authority import MongoKnowledgeAuthority
     from .knowledge_domain.knowledge_mongo import MongoKnowledgeReader
@@ -46,7 +50,8 @@ def search_knowledge(query):
     if os.environ.get('KNOWLEDGE_CACHE_URI'):
         cache = MongoCandidateCache(domain_client('KNOWLEDGE_CACHE_URI',
             'telecom_knowledge_cache').telecom_demo_knowledge, reader)
-    scope = Scope('synthetic-telecom', frozenset({'synthetic-support'}), 'FiberBox', 'demo', '2.x')
+    scope = Scope('synthetic-telecom', frozenset({'synthetic-support'}), 'FiberBox', 'demo', '2.x',
+                  {'en-US': 'en', 'pt-BR': 'pt', 'es-ES': 'es'}[locale])
     text = retrieve(reader, MongoKnowledgeAuthority(database), voyage,
                     scope, query, voyage.embed_query(query), max_response_chars=1800, cache=cache)
     return BusinessResult(kind='technical', account_ref=user, reference='knowledge-current', text=text).model_dump()

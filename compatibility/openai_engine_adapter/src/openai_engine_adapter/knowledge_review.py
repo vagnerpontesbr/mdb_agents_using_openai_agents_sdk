@@ -110,7 +110,9 @@ class KnowledgeApp(OpenAIEngineApp):
     knowledge_enabled = True
     def get_agent(self, callbacks=None, *, graph=None):
         super().get_agent(callbacks, graph=graph)
-        hooks.register_workflow_adapter("telecom-journey", "8")
+        # Locale transport/tool contracts change replay behavior. Deploy only after
+        # draining version-8 executions; old settled results remain readable.
+        hooks.register_workflow_adapter("telecom-journey", "9")
         def bindings(context, schemas):
             return EngineBindings.from_runtime(context=context, schemas=schemas,
                 llm_id=self.llm_id, model_name=self.model_name, managed_memory=True)

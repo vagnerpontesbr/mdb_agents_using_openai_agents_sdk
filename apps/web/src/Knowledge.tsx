@@ -74,6 +74,9 @@ export default function Knowledge({ user }: { user: Principal }) {
       for (const name of ['created_at', 'effective_from', 'expires_at', 'last_reviewed_at', 'review_due_at']) {
         payload[name] = new Date(String(data.get(name))).toISOString();
       }
+      payload.language = String(data.get('language') || 'en');
+      const original = String(data.get('translation_of') || '');
+      if (original) payload.translation_of = original;
       const replacement = String(data.get('supersedes') || '');
       if (replacement) payload.supersedes = replacement;
       await request('/api/knowledge/upload', payload);
@@ -105,12 +108,22 @@ export default function Knowledge({ user }: { user: Principal }) {
     <h3>{t("Published sources")}</h3>
     {documents.length === 0 ? <p>{t("No currently eligible sources.")}</p> : <ul>{documents.map(doc =>
       <li key={String(doc.version_key)}><a href={`/api/knowledge/source/${encodeURIComponent(String(doc.version_key))}`}>
-        {String(doc.title)} — {t('version')} {String(doc.version_id)} (PDF)</a></li>)}</ul>}
+        {String(doc.title)} — {t('version')} {String(doc.version_id)} (PDF, {String(doc.language || 'en')})</a></li>)}</ul>}
     {user.role === 'admin' && <>
       <details><summary>{t("Upload and curate a PDF")}</summary>
         <p>{t("Enter the source\u2019s actual dates. The registered owner reviews the source and metadata before publication.")}</p>
         <form onSubmit={event => { void upload(event); }}>
           <label>{t("PDF (up to 10 pages, 5 MB)")}<input name="pdf" type="file" accept="application/pdf" required disabled={busy} /></label>
+          <label>{t('Source language')}<select name="language" defaultValue="en" disabled={busy}>
+            <option value="en">{t('English')}</option><option value="pt">{t('Portuguese (Brazil)')}</option>
+            <option value="es">{t('Spanish')}</option>
+          </select></label>
+          <label>{t('Translated from')}<select name="translation_of" defaultValue="" disabled={busy}>
+            <option value="">{t('Original document (not a translation)')}</option>
+            {documents.filter(doc => !doc.translation_of).map(doc => <option key={String(doc.version_key)} value={String(doc.version_key)}>
+              {String(doc.document_id)} — {String(doc.version_id)} ({String(doc.language || 'en')})
+            </option>)}
+          </select></label>
           <label>{t("Document ID")}<input name="document_id" required maxLength={100} disabled={busy} /></label>
           <label>{t("Version")}<input name="version_id" required maxLength={100} disabled={busy} /></label>
           <label>{t("Title")}<input name="title" required maxLength={200} disabled={busy} /></label>
@@ -141,6 +154,8 @@ export default function Knowledge({ user }: { user: Principal }) {
       <button className="secondary" disabled={busy} onClick={() => { void action(() => loadReview()); }}>{t("Restore / refresh my review")}</button>
       {metadata && <div><h3>{t("Review this exact publication")}</h3>
         <p>{String(metadata.title)} — {String(metadata.document_id)}, {t('version')} {String(metadata.version_id)}</p>
+        <p>{t('Source language')}: {String(metadata.language || 'en')}</p>
+        {typeof metadata.translation_of === 'string' && <p>{t('Translated from')}: {String(metadata.translation_of)}</p>}
         <p>{t("Effective:")} {formatTimestamp(metadata.effective_from, locale, timezone)}<br />{t("Expires:")} {formatTimestamp(metadata.expires_at, locale, timezone)}<br />{t("Review due:")} {formatTimestamp(metadata.review_due_at, locale, timezone)}</p>
         <details><summary>{t("All metadata covered by this approval")}</summary><dl>{Object.entries(metadata).map(([key, value]) =>
           <div key={key}><dt>{key.replaceAll('_', ' ')}</dt><dd>{Array.isArray(value) ? value.join(', ') : value == null ? t('None') : String(value)}</dd></div>)}</dl></details>

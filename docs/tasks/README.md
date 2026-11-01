@@ -3,7 +3,7 @@
 The [initial plan](../../initial_plan.md) defines scope; this backlog sequences reviewable deliveries. Owners are assigned when work starts. Every task uses the [template](TEMPLATE.md) and records actual evidence. “Ready” means scoped, not tested.
 
 Current improvement cycle: [UI-001 — Profiles and application Control Plane](UI-001-PROFILES-CONTROL-PLANE.md).
-The plan defines UI-0 through UI-4 with per-phase quality gates. UI-0 merged in PR #5; UI-1 merged in PR #6 with 332 remote tests passed. UI-2a merged in PR #7 after Atlas acceptance. UI-2b merged in PR #8. UI-2c merged in PR #9. LANG-0, LANG-2a and LANG-2b merged in PRs #10–12. LANG-2c source contracts await the scoped Atlas validator gate; live multilingual acceptance, settings, costs and memory migration remain pending.
+The plan defines UI-0 through UI-4 with per-phase quality gates. UI-0 merged in PR #5; UI-1 merged in PR #6 with 332 remote tests passed. UI-2a merged in PR #7 after Atlas acceptance. UI-2b merged in PR #8. UI-2c merged in PR #9. LANG-0, LANG-2a and LANG-2b merged in PRs #10–12. LANG-2c validators and three governed language sources passed their live gates. Workflow 9 is deployed; all 20 hosted multilingual cases and 20 HTTP recovery/isolation checks passed. PR #13 publication/CI remains the integration gate. See I18N-001 for evidence. Settings, costs and memory migration remain pending.
 
 | ID | Deliverable | Dependency | Acceptance | Status |
 |---|---|---|---|---|

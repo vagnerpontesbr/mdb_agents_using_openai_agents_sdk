@@ -1,0 +1,39 @@
+{
+  "status": "local_source_gate_passed",
+  "checks": [
+    {
+      "language": "en",
+      "source_sha256": "e5f4a8472969e66b4271067f814999fc5b6fe15c66887f39109c52125a759443",
+      "pages": 1,
+      "all_steps_and_negations_preserved": true,
+      "text_chars": 669,
+      "visual_review": "passed",
+      "parser": "docling-2.143.1"
+    },
+    {
+      "language": "pt",
+      "source_sha256": "ea7bb994ef513404628f578ad60709481fa271585dc6dc32ab97091c87ec8a14",
+      "pages": 1,
+      "all_steps_and_negations_preserved": true,
+      "text_chars": 786,
+      "visual_review": "passed",
+      "parser": "docling-2.143.1"
+    },
+    {
+      "language": "es",
+      "source_sha256": "71a0957141370d84396d45f9d163796b75dffeb19ee3671c08283e8f3771201a",
+      "pages": 1,
+      "all_steps_and_negations_preserved": true,
+      "text_chars": 816,
+      "visual_review": "passed",
+      "parser": "docling-2.143.1"
+    }
+  ],
+  "provider_calls": 0,
+  "atlas_writes": 0,
+  "native_approval": false,
+  "limitations": [
+    "Content remains draft until information-owner review",
+    "No live embeddings, retrieval, publication or hosted rollout"
+  ]
+}

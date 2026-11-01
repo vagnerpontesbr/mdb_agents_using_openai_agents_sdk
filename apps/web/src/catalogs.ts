@@ -3,6 +3,9 @@ export const catalogs: Record<Locale, Record<string, string>> = {
   "en-US": {
     "Response language:": "Response language:",
     "You": "You",
+    "Source language": "Source language",
+    "Translated from": "Translated from",
+    "Original document (not a translation)": "Original document (not a translation)",
     "English": "English",
     "Portuguese (Brazil)": "Portuguese (Brazil)",
     "Spanish": "Spanish",
@@ -223,6 +226,9 @@ export const catalogs: Record<Locale, Record<string, string>> = {
   "pt-BR": {
     "Response language:": "Idioma da resposta:",
     "You": "Você",
+    "Source language": "Idioma da fonte",
+    "Translated from": "Traduzido de",
+    "Original document (not a translation)": "Documento original (não é tradução)",
     "English": "Inglês",
     "Portuguese (Brazil)": "Português (Brasil)",
     "Spanish": "Espanhol",
@@ -443,6 +449,9 @@ export const catalogs: Record<Locale, Record<string, string>> = {
   "es-ES": {
     "Response language:": "Idioma de la respuesta:",
     "You": "Tú",
+    "Source language": "Idioma de la fuente",
+    "Translated from": "Traducido de",
+    "Original document (not a translation)": "Documento original (no es traducción)",
     "English": "Inglés",
     "Portuguese (Brazil)": "Portugués (Brasil)",
     "Spanish": "Español",

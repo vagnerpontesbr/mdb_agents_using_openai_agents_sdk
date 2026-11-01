@@ -33,3 +33,10 @@ Verify each connection targets its intended cluster and has the required permitt
 ## Revisit trigger
 
 Revisit for memory isolation, operational ownership, residency, recovery or cost requirements that cannot be met by the shared Engine project.
+
+## Planned transition — 2026-11-01
+
+The requester selected mymemory as the future memory destination.
+[ADR-0031](0031-mymemory-target.md) and [MEM-002](../tasks/MEM-002-MYMEMORY-MIGRATION.md)
+define the transition. This historical decision is not yet replaced operationally;
+application separation and Engine ownership remain intact.

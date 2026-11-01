@@ -352,6 +352,29 @@ Tool names/arguments suggested by a model do not authorize execution. Business f
 
 Official sources: [guardrails and approvals](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals), [agent evaluations](https://developers.openai.com/api/docs/guides/agent-evals), [agent definitions](https://developers.openai.com/api/docs/guides/agents/define-agents).
 
+## UI improvement cycle — 2026-11-01
+
+Confirmed scope now includes name, timezone, language, photo and password change.
+[I18N-001](docs/tasks/I18N-001-MULTILINGUAL.md) and [ADR-0032](docs/adr/0032-multilingual-profile.md)
+require pt-BR, en-US and es-ES throughout UI, agent answers and audio, superseding
+previous English-only user-facing assumptions. Code identifiers/developer docs remain
+English. Per-phase commit, push, PR and gated automatic merge are authorized; stop
+for unresolved material questions.
+
+
+The requester added [Tokenomics](docs/tasks/TOK-001-TOKENOMICS.md) dashboards from
+the Fiserv reference and a separate phased [mymemory migration](docs/tasks/MEM-002-MYMEMORY-MIGRATION.md).
+All changes require per-phase tests. DemoTelco project changes remain later work.
+Private URI placeholders do not change the running memory destination.
+
+
+After demo phases 0–8 and merged PR #4, the requester asked for profile menus and
+an application Control Plane inspired by `gensdd-main`. The authoritative new plan
+is [UI-001](docs/tasks/UI-001-PROFILES-CONTROL-PLANE.md), with five phases UI-0–UI-4,
+per-phase verification and manual publication gates. [ADR-0030](docs/adr/0030-ui-profiles-control-plane.md)
+records proposed ownership/navigation choices. Implementation has not started;
+this UI cycle does not reopen production-capacity or pricing requirements.
+
 ## Sources
 
 - [Requirements](docs/REQUIREMENTS.md)

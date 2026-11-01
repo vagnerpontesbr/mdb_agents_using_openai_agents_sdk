@@ -10,6 +10,9 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 
 | ADR | Decision | Status |
 |---|---|---|
+| [ADR-0032](0032-multilingual-profile.md) | Full profile and pt-BR/en-US/es-ES UI, answers and voice | Scope confirmed; implementation planned |
+| [ADR-0031](0031-mymemory-target.md) | Engine-managed memory destination mymemory | Target requested; planned, not applied |
+| [ADR-0030](0030-ui-profiles-control-plane.md) | Profile navigation and application Control Plane with existing ownership boundaries | Proposed; implementation not started |
 | [ADR-0001](0001-framework-platform.md) | Separate agent framework from agent platform | Proposed |
 | [ADR-0002](0002-service-boundaries.md) | Separate workloads at justified service boundaries | Proposed |
 | [ADR-0003](0003-memory-state.md) | Separate conversation, durable memory, and execution state | Proposed |

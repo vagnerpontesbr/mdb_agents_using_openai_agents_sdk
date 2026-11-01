@@ -16,6 +16,13 @@ MongoDB is the integrated data platform for operational documents, full-text Sea
 
 ## Approved two-cluster topology
 
+Planned change (2026-11-01): [MEM-002](tasks/MEM-002-MYMEMORY-MIGRATION.md) and
+[ADR-0031](adr/0031-mymemory-target.md) target `mymemory` for Engine-managed memory.
+This is not applied: ClusterDemoTelco remains the current source until cutover
+acceptance. OpenAI-SDK remains the application cluster. Shared Engine-project
+consumers must be inventoried; the later DemoTelco project change is separate.
+
+
 Use the existing OpenAI-SDK cluster for application data and ClusterDemoTelco for shared project-managed Engine memory, as approved in [ADR-0017](adr/0017-two-cluster-memory-boundary.md). Separate namespaces by environment and service/domain ownership. Application eval/load databases use OpenAI-SDK with separate credentials; schedule disruptive tests away from demonstrations. Logical isolation cannot isolate shared CPU, I/O, storage, failures, or administrative privileges.
 
 Use deployment-allowlisted names such as `telecom_<env>_<domain>`, never arbitrary LLM/request-supplied database names. Proposed application namespaces:

@@ -115,6 +115,6 @@ implemented or validated by this planning update.
 UI-2a progress: interface catalogs, profile/login language selection and timestamp/
 number presentation are implemented locally; tests cover catalog parity, persistence,
 active-request continuity and audio-object continuity. See UI-001 for exact results
-and Atlas role approval dependency. LANG-0 provider/template/source inventory and
+and the passed Atlas profile write gate. LANG-0 provider/template/source inventory and
 LANG-2/3 hosted response/speech gates remain incomplete. Historical provider prose
 and governed source metadata are deliberately not translated by the UI catalog.

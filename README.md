@@ -18,8 +18,7 @@ distinguish accepted scope, historical checkpoints and current Git/CI results.
 The new React account workspace supports login, administrator-only registration,
 session restoration and logout through the existing MongoDB identity boundary.
 The authenticated workspace now uses Support/Knowledge navigation and a Profile
-menu. Administrators create accounts under Control Plane → Users. Name, timezone and interface language editing are implemented locally, with Atlas
-write permission/live acceptance pending. Photo/password editing, settings and Tokenomics data remain pending in the [UI plan](docs/tasks/UI-001-PROFILES-CONTROL-PLANE.md).
+menu. Administrators create accounts under Control Plane → Users. Name, timezone and interface language editing are implemented with validated Atlas persistence. Photo/password editing, settings and Tokenomics data remain pending in the [UI plan](docs/tasks/UI-001-PROFILES-CONTROL-PLANE.md).
 Chat, specialists and voice are opt-in under the [Phase 2 runbook](docs/runbooks/PHASE_2.md)
 and are disabled by default until configured against the accepted deployment. The [application runbook](docs/runbooks/APPLICATION.md)
 provides prerequisites, private configuration, optional index/bootstrap commands,

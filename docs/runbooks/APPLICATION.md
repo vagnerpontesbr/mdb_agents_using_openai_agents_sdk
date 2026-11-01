@@ -76,8 +76,12 @@ Open `http://127.0.0.1:8000`. Sign in and use Support/Knowledge in the workspace
 navigation. As administrator, open Control Plane → Users to create a synthetic
 account. Refresh to verify session restoration; use Profile → Sign out.
 Navigation preserves the conversation; leaving Support discards local microphone
-recording and stops playback. Profile editing and other Control Plane views are
-planned, not enabled by their navigation links. Ordinary users see their
+recording and stops playback. Profile supports name, IANA timezone and interface language (English, Portuguese
+Brazil or Spanish). Inline language selection in Profile preserves active conversation
+and audio objects. Photo/password editing and other Control Plane views are planned.
+Agent response and speech localization remain separate phases; current voice still
+expects English. The runtime role now includes UPDATE only on telecom_identity.users
+for profile persistence; see UI-001 for verified scope and rollback. Ordinary users see their
 account without administration controls; the backend independently denies a
 forged registration request. Re-login revokes the browser's previous session.
 

@@ -54,6 +54,25 @@ class JourneyReviewTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(json.loads(output.content)["results"][-1]["kind"], "simulation")
         self.settle.assert_awaited_once()
 
+    async def test_localized_review_retains_exact_action_and_renders_receipt(self):
+        from openai_engine_adapter.journey_locale import render, price
+        for locale in ("pt-BR", "es-ES"):
+            original = self.read.execute.return_value
+            result = JourneyResult.model_validate_json(original.response["output"])
+            self.read.execute.return_value = AgentOutput(response={"output": result.model_copy(
+                update={"locale": locale}).model_dump_json()})
+            self.tools.reset_mock()
+            with patch("openai_engine_adapter.journey.request_review", return_value=ReviewDecision(decision="approve")) as review:
+                output = await self.run_journey()
+            action = review.call_args.kwargs["action"]
+            self.assertEqual(set(action.arguments), {"plan_id", "monthly_minor", "proposal_id"})
+            self.tools.execute_tool.assert_called_once_with("telco_simulate_plan_change", action.arguments,
+                tool_call_id="journey-plan-change", is_local=False, on_unknown_outcome="fail")
+            presented = json.loads(output.content)
+            self.assertEqual(presented["locale"], locale)
+            self.assertEqual(presented["text"], render("simulation.v1", locale,
+                plan="fiber-500", price=price(8990, locale)))
+
     async def test_rejection_and_expiry_never_call_simulation(self):
         for decision, expired, expected in (("reject", False, "rejected"), ("approve", True, "expired")):
             self.deadline.expired = lambda: expired

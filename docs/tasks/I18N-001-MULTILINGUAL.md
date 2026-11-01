@@ -1,6 +1,6 @@
 # I18N-001: Portuguese, English and Spanish across UI, responses and voice
 
-- Status: Interface/profile delivered through UI-2c; LANG-0 inventory prepared, remote gate pending; full LANG acceptance pending
+- Status: LANG-0 merged; LANG-2a hosted templates/contract locally validated, remote gate pending; full LANG acceptance pending
 - Date: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 profile preferences, existing journey/voice contracts
@@ -129,3 +129,62 @@ behavior or provider configuration is changed by this inventory. Retain the sele
 voice models for this iteration; their documented shutdown dates require a separate
 migration before January/February 2027. LANG-2 must prove durable locale transport
 and governed source handling before a hosted rollout.
+
+
+## LANG-2 subphases and acceptance
+
+LANG-0 merged in PR #10 as `8810449`. Source commit `4658e5f` passed repository and
+application CI in runs `41340434042` and `41340450806`; neither run failed.
+
+- LANG-2a: bounded hosted presentation proof. Add versioned templates, strict turn
+  envelope parsing, typed response locale and real SDK tests with Engine doubles.
+  Preserve legacy English calls and exact action arguments. This is not activation
+  of profile-to-hosted propagation or completion of LANG-2.
+- LANG-2b: application admission/recovery/UI propagation, local invoice template,
+  consistent error codes, and staged compatibility with deployed Engine contracts.
+  The new carrier must not be enabled against the old hosted deployment.
+- LANG-2c: governed localized sources and full bounded hosted semantic/memory
+  acceptance. Prepare exact source/validator/deployment changes and inspect shared
+  consumers before requesting any needed Atlas approval. Only then close LANG-2.
+
+### LANG-2a implemented behavior
+
+The hosted adapter accepts legacy plain text as en-US or a strict
+`telecom-turn-v2` message envelope containing only locale and message. It rejects
+unknown locales, extra identity fields, duplicate JSON keys and oversized input,
+and does not recursively interpret the user message. Memory retrieval receives the
+original user text and unchanged user/session context. This is an application
+message format using the existing Engine message field, not a new native metadata
+API. The HTTP application does not emit it yet.
+
+The SDK injects validated presentation locale into read-tool calls; English defaults
+preserve existing arguments. Financial/connection/plan outputs use deterministic
+three-language templates. Original requester, plan ID, minor units, currency and
+proposal digest are unchanged. Native simulation arguments are unchanged; a checked
+receipt is localized only after scope/price/reference validation. Rejection, expiry
+and clarification are deterministic. Result.locale defaults to en-US for old records.
+
+A non-English approved-procedure request returns a localized explanation that the
+current source language is English. It neither searches with weaker applicability
+filters nor translates operational steps. This temporary safe path does not count
+as localized knowledge availability; LANG-2c still requires governed sources.
+Ingestion status localization also remains for that phase.
+
+### Local gates and failures
+
+- All **95 hosted contract tests** passed using SDK 0.24.0 and Engine SDK/runner
+  0.11.11 with doubled transport. Added coverage includes exact invoices, locale
+  validation, unchanged proposals, request-scoped memory identity, cross-user denial,
+  missing-procedure fallback, and native review/receipt presentation.
+- Ruff F checks passed on the six changed Python modules; adapter wheel and source
+  distribution built successfully. No frontend or application runtime changed.
+- Initial tests could not start because sandbox cache access was denied, then because
+  the adapter environment was absent and uv could not discover Python 3.15.2. A
+  frozen sync using the already verified `/tmp/telecom-python-manual/python/bin/python3.15`
+  created the environment without changing pins.
+- `test_wrong_subject_is_denied_in_each_language` initially expected a direct
+  UnsupportedContract. The SDK correctly denied the result but wrapped that exception
+  in UserError. The test now checks the wrapper and original cause; all languages pass.
+  Ruff found one unused json import in journey.py; removed and rerun passed.
+- No provider calls, live memory continuity proof, Atlas mutation, hosted deployment
+  or end-user listening was performed. Full LANG-2 and LANG-3 gates remain open.

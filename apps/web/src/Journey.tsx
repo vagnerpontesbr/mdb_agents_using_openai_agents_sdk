@@ -1,12 +1,16 @@
 import { useI18n } from './i18n';
+import { locales } from './catalogs';
+import type { Locale } from './catalogs';
 import { useEffect, useRef, useState } from 'react';
 import type { Principal } from './api';
 import { request } from './api';
 import { startRecording } from './recording';
 import type { Recording } from './recording';
 
+const languageNames: Record<Locale, string> = { 'en-US': 'English', 'pt-BR': 'Portuguese (Brazil)', 'es-ES': 'Spanish' };
+
 type Execution = {
-  execution_id?: string; status: string; text?: string; outcome?: string;
+  locale?: Locale; execution_id?: string; status: string; text?: string; outcome?: string;
   specialists?: string[]; action_digest?: string;
   action?: { plan_id: string; monthly_minor: number; proposal_id: string };
 };
@@ -15,11 +19,14 @@ function execution(value: unknown): Execution {
   if (!value || typeof value !== 'object' || !('status' in value) || typeof value.status !== 'string') {
     throw new Error('Invalid execution response');
   }
-  return value as Execution;
+  if ('locale' in value && !locales.includes(value.locale as Locale)) {
+    throw new Error('Invalid execution language');
+  }
+  return { ...value, locale: ('locale' in value ? value.locale : 'en-US') } as Execution;
 }
 
 export default function Journey({ user, active = true }: { user: Principal; active?: boolean }) {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const [conversation, setConversation] = useState(() => {
     const key = `telecom-conversation-${user.user_id}`;
     const saved = sessionStorage.getItem(key);
@@ -125,7 +132,7 @@ export default function Journey({ user, active = true }: { user: Principal; acti
           const kind = block.split('\n').find(line => line.startsWith('event: '))?.slice(7);
           const data = JSON.parse(block.split('\n').find(line => line.startsWith('data: '))?.slice(6) ?? '{}');
           if (kind === 'error') throw new Error(data.message);
-          if (kind === 'progress') setMessage(data.message);
+          if (kind === 'progress') setMessage('Consulting your support team');
           if (kind === 'result') {
             const result = execution(data); setCurrent(result); polls.current = 0;
             sessionStorage.removeItem(`telecom-uncertain-${conversation}`);
@@ -227,20 +234,21 @@ export default function Journey({ user, active = true }: { user: Principal; acti
     <p className="eyebrow">{t("YOUR SUPPORT TEAM")}</p><h2>{t("How can we help?")}</h2>
     <p className="muted">{t("Financial \u00b7 Technical \u00b7 Sales")}</p>
     <div className="conversation" aria-live="polite">
-      {history.map((item, index) => <article key={index}><strong>{item.role}</strong><p>{item.text}</p></article>)}
+      {history.map((item, index) => <article key={index}><strong>{t(item.role)}</strong><p>{item.text}</p></article>)}
     </div>
     <p role="status" className="muted">{t(message)}</p>
     {current?.status === 'suspended' && current.action && <div className="proposal">
       <h3>{t("Confirm this simulation")}</h3>
       <p>{t("Plan:")} <strong>{current.action.plan_id}</strong></p>
-      <p>{t("Monthly price: USD")} {new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(current.action.monthly_minor / 100)}</p>
+      <p>{t("Monthly price: USD")} {new Intl.NumberFormat(current.locale ?? 'en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(current.action.monthly_minor / 100)}</p>
       <p>{t("No live plan or charge will change. Only the original requester can approve.")}</p>
       <div className="actions"><button disabled={busy} onClick={() => { void review('approve'); }}>{t("Approve simulation")}</button>
         <button className="secondary" disabled={busy} onClick={() => { void review('reject'); }}>{t("Reject")}</button></div>
     </div>}
     {current && <div className="execution"><p>{t("Execution:")} {t(current.status)}</p>
       {current.specialists && <p>{t("Consulted:")} {current.specialists.map(t).join(', ')}</p>}
-      {current.text && <p className="result">{current.text}</p>}
+      {current.text && <><p className="response-language">{t('Response language:')} {t(languageNames[current.locale ?? 'en-US'])}</p>
+        <p className="result" lang={current.locale}>{current.text}</p></>}
       {voice && current.status === 'completed' && <div className="actions">
         <button disabled={busy} onClick={() => { void speak(); }}>{t("Play response")}</button>
         <button className="secondary" onClick={() => audio.current?.pause()}>{t("Stop playback")}</button>

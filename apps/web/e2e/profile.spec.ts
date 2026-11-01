@@ -73,6 +73,8 @@ test('inline language changes preserve a running conversation and its original r
   await expect(page.getByLabel('Tu mensaje')).toBeVisible();
   release();
   await expect(page.locator('.result')).toHaveText('Original English response');
+  await expect(page.locator('.result')).toHaveAttribute('lang', 'en-US');
+  await expect(page.locator('.response-language')).toHaveText('Idioma de la respuesta: Inglés');
   expect(calls).toBe(1);
   expect(await page.evaluate(() => sessionStorage.getItem('telecom-conversation-locale-synthetic'))).toBe(id);
   await page.evaluate(() => {

@@ -248,3 +248,70 @@ def test_recreated_service_recovers_engine_review_without_local_run_state(journe
     assert restarted.latest(token, conversation) == expected
     engine.invoke.assert_not_called()
     engine.resume.assert_not_called()
+
+
+def test_localized_turn_snapshots_profile_and_recovers_without_rereading_it(journey):
+    from telecom_app.turn_locale import Turn
+
+    service, engine, row, token, conversation = journey
+    service.localized_turns = True
+    profile = service.identity.profile(token)
+    service.identity.save_profile(token, values={"display_name": "Synthetic", "timezone": "UTC",
+                                  "locale": "pt-BR"}, expected_revision=profile["revision"])
+    captured = service.turn_locale(token)
+    profile = service.identity.profile(token)
+    service.identity.save_profile(token, values={"display_name": "Synthetic", "timezone": "UTC",
+                                  "locale": "es-ES"}, expected_revision=profile["revision"])
+    row["message"] = Turn(locale="pt-BR", message="fatura demo-1").wire()
+    row["result"] = json.dumps({"contract": "telecom-journey-v1", "text": "Fatura sintética.",
+                               "status": "completed", "specialists": ["financial"],
+                               "locale": "pt-BR"})
+    result = service.send(token, conversation, "fatura demo-1", captured)
+    engine.invoke.assert_called_once_with(row["user_id"], row["session_id"], row["message"])
+    assert result["locale"] == "pt-BR"
+    restarted = JourneyService(service.identity, engine, localized_turns=True)
+    assert restarted.latest(token, conversation)["locale"] == "pt-BR"
+    assert restarted.turn_locale(token) == "es-ES"
+
+
+def test_localized_review_preserves_digest_after_profile_change(journey):
+    from telecom_app.turn_locale import Turn
+
+    service, engine, row, token, _ = journey
+    pending(row)
+    row["message"] = Turn(locale="pt-BR", message="Simule fiber-500").wire()
+    shown = service.present(token, row["execution_id"])
+    assert shown["locale"] == "pt-BR"
+    profile = service.identity.profile(token)
+    service.identity.save_profile(token, values={"display_name": "Synthetic", "timezone": "UTC",
+                                  "locale": "es-ES"}, expected_revision=profile["revision"])
+    assert service.present(token, row["execution_id"])["action_digest"] == shown["action_digest"]
+    service.decide(token, row["execution_id"], shown["action_digest"], "reject")
+    engine.resume.assert_called_once_with(row["execution_id"], 1, "reject")
+
+
+@pytest.mark.parametrize("locale", ["fr-FR", None, [], True])
+def test_invalid_hosted_locale_never_becomes_public_result(journey, locale):
+    service, _, row, token, _ = journey
+    result = json.loads(row["result"])
+    result["locale"] = locale
+    row["result"] = json.dumps(result)
+    with pytest.raises(EngineUnavailable):
+        service.present(token, row["execution_id"])
+
+
+def test_result_cannot_change_original_turn_language(journey):
+    from telecom_app.turn_locale import Turn
+
+    service, _, row, token, _ = journey
+    row["message"] = Turn(locale="pt-BR", message="fatura").wire()
+    with pytest.raises(EngineUnavailable, match="locale mismatch"):
+        service.present(token, row["execution_id"])
+
+
+def test_localized_invocation_requires_native_input_roundtrip(journey):
+    service, engine, _, token, conversation = journey
+    service.localized_turns = True
+    with pytest.raises(JourneyConflict, match="Invocation message mismatch"):
+        service.send(token, conversation, "demo-1")
+    engine.invoke.assert_called_once()

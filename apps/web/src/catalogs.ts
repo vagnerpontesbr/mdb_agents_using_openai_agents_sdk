@@ -1,6 +1,11 @@
 // Static interface catalogs. Provider responses and historical messages are never translated here.
 export const catalogs: Record<Locale, Record<string, string>> = {
   "en-US": {
+    "Response language:": "Response language:",
+    "You": "You",
+    "English": "English",
+    "Portuguese (Brazil)": "Portuguese (Brazil)",
+    "Spanish": "Spanish",
     "Support": "Support",
     "Knowledge": "Knowledge",
     "Profile": "Profile",
@@ -216,6 +221,11 @@ export const catalogs: Record<Locale, Record<string, string>> = {
     "Password changed. Sign in with your new password.": "Password changed. Sign in with your new password."
   },
   "pt-BR": {
+    "Response language:": "Idioma da resposta:",
+    "You": "Você",
+    "English": "Inglês",
+    "Portuguese (Brazil)": "Português (Brasil)",
+    "Spanish": "Espanhol",
     "Support": "Suporte",
     "Knowledge": "Conhecimento",
     "Profile": "Perfil",
@@ -431,6 +441,11 @@ export const catalogs: Record<Locale, Record<string, string>> = {
     "Password changed. Sign in with your new password.": "Senha alterada. Entre com sua nova senha."
   },
   "es-ES": {
+    "Response language:": "Idioma de la respuesta:",
+    "You": "Tú",
+    "English": "Inglés",
+    "Portuguese (Brazil)": "Portugués (Brasil)",
+    "Spanish": "Español",
     "Support": "Soporte",
     "Knowledge": "Conocimiento",
     "Profile": "Perfil",

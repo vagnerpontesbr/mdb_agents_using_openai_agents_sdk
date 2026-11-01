@@ -1,6 +1,6 @@
 # I18N-001: Portuguese, English and Spanish across UI, responses and voice
 
-- Status: LANG-0 merged; LANG-2a hosted templates/contract locally validated, remote gate pending; full LANG acceptance pending
+- Status: LANG-0 and LANG-2a merged; LANG-2b application propagation locally validated, remote gate pending; full LANG acceptance pending
 - Date: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 profile preferences, existing journey/voice contracts
@@ -188,3 +188,46 @@ Ingestion status localization also remains for that phase.
   Ruff found one unused json import in journey.py; removed and rerun passed.
 - No provider calls, live memory continuity proof, Atlas mutation, hosted deployment
   or end-user listening was performed. Full LANG-2 and LANG-3 gates remain open.
+
+
+### LANG-2b application admission and recovery
+
+LANG-2a merged through PR #11 as `1ca1a66`. Its source commit `2d18f10` passed
+repository/application CI runs `41341351639` and `41341367933`; neither failed.
+
+New text requests snapshot the authenticated profile locale before streaming starts.
+The application emits the strict carrier only when APP_JOURNEY_LOCALE_ENABLED=true;
+its default is false and no live environment file is changed. This compatibility
+switch is private deployment configuration, not an editable Control Plane toggle.
+New localized invocations require the Engine to return the exact original message.
+Missing/mismatched native input fails without retry or a success claim.
+
+Native execution.message supplies the locale on recovery, suspension and errors.
+Completed result.locale must match that input. Legacy records default to en-US;
+unknown locales fail closed. Changing profile preference or restarting the backend
+cannot change a saved execution's language or approval digest. No local execution
+or memory store is introduced. The pinned runner's Execution model contains message;
+the official [execution detail schema](https://www.mongodb.com/docs/agentengine/sdk/javascript/packages/agent-engine-runner-shared/docs/api/)
+also exposes it. Live carrier/maximum-length acceptance is still pending.
+
+The interface labels response language and sets its lang attribute; historical prose
+is preserved. Proposal amount formatting uses captured locale. Chat progress/error
+SSE now includes stable codes; progress renders a known catalog key. The independent
+local invoice renderer has exact pt-BR/es-ES templates but is not presented as a
+substitute for hosted-path acceptance.
+
+Validation: 189 foundation tests passed before the final input-roundtrip assertion;
+the affected journey/locale suites were rerun afterward (39 tests). Hosted contracts
+passed 96 tests, including actual application-producer/adapter-consumer wire agreement.
+Ruff passed after fixing two E501 line-length findings; mypy passed for 30 files.
+Frontend lint, six unit tests and typecheck/build passed. All 19 browser tests passed;
+a focused language-switch rerun passed after visual review corrected untranslated
+history role labels and replaced the locale code with a readable language name.
+The 390px capture has no horizontal clipping. These are local fixtures, not provider
+language or listening evidence. No behavior assertion failed in this subphase.
+
+Next gate: prepare the hosted rollout and governed localized knowledge acceptance.
+Keep the compatibility switch false until the exact deployed agent, read-tool schemas,
+original-message recovery and provider behavior pass the controlled rehearsal. Do not
+roll out while old active/suspended executions lack a verified replay path. LANG-3,
+admin configuration, actual costs and memory migration remain subsequent work.

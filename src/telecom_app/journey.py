@@ -15,6 +15,8 @@ from compatibility.demo_auth.engine import BASE, ORG, PROJECT, WORKSPACE, NoRedi
 
 from .contracts import Contract
 from .identity import IdentityService
+from .profile import Locale
+from .turn_locale import Turn, execution_locale, validated_locale
 
 
 class JourneyConflict(Exception):
@@ -115,8 +117,16 @@ def session_id(user: str, conversation: UUID) -> str:
 
 
 class JourneyService:
-    def __init__(self, identity: IdentityService, engine: EngineAPI) -> None:
+    def __init__(self, identity: IdentityService, engine: EngineAPI,
+                 *, localized_turns: bool = False) -> None:
         self.identity, self.engine = identity, engine
+        self.localized_turns = localized_turns
+
+    def turn_locale(self, token: str) -> Locale:
+        self.identity.principal(token)
+        if not self.localized_turns:
+            return "en-US"
+        return validated_locale(self.identity.profile(token)["locale"])
 
     def execution(self, token: str, execution_id: str) -> dict[str, Any]:
         user = self.identity.principal(token).user_id
@@ -136,7 +146,11 @@ class JourneyService:
     def present(self, token: str, execution_id: str) -> dict[str, Any]:
         execution = self.execution(token, execution_id)
         status = execution.get("status")
-        public: dict[str, Any] = {"execution_id": execution_id, "status": status}
+        try:
+            locale = execution_locale(execution.get("message"))
+        except ValueError:
+            raise EngineUnavailable("Invalid execution presentation context") from None
+        public: dict[str, Any] = {"execution_id": execution_id, "status": status, "locale": locale}
         if status == "suspended":
             interrupts = execution.get("suspend_context", {}).get("interrupts", [])
             if len(interrupts) != 1:
@@ -190,23 +204,39 @@ class JourneyService:
                 )
             ):
                 raise EngineUnavailable("The deployed agent does not match the journey contract")
+            try:
+                result_locale = validated_locale(result.get("locale", "en-US"))
+            except ValueError:
+                raise EngineUnavailable("Invalid result locale") from None
+            if result_locale != locale:
+                raise EngineUnavailable("Execution/result locale mismatch")
             public.update(
                 text=result["text"], specialists=result["specialists"], outcome=result["status"]
             )
         elif status in ("error", "cancelled"):
-            public["text"] = "The execution did not complete. No successful result is claimed."
+            public["text"] = {
+                "en-US": "The execution did not complete. No successful result is claimed.",
+                "pt-BR": ("A execução não foi concluída. "
+                          "Nenhum resultado bem-sucedido é confirmado."),
+                "es-ES": "La ejecución no se completó. No se confirma ningún resultado exitoso.",
+            }[locale]
         elif status not in ("pending", "running", "resuming"):
             raise EngineUnavailable("Unexpected execution state")
         return public
 
-    def send(self, token: str, conversation: UUID, message: str) -> dict[str, Any]:
+    def send(self, token: str, conversation: UUID, message: str,
+             locale: Locale | None = None) -> dict[str, Any]:
         actor = self.identity.principal(token)
         session = session_id(actor.user_id, conversation)
-        result = self.engine.invoke(actor.user_id, session, message)
+        selected = validated_locale(locale) if locale is not None else self.turn_locale(token)
+        wire = Turn(locale=selected, message=message).wire() if self.localized_turns else message
+        result = self.engine.invoke(actor.user_id, session, wire)
         execution_id = str(UUID(result["execution_id"]))
         execution = self.execution(token, execution_id)
         if execution["session_id"] != session:
             raise JourneyConflict("Invocation session mismatch")
+        if self.localized_turns and execution.get("message") != wire:
+            raise JourneyConflict("Invocation message mismatch")
         return self.present(token, execution_id)
 
     def latest(self, token: str, conversation: UUID) -> dict[str, Any]:

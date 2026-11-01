@@ -1,6 +1,6 @@
 # UI-001: Profile navigation and application Control Plane
 
-- Status: UI-0, UI-1, UI-2a and UI-2b merged; UI-2c local gates passed, publication pending
+- Status: UI-0 through UI-2c merged; multilingual inventory in progress
 - Owner: Telecom demo maintainer
 - Requested: 2026-11-01
 - Branch: `codex/ui-profiles-control-plane`
@@ -587,3 +587,9 @@ email or admin reset flow is introduced. No new role or Atlas write was performe
   sessions. Any physical live-session cleanup requires its own approved scope.
 - Required remote CI remains the publication gate. Provider-language, settings,
   Tokenomics, memory migration and final integrated acceptance remain separate work.
+
+
+UI-2c source commit `8ccc58b` passed both repository/application jobs in CI runs
+`41328839804` and `41328845361`. PR #9 merged as `16681b9`; no remote check failed.
+This is integration evidence, not deployment to existing identity-serving processes.
+The next bounded work is LANG-0; see the [multilingual rollout](../runbooks/MULTILINGUAL.md).

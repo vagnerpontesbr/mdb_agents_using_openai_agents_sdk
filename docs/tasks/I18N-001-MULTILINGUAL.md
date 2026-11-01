@@ -1,6 +1,6 @@
 # I18N-001: Portuguese, English and Spanish across UI, responses and voice
 
-- Status: Interface catalogs and profile locale selection implemented locally; full LANG acceptance pending
+- Status: Interface/profile delivered through UI-2c; LANG-0 inventory prepared, remote gate pending; full LANG acceptance pending
 - Date: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 profile preferences, existing journey/voice contracts
@@ -118,3 +118,14 @@ active-request continuity and audio-object continuity. See UI-001 for exact resu
 and the passed Atlas profile write gate. LANG-0 provider/template/source inventory and
 LANG-2/3 hosted response/speech gates remain incomplete. Historical provider prose
 and governed source metadata are deliberately not translated by the UI catalog.
+
+
+## LANG-0 inventory — 2026-11-01
+
+[Multilingual rollout](../runbooks/MULTILINGUAL.md) maps current source owners,
+locale transport/replay compatibility, English-only knowledge constraints, pinned
+speech API behavior, semantic test inputs and the human listening script. No runtime
+behavior or provider configuration is changed by this inventory. Retain the selected
+voice models for this iteration; their documented shutdown dates require a separate
+migration before January/February 2027. LANG-2 must prove durable locale transport
+and governed source handling before a hosted rollout.

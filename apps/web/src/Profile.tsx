@@ -1,17 +1,10 @@
 import { useState } from 'react';
 import { ApiError, request } from './api';
-import { locales } from './catalogs';
 import type { Locale } from './catalogs';
 import { useI18n } from './i18n';
-export type ProfileData = { user_id: string; email: string; role: 'user' | 'admin'; display_name: string; timezone: string; locale: Locale; revision: number };
-export function parseProfile(value: unknown): ProfileData {
-  const p = value as ProfileData;
-  if (!p || typeof p.user_id !== 'string' || typeof p.email !== 'string' || !['user', 'admin'].includes(p.role)
-    || typeof p.display_name !== 'string' || typeof p.timezone !== 'string' || !locales.includes(p.locale)
-    || !Number.isSafeInteger(p.revision) || p.revision < 0) throw new Error('Invalid profile');
-  new Intl.DateTimeFormat('en-US', {timeZone:p.timezone});
-  return p;
-}
+import AvatarEditor from './Avatar';
+import { parseProfile } from './profileApi';
+import type { ProfileData } from './profileApi';
 export default function Profile({ data, saved, reload }: { data: ProfileData; saved: (value: ProfileData) => void; reload: () => void }) {
   const { t } = useI18n();
   const [name, setName] = useState(data.display_name);
@@ -19,7 +12,8 @@ export default function Profile({ data, saved, reload }: { data: ProfileData; sa
   const [locale, setLocale] = useState(data.locale);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
-  return <section className="panel"><h1>{t('My profile')}</h1><p>{data.email} · {t(data.role)}</p>
+  return <section className="panel profile-panel"><h1>{t('My profile')}</h1><p>{data.email} · {t(data.role)}</p>
+    <AvatarEditor data={data} saved={saved} />
     <form onSubmit={async event => {
       event.preventDefault(); if (busy) return; setBusy(true); setMessage('');
       try {
@@ -41,6 +35,6 @@ export default function Profile({ data, saved, reload }: { data: ProfileData; sa
       <button type="button" className="secondary" disabled={busy} onClick={reload}>{t('Reload profile')}</button>
     </form>
     {message && <p role="status">{t(message)}</p>}
-    <p className="hint">{t('Photo and password editing are coming in the next profile phases.')}</p>
+    <p className="hint">{t('Password editing is coming in the next profile phase.')}</p>
   </section>;
 }

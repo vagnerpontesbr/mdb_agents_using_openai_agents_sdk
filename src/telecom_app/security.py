@@ -57,6 +57,8 @@ class Boundary:
                             return
                         chunk = message.get("body", b"")
                         maximum = 970_000 if scope.get("path") == "/api/voice/transcribe" else 8192
+                        if scope.get("path") == "/api/profile/avatar":
+                            maximum = 2_797_000  # 2 MiB binary as base64 plus bounded JSON metadata
                         if scope.get("path") == "/api/knowledge/upload":
                             maximum = 6_680_000
                         if len(body) + len(chunk) > maximum:

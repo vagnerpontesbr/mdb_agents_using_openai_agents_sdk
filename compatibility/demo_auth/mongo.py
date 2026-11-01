@@ -60,3 +60,13 @@ class MongoUserStore:
              "$inc": {"profile_revision": 1}},
         )
         return result.modified_count == 1
+
+    def update_avatar(self, email, user_id, expected_revision, content):
+        revision = ({"$or": [{"profile_revision": 0}, {"profile_revision": {"$exists": False}}]}
+                    if expected_revision == 0 else {"profile_revision": expected_revision})
+        changes = ({"$unset": {"profile.avatar": ""}} if content is None
+                   else {"$set": {"profile.avatar": content}})
+        return self.collection.update_one(
+            {"_id": email, "user_id": user_id, "active": True, **revision},
+            {**changes, "$inc": {"profile_revision": 1}},
+        ).modified_count == 1

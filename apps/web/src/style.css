@@ -87,3 +87,10 @@ footer { min-height: 75px; display: flex; justify-content: space-between; gap: 1
   .navigation.open { display: block; }
   .knowledge dl { grid-template-columns: minmax(0, 1fr); }
 }
+.avatar-image, .avatar-initials { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; }
+.avatar-initials { display: inline-flex; align-items: center; justify-content: center; background: #e3fbed; color: #005c3f; font-weight: 700; font-size: 24px; }
+.avatar-editor { padding: 20px 0; border-bottom: 1px solid #dce5e0; }
+.avatar-editor label { margin-top: 16px; }
+.avatar-editor p { font-size: 13px; line-height: 1.5; }
+
+.profile-panel > .hint { margin: 20px 0 0; }

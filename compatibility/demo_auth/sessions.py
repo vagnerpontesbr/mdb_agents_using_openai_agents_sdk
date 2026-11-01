@@ -74,7 +74,7 @@ class SessionAuth:
                 "display_name": profile.get("display_name", "User"),
                 "timezone": profile.get("timezone", "UTC"),
                 "locale": profile.get("locale", "en-US"),
-                "revision": user.get("profile_revision", 0)}
+                "revision": user.get("profile_revision", 0), "has_avatar": bool(profile.get("avatar"))}
 
     def save_profile(self, token, *, values, expected_revision):
         principal = self.principal(token)
@@ -82,6 +82,20 @@ class SessionAuth:
             raise ValueError("Invalid profile fields")
         if not self.store.update_profile(principal.email, principal.user_id,
                                          expected_revision, values):
+            self.principal(token)
+            raise ProfileConflict("Profile changed; reload before saving")
+        return self.profile(token)
+
+    def avatar(self, token):
+        principal = self.principal(token)
+        user = self.store.get(principal.email)
+        if not user or user.get("active") is not True or user["user_id"] != principal.user_id:
+            raise AccessDenied("Login required")
+        return user.get("profile", {}).get("avatar")
+
+    def save_avatar(self, token, *, content, expected_revision):
+        principal = self.principal(token)
+        if not self.store.update_avatar(principal.email, principal.user_id, expected_revision, content):
             self.principal(token)
             raise ProfileConflict("Profile changed; reload before saving")
         return self.profile(token)

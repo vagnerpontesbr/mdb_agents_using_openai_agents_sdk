@@ -1,6 +1,6 @@
 # UI-001: Profile navigation and application Control Plane
 
-- Status: UI-0 and UI-1 merged; UI-2a local and Atlas acceptance passed, final publication gate pending
+- Status: UI-0, UI-1 and UI-2a merged; UI-2b local gates passed, publication pending
 - Owner: Telecom demo maintainer
 - Requested: 2026-11-01
 - Branch: `codex/ui-profiles-control-plane`
@@ -197,7 +197,7 @@ reported. No repeated load, pricing or production-capacity proof is part of this
 | --- | --- | --- | --- |
 | UI-0 | Design and migration inventory complete; requester decisions recorded | Local and remote gates passed | PR #5 merged as `f43a10f` |
 | UI-1 | Responsive workspace, profile disclosure, fixed routes, preserved journey | Local gates and 332 remote tests passed | PR #6 merged as `95d2982` |
-| UI-2 | UI-2a profile and interface catalogs complete; photo/password not started | Local, initial CI and live Atlas profile acceptance passed | PR #7, final evidence CI pending |
+| UI-2 | UI-2a merged; UI-2b photo implemented; password pending | UI-2a Atlas gate passed; UI-2b local gates passed | PR #7 merged as `c62b99a`; UI-2b publication pending |
 | UI-3 | Not started | Not run | None |
 | UI-4 | Not started | Not run | None |
 
@@ -494,3 +494,50 @@ Initial commit `408c3c0` passed repository/application CI in push run `413233064
 and PR run `41323339507`; no remote checks failed. This evidence update requires a
 fresh CI gate before merge. UI-2a acceptance is complete; the entire UI-2 and full
 multilingual response/voice acceptance remain open for their subsequent phases.
+
+
+## UI-2b profile photo — 2026-11-01
+
+UI-2a final commit `e0e2992` passed repository/application jobs in runs `41324612654`
+and `41324617481`, then PR #7 merged as `c62b99a`. UI-2b branches from that main.
+
+Added JPEG/PNG-only normalization with Pillow **13.0.0**, pinned in pyproject and
+uv.lock. PyPI metadata confirmed Python >=3.11 and CPython 3.15 wheels for macOS/Linux;
+the Python 3.15.2 local install and `uv pip check` passed. Official
+[Pillow Image documentation](https://pillow.readthedocs.io/en/stable/reference/Image.html)
+was inspected for open/verify/thumbnail and decompression-bomb handling.
+
+The backend enforces a 2 MiB binary upload, 4096 pixels per side and 4 million decoded
+pixels before full loading. It verifies format/MIME, rejects animation and malformed
+content, applies EXIF orientation, copies pixels into a fresh JPEG, strips metadata
+and bounds the thumbnail to 256px and 128 KiB. Only the normalized bytes are stored
+under `profile.avatar`; original uploads are not persisted. Existing profile updates
+preserve that independent field. A shared profile revision prevents lost updates.
+
+GET `/api/profile/avatar` returns only the current authenticated user's JPEG with
+no-store/nosniff, or 404 if absent. POST on that path adds/replaces; POST
+`/api/profile/avatar/remove` removes through an optimistic UPDATE, without a new
+collection or extra Atlas privilege. An explicit 2,797,000-byte JSON envelope applies
+only to the avatar upload path; other limits are unchanged. No remote URL or SVG
+input is accepted. Profile/menu show the photo or escaped initials. All new controls
+and errors have three-locale catalog entries.
+
+### Evidence and limitations
+
+- Ruff passed after correcting eight E501 line-length findings; mypy passed for
+  29 source files. All **163** foundation tests passed, including normalization,
+  EXIF/metadata removal, oversized dimensions, format/MIME mismatch, animation,
+  malformed/base64/truncated input, scoped read/write/remove, stale revisions and
+  preservation of profile fields. No backend behavior assertion failed.
+- Frontend lint, types/build, six unit tests and **18 browser tests** passed.
+  Browser coverage includes the complete photo lifecycle with the real normalization
+  endpoint and an in-memory identity store, plus all previous regressions.
+- Visual review at 390px caught a hint overlapping Reload profile; the profile-only
+  hint margin was corrected. The browser suite was rerun to regenerate evidence.
+- All 59 installed packages passed `uv pip check`. No new Atlas mutation, live photo
+  write or provider call was performed in UI-2b. The prior UI-2a grant and Atlas
+  persistence proof remain valid historical evidence, not a claimed live avatar test.
+- No photo/user listing endpoint or broader role was added. Do not present this
+  phase as password-change or multilingual speech completion. Required CI remains
+  the final publication gate; rollback can revert UI/API while retaining harmless
+  normalized profile fields until a separately approved deletion is requested.

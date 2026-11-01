@@ -3,14 +3,14 @@
 The [initial plan](../../initial_plan.md) defines scope; this backlog sequences reviewable deliveries. Owners are assigned when work starts. Every task uses the [template](TEMPLATE.md) and records actual evidence. “Ready” means scoped, not tested.
 
 Current improvement cycle: [UI-001 — Profiles and application Control Plane](UI-001-PROFILES-CONTROL-PLANE.md).
-The plan defines UI-0 through UI-4 with per-phase quality gates. UI-0 merged in PR #5; UI-1 navigation is implemented with local gates passed and publication pending. Remaining profile, locale, settings and data phases are not yet implemented.
+The plan defines UI-0 through UI-4 with per-phase quality gates. UI-0 merged in PR #5; UI-1 merged in PR #6 with 332 remote tests passed. UI-2a profile/interface catalogs are implemented locally; Atlas permission/live acceptance is pending. Remaining profile, locale, settings and data phases are not yet implemented.
 
 | ID | Deliverable | Dependency | Acceptance | Status |
 |---|---|---|---|---|
 | I18N-001 | Three-language UI, agent responses and voice | UI-001 profile, journey/voice contracts | Catalog completeness, protected templates, locale isolation and multilingual speech acceptance | Planned; [LANG-0 through LANG-3](I18N-001-MULTILINGUAL.md) |
 | MEM-002 | Engine memory destination mymemory | MEM-001, COMP-002 | Supported migration, shared-project scope, continuity/isolation and rollback gates | Planned; [phases](MEM-002-MYMEMORY-MIGRATION.md) |
 | TOK-001 | Control Plane Tokenomics dashboards | UI-001 admin shell, native usage APIs | Fiserv-inspired visualizations, truthful data coverage and tested calculations | Planned; [inventory and gates](TOK-001-TOKENOMICS.md) |
-| UI-001 | Profile menu, responsive navigation and admin Control Plane | FND-003, VERT-001/002, RAG-001, OPS-001 | Per-phase navigation, authorization, persistence, regression and visual gates | UI-1 local gates passed; [scope and phase gates](UI-001-PROFILES-CONTROL-PLANE.md) |
+| UI-001 | Profile menu, responsive navigation and admin Control Plane | FND-003, VERT-001/002, RAG-001, OPS-001 | Per-phase navigation, authorization, persistence, regression and visual gates | UI-2a remote gate pending; [scope and phase gates](UI-001-PROFILES-CONTROL-PLANE.md) |
 | FND-001 | Codex instructions, docs validation, PR templates, development ADRs | None | Local checker passes; status honestly distinguishes authored files from GitHub setup | Done locally |
 | FND-002 | Reconcile local files with intended GitHub repository | User Terminal for Git writes | Remote history preserved; branch and PR verified; CI results recorded | `43746c6` published; integration tracked in PR #1; disconnect-test fix `60ef97b` published; push and PR CI passed; [publication status](../runbooks/REPOSITORY_SETUP.md) |
 | COMP-001 | Latest-Python dependency proof | Provider/package access | uv lock/sync/import/build on target; record compatible versions and failures; no silent downgrade | Passed for bounded split Python environments and bundled Python 3.15.2 hosted build; [dependency evidence](COMP-001-DEPENDENCIES.md). Future application dependencies remain separate. |

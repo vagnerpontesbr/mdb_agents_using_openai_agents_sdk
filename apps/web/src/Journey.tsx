@@ -1,3 +1,4 @@
+import { useI18n } from './i18n';
 import { useEffect, useRef, useState } from 'react';
 import type { Principal } from './api';
 import { request } from './api';
@@ -18,6 +19,7 @@ function execution(value: unknown): Execution {
 }
 
 export default function Journey({ user, active = true }: { user: Principal; active?: boolean }) {
+  const { t, locale } = useI18n();
   const [conversation, setConversation] = useState(() => {
     const key = `telecom-conversation-${user.user_id}`;
     const saved = sessionStorage.getItem(key);
@@ -221,45 +223,45 @@ export default function Journey({ user, active = true }: { user: Principal; acti
   }
 
   const waiting = recoveryRequired || current && ['suspended', 'running', 'resuming', 'pending'].includes(current.status);
-  return <section className="journey panel" aria-label="Support workspace">
-    <p className="eyebrow">YOUR SUPPORT TEAM</p><h2>How can we help?</h2>
-    <p className="muted">Financial · Technical · Sales</p>
+  return <section className="journey panel" aria-label={t("Support workspace")}>
+    <p className="eyebrow">{t("YOUR SUPPORT TEAM")}</p><h2>{t("How can we help?")}</h2>
+    <p className="muted">{t("Financial \u00b7 Technical \u00b7 Sales")}</p>
     <div className="conversation" aria-live="polite">
       {history.map((item, index) => <article key={index}><strong>{item.role}</strong><p>{item.text}</p></article>)}
     </div>
-    <p role="status" className="muted">{message}</p>
+    <p role="status" className="muted">{t(message)}</p>
     {current?.status === 'suspended' && current.action && <div className="proposal">
-      <h3>Confirm this simulation</h3>
-      <p>Plan: <strong>{current.action.plan_id}</strong></p>
-      <p>Monthly price: USD {(current.action.monthly_minor / 100).toFixed(2)}</p>
-      <p>No live plan or charge will change. Only the original requester can approve.</p>
-      <div className="actions"><button disabled={busy} onClick={() => { void review('approve'); }}>Approve simulation</button>
-        <button className="secondary" disabled={busy} onClick={() => { void review('reject'); }}>Reject</button></div>
+      <h3>{t("Confirm this simulation")}</h3>
+      <p>{t("Plan:")} <strong>{current.action.plan_id}</strong></p>
+      <p>{t("Monthly price: USD")} {new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(current.action.monthly_minor / 100)}</p>
+      <p>{t("No live plan or charge will change. Only the original requester can approve.")}</p>
+      <div className="actions"><button disabled={busy} onClick={() => { void review('approve'); }}>{t("Approve simulation")}</button>
+        <button className="secondary" disabled={busy} onClick={() => { void review('reject'); }}>{t("Reject")}</button></div>
     </div>}
-    {current && <div className="execution"><p>Execution: {current.status}</p>
-      {current.specialists && <p>Consulted: {current.specialists.join(', ')}</p>}
+    {current && <div className="execution"><p>{t("Execution:")} {t(current.status)}</p>
+      {current.specialists && <p>{t("Consulted:")} {current.specialists.map(t).join(', ')}</p>}
       {current.text && <p className="result">{current.text}</p>}
       {voice && current.status === 'completed' && <div className="actions">
-        <button disabled={busy} onClick={() => { void speak(); }}>Play response</button>
-        <button className="secondary" onClick={() => audio.current?.pause()}>Stop playback</button>
+        <button disabled={busy} onClick={() => { void speak(); }}>{t("Play response")}</button>
+        <button className="secondary" onClick={() => audio.current?.pause()}>{t("Stop playback")}</button>
       </div>}
     </div>}
-    <label>Your message<textarea value={draft} maxLength={4000} rows={3}
+    <label>{t("Your message")}<textarea value={draft} maxLength={4000} rows={3}
       onChange={event => setDraft(event.target.value)} disabled={!available || busy || !!waiting || recording}
-      placeholder="Read invoice demo-1 and check my slow connection." /></label>
+      placeholder={t("Read invoice demo-1 and check my slow connection.")} /></label>
     <div className="actions">
-      <button disabled={!available || busy || !!waiting || recording || !draft.trim()} onClick={() => { void send(); }}>Send</button>
+      <button disabled={!available || busy || !!waiting || recording || !draft.trim()} onClick={() => { void send(); }}>{t("Send")}</button>
       {voice && !recording && <button className="secondary" disabled={!available || busy || !!waiting}
-        onClick={() => { void record(); }}>Record voice</button>}
-      {recording && <><button onClick={() => { void finishRecording(); }}>Finish recording</button>
-        <button className="secondary" onClick={() => { void finishRecording(true); }}>Cancel recording</button></>}
-      {busy && abort.current && <button className="secondary" onClick={() => abort.current?.abort()}>Stop waiting</button>}
-      <button className="secondary" disabled={!available || busy || recording} onClick={() => { void latest(); }}>Check latest execution</button>
+        onClick={() => { void record(); }}>{t("Record voice")}</button>}
+      {recording && <><button onClick={() => { void finishRecording(); }}>{t("Finish recording")}</button>
+        <button className="secondary" onClick={() => { void finishRecording(true); }}>{t("Cancel recording")}</button></>}
+      {busy && abort.current && <button className="secondary" onClick={() => abort.current?.abort()}>{t("Stop waiting")}</button>}
+      <button className="secondary" disabled={!available || busy || recording} onClick={() => { void latest(); }}>{t("Check latest execution")}</button>
       <button className="secondary" disabled={!available || busy || recording || !!waiting}
-        onClick={newConversation}>New conversation</button>
+        onClick={newConversation}>{t("New conversation")}</button>
     </div>
-    <p className="hint">Leaving Support discards microphone recording and stops playback. Your conversation remains active.</p>
-    <p className="hint">Stopping playback or waiting does not cancel accepted remote work. No automatic resubmission.</p>
-    <p className="hint">New conversations may recall selected earlier facts. Full chat history is not restored, and new memories may take time to become available.</p>
+    <p className="hint">{t("Leaving Support discards microphone recording and stops playback. Your conversation remains active.")}</p>
+    <p className="hint">{t("Stopping playback or waiting does not cancel accepted remote work. No automatic resubmission.")}</p>
+    <p className="hint">{t("New conversations may recall selected earlier facts. Full chat history is not restored, and new memories may take time to become available.")}</p>
   </section>;
 }

@@ -1,6 +1,6 @@
 # I18N-001: Portuguese, English and Spanish across UI, responses and voice
 
-- Status: Scope requested; planned, not implemented
+- Status: Interface catalogs and profile locale selection implemented locally; full LANG acceptance pending
 - Date: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 profile preferences, existing journey/voice contracts
@@ -110,3 +110,11 @@ Planning inspected the current hardcoded STT hint, English templates and profile
 contracts, and fetched official TTS language documentation. No translation catalog,
 profile persistence, password/photo endpoint, provider call or deployment has been
 implemented or validated by this planning update.
+
+
+UI-2a progress: interface catalogs, profile/login language selection and timestamp/
+number presentation are implemented locally; tests cover catalog parity, persistence,
+active-request continuity and audio-object continuity. See UI-001 for exact results
+and Atlas role approval dependency. LANG-0 provider/template/source inventory and
+LANG-2/3 hosted response/speech gates remain incomplete. Historical provider prose
+and governed source metadata are deliberately not translated by the UI catalog.

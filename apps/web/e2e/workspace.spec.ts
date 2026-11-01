@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 async function workspace(page: Page, role: 'user' | 'admin' = 'admin', route = '/support') {
   await page.route('**/api/me', r => r.fulfill({ json: { user_id: `synthetic-${role}`, email: `${role}@example.test`, role } }));
+  await page.route('**/api/profile', r => r.fulfill({ json: { user_id: `synthetic-${role}`, email: `${role}@example.test`, role, display_name: 'Synthetic User', locale: 'en-US', timezone: 'UTC', revision: 0 } }));
   await page.route('**/api/capabilities', r => r.fulfill({ json: { journey: true, voice: true, knowledge: false } }));
   await page.route('**/api/journey/latest', r => r.fulfill({ json: { status: 'empty' } }));
   await page.goto(`/#${route}`);

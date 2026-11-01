@@ -13,6 +13,15 @@ class SessionStore(Store):
         super().__init__()
         self.sessions, self.attempts = {}, {}
 
+    def update_profile(self, email, user_id, expected_revision, values):
+        user = self.users.get(email)
+        if (not user or user["user_id"] != user_id or user.get("active") is not True
+                or user.get("profile_revision", 0) != expected_revision):
+            return False
+        user["profile"] = copy.deepcopy(values)
+        user["profile_revision"] = expected_revision + 1
+        return True
+
     def insert_session(self, session):
         self.sessions[session["_id"]] = copy.deepcopy(session)
 

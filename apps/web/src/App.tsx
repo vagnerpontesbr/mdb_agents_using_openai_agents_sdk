@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { SubmitEvent } from 'react';
-import { ApiError, principal, request } from './api';
+import { ApiError, InterfaceError, principal, request } from './api';
 import type { Principal, Role } from './api';
 import WorkspaceLayout from './WorkspaceLayout';
+import { useI18n } from './i18n';
+import type { Locale } from './catalogs';
 
 export default function App() {
+  const { locale, setLocale, t } = useI18n();
   const [user, setUser] = useState<Principal | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -42,10 +45,10 @@ export default function App() {
     try {
       const result = principal(await request(register ? '/api/users' : '/api/login', payload));
       form.reset();
-      if (register) setNotice(`Account created for ${result.email}.`);
+      if (register) setNotice(result.email);
       else setUser(result);
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Request failed.');
+      setError(reason instanceof InterfaceError ? reason.key : 'Request failed.');
       if (register && reason instanceof ApiError && reason.status === 401) setUser(null);
     } finally {
       // Passwords never enter persistent browser storage.
@@ -65,56 +68,60 @@ export default function App() {
   }
 
   if (user) return <WorkspaceLayout key={user.user_id} user={user} busy={busy}
-    logout={() => { void logout(); }} feedback={error && <p role="alert" className="feedback error">{error}</p>} account={<>
-      <h2>Create an account</h2><p className="muted">Give a team member access to this demo.</p>
+    logout={() => { void logout(); }} feedback={error && <p role="alert" className="feedback error">{t(error)}</p>} account={<>
+      <h2>{t("Create an account")}</h2><p className="muted">{t("Give a team member access to this demo.")}</p>
       <form onSubmit={event => { void submit(event, true); }}>
         <Credentials register disabled={busy} />
-        <label>Role<select name="role" defaultValue="user" disabled={busy}>
-          <option value="user">User</option><option value="admin">Administrator</option>
+        <label>{t("Role")}<select name="role" defaultValue="user" disabled={busy}>
+          <option value="user">{t("User")}</option><option value="admin">{t("Administrator")}</option>
         </select></label>
-        <button disabled={busy} type="submit">{busy ? 'Working…' : 'Create account'}</button>
+        <button disabled={busy} type="submit">{t(busy ? 'Working…' : 'Create account')}</button>
       </form>
-      {notice && <p role="status" className="feedback success">{notice}</p>}
+      {notice && <p role="status" className="feedback success">{notice && t('Account created for {email}.').replace('{email}', notice)}</p>}
     </>} />;
 
   return <div className="shell">
     <header><a className="brand" href="/" aria-label="Telecom workspace home">
-      <span className="brand-mark" aria-hidden="true">◒</span> Telecom<span> / workspace</span>
-    </a><span className="badge">Reference demo</span></header>
+      <span className="brand-mark" aria-hidden="true">◒</span> Telecom<span> / {t('workspace')}</span>
+    </a><span className="badge">{t("Reference demo")}</span></header>
+    <label>{t('Language')}<select value={locale} onChange={event => setLocale(event.target.value as Locale)}>
+      <option value="en-US">English</option><option value="pt-BR">Português (Brasil)</option><option value="es-ES">Español</option>
+    </select></label>
     <main>
       <section className="intro">
-        <p className="eyebrow">CONNECTED SERVICE</p>
-        <h1>A clear start.<br />A connected experience.</h1>
-        <p className="lede">One workspace for your telecom support team.</p>
+        <p className="eyebrow">{t("CONNECTED SERVICE")}</p>
+        <h1>{t("A clear start.")}<br />{t("A connected experience.")}</h1>
+        <p className="lede">{t("One workspace for your telecom support team.")}</p>
         <div className="scope-note"><span aria-hidden="true">01</span><div>
-          <strong>Your workspace starts here</strong>
-          <p>Sign in to access your account. Administrators can invite the team by creating user accounts.</p>
+          <strong>{t("Your workspace starts here")}</strong>
+          <p>{t("Sign in to access your account. Administrators can invite the team by creating user accounts.")}</p>
         </div></div>
-        <p className="footnote">Independent reference asset inspired by MongoDB. Uses synthetic demo data.</p>
+        <p className="footnote">{t("Independent reference asset inspired by MongoDB. Uses synthetic demo data.")}</p>
       </section>
       <section className="panel" aria-busy={busy || loading}>
-        {loading ? <p role="status">Checking your session…</p> : <>
-            <p className="eyebrow">YOUR WORKSPACE</p><h2>Sign in</h2>
-            <p className="muted">Use the account provided by your administrator.</p>
+        {loading ? <p role="status">{t("Checking your session\u2026")}</p> : <>
+            <p className="eyebrow">{t("YOUR WORKSPACE")}</p><h2>{t("Sign in")}</h2>
+            <p className="muted">{t("Use the account provided by your administrator.")}</p>
             <form onSubmit={event => { void submit(event, false); }}>
               <Credentials register={false} disabled={busy} />
-              <button disabled={busy} type="submit">{busy ? 'Signing in…' : 'Sign in'}</button>
+              <button disabled={busy} type="submit">{t(busy ? 'Signing in…' : 'Sign in')}</button>
             </form>
         </>}
-        {error && <p className="feedback error" role="alert">{error}</p>}
-        {notice && <p className="feedback success" role="status">{notice}</p>}
+        {error && <p className="feedback error" role="alert">{t(error)}</p>}
+        {notice && <p className="feedback success" role="status">{notice && t('Account created for {email}.').replace('{email}', notice)}</p>}
       </section>
     </main>
-    <footer>Telecom reference asset <span>Private demo workspace</span></footer>
+    <footer>{t("Telecom reference asset")} <span>{t("Private demo workspace")}</span></footer>
   </div>;
 }
 
 function Credentials({ register, disabled }: { register: boolean; disabled: boolean }) {
+  const { t } = useI18n();
   return <>
-    <label>Email<input name="email" type="email" autoComplete={register ? 'off' : 'username'}
+    <label>{t("Email")}<input name="email" type="email" autoComplete={register ? 'off' : 'username'}
       required maxLength={254} placeholder="you@example.com" disabled={disabled} /></label>
-    <label>Password<input name="password" type="password" required minLength={8} maxLength={128}
+    <label>{t("Password")}<input name="password" type="password" required minLength={8} maxLength={128}
       autoComplete={register ? 'new-password' : 'current-password'} disabled={disabled} /></label>
-    {register && <p className="hint">Use 8–128 characters. Share credentials through your private demo channel.</p>}
+    {register && <p className="hint">{t("Use 8\u2013128 characters. Share credentials through your private demo channel.")}</p>}
   </>;
 }

@@ -10,6 +10,10 @@ SESSION_SECONDS = 3600
 LOGIN_ATTEMPTS = 8
 
 
+class ProfileConflict(Exception):
+    pass
+
+
 class RateLimited(Exception):
     pass
 
@@ -59,3 +63,25 @@ class SessionAuth:
 
     def logout(self, token):
         self.store.delete_session(token_digest(token))
+
+    def profile(self, token):
+        principal = self.principal(token)
+        user = self.store.get(principal.email)
+        if not user or user.get("active") is not True or user["user_id"] != principal.user_id:
+            raise AccessDenied("Login required")
+        profile = user.get("profile", {})
+        return {"user_id": principal.user_id, "email": principal.email, "role": principal.role,
+                "display_name": profile.get("display_name", "User"),
+                "timezone": profile.get("timezone", "UTC"),
+                "locale": profile.get("locale", "en-US"),
+                "revision": user.get("profile_revision", 0)}
+
+    def save_profile(self, token, *, values, expected_revision):
+        principal = self.principal(token)
+        if set(values) != {"display_name", "timezone", "locale"}:
+            raise ValueError("Invalid profile fields")
+        if not self.store.update_profile(principal.email, principal.user_id,
+                                         expected_revision, values):
+            self.principal(token)
+            raise ProfileConflict("Profile changed; reload before saving")
+        return self.profile(token)

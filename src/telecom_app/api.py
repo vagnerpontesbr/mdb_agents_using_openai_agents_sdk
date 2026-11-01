@@ -67,7 +67,8 @@ def create_app(
             else:
                 app.state.identity = identity
             app.state.journey = journey or (
-                JourneyService(app.state.identity, EngineAPI())
+                JourneyService(app.state.identity, EngineAPI(),
+                               localized_turns=settings.journey_locale_enabled)
                 if settings.journey_enabled
                 else None
             )
@@ -324,18 +325,23 @@ def create_app(
     def chat(data: ChatInput, request: Request) -> StreamingResponse:
         handler = journey_service(request)
         session_token = token(request)
+        locale = handler.turn_locale(session_token)
 
         async def stream() -> AsyncIterator[str]:
-            yield 'event: progress\ndata: {"message":"Consulting your support team"}\n\n'
+            yield (
+                'event: progress\ndata: {"code":"journey_progress",'
+                '"message":"Consulting your support team"}\n\n'
+            )
             try:
                 result = await run_in_threadpool(
-                    handler.send, session_token, data.conversation_id, data.message
+                    handler.send, session_token, data.conversation_id, data.message, locale
                 )
                 yield "event: result\ndata: " + json.dumps(result) + "\n\n"
             except Exception:
                 # Native execution may still exist after cancellation/transport loss.
                 yield (
-                    'event: error\ndata: {"message":"The outcome could not be confirmed. '
+                    'event: error\ndata: {"code":"journey_outcome_unknown",'
+                    '"message":"The outcome could not be confirmed. '
                     'Check the latest execution before sending again."}\n\n'
                 )
 

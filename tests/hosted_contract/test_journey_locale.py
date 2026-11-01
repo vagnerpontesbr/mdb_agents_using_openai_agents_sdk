@@ -125,6 +125,14 @@ class LocaleTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(render("expired.v1", "es-ES"),
             "La simulación de cambio de plan caducó. No se modificó ningún plan ni cargo.")
 
+    def test_http_producer_and_hosted_consumer_agree_on_the_wire_contract(self):
+        from src.telecom_app.turn_locale import Turn, execution_locale
+        for locale in LANGUAGES:
+            for message in ("fatura demo-1", "🙂" * 4000, PREFIX + "user text"):
+                wire = Turn(locale=locale, message=message).wire()
+                self.assertEqual(read_turn(wire), (locale, message))
+                self.assertEqual(execution_locale(wire), locale)
+
     def test_legacy_and_nested_envelopes_preserve_message_without_recursive_parsing(self):
         self.assertEqual(read_turn("hello"), ("en-US", "hello"))
         nested = PREFIX + '{"locale":"es-ES","message":"nested"}'

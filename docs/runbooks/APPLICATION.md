@@ -158,3 +158,9 @@ The supervisor/specialist and browser voice implementation is opt-in and has pas
 hosted/browser acceptance. Follow [the Phase 2 runbook](PHASE_2.md) for the deployment gate,
 `APP_JOURNEY_ENABLED`, protected endpoints and recovery. Keep it disabled against
 the Phase 0 invoice deployment.
+
+
+Multilingual admission is staged behind `APP_JOURNEY_LOCALE_ENABLED=false`. Do not
+enable it against the old hosted agent. Follow the [multilingual activation gate](MULTILINGUAL.md)
+for deployment/replay checks and actual provider acceptance. This switch does not
+change the application/memory cluster boundary or create a second memory owner.

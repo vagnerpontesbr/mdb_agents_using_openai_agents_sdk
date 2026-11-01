@@ -15,7 +15,7 @@ integrated `16681b9` on 2026-11-01. This document describes gates, not a deploym
 | Native execution and replay | adapter `journey.py` | Carry snapshot in durable input/output, preserve it over suspend/resume; retain legacy executions |
 | SDK routing and clarification | adapter `journey_agent.py` | Language instruction from validated context; localized deterministic clarification |
 | Invoice, diagnosis, offers, receipts | adapter `journey_domain.py` | Versioned protected templates; same validated values, IDs and eligibility |
-| Local invoice endpoint | `src/telecom_app/rendering.py` | Same locale semantics; this path alone does not prove hosted support |
+| Local invoice renderer | `src/telecom_app/rendering.py` | Same locale semantics; this path alone does not prove hosted support |
 | Rejection, expiry and uncertain outcome | adapter and API `journey.py` | Localized templates; no successful-action claim from an uncertain result |
 | Knowledge retrieval/publication/cache | `knowledge.py`, `curation.py`, `knowledge_search.py`, `knowledge_cache.py`, adapter `knowledge_tools.py` | Source language is currently en-only; retain ACL, applicability, validity and language filters |
 | Speech input/output | `src/telecom_app/voice.py`, API speech routes | STT currently en; capture recording locale, use the execution locale for TTS |
@@ -134,3 +134,15 @@ Inventory, source strategy, three-language semantic cases and listening script a
 prepared. Installed API source inspection and official documentation are complete.
 Local repository validation and remote CI must pass before integration. LANG-1 is
 partial (future admin/cost views remain); LANG-2 and LANG-3 are not implemented here.
+
+
+## Application activation gate
+
+LANG-2b introduces APP_JOURNEY_LOCALE_ENABLED=false. Leave it false while the old
+hosted agent is deployed. The new application can read both old English results and
+localized results, but it rejects missing/mismatched original input for new localized
+invocations. First prepare and review the exact hosted build/tool schema changes,
+drain affected in-flight executions or prove old-version replay, and verify native
+message/result recovery with a bounded synthetic run. Only then enable the switch
+in the private backend configuration. Do not deploy a memory cutover in this rollout.
+Disabling new localized admission does not delete existing executions or memories.

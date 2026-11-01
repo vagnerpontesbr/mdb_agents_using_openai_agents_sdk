@@ -132,11 +132,12 @@ separate supported integration evidence, not a generic settings form.
 
 ## Phases and quality gates
 
-The latest requester-supplied AGENTS.md instructions restore manual commits, pushes
-and PR creation. Prepare and validate each phase, provide publication commands and
-wait for confirmation at its boundary. Verify required CI and integration through
-read access before the next phase. This supersedes earlier automatic-publication
-wording for this cycle. Do not bypass branch protections.
+The requester now authorizes agent-performed commits, branch pushes and PR creation
+without additional confirmation, superseding manual-publication instructions.
+[AGENTS.md](../../AGENTS.md) owns the delivery workflow: one reviewed phase per PR,
+required quality/CI gates before the previously authorized automatic merge, then
+the next branch from integrated main. Stop for material unresolved decisions and
+Atlas mutations that could affect other projects; do not bypass branch protections.
 
 | Phase | Deliverable and expected files | Required gate | Rollback |
 | --- | --- | --- | --- |

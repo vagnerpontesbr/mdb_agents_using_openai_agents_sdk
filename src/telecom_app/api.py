@@ -15,7 +15,7 @@ from pymongo import MongoClient
 from starlette.concurrency import run_in_threadpool
 
 from compatibility.demo_auth.auth import AccessDenied, UserExists
-from compatibility.demo_auth.sessions import SESSION_SECONDS, RateLimited
+from compatibility.demo_auth.sessions import SESSION_SECONDS, ProfileConflict, RateLimited
 
 from .config import Settings
 from .contracts import LoginRequest, PrincipalView, RegistrationRequest
@@ -35,6 +35,7 @@ from .journey import (
     ReviewInput,
 )
 from .knowledge_publication import PublicationConflict
+from .profile import ProfileInput, ProfileView
 from .security import Boundary
 from .voice import AudioInput, VoiceService
 
@@ -144,6 +145,21 @@ def create_app(
     @app.get("/healthz")
     def health() -> dict[str, str]:
         return {"status": "ok", "service": "telecom-api", "contract_version": "1"}
+
+    @app.exception_handler(ProfileConflict)
+    async def profile_conflict(request: Request, error: ProfileConflict) -> JSONResponse:
+        return JSONResponse({"error": "Profile changed; reload before saving"}, status_code=409)
+
+    @app.get("/api/profile", response_model=ProfileView)
+    def profile(request: Request) -> ProfileView:
+        return ProfileView.model_validate(service().profile(token(request)))
+
+    @app.post("/api/profile", response_model=ProfileView)
+    def save_profile(request: Request, body: ProfileInput) -> ProfileView:
+        return ProfileView.model_validate(service().save_profile(
+            token(request), values=body.model_dump(exclude={"expected_revision"}),
+            expected_revision=body.expected_revision,
+        ))
 
     @app.get("/api/me", response_model=PrincipalView)
     def me(request: Request) -> PrincipalView:

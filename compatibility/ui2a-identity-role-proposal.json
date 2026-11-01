@@ -1,0 +1,91 @@
+{
+  "actions": [
+    {
+      "action": "INSERT",
+      "resources": [
+        {
+          "cluster": false,
+          "collection": "login_attempts",
+          "db": "telecom_identity"
+        },
+        {
+          "cluster": false,
+          "collection": "sessions",
+          "db": "telecom_identity"
+        },
+        {
+          "cluster": false,
+          "collection": "users",
+          "db": "telecom_identity"
+        }
+      ]
+    },
+    {
+      "action": "CREATE_INDEX",
+      "resources": [
+        {
+          "cluster": false,
+          "collection": "login_attempts",
+          "db": "telecom_identity"
+        },
+        {
+          "cluster": false,
+          "collection": "sessions",
+          "db": "telecom_identity"
+        },
+        {
+          "cluster": false,
+          "collection": "users",
+          "db": "telecom_identity"
+        }
+      ]
+    },
+    {
+      "action": "REMOVE",
+      "resources": [
+        {
+          "cluster": false,
+          "collection": "sessions",
+          "db": "telecom_identity"
+        }
+      ]
+    },
+    {
+      "action": "UPDATE",
+      "resources": [
+        {
+          "cluster": false,
+          "collection": "login_attempts",
+          "db": "telecom_identity"
+        },
+        {
+          "cluster": false,
+          "collection": "users",
+          "db": "telecom_identity"
+        }
+      ]
+    },
+    {
+      "action": "FIND",
+      "resources": [
+        {
+          "cluster": false,
+          "collection": "login_attempts",
+          "db": "telecom_identity"
+        },
+        {
+          "cluster": false,
+          "collection": "sessions",
+          "db": "telecom_identity"
+        },
+        {
+          "cluster": false,
+          "collection": "users",
+          "db": "telecom_identity"
+        }
+      ]
+    }
+  ],
+  "inheritedRoles": [],
+  "roleName": "telecomDemoIdentityRuntime"
+}

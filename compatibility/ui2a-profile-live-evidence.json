@@ -1,0 +1,20 @@
+{
+  "scope": "OpenAI-SDK/telecom_identity",
+  "synthetic_accounts": 1,
+  "checks": {
+    "legacy_defaults": true,
+    "save_and_read": true,
+    "stale_revision_denied": true,
+    "invalid_and_privileged_fields_denied": true,
+    "new_login_persistence": true,
+    "mongo_persistence": true
+  },
+  "cleanup": {
+    "account_removed": true,
+    "sessions_remaining": 0,
+    "attempts_remaining": 0
+  },
+  "save_status": 200,
+  "status": "passed",
+  "observed_at": "2026-11-01T16:05:18.637492+00:00"
+}

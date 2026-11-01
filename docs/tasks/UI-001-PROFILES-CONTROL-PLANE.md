@@ -1,6 +1,6 @@
 # UI-001: Profile navigation and application Control Plane
 
-- Status: UI-0 merged in PR #5; UI-1 local gates passed, publication pending
+- Status: UI-0 and UI-1 merged; UI-2a local and Atlas acceptance passed, final publication gate pending
 - Owner: Telecom demo maintainer
 - Requested: 2026-11-01
 - Branch: `codex/ui-profiles-control-plane`
@@ -196,8 +196,8 @@ reported. No repeated load, pricing or production-capacity proof is part of this
 | Phase | Code status | Validation evidence | Publication |
 | --- | --- | --- | --- |
 | UI-0 | Design and migration inventory complete; requester decisions recorded | Local and remote gates passed | PR #5 merged as `f43a10f` |
-| UI-1 | Responsive workspace, profile disclosure, fixed routes, preserved journey | Local gates passed; see evidence below | Pending |
-| UI-2 | Not started | Not run | None |
+| UI-1 | Responsive workspace, profile disclosure, fixed routes, preserved journey | Local gates and 332 remote tests passed | PR #6 merged as `95d2982` |
+| UI-2 | UI-2a profile and interface catalogs complete; photo/password not started | Local, initial CI and live Atlas profile acceptance passed | PR #7, final evidence CI pending |
 | UI-3 | Not started | Not run | None |
 | UI-4 | Not started | Not run | None |
 
@@ -400,3 +400,97 @@ menu restrictions complement the unchanged backend authorization; UI route check
 alone are not claimed as backend permission proof. No routes expose configuration,
 secrets, invented cost/health values or a second memory owner. Subsequent UI-2/LANG
 work must preserve the mounted journey and the existing action/session identities.
+
+
+## UI-2a current implementation and remote gate — 2026-11-01
+
+Branch `codex/ui-2a-profile` starts from merged UI-1 (`95d2982`). Implemented
+session-derived GET/POST `/api/profile`, strict field validation, IANA timezone and
+three-locale allowlists, bounded names, protected identity fields and revision-based
+atomic updates. Legacy defaults are display name `User`, timezone `UTC`, locale
+`en-US` and revision 0; reading old accounts does not write or migrate them.
+Profile fields are embedded in existing identity documents; no new collection,
+index, Engine writer or schema reset is introduced. The update uses dotted fields
+to preserve future independent profile attributes.
+
+The profile form and inline profile-menu language selector persist through the API.
+Inline switching preserves the mounted journey, draft, execution, approval and audio
+objects. User preference wins after login; unauthenticated locale selection is
+in-memory. Interface catalogs cover login, profile, navigation, support controls and
+knowledge controls in en-US/pt-BR/es-ES. Timestamps use the selected timezone and
+numbers use locale formatting without currency conversion. Raw source metadata,
+provider prose and historical messages remain unchanged. Typed safe UI errors are
+localized without matching arbitrary exception text or exposing provider details.
+
+This is interface localization only: LANG-2/3 hosted response and speech propagation
+are not implemented, and existing voice still explicitly asks for English. Do not
+claim the full multilingual acceptance gate or the entire UI-2 phase complete.
+
+### Checks and failures
+
+- Backend Ruff passed; mypy passed for 28 source files; 151 foundation tests passed.
+  New tests cover legacy defaults, persistence across login, stale revisions,
+  invalid names/timezones/locales/revisions, role/email/user-ID injection, isolation
+  and disabled users. Local stores do not prove Atlas persistence.
+- Frontend lint/types/build passed. Six Vitest tests passed, including catalog
+  key/placeholder parity, timezone formatting and profile-contract validation.
+- All 17 Playwright tests passed. New profile tests exercise save/reload/login,
+  stale edits, three interface locales, active-request identity and original-result
+  continuity, and uninterrupted audio objects through inline locale changes.
+- The first new profile browser run had two timeouts: exact `getByLabel` selectors
+  failed to identify the language selects despite their accessible combobox names.
+  Using `getByRole('combobox', {name, exact:true})` fixed both; the rerun passed.
+  Review also fixed Reload to discard stale form state while fetching the latest
+  profile. Existing 15 regressions remained green.
+- Initial uv checks were blocked by sandbox cache access; permission-enabled runs
+  passed. Subsequent CI and live acceptance are recorded below.
+
+### Approved Atlas change and verification
+
+Read-only inspection found custom role `telecomDemoIdentityRuntime` in Atlas project
+`67b385a7976edf15ecc62e06`, with one direct database-user assignment scoped to cluster
+`OpenAI-SDK` (all 18 project database users were inspected). Application runtime has
+FIND, INSERT and CREATE_INDEX on `telecom_identity.users`, originally lacked UPDATE. The
+runtime cannot list collection validators; a separate existing administrative
+read confirmed collection options `{}`. No validator migration is required.
+
+Snapshots: [original role](../../compatibility/ui2a-identity-role-before.json) and
+[proposed role](../../compatibility/ui2a-identity-role-proposal.json). The only delta
+is UPDATE on `telecom_identity.users`. Preserve every current privilege and inherited
+role. Re-read before applying and stop on drift. A database-user assignment count
+is not proof that no other process uses the same credential.
+
+Approved command, executed successfully after confirming no role drift:
+
+```sh
+atlas customDbRoles update telecomDemoIdentityRuntime \
+  --projectId 67b385a7976edf15ecc62e06 \
+  --append --privilege UPDATE@telecom_identity.users
+```
+
+MongoDB collection UPDATE is not field-level authorization: it also permits updating
+other fields in users. The backend's strict profile allowlist and session-derived
+identity enforce own-profile writes. This permission must not be extended to other
+collections, databases or memory clusters. Rollback removes only the newly added
+resource from UPDATE after re-reading the role; never overwrite unrelated changes.
+
+The requester explicitly approved the mutation and one temporary synthetic account
+smoke test. The role change was applied and a fresh read verified exactly one added
+grant, with all other and inherited privileges preserved:
+[role evidence](../../compatibility/ui2a-identity-role-evidence.json).
+
+The real FastAPI profile/login routes were exercised through TestClient with the
+runtime MongoDB identity and one new synthetic account. This was not a mock database.
+Checks passed for legacy defaults, HTTP 200 save/read, actual MongoDB persistence,
+HTTP 409 stale revisions, HTTP 400 invalid/privileged fields, logout and new-login
+continuity. Administrative credentials were used only for scoped cleanup, not for
+profile writes. [Live evidence](../../compatibility/ui2a-profile-live-evidence.json)
+confirms the account was removed and zero test sessions/login-attempt records remain.
+No real user profile, Engine memory, provider configuration or other collection role
+was changed. This is an in-process HTTP + real Atlas proof, not deployment to the
+already-running demo server.
+
+Initial commit `408c3c0` passed repository/application CI in push run `41323306419`
+and PR run `41323339507`; no remote checks failed. This evidence update requires a
+fresh CI gate before merge. UI-2a acceptance is complete; the entire UI-2 and full
+multilingual response/voice acceptance remain open for their subsequent phases.

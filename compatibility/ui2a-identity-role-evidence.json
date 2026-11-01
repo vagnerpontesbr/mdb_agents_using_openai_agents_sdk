@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "role": "telecomDemoIdentityRuntime",
+  "added_action": "UPDATE",
+  "database": "telecom_identity",
+  "collection": "users",
+  "other_privileges_preserved": true,
+  "inherited_roles_unchanged": true,
+  "observed_at": "2026-11-01T16:05:48.610394+00:00"
+}

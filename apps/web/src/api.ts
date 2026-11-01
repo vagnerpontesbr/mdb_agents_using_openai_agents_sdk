@@ -1,7 +1,11 @@
 export type Role = 'user' | 'admin';
 export type Principal = { user_id: string; email: string; role: Role };
 
-export class ApiError extends Error {
+export class InterfaceError extends Error {
+  constructor(public readonly key: string) { super(key); }
+}
+
+export class ApiError extends InterfaceError {
   constructor(public readonly status: number, message: string) { super(message); }
 }
 
@@ -27,7 +31,7 @@ export async function request(path: string, data?: Record<string, unknown>): Pro
     });
   } catch {
     // Never retry account writes automatically after an uncertain network outcome.
-    throw new Error('Connection unavailable. Check your session before trying again.');
+    throw new InterfaceError('Connection unavailable. Check your session before trying again.');
   }
   if (response.status === 401 && !['/api/login', '/api/me'].includes(path) && typeof window !== 'undefined') {
     window.dispatchEvent(new Event('telecom-session-expired'));

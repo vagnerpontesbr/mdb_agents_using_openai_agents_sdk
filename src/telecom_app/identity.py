@@ -1,6 +1,6 @@
 """Typed HTTP boundary around the existing Phase 0 identity implementation."""
 
-from typing import Protocol, cast
+from typing import Any, Protocol, cast
 
 from compatibility.demo_auth.auth import Principal
 from compatibility.demo_auth.sessions import SessionAuth
@@ -14,6 +14,9 @@ class IdentityService(Protocol):
     def register(self, token: str, *, email: str, password: str,
                  role: str = "user") -> Principal: ...
     def logout(self, token: str) -> None: ...
+    def profile(self, token: str) -> dict[str, Any]: ...
+    def save_profile(self, token: str, *, values: dict[str, Any],
+                     expected_revision: int) -> dict[str, Any]: ...
 
 
 def identity_service(store: object) -> IdentityService:

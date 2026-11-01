@@ -1,0 +1,101 @@
+{
+  "status": "semantic_gate_failed",
+  "provider_requests_started": 6,
+  "cases": [
+    {
+      "locale": "en-US",
+      "source_text": "Marta, do not change fiber-500. The total is USD 79.90, due December 1, 2026.",
+      "transcript": "Marta, do not change fiber 500. The total is USD 7,990, due December 1, 2026.",
+      "wav_sha256": "6b1af05e4e739532b4dd4a48c6eba95ca986c501b9d056956ca3c8a4c4fb922b",
+      "semantic_review": {
+        "status": "failed",
+        "critical_amount": {
+          "expected": "USD 79.90",
+          "actual": "USD 7,990"
+        },
+        "name": "preserved",
+        "date": "preserved",
+        "negation": "preserved",
+        "plan": "hyphen omitted; semantic identifier preserved"
+      },
+      "duration_seconds": 8.85
+    },
+    {
+      "locale": "pt-BR",
+      "source_text": "Marta, não altere o fiber-500. O total é USD 79,90, vence em 1 de dezembro de 2026.",
+      "transcript": "Martha, não altere o Fiber500. O total é USD 79,90, vence em 1 de dezembro de 2026.",
+      "wav_sha256": "a84f791610b54e8ff167d3ee883a0bbba55166308f79c877e6b6fcba5d1c5c72",
+      "semantic_review": {
+        "status": "needs_review",
+        "name": {
+          "expected": "Marta",
+          "actual": "Martha"
+        },
+        "amount": "preserved",
+        "date": "preserved",
+        "negation": "preserved",
+        "plan": "hyphen omitted; semantic identifier preserved"
+      },
+      "duration_seconds": 9.6
+    },
+    {
+      "locale": "es-ES",
+      "source_text": "Marta, no cambies fiber-500. El total es USD 79,90, vence el 1 de diciembre de 2026.",
+      "transcript": "Marta, no cambies Fiber 500. El total es USD 79,90. Vence el 1 de diciembre de 2026.",
+      "wav_sha256": "ed7fc9ae36a9d9549966d25b702dd90093bb2587d734b8a8537921b45234bbde",
+      "semantic_review": {
+        "status": "transcript_semantics_passed_listening_pending",
+        "name": "preserved",
+        "amount": "preserved",
+        "date": "preserved",
+        "negation": "preserved",
+        "plan": "hyphen omitted; semantic identifier preserved"
+      },
+      "duration_seconds": 10.35
+    }
+  ],
+  "human_listening": {
+    "en-US": "failed: requester reports Spanish speech in en-US.wav",
+    "pt-BR": {
+      "status": "passed",
+      "reviewer": "requester",
+      "confirmed": [
+        "Portuguese speech",
+        "clarity",
+        "USD 79.90"
+      ],
+      "response": "sim os dois audios estao corretos"
+    },
+    "es-ES": {
+      "status": "passed",
+      "reviewer": "requester",
+      "confirmed": [
+        "Spanish speech",
+        "clarity",
+        "USD 79.90"
+      ],
+      "response": "sim os dois audios estao corretos"
+    }
+  },
+  "microphone_walkthrough": "pending",
+  "models": [
+    "gpt-4o-mini-tts",
+    "gpt-4o-mini-transcribe"
+  ],
+  "call_cap": 6,
+  "time_cap_seconds": 600,
+  "elapsed_seconds": 11.85,
+  "authorization": {
+    "requester_approved": true,
+    "speech_request_cap": 24,
+    "hosted_invocation_cap": 9,
+    "combined_time_cap_seconds": 1800,
+    "budget_ceiling_usd": 30,
+    "budget_increased": false
+  },
+  "speech_requests_used": 6,
+  "hosted_invocations_used": 0,
+  "automatic_retries": 0,
+  "failure_origin": "English TTS language failure reported by requester; exact cause and amount-error origin unresolved",
+  "listening_summary": "Portuguese and Spanish original samples accepted; English corrected retest accepted separately. Original English round-trip failure remains recorded."
+}

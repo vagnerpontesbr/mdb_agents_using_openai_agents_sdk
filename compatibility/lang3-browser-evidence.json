@@ -1,0 +1,90 @@
+{
+  "deadline_epoch": 1793572967.686244,
+  "speech_admissions": 8,
+  "chat_admissions": 5,
+  "stopped": false,
+  "events": [
+    {
+      "route": "/api/voice/transcribe",
+      "status": 200,
+      "epoch": 1793571437.40757
+    },
+    {
+      "route": "/api/journey/chat",
+      "status": 200,
+      "epoch": 1793571443.216131
+    },
+    {
+      "route": "/api/voice/speak",
+      "status": 200,
+      "epoch": 1793571465.251106
+    },
+    {
+      "route": "/api/voice/transcribe",
+      "status": 200,
+      "epoch": 1793571485.40238
+    },
+    {
+      "route": "/api/journey/chat",
+      "status": 200,
+      "epoch": 1793571488.644664
+    },
+    {
+      "route": "/api/voice/speak",
+      "status": 200,
+      "epoch": 1793571510.341294
+    },
+    {
+      "route": "/api/voice/transcribe",
+      "status": 200,
+      "epoch": 1793571524.5057569
+    },
+    {
+      "route": "/api/journey/chat",
+      "status": 200,
+      "epoch": 1793571527.1971798
+    },
+    {
+      "route": "/api/voice/transcribe",
+      "status": 200,
+      "epoch": 1793571559.830872
+    },
+    {
+      "route": "/api/journey/chat",
+      "status": 200,
+      "epoch": 1793571562.151426
+    },
+    {
+      "route": "/api/voice/transcribe",
+      "status": 200,
+      "epoch": 1793571742.098721
+    },
+    {
+      "route": "/api/journey/chat",
+      "status": 200,
+      "epoch": 1793571745.144659
+    },
+    {
+      "route": "/api/voice/speak",
+      "status": 200,
+      "epoch": 1793572002.956807
+    }
+  ],
+  "status": "accepted_bounded_demo",
+  "requester_feedback": {
+    "en-US": "User reported English and Portuguese tests worked",
+    "pt-BR": "User reported English and Portuguese tests worked",
+    "es-ES": "propnto ja testei em espanhiol e funcionou"
+  },
+  "http_evidence_scope": "Admission counts and HTTP statuses; semantic success and languages are requester-reported, not inferred from HTTP 200",
+  "observed_transcriptions": 5,
+  "observed_playbacks": 3,
+  "planned_case_matrix": 9,
+  "full_nine_case_matrix": "not established",
+  "raw_microphone_recordings_retained": false,
+  "scope_decision": {
+    "requester_response": "sim aceito",
+    "decision": "Accept three-language live demo and local regression evidence; full nine-case matrix remains a documented limitation",
+    "does_not_claim": "Nine passed live cases, production reliability or zero speech errors"
+  }
+}

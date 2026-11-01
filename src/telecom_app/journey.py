@@ -30,6 +30,7 @@ class EngineUnavailable(Exception):
 class ChatInput(Contract):
     conversation_id: UUID
     message: str = Field(min_length=1, max_length=4000)
+    audio_locale: Locale | None = None
 
 
 class ExecutionInput(Contract):

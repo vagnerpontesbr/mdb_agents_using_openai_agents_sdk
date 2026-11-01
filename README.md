@@ -13,6 +13,11 @@ characterization, sustained/Atlas/voice acceptance and the final requester scope
 [Decisions](docs/adr/README.md) and [publication status](docs/runbooks/REPOSITORY_SETUP.md)
 distinguish accepted scope, historical checkpoints and current Git/CI results.
 
+Voice now preserves English, Brazilian Portuguese or Spanish from recording through
+transcript review and the authorized response. The requester accepted the bounded
+three-language demo; [voice acceptance and limitations](docs/runbooks/LANG_3_VOICE.md)
+records provider failures, corrections and the incomplete nine-case matrix.
+
 ## Run the application foundation
 
 The new React account workspace supports login, administrator-only registration,

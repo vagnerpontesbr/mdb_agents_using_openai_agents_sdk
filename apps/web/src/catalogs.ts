@@ -1,6 +1,9 @@
 // Static interface catalogs. Provider responses and historical messages are never translated here.
 export const catalogs: Record<Locale, Record<string, string>> = {
   "en-US": {
+    "Recording. Maximum 15 seconds.": "Recording. Maximum 15 seconds.",
+    "Audio language:": "Audio language:",
+    "The spoken response is AI-generated.": "The spoken response is AI-generated.",
     "Response language:": "Response language:",
     "You": "You",
     "Source language": "Source language",
@@ -224,6 +227,9 @@ export const catalogs: Record<Locale, Record<string, string>> = {
     "Password changed. Sign in with your new password.": "Password changed. Sign in with your new password."
   },
   "pt-BR": {
+    "Recording. Maximum 15 seconds.": "Gravando. Máximo de 15 segundos.",
+    "Audio language:": "Idioma do áudio:",
+    "The spoken response is AI-generated.": "A resposta falada é gerada por IA.",
     "Response language:": "Idioma da resposta:",
     "You": "Você",
     "Source language": "Idioma da fonte",
@@ -447,6 +453,9 @@ export const catalogs: Record<Locale, Record<string, string>> = {
     "Password changed. Sign in with your new password.": "Senha alterada. Entre com sua nova senha."
   },
   "es-ES": {
+    "Recording. Maximum 15 seconds.": "Grabando. Máximo 15 segundos.",
+    "Audio language:": "Idioma del audio:",
+    "The spoken response is AI-generated.": "La respuesta hablada es generada por IA.",
     "Response language:": "Idioma de la respuesta:",
     "You": "Tú",
     "Source language": "Idioma de la fuente",

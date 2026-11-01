@@ -92,7 +92,7 @@ def test_voice_transport_retains_pcm_validation_and_execution_scope(load_client)
     encoded = base64.b64encode(b"\x00\x04\x00\xfc" * 3000).decode()
     response = load_client.post("/api/voice/transcribe", headers=headers(),
                                 json={"pcm_base64": encoded})
-    assert response.json() == {"text": "Synthetic transport request."}
+    assert response.json() == {"text": "Synthetic transport request.", "locale": "en-US"}
     response = load_client.post("/api/journey/chat", headers=headers(),
                                 json={"conversation_id": str(uuid4()), "message": "voice"})
     result = json.loads(response.text.split("event: result\ndata: ")[1].strip())

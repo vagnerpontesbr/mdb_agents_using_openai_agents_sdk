@@ -1,0 +1,23 @@
+{
+  "started_epoch": 1793571167.686244,
+  "deadline_epoch": 1793572967.686244,
+  "speech_cap": 19,
+  "hosted_cap": 9,
+  "speech_started": 1,
+  "hosted_started": 0,
+  "status": "english_stt_semantics_passed_browser_pending",
+  "source_sha256": "3b4fefa01e324ca6c74f1924d7f980376447337e17352c41a6a3c87cd15ab9cf",
+  "transcript": "Marta, do not change fiber 500. The total is USD 79.90 due December 1st, 2026.",
+  "elapsed_seconds": 2.61,
+  "semantic_review": {
+    "amount": "USD 79.90 preserved",
+    "date": "2026-12-01 preserved",
+    "name": "Marta preserved",
+    "negation": "do not change preserved",
+    "plan": "fiber 500 preserved with hyphen omitted"
+  },
+  "authorization": "Requester approved 19 speech requests and 9 hosted invocations / 30 minutes; USD30 ceiling unchanged",
+  "isolated_origin": "http://127.0.0.1:53191",
+  "deployment_verified": "deploy-f11e4d01",
+  "browser_walkthrough": "Requester confirmed working microphone/response in English, Portuguese and Spanish; full nine-case matrix not established"
+}

@@ -7,6 +7,8 @@ import wave
 from typing import Any
 
 from .contracts import Contract
+from .profile import Locale
+from .turn_locale import validated_locale
 
 RATE = 24000
 MAX_PCM = RATE * 2 * 15
@@ -14,6 +16,7 @@ MAX_PCM = RATE * 2 * 15
 
 class AudioInput(Contract):
     pcm_base64: str
+    locale: Locale = "en-US"
 
 
 def pcm_bytes(encoded: str) -> bytes:
@@ -34,13 +37,14 @@ def pcm_bytes(encoded: str) -> bytes:
 
 
 class VoiceService:
-    async def transcribe(self, encoded: str) -> str:
+    async def transcribe(self, encoded: str, locale: Locale = "en-US") -> str:
         import numpy as np
         from agents.voice import AudioInput as SDKAudio
         from agents.voice.model import STTModelSettings
         from agents.voice.models.openai_model_provider import OpenAIVoiceModelProvider
         from openai import AsyncOpenAI
 
+        language = {"en-US": "en", "pt-BR": "pt", "es-ES": "es"}[validated_locale(locale)]
         pcm = pcm_bytes(encoded)
         async with AsyncOpenAI(max_retries=0, timeout=45) as client:
             model = OpenAIVoiceModelProvider(openai_client=client).get_stt_model(
@@ -48,7 +52,7 @@ class VoiceService:
             )
             result: Any = await model.transcribe(
                 SDKAudio(buffer=np.frombuffer(pcm, dtype="<i2")),
-                STTModelSettings(language="en"),
+                STTModelSettings(language=language),
                 False,
                 False,
             )
@@ -56,17 +60,25 @@ class VoiceService:
             raise ValueError("No usable transcript")
         return result.strip()
 
-    async def speak(self, text: str) -> bytes:
+    async def speak(self, text: str, locale: Locale = "en-US") -> bytes:
         from agents.voice.model import TTSModelSettings
         from agents.voice.models.openai_model_provider import OpenAIVoiceModelProvider
         from openai import AsyncOpenAI
 
+        language = {"en-US": "American English", "pt-BR": "Brazilian Portuguese",
+                    "es-ES": "Spanish (Spain)"}[validated_locale(locale)]
         if not text or len(text) > 8000:
             raise ValueError("Invalid speech text")
         pcm = bytearray()
         async with AsyncOpenAI(max_retries=0, timeout=45) as client:
             model = OpenAIVoiceModelProvider(openai_client=client).get_tts_model("gpt-4o-mini-tts")
-            async for chunk in model.run(text, TTSModelSettings(voice="alloy")):
+            settings = TTSModelSettings(
+                voice="alloy", instructions=f"Read the supplied text in {language}. "
+                "Use only this language throughout; never switch languages. "
+                "Do not translate, add or omit words. Preserve dates and negations. "
+                "Read monetary decimals as currency units and cents, never as thousands."
+            )
+            async for chunk in model.run(text, settings):
                 pcm.extend(chunk)
                 if len(pcm) > RATE * 2 * 120:
                     raise ValueError("Speech output exceeds bound")

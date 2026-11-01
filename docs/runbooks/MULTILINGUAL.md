@@ -164,3 +164,11 @@ recovery/isolation checks passed; see [rollout](LANG_2_HOSTED_ROLLOUT.md). The p
 local .env enables the locale flag for the next backend start. Existing servers were
 not restarted. The repository default remains false for other unvalidated deployments.
 Speech remains LANG-3: do not claim multilingual STT or listening acceptance yet.
+
+
+## LANG-3 implementation and live gate
+
+[Captured voice locale](LANG_3_VOICE.md) records the local implementation, tests and
+exact pending live envelope. LANG-2c merged in PR #13 (`c52e2de`). Speech transport
+now supports all three locale snapshots; real multilingual speech quality, microphone
+walkthrough and human listening have not yet been accepted.

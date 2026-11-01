@@ -122,3 +122,23 @@ Phase 8 budget and routing decisions are authoritative in [OPS-001](tasks/OPS-00
 The requester clarified Phase 8 application tests use M20 and previous phases used M10. Current cluster-specific observations and the historical limitation are recorded in [OPS-001](tasks/OPS-001-RESILIENCE.md), including the separate Engine-memory tier. The requester authorized continuing the bounded phase without further questions; this does not turn unavailable billing or unexecuted profiles into accepted results.
 
 Final Phase 8 scope: the requester explicitly excluded production-capacity and pricing proof and requested committing the work. [OPS-001](tasks/OPS-001-RESILIENCE.md) records the superseded billing gate and completed demo acceptance. Historical unknown costs and test limitations remain unchanged; manual publication is pending.
+
+## Confirmed profile and multilingual scope — 2026-11-01
+
+The requester selected display name, timezone, language, photo and self-service
+password change. Portuguese (Brazil), English and Spanish must cover interface,
+agent responses and audio. [ADR-0032](adr/0032-multilingual-profile.md) supersedes
+English-only user-facing requirements; [I18N-001](tasks/I18N-001-MULTILINGUAL.md)
+and UI-001 define phased tests. Source identifiers and developer documentation stay
+English. Commit/push/PR and automatic merge per phase are authorized after gates;
+pause and ask before actions affected by an unresolved material question.
+
+The requester confirmed editable Control Plane configuration limited to application limits and retrieval-cache settings. Feature toggles remain read-only. Explicit Save/Apply affects subsequent operations, preserving in-flight configuration snapshots; no restart/deploy button is included. UI-001 owns validation and activation tests; existing admin authorization and Engine ownership remain in force.
+
+
+## Working agreements and acceptance refinements — 2026-11-01
+
+- Keep [AGENTS.md](../AGENTS.md) current as durable instructions change. Local changes within scope require no additional permission; Atlas mutations that could affect other projects require prior requester approval of the concrete change.
+- Language changes must preserve the active conversation; [I18N-001](tasks/I18N-001-MULTILINGUAL.md) owns continuity and in-flight acceptance tests.
+- The Tokenomics cost dashboard must show actual source-reported monetary values, not estimates or fixtures. Missing actual-cost access is an unresolved acceptance dependency, not a completed cost feature; [TOK-001](tasks/TOK-001-TOKENOMICS.md) owns source semantics and coverage.
+- Validation reports must identify executed local/CI tests and explain failures, corrections and rerun outcomes, following the completion-report contract in AGENTS.md.

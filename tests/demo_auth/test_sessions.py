@@ -31,6 +31,15 @@ class SessionStore(Store):
             self.users[email]["profile"]["avatar"] = content
         return True
 
+    def replace_password(self, email, user_id, expected_hash, replacement):
+        user = self.users.get(email)
+        if (not user or user["user_id"] != user_id or user.get("active") is not True
+                or user["password_hash"] != expected_hash):
+            return False
+        user["password_hash"] = replacement
+        user["credential_version"] = user.get("credential_version", 0) + 1
+        return True
+
     def insert_session(self, session):
         self.sessions[session["_id"]] = copy.deepcopy(session)
 

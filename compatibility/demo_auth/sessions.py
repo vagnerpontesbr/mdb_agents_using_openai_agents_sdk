@@ -4,10 +4,14 @@ import hashlib
 import re
 import secrets
 
-from .auth import AccessDenied, Auth, Principal
+from .auth import AccessDenied, Auth, Principal, password_hash, password_matches
 
 SESSION_SECONDS = 3600
 LOGIN_ATTEMPTS = 8
+
+
+class PasswordRejected(Exception):
+    pass
 
 
 class ProfileConflict(Exception):
@@ -37,11 +41,16 @@ class SessionAuth:
         # Per-peer limit also covers unknown emails, preventing email rotation bypass.
         if self.store.consume_attempt(key, expires) > LOGIN_ATTEMPTS:
             raise RateLimited("Too many login attempts; try again next minute")
-        principal = self.auth.authenticate(email, password)
+        principal, version = self.auth.authenticate_versioned(email, password)
         token = secrets.token_urlsafe(32)
         self.store.insert_session({"_id": token_digest(token), "email": principal.email,
-                                   "user_id": principal.user_id,
+                                   "user_id": principal.user_id, "credential_version": version,
                                    "expires_at": now + timedelta(seconds=SESSION_SECONDS)})
+        try:
+            principal = self.principal(token)
+        except AccessDenied:
+            self.store.delete_session(token_digest(token))
+            raise
         return token, principal
 
     def principal(self, token):
@@ -51,7 +60,8 @@ class SessionAuth:
         user = self.store.get(session["email"])
         if (not user or user.get("active") is not True
                 or user.get("user_id") != session["user_id"]
-                or user.get("role") not in ("user", "admin")):
+                or user.get("role") not in ("user", "admin")
+                or session.get("credential_version", 0) != user.get("credential_version", 0)):
             raise AccessDenied("Login required")
         # Re-read role: a revoked/demoted account cannot keep cached admin powers.
         return Principal(user["user_id"], user["_id"], user["role"])
@@ -99,3 +109,20 @@ class SessionAuth:
             self.principal(token)
             raise ProfileConflict("Profile changed; reload before saving")
         return self.profile(token)
+
+    def change_password(self, token, *, current_password, new_password):
+        principal = self.principal(token)
+        now = self.clock()
+        window = int(now.timestamp()) // 900
+        key = hashlib.sha256(f"password:{principal.user_id}:{window}".encode()).hexdigest()
+        expires = datetime.fromtimestamp((window + 1) * 900, timezone.utc)
+        if self.store.consume_attempt(key, expires) > 5:
+            raise RateLimited("Too many password attempts")
+        user = self.store.get(principal.email)
+        if not user or not password_matches(current_password, user["password_hash"]):
+            raise PasswordRejected("Check current password")
+        replacement = password_hash(new_password)
+        self.principal(token)
+        if not self.store.replace_password(principal.email, principal.user_id,
+                                           user["password_hash"], replacement):
+            raise ProfileConflict("Credentials changed; sign in again")

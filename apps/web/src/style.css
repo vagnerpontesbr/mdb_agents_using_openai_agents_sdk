@@ -94,3 +94,6 @@ footer { min-height: 75px; display: flex; justify-content: space-between; gap: 1
 .avatar-editor p { font-size: 13px; line-height: 1.5; }
 
 .profile-panel > .hint { margin: 20px 0 0; }
+
+.password-editor { margin-top: 32px; padding-top: 24px; border-top: 1px solid #dce5e0; }
+.password-editor p { font-size: 14px; line-height: 1.5; }

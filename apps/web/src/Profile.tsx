@@ -3,6 +3,7 @@ import { ApiError, request } from './api';
 import type { Locale } from './catalogs';
 import { useI18n } from './i18n';
 import AvatarEditor from './Avatar';
+import Password from './Password';
 import { parseProfile } from './profileApi';
 import type { ProfileData } from './profileApi';
 export default function Profile({ data, saved, reload }: { data: ProfileData; saved: (value: ProfileData) => void; reload: () => void }) {
@@ -35,6 +36,6 @@ export default function Profile({ data, saved, reload }: { data: ProfileData; sa
       <button type="button" className="secondary" disabled={busy} onClick={reload}>{t('Reload profile')}</button>
     </form>
     {message && <p role="status">{t(message)}</p>}
-    <p className="hint">{t('Password editing is coming in the next profile phase.')}</p>
+    <Password />
   </section>;
 }

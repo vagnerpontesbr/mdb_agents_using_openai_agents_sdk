@@ -204,7 +204,16 @@ export const catalogs: Record<Locale, Record<string, string>> = {
     "Choose a valid JPEG or PNG within the image limits.": "Choose a valid JPEG or PNG within the image limits.",
     "Photo change could not be confirmed. Reload your profile before trying again.": "Photo change could not be confirmed. Reload your profile before trying again.",
     "JPEG or PNG up to 2 MiB, 4096 pixels per side and 4 million pixels. Metadata is removed.": "JPEG or PNG up to 2 MiB, 4096 pixels per side and 4 million pixels. Metadata is removed.",
-    "Password editing is coming in the next profile phase.": "Password editing is coming in the next profile phase."
+    "Password editing is coming in the next profile phase.": "Password editing is coming in the next profile phase.",
+    "Change password": "Change password",
+    "Current password": "Current password",
+    "New password": "New password",
+    "Confirm new password": "Confirm new password",
+    "Changing your password signs out all existing sessions. Sign in again afterward.": "Changing your password signs out all existing sessions. Sign in again afterward.",
+    "Check your current password and matching new passwords (8–128 characters).": "Check your current password and matching new passwords (8–128 characters).",
+    "Too many password attempts. Try again in 15 minutes.": "Too many password attempts. Try again in 15 minutes.",
+    "Password change could not be confirmed. Sign in again to check before retrying.": "Password change could not be confirmed. Sign in again to check before retrying.",
+    "Password changed. Sign in with your new password.": "Password changed. Sign in with your new password."
   },
   "pt-BR": {
     "Support": "Suporte",
@@ -410,7 +419,16 @@ export const catalogs: Record<Locale, Record<string, string>> = {
     "Choose a valid JPEG or PNG within the image limits.": "Escolha um JPEG ou PNG válido dentro dos limites da imagem.",
     "Photo change could not be confirmed. Reload your profile before trying again.": "Não foi possível confirmar a alteração da foto. Recarregue o perfil antes de tentar novamente.",
     "JPEG or PNG up to 2 MiB, 4096 pixels per side and 4 million pixels. Metadata is removed.": "JPEG ou PNG de até 2 MiB, 4096 pixels por lado e 4 milhões de pixels. Os metadados são removidos.",
-    "Password editing is coming in the next profile phase.": "A edição de senha virá na próxima fase do perfil."
+    "Password editing is coming in the next profile phase.": "A edição de senha virá na próxima fase do perfil.",
+    "Change password": "Trocar senha",
+    "Current password": "Senha atual",
+    "New password": "Nova senha",
+    "Confirm new password": "Confirmar nova senha",
+    "Changing your password signs out all existing sessions. Sign in again afterward.": "Trocar a senha encerra todas as sessões existentes. Entre novamente depois.",
+    "Check your current password and matching new passwords (8–128 characters).": "Confira a senha atual e as novas senhas iguais (8–128 caracteres).",
+    "Too many password attempts. Try again in 15 minutes.": "Muitas tentativas de senha. Tente novamente em 15 minutos.",
+    "Password change could not be confirmed. Sign in again to check before retrying.": "Não foi possível confirmar a troca de senha. Entre novamente para verificar antes de tentar outra vez.",
+    "Password changed. Sign in with your new password.": "Senha alterada. Entre com sua nova senha."
   },
   "es-ES": {
     "Support": "Soporte",
@@ -616,7 +634,16 @@ export const catalogs: Record<Locale, Record<string, string>> = {
     "Choose a valid JPEG or PNG within the image limits.": "Elige un JPEG o PNG válido dentro de los límites de imagen.",
     "Photo change could not be confirmed. Reload your profile before trying again.": "No se pudo confirmar el cambio de foto. Recarga el perfil antes de volver a intentarlo.",
     "JPEG or PNG up to 2 MiB, 4096 pixels per side and 4 million pixels. Metadata is removed.": "JPEG o PNG de hasta 2 MiB, 4096 píxeles por lado y 4 millones de píxeles. Se eliminan los metadatos.",
-    "Password editing is coming in the next profile phase.": "La edición de contraseña llegará en la próxima fase del perfil."
+    "Password editing is coming in the next profile phase.": "La edición de contraseña llegará en la próxima fase del perfil.",
+    "Change password": "Cambiar contraseña",
+    "Current password": "Contraseña actual",
+    "New password": "Nueva contraseña",
+    "Confirm new password": "Confirmar nueva contraseña",
+    "Changing your password signs out all existing sessions. Sign in again afterward.": "Cambiar la contraseña cierra todas las sesiones existentes. Inicia sesión de nuevo después.",
+    "Check your current password and matching new passwords (8–128 characters).": "Comprueba la contraseña actual y que las nuevas coincidan (8–128 caracteres).",
+    "Too many password attempts. Try again in 15 minutes.": "Demasiados intentos de contraseña. Inténtalo de nuevo en 15 minutos.",
+    "Password change could not be confirmed. Sign in again to check before retrying.": "No se pudo confirmar el cambio de contraseña. Inicia sesión de nuevo para comprobarlo antes de reintentar.",
+    "Password changed. Sign in with your new password.": "Contraseña cambiada. Inicia sesión con tu nueva contraseña."
   }
 };
 export type Locale = "en-US" | "pt-BR" | "es-ES";

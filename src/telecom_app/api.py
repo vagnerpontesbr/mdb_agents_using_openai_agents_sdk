@@ -15,7 +15,12 @@ from pymongo import MongoClient
 from starlette.concurrency import run_in_threadpool
 
 from compatibility.demo_auth.auth import AccessDenied, UserExists
-from compatibility.demo_auth.sessions import SESSION_SECONDS, ProfileConflict, RateLimited
+from compatibility.demo_auth.sessions import (
+    SESSION_SECONDS,
+    PasswordRejected,
+    ProfileConflict,
+    RateLimited,
+)
 
 from .avatar import AvatarRevision, AvatarUpload, normalize_avatar
 from .config import Settings
@@ -36,7 +41,7 @@ from .journey import (
     ReviewInput,
 )
 from .knowledge_publication import PublicationConflict
-from .profile import ProfileInput, ProfileView
+from .profile import PasswordInput, ProfileInput, ProfileView
 from .security import Boundary
 from .voice import AudioInput, VoiceService
 
@@ -131,6 +136,9 @@ def create_app(
 
     @app.exception_handler(RateLimited)
     async def limited(request: Request, error: RateLimited) -> JSONResponse:
+        if request.url.path == "/api/profile/password":
+            return JSONResponse({"error": "Too many password attempts; try later"},
+                                status_code=429, headers={"Retry-After": "900"})
         return JSONResponse(
             {"error": "Too many login attempts; try again next minute"},
             status_code=429,
@@ -150,6 +158,21 @@ def create_app(
     @app.exception_handler(ProfileConflict)
     async def profile_conflict(request: Request, error: ProfileConflict) -> JSONResponse:
         return JSONResponse({"error": "Profile changed; reload before saving"}, status_code=409)
+
+    @app.exception_handler(PasswordRejected)
+    async def password_rejected(request: Request, error: PasswordRejected) -> JSONResponse:
+        return JSONResponse({"error": "Check current password"}, status_code=400)
+
+    @app.post("/api/profile/password")
+    def change_password(
+        request: Request, response: Response, body: PasswordInput,
+    ) -> dict[str, str]:
+        service().change_password(
+            token(request), current_password=body.current_password.get_secret_value(),
+            new_password=body.new_password.get_secret_value(),
+        )
+        response.delete_cookie(COOKIE, path="/", httponly=True, samesite="strict")
+        return {"status": "password_changed", "reauthenticate": "required"}
 
     @app.get("/api/profile/avatar")
     def avatar(request: Request) -> Response:

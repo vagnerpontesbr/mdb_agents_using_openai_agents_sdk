@@ -87,6 +87,9 @@ class Auth:
         return self._insert(BOOTSTRAP_EMAIL, password, "admin")
 
     def authenticate(self, email: str, password: str) -> Principal:
+        return self.authenticate_versioned(email, password)[0]
+
+    def authenticate_versioned(self, email: str, password: str) -> tuple[Principal, int]:
         try:
             user = self.store.get(normalized_email(email))
         except ValueError:
@@ -95,7 +98,10 @@ class Auth:
         if (not valid or not user or user.get("active") is not True
                 or user.get("role") not in ("user", "admin")):
             raise AccessDenied("Invalid credentials")
-        return Principal(user["user_id"], user["_id"], user["role"])
+        version = user.get("credential_version", 0)
+        if type(version) is not int or version < 0:
+            raise AccessDenied("Invalid credentials")
+        return Principal(user["user_id"], user["_id"], user["role"]), version
 
     def register(self, actor_email: str, actor_password: str, *,
                  email: str, password: str, role: str = "user") -> Principal:

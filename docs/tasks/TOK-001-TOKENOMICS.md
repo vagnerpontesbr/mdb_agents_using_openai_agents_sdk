@@ -1,6 +1,6 @@
 # TOK-001: Control Plane Tokenomics dashboards
 
-- Status: TOK-0 local acceptance complete (277 tests); official-price estimates authorized; publication/CI pending
+- Status: TOK-0 merged in PR #16 (`3fc274c`), local/remote CI passed; TOK-1 backend/source acceptance passed locally; publication/CI pending
 - Requested: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 shell/admin boundaries; native Engine usage metadata
@@ -50,10 +50,15 @@ Do not create a second SDK trace owner or browser-direct Engine connection.
 Any future persisted aggregate is rebuildable, scoped application-owned metadata,
 not a memory copy; introduce storage/retention only after a concrete need and design.
 
-Proposed read-only endpoints (not implemented):
+Implemented TOK-1 read-only endpoints:
 
-- `GET /api/admin/tokenomics/dashboard?start=...&end=...`
-- `GET /api/admin/tokenomics/focus-records?start=...&end=...&cursor=...&limit=...`
+- `GET /api/admin/tokenomics/dashboard?period=7d|30d|90d`
+- `GET /api/admin/tokenomics/focus-records?period=7d|30d|90d&limit=1..100`
+
+Explicit historical start/end filtering and native FOCUS event pagination remain
+unsupported. These inputs are rejected before reading Engine; the interface must
+explain the limitation rather than pretend to filter or fabricate billing rows.
+[The TOK-1 runbook](../runbooks/TOK_1_BACKEND.md) owns current adapter evidence.
 
 Server derives the authorized application/project/workspace scope. Reject client
 scope overrides. Limit windows to 90 days, FOCUS pages to 100 rows and upstream
@@ -121,4 +126,4 @@ Changes ship in separate reviewable commits/PRs with evidence and quality-gated 
 Use the shared I18N-001 catalogs for all chart labels, dates/numbers, tooltips, tables and error states. Never convert monetary currency when switching locale.
 
 
-TOK-0 source mapping, read recovery and missing monetary coverage are recorded in [the data mapping runbook](../runbooks/TOK_0_DATA_MAPPING.md). The normalized contracts and 28 deterministic tests are implemented; no live backend adapter or dashboard is delivered.
+TOK-0 source mapping, read recovery and missing monetary coverage are recorded in [the data mapping runbook](../runbooks/TOK_0_DATA_MAPPING.md). The normalized contracts and 28 deterministic tests are implemented; the live backend adapter passed TOK-1 source acceptance; the dashboard UI remains TOK-2 work.

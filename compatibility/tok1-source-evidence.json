@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-11-02T01:27:23.127272+00:00",
+  "scope": "configured Telecom workspace",
+  "period": "7d",
+  "new_inference_calls": 0,
+  "status": "passed",
+  "total_tokens": "259874",
+  "estimated_usd": "0.0811888",
+  "cost_basis": "estimated",
+  "cost_coverage": "partial",
+  "model_rows": 1,
+  "daily_rows": 5,
+  "assumptions_present": true,
+  "previous_attempt": {
+    "checked_at": "2026-11-02T01:27:09.463027+00:00",
+    "status": "failed",
+    "code": "tokenomics_auth_expired",
+    "correction": "Native CLI status renewed credentials; one explicit retry passed"
+  }
+}

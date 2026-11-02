@@ -4,7 +4,7 @@ import json
 import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import Any
+from typing import Any, cast
 
 from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
@@ -44,6 +44,14 @@ from .journey import (
 from .knowledge_publication import PublicationConflict
 from .profile import PasswordInput, ProfileInput, ProfileView
 from .security import Boundary
+from .tokenomics import DashboardView, FocusPage
+from .tokenomics_service import (
+    EngineUsageSource,
+    Period,
+    TokenomicsRangeUnsupported,
+    TokenomicsService,
+    TokenomicsUnavailable,
+)
 from .turn_locale import validated_locale
 from .voice import AudioInput, VoiceService
 
@@ -57,6 +65,7 @@ def create_app(
     voice: VoiceService | None = None,
     curation: CurationService | None = None,
     control: ControlPlane | None = None,
+    tokenomics: TokenomicsService | None = None,
 ) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -79,6 +88,8 @@ def create_app(
                 if settings.journey_enabled
                 else None
             )
+            app.state.tokenomics = tokenomics or TokenomicsService(
+                EngineUsageSource() if settings.journey_enabled else None)
             app.state.voice = voice or (
                 VoiceService() if os.environ.get("OPENAI_API_KEY") else None
             )
@@ -356,6 +367,59 @@ def create_app(
         result["memory_owner"] = "Agent Engine"
         result["hosted_cache"] = "runtime_owned_read_only"
         return result
+
+    @app.exception_handler(TokenomicsUnavailable)
+    async def tokenomics_unavailable(
+        request: Request, error: TokenomicsUnavailable,
+    ) -> JSONResponse:
+        return JSONResponse(
+            {"error": "Tokenomics unavailable", "code": error.code},
+            status_code=429 if error.code == "tokenomics_rate_limited" else 503,
+        )
+
+    @app.exception_handler(TokenomicsRangeUnsupported)
+    async def unsupported_tokenomics_range(
+        request: Request, error: TokenomicsRangeUnsupported,
+    ) -> JSONResponse:
+        return JSONResponse(
+            {"error": "Use a supported trailing period", "code": "tokenomics_range_unsupported"},
+            status_code=400,
+        )
+
+    def tokenomics_request(request: Request, *, focus: bool = False) -> Period:
+        plane: ControlPlane = app.state.control
+        plane.admin(token(request))
+        allowed = {"period", "start", "end"} | ({"cursor", "limit"} if focus else set())
+        params = request.query_params
+        if set(params) - allowed or any(len(params.getlist(key)) != 1 for key in params):
+            raise ValueError("Unknown or duplicate filter")
+        if "start" in params or "end" in params:
+            # No claim of historical filtering from a trailing native period aggregate.
+            raise TokenomicsRangeUnsupported()
+        period = params.get("period", "7d")
+        if period not in ("7d", "30d", "90d"):
+            raise ValueError("Unsupported period")
+        if focus:
+            if "cursor" in params:
+                raise ValueError("Source has no cursor pagination")
+            limit = params.get("limit", "100")
+            if not limit.isascii() or not limit.isdecimal() or not 1 <= int(limit) <= 100:
+                raise ValueError("Invalid page limit")
+        return cast(Period, period)
+
+    @app.get("/api/admin/tokenomics/dashboard", response_model=DashboardView)
+    def tokenomics_dashboard(request: Request) -> DashboardView:
+        period = tokenomics_request(request)
+        handler: TokenomicsService = app.state.tokenomics
+        result = handler.dashboard(period)
+        app.state.control.admin(token(request))  # Recheck after potentially slow upstream read.
+        return result
+
+    @app.get("/api/admin/tokenomics/focus-records", response_model=FocusPage)
+    def tokenomics_focus(request: Request) -> FocusPage:
+        tokenomics_request(request, focus=True)
+        handler: TokenomicsService = app.state.tokenomics
+        return handler.focus()
 
     @app.post("/api/admin/control-plane")
     def control_save(data: SettingsChange, request: Request) -> dict[str, Any]:

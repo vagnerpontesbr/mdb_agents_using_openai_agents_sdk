@@ -142,3 +142,5 @@ The requester confirmed editable Control Plane configuration limited to applicat
 - Language changes must preserve the active conversation; [I18N-001](tasks/I18N-001-MULTILINGUAL.md) owns continuity and in-flight acceptance tests.
 - The latest requester decision permits explicitly estimated Tokenomics costs from observed usage and the official OpenAI/Anthropic price pages. Preserve separate actual/billed semantics, price provenance, assumptions and missing coverage; [TOK-001](tasks/TOK-001-TOKENOMICS.md) owns the authoritative pricing-source policy. Fixtures and missing prices cannot stand in for live costs.
 - Validation reports must identify executed local/CI tests and explain failures, corrections and rerun outcomes, following the completion-report contract in AGENTS.md.
+
+- The requester explicitly accepted Tokenomics trailing 7/30/90-day presets for demo acceptance ("sim aceito"). Arbitrary historical intervals remain unsupported and are excluded from the current demo gate; [TOK-001](tasks/TOK-001-TOKENOMICS.md) owns the updated scope.

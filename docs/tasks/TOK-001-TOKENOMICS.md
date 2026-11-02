@@ -1,6 +1,6 @@
 # TOK-001: Control Plane Tokenomics dashboards
 
-- Status: TOK-0 merged in PR #16 (`3fc274c`), local/remote CI passed; TOK-1 merged in PR #17 (`cd34218`); TOK-2 local dashboard gates passed; publication/CI pending
+- Status: TOK-0 merged in PR #16 (`3fc274c`), local/remote CI passed; TOK-1 merged in PR #17 (`cd34218`); TOK-2 merged in PR #18 (`44e69a4`); TOK-3 supported-source integration passed locally, publication/CI pending; 7/30/90-day demo scope explicitly accepted
 - Requested: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 shell/admin boundaries; native Engine usage metadata
@@ -37,8 +37,9 @@ FOCUS-like mappings must not be copied as Telecom authorization or billing truth
 
 All three tabs (`Overview`, `Breakdown`, `FOCUS`) and all listed sections are in
 scope, including meaningful empty/unavailable states. Visual parity does not require
-fabricated telemetry. Initial date presets: 7/30/90 days and explicit bounded date
-range; apply validated filters server-side. Prefer token bars when monetary values
+fabricated telemetry. The requester explicitly accepted 7/30/90 trailing-day presets for the demo
+with "sim aceito" on 2026-11-01 (local time). This supersedes the earlier custom
+historical-range requirement; apply the supported filters server-side. Prefer token bars when monetary values
 are unavailable, and label the selected metric. Actual zero produces a zero-length
 bar, not the reference's minimum nonzero bar. Tooltips must work by keyboard too.
 
@@ -130,3 +131,6 @@ TOK-0 source mapping, read recovery and missing monetary coverage are recorded i
 
 
 TOK-2 behavior and validation are recorded in [the dashboard runbook](../runbooks/TOK_2_DASHBOARDS.md).
+
+
+[TOK-3](../runbooks/TOK_3_INTEGRATION.md) records the real source-to-screen acceptance and the remaining native capability gaps.

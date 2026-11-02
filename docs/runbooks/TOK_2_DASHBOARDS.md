@@ -94,3 +94,12 @@ passed all **3 locale cases** with the new one-line amount assertion. Visual ins
 of the regenerated Spanish zoom image confirms readable card amounts and bounded
 tables. Final lint passed. Repository/diff checks passed (100 Markdown files, 34 ADRs).
 Local TOK-2 acceptance is complete; publication/required remote CI remain pending.
+
+
+## Remote gate and integration
+
+Source `955cadec0befbc2086b0b74f6f92b87cdb6e9fa3` passed repository/application CI in
+runs [41375051481](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41375051481)
+and [41375135325](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41375135325).
+No remote checks failed. PR #18 merged as `44e69a4c2011e2b27b51ad90d84b627f77f44611`.
+TOK-3 branches from that main and owns the isolated real-source walkthrough.

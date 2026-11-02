@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-11-02T02:03:58.772Z",
+  "scope": "configured Telecom workspace",
+  "identity": "isolated synthetic app sessions; existing private operator Engine identity",
+  "period": "7d",
+  "new_inference_calls": 0,
+  "total_tokens": 259874,
+  "estimated_usd": "0.0811888",
+  "cost_basis": "estimated",
+  "cost_coverage": "partial",
+  "source_url": "https://developers.openai.com/api/docs/pricing",
+  "source_to_api_match": true,
+  "unauthenticated_status": 401,
+  "user_status": 403,
+  "locales": [
+    {
+      "locale": "en-US",
+      "value_matches": true,
+      "no_additional_source_read": true,
+      "mobile_desktop_zoom_pass": true
+    },
+    {
+      "locale": "pt-BR",
+      "value_matches": true,
+      "no_additional_source_read": true,
+      "mobile_desktop_zoom_pass": true
+    },
+    {
+      "locale": "es-ES",
+      "value_matches": true,
+      "no_additional_source_read": true,
+      "mobile_desktop_zoom_pass": true
+    }
+  ],
+  "explicit_refresh_single_read": true,
+  "total_source_reads": 2,
+  "focus_unavailable": true,
+  "scope_override_denied": true,
+  "historical_range_explicitly_unsupported": true,
+  "status": "passed"
+}

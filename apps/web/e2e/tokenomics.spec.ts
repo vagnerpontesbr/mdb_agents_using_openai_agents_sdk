@@ -103,3 +103,41 @@ for (const [locale, cost, breakdown] of [
     await page.screenshot({ path: `test-results/tokenomics-${locale}-zoom.png`, fullPage: true });
   });
 }
+
+test('Tokenomics filters and locale changes preserve the active support execution', async ({ page }) => {
+  await identity(page);
+  const user = { user_id: 'synthetic-tokenomics', email: 'synthetic@example.test', role: 'admin' };
+  await page.route('**/api/profile', r => r.fulfill({ json: {
+    ...user, locale: r.request().method() === 'POST' ? r.request().postDataJSON().locale : 'en-US',
+    timezone: 'UTC', display_name: 'Synthetic', revision: r.request().method() === 'POST' ? 1 : 0,
+  } }));
+  await page.route('**/api/capabilities', r => r.fulfill({ json: { journey: true, voice: false, knowledge: false } }));
+  await page.route('**/api/journey/latest', r => r.fulfill({ json: { status: 'empty' } }));
+  let calls = 0, reads = 0, conversation = '';
+  let release!: () => void;
+  const held = new Promise<void>(resolve => { release = resolve; });
+  await page.route('**/api/journey/chat', async r => {
+    calls++; conversation = r.request().postDataJSON().conversation_id;
+    await held;
+    await r.fulfill({ contentType: 'text/event-stream', body: 'event: result\ndata: {"status":"completed","text":"Original synthetic support result"}\n\n' });
+  });
+  await page.route('**/api/admin/tokenomics/dashboard?*', r => { reads++; return r.fulfill({ json: fixture.dashboard }); });
+  await page.route('**/api/admin/tokenomics/focus-records?*', r => r.fulfill({ json: fixture.focus }));
+  await page.goto('/#/support');
+  await page.getByLabel('Your message').fill('Synthetic pending support request');
+  await page.getByRole('button', { name: 'Send', exact: true }).click();
+  await expect.poll(() => calls).toBe(1);
+  await page.getByRole('link', { name: 'Tokenomics', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Observed tokens', exact: true })).toBeVisible();
+  await page.getByRole('combobox', { name: 'Period', exact: true }).selectOption('90d');
+  await expect(page.getByRole('button', { name: 'Refresh usage' })).toBeEnabled();
+  await page.getByRole('button', { name: 'Profile', exact: true }).click();
+  await page.getByRole('combobox', { name: 'Language', exact: true }).selectOption('pt-BR');
+  await expect(page.getByRole('heading', { name: 'Custo estimado', exact: true })).toBeVisible();
+  expect(reads).toBe(2); expect(calls).toBe(1);
+  release();
+  await page.getByRole('link', { name: 'Suporte', exact: true }).click();
+  await expect(page.locator('.result')).toHaveText('Original synthetic support result');
+  expect(await page.evaluate(() => sessionStorage.getItem('telecom-conversation-synthetic-tokenomics'))).toBe(conversation);
+  expect(calls).toBe(1);
+});

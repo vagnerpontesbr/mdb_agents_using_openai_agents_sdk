@@ -1,6 +1,6 @@
 # TOK-001: Control Plane Tokenomics dashboards
 
-- Status: TOK-0 merged in PR #16 (`3fc274c`), local/remote CI passed; TOK-1 merged in PR #17 (`cd34218`); TOK-2 local dashboard gates passed; publication/CI pending
+- Status: TOK-0 merged in PR #16 (`3fc274c`), local/remote CI passed; TOK-1 merged in PR #17 (`cd34218`); TOK-2 merged in PR #18 (`44e69a4`); TOK-3 supported-source integration passed locally, publication/CI pending; arbitrary historical filters remain unsupported
 - Requested: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 shell/admin boundaries; native Engine usage metadata
@@ -130,3 +130,6 @@ TOK-0 source mapping, read recovery and missing monetary coverage are recorded i
 
 
 TOK-2 behavior and validation are recorded in [the dashboard runbook](../runbooks/TOK_2_DASHBOARDS.md).
+
+
+[TOK-3](../runbooks/TOK_3_INTEGRATION.md) records the real source-to-screen acceptance and the remaining native capability gaps.

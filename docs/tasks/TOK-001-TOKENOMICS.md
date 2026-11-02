@@ -1,6 +1,6 @@
 # TOK-001: Control Plane Tokenomics dashboards
 
-- Status: TOK-0 merged in PR #16 (`3fc274c`), local/remote CI passed; TOK-1 backend/source acceptance passed locally; publication/CI pending
+- Status: TOK-0 merged in PR #16 (`3fc274c`), local/remote CI passed; TOK-1 merged in PR #17 (`cd34218`); TOK-2 local dashboard gates passed; publication/CI pending
 - Requested: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 shell/admin boundaries; native Engine usage metadata
@@ -127,3 +127,6 @@ Use the shared I18N-001 catalogs for all chart labels, dates/numbers, tooltips, 
 
 
 TOK-0 source mapping, read recovery and missing monetary coverage are recorded in [the data mapping runbook](../runbooks/TOK_0_DATA_MAPPING.md). The normalized contracts and 28 deterministic tests are implemented; the live backend adapter passed TOK-1 source acceptance; the dashboard UI remains TOK-2 work.
+
+
+TOK-2 behavior and validation are recorded in [the dashboard runbook](../runbooks/TOK_2_DASHBOARDS.md).

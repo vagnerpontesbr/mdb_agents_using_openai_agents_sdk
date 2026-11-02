@@ -9,6 +9,7 @@ async function workspace(page: Page, role: 'user' | 'admin' = 'admin', route = '
     revision: 0, values: { chat_max_chars: 4000, knowledge_query_max_chars: 2000, library_cache_max_age_seconds: 900 },
     editable: false, source: 'code_defaults', observed_at: '2026-11-01T00:00:00Z',
   } }));
+  await page.route('**/api/admin/tokenomics/**', r => r.fulfill({ status: 503, json: { code: 'tokenomics_not_configured' } }));
   await page.goto(`/#${route}`);
 }
 

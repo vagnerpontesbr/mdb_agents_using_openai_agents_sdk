@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Principal } from './api';
 import Journey from './Journey';
+import ControlPlane, { UsersList } from './ControlPlane';
 import Knowledge from './Knowledge';
 import Profile from './Profile';
 import { parseProfile } from './profileApi';
@@ -111,7 +112,7 @@ export default function WorkspaceLayout({ user, account, busy, logout, feedback 
         {adminRoute && user.role !== 'admin' ? <section className="panel" role="alert"><h1>{t('Access denied')}</h1>
           <p>{t('This area requires an administrator.')}</p>{link('/support', 'Return to Support')}</section> :
           known && adminRoute && <section className="panel"><h1>{t(adminPage[0].toUpperCase() + adminPage.slice(1))}</h1>
-            {adminPage === 'users' ? account : <p>{t('This view is coming soon.')}</p>}
+            {adminPage === 'users' ? <>{account}<UsersList /></> : adminPage === 'tokenomics' ? <p>{t('This view is coming soon.')}</p> : <ControlPlane key={adminPage} page={adminPage} />}
           </section>}
         {!known && !(adminRoute && user.role !== 'admin') && <section className="panel"><h1>{t('Page not found')}</h1>
           {link('/support', 'Return to Support')}</section>}

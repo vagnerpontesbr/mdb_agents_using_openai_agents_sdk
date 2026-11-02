@@ -13,6 +13,11 @@ class SessionStore(Store):
         super().__init__()
         self.sessions, self.attempts = {}, {}
 
+    def list_users(self, after, limit):
+        rows = [{"user_id": row["user_id"], "email": row["_id"], "role": row["role"]}
+                for row in self.users.values() if not after or row["user_id"] > after]
+        return sorted(rows, key=lambda row: row["user_id"])[:limit]
+
     def update_profile(self, email, user_id, expected_revision, values):
         user = self.users.get(email)
         if (not user or user["user_id"] != user_id or user.get("active") is not True

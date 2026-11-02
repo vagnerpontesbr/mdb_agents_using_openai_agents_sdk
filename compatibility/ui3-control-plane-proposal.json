@@ -1,0 +1,393 @@
+{
+  "status": "proposal_not_applied",
+  "project_id": "67b385a7976edf15ecc62e06",
+  "cluster": "OpenAI-SDK",
+  "host": "openai-sdk.qrmdk.mongodb.net",
+  "database": "telecom_identity",
+  "collection": "application_settings",
+  "expected_collection": "absent",
+  "role_consumers": [
+    {
+      "username": "telecom_demo_identity_runtime",
+      "scopes": [
+        {
+          "name": "OpenAI-SDK",
+          "type": "CLUSTER"
+        }
+      ]
+    }
+  ],
+  "affected_role_names": [
+    "telecomDemoIdentityRuntime"
+  ],
+  "role_before": {
+    "actions": [
+      {
+        "action": "UPDATE",
+        "resources": [
+          {
+            "cluster": false,
+            "collection": "users",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "login_attempts",
+            "db": "telecom_identity"
+          }
+        ]
+      },
+      {
+        "action": "FIND",
+        "resources": [
+          {
+            "cluster": false,
+            "collection": "login_attempts",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "sessions",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "users",
+            "db": "telecom_identity"
+          }
+        ]
+      },
+      {
+        "action": "INSERT",
+        "resources": [
+          {
+            "cluster": false,
+            "collection": "login_attempts",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "sessions",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "users",
+            "db": "telecom_identity"
+          }
+        ]
+      },
+      {
+        "action": "CREATE_INDEX",
+        "resources": [
+          {
+            "cluster": false,
+            "collection": "login_attempts",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "sessions",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "users",
+            "db": "telecom_identity"
+          }
+        ]
+      },
+      {
+        "action": "REMOVE",
+        "resources": [
+          {
+            "cluster": false,
+            "collection": "sessions",
+            "db": "telecom_identity"
+          }
+        ]
+      }
+    ],
+    "inheritedRoles": [],
+    "roleName": "telecomDemoIdentityRuntime"
+  },
+  "role_after": {
+    "actions": [
+      {
+        "action": "UPDATE",
+        "resources": [
+          {
+            "cluster": false,
+            "collection": "users",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "login_attempts",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "db": "telecom_identity",
+            "collection": "application_settings"
+          }
+        ]
+      },
+      {
+        "action": "FIND",
+        "resources": [
+          {
+            "cluster": false,
+            "collection": "login_attempts",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "sessions",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "users",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "db": "telecom_identity",
+            "collection": "application_settings"
+          }
+        ]
+      },
+      {
+        "action": "INSERT",
+        "resources": [
+          {
+            "cluster": false,
+            "collection": "login_attempts",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "sessions",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "users",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "db": "telecom_identity",
+            "collection": "application_settings"
+          }
+        ]
+      },
+      {
+        "action": "CREATE_INDEX",
+        "resources": [
+          {
+            "cluster": false,
+            "collection": "login_attempts",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "sessions",
+            "db": "telecom_identity"
+          },
+          {
+            "cluster": false,
+            "collection": "users",
+            "db": "telecom_identity"
+          }
+        ]
+      },
+      {
+        "action": "REMOVE",
+        "resources": [
+          {
+            "cluster": false,
+            "collection": "sessions",
+            "db": "telecom_identity"
+          }
+        ]
+      }
+    ],
+    "inheritedRoles": [],
+    "roleName": "telecomDemoIdentityRuntime"
+  },
+  "create_command": {
+    "create": "application_settings",
+    "validator": {
+      "$jsonSchema": {
+        "bsonType": "object",
+        "additionalProperties": false,
+        "required": [
+          "_id",
+          "revision",
+          "values",
+          "audit"
+        ],
+        "properties": {
+          "_id": {
+            "enum": [
+              "application"
+            ]
+          },
+          "revision": {
+            "bsonType": [
+              "int",
+              "long"
+            ],
+            "minimum": 1
+          },
+          "values": {
+            "bsonType": "object",
+            "additionalProperties": false,
+            "required": [
+              "chat_max_chars",
+              "knowledge_query_max_chars",
+              "library_cache_max_age_seconds"
+            ],
+            "properties": {
+              "chat_max_chars": {
+                "bsonType": [
+                  "int",
+                  "long"
+                ],
+                "minimum": 100,
+                "maximum": 4000
+              },
+              "knowledge_query_max_chars": {
+                "bsonType": [
+                  "int",
+                  "long"
+                ],
+                "minimum": 100,
+                "maximum": 2000
+              },
+              "library_cache_max_age_seconds": {
+                "bsonType": [
+                  "int",
+                  "long"
+                ],
+                "minimum": 1,
+                "maximum": 900
+              }
+            }
+          },
+          "audit": {
+            "bsonType": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "bsonType": "object",
+              "additionalProperties": false,
+              "required": [
+                "revision",
+                "actor_id",
+                "at",
+                "before",
+                "after"
+              ],
+              "properties": {
+                "revision": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 1
+                },
+                "actor_id": {
+                  "bsonType": "string",
+                  "maxLength": 128
+                },
+                "at": {
+                  "bsonType": "date"
+                },
+                "before": {
+                  "bsonType": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "chat_max_chars",
+                    "knowledge_query_max_chars",
+                    "library_cache_max_age_seconds"
+                  ],
+                  "properties": {
+                    "chat_max_chars": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 100,
+                      "maximum": 4000
+                    },
+                    "knowledge_query_max_chars": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 100,
+                      "maximum": 2000
+                    },
+                    "library_cache_max_age_seconds": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 1,
+                      "maximum": 900
+                    }
+                  }
+                },
+                "after": {
+                  "bsonType": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "chat_max_chars",
+                    "knowledge_query_max_chars",
+                    "library_cache_max_age_seconds"
+                  ],
+                  "properties": {
+                    "chat_max_chars": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 100,
+                      "maximum": 4000
+                    },
+                    "knowledge_query_max_chars": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 100,
+                      "maximum": 2000
+                    },
+                    "library_cache_max_age_seconds": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 1,
+                      "maximum": 900
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "validationLevel": "strict",
+    "validationAction": "error"
+  },
+  "existing_documents_modified": 0,
+  "initial_documents_inserted": 0,
+  "new_indexes": 0,
+  "engine_changes": false,
+  "rollback": "Disable APP_CONTROL_PLANE_ENABLED on new application starts; restore exact role_before after reviewing consumers; retain collection and audit."
+}

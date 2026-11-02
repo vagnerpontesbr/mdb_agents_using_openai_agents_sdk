@@ -658,3 +658,6 @@ LANG-3 matrix requirement for this demo only; other phase gates remain unchanged
 Functional acceptance is complete. Publication and remote CI remain separate gates.
 Original speech failures, Portuguese name spelling variation and non-deterministic
 pronunciation remain documented; no guarantee of error-free speech is claimed.
+
+
+LANG-3 publication: PR #14 merged as 856bc60; source bc01b79 passed repository/application CI runs 41357564305 and 41357577781 with no CI failure. Its isolated live server was stopped after acceptance.

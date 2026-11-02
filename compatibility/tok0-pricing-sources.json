@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-11-02T01:03:15.625375+00:00",
+  "basis": "estimated",
+  "currency": "USD",
+  "unit": "USD per 1000000 tokens",
+  "sources": {
+    "openai": {
+      "url": "https://developers.openai.com/api/docs/pricing",
+      "retrieval": "Official OpenAI Docs fetch_openai_doc",
+      "scope": "OpenAI API public list prices; cloud/gateway invoice equivalence not asserted"
+    },
+    "anthropic": {
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "retrieval": "HTTPS page, parsed visible text",
+      "html_sha256": "9f313f55037617134a68eded5b8573851c1b56f4b792e7a528a30ff66acae5a9",
+      "scope": "Claude API public list prices; partner platform equivalence not asserted"
+    }
+  },
+  "observed_model_rates": [
+    {
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "tier": "standard",
+      "short_context_max_input_tokens": 272000,
+      "short_context": {
+        "input": "0.20",
+        "output": "1.20",
+        "cached_input": "0.02",
+        "cache_write_30m": "0.25",
+        "cache_write_12h": "0.50"
+      },
+      "long_context": {
+        "input": "0.40",
+        "output": "1.80",
+        "cached_input": "0.04",
+        "cache_write_30m": "0.50",
+        "cache_write_12h": "1.00"
+      }
+    }
+  ],
+  "anthropic_observed_models": [],
+  "anthropic_policy": "Resolve exact observed model and applicable context, caching, service tier and geography against the approved source before adding rates. Do not fabricate usage or map unknown aliases by similarity.",
+  "example": {
+    "usage_source": "compatibility/tok0-source-evidence.json",
+    "period": "7d",
+    "input_tokens": 230660,
+    "output_tokens": 29214,
+    "amount_usd": "0.0811888",
+    "basis": "estimated",
+    "method": "Public standard short-context rates applied to all observed prompt and completion tokens",
+    "assumptions": [
+      "All prompt tokens treated as uncached regular input; cache reads and writes are not measured by this aggregate",
+      "Standard service tier and no regional uplift assumed",
+      "Current observed price snapshot applied retrospectively; historical tariff effectiveness not proven"
+    ],
+    "excluded": [
+      "Gateway markup, negotiated discounts and taxes",
+      "Embedding, audio and tool charges not reported in this usage response"
+    ],
+    "billing_status": "Not a billed amount or complete total; not a guaranteed upper bound"
+  }
+}

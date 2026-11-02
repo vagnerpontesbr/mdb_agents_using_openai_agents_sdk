@@ -140,5 +140,5 @@ The requester confirmed editable Control Plane configuration limited to applicat
 
 - Keep [AGENTS.md](../AGENTS.md) current as durable instructions change. Local changes within scope require no additional permission; Atlas mutations that could affect other projects require prior requester approval of the concrete change.
 - Language changes must preserve the active conversation; [I18N-001](tasks/I18N-001-MULTILINGUAL.md) owns continuity and in-flight acceptance tests.
-- The Tokenomics cost dashboard must show actual source-reported monetary values, not estimates or fixtures. Missing actual-cost access is an unresolved acceptance dependency, not a completed cost feature; [TOK-001](tasks/TOK-001-TOKENOMICS.md) owns source semantics and coverage.
+- The latest requester decision permits explicitly estimated Tokenomics costs from observed usage and the official OpenAI/Anthropic price pages. Preserve separate actual/billed semantics, price provenance, assumptions and missing coverage; [TOK-001](tasks/TOK-001-TOKENOMICS.md) owns the authoritative pricing-source policy. Fixtures and missing prices cannot stand in for live costs.
 - Validation reports must identify executed local/CI tests and explain failures, corrections and rerun outcomes, following the completion-report contract in AGENTS.md.

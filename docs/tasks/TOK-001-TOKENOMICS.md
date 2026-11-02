@@ -1,6 +1,6 @@
 # TOK-001: Control Plane Tokenomics dashboards
 
-- Status: Requested and planned; implementation not started
+- Status: TOK-0 local acceptance complete (277 tests); official-price estimates authorized; publication/CI pending
 - Requested: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 shell/admin boundaries; native Engine usage metadata
@@ -66,9 +66,13 @@ Metric fields carry nullable value, unit, source, observation time, window,
 coverage and basis (`observed`, `estimated`, `billed`, `unavailable`). Native
 `unpriced_llm_calls` means cost coverage is incomplete even when total_cost is zero.
 Prior Phase 8 evidence showed exactly this condition; do not convert it to free use.
-The requester requires real monetary values in the cost dashboard. Use source-reported actual cost amounts with currency, scope, period, provenance and coverage; observed token counts multiplied by a price table are estimates and cannot satisfy this requirement. A provider-reported calculated cost is not automatically a billed charge: preserve its source semantics. Partial actual-cost sums may be shown only as labeled subtotals with coverage.
+The latest requester decision selects [OpenAI API pricing](https://developers.openai.com/api/docs/pricing) and [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing) as the price sources. This supersedes the earlier actual-cost-only acceptance requirement: observed usage multiplied by verified public tariffs may populate explicitly **estimated** cost views. It never becomes an actual or billed amount. Native unpriced zero remains unavailable as an actual cost. Keep separately reported actual/billed amounts distinct from estimates.
 
-TOK-0 must establish an accessible actual monetary source for the application, including gaps across model, embedding and voice providers. If none exists, report that dependency and ask for the necessary access/source decision before claiming cost acceptance. Unavailable states remain required error behavior, but an entirely unavailable cost dashboard does not complete the requested feature. Do not invent zero charges, use synthetic fallback or silently substitute estimates. Invoice reconciliation and production pricing proof remain out of scope.
+Version each price snapshot with retrieval time, source URL, exact model, currency, unit, service tier, context band and cache categories. Never guess an unknown model alias or missing price. Rates from these sources describe their respective provider APIs; gateway/cloud markups, private discounts, tax and historical tariff differences remain excluded or separately sourced. Apply per-request context bands, not the period-wide token sum. Cache reads/writes need measured attribution and provider-specific token semantics to avoid double counting.
+
+Where only aggregate prompt/completion counts exist, an explicitly labeled standard-rate scenario may assume uncached regular input, standard service and no regional uplift. Surface those assumptions and missing cache/write coverage; do not claim a complete cost or upper bound. Do not allocate a multi-model total between input/output categories without supporting source data. Unknown models and unmeasured embedding/voice/tool usage remain unavailable. FOCUS-like BilledCost stays null without an actual billed source; estimates need their own field and basis.
+
+TOK-0 must validate price provenance, formulas and coverage for the observed application usage, including missing providers/categories. An invoice/Admin Key is no longer a prerequisite for estimated-cost acceptance. A dashboard with no usable estimate or actual amount still does not satisfy the requested feature. No fixture fallback, invented usage, automatic provider call or shared pricing-policy mutation is authorized by this source decision.
 
 Define before implementation:
 
@@ -100,7 +104,7 @@ changing a memory cluster is not a new application or a reason to double-count u
 | TOK-0 — Data mapping | Inventory each reference metric against supported native sources; typed response contract; formulas, scope, limits and anomaly rule | Every metric mapped to a source or explicit unavailable state; observed/estimated/billed distinctions; fixture calculations for zero, missing, duplicates, partial coverage and mixed units |
 | TOK-1 — Backend view | Admin-only bounded read endpoints and source adapters | user/unauthenticated denial, scope-override rejection, no secret/content leakage, deduplication, period filters, pagination, 429/timeouts/expired credentials, no inference on refresh; deterministic fixture tests |
 | TOK-2 — Dashboards | Menu, six cards, Overview/Breakdown/FOCUS, charts, tables, filters and refresh | Every inventory section rendered; values match contract; zero bars and missing data correct; localized labels, keyboard/tooltips/table alternatives, mobile layout, preserved filters, loading/error/partial/empty states |
-| TOK-3 — Integration | Existing admin navigation plus sanitized actual-cost-source walkthrough; docs | End-to-end admin/user controls, no duplicate requests or uncontrolled polling, visual checks at 390/1440px and 200% zoom; actual monetary values match the source for a bounded period with currency and coverage recorded; missing prices never become zero or estimates; unavailable native metrics handled honestly; existing support/voice/knowledge regressions remain green |
+| TOK-3 — Integration | Existing admin navigation plus sanitized usage/price-source walkthrough; docs | End-to-end admin/user controls, no duplicate requests or uncontrolled polling, visual checks at 390/1440px and 200% zoom; estimated values reproduce observed usage × verified official rates for a bounded period with currency, assumptions and coverage recorded; any actual amounts retain their own provenance; missing prices never become zero or guessed rates; unavailable native metrics handled honestly; existing support/voice/knowledge regressions remain green |
 
 Use UI-001 frontend/backend checks and record evidence after every change. Planned
 commands/tests are not executed evidence. No production-capacity test, required
@@ -115,3 +119,6 @@ final acceptance. Do not combine an Engine memory cutover with a dashboard rollo
 Changes ship in separate reviewable commits/PRs with evidence and quality-gated automatic publication authorized by the requester.
 
 Use the shared I18N-001 catalogs for all chart labels, dates/numbers, tooltips, tables and error states. Never convert monetary currency when switching locale.
+
+
+TOK-0 source mapping, read recovery and missing monetary coverage are recorded in [the data mapping runbook](../runbooks/TOK_0_DATA_MAPPING.md). The normalized contracts and 28 deterministic tests are implemented; no live backend adapter or dashboard is delivered.

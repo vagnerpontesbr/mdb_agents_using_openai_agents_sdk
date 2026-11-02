@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-11-02T02:19:29.305Z",
+  "source_commit": "4b21bd64c08349bd717a35dfb65cb8f9e4f67972",
+  "source": "clean git archive; new venv and node_modules; existing package caches reused",
+  "python": "3.15.2",
+  "node": "26.5.0",
+  "npm": "11.17.0",
+  "private_env_copied": false,
+  "health": 200,
+  "static_ui": true,
+  "synthetic_login_reload_logout": true,
+  "unconfigured_tokenomics_explicit": true,
+  "new_inference_calls": 0,
+  "atlas_mutations": 0,
+  "status": "passed"
+}

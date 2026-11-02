@@ -1,6 +1,6 @@
 # Contributing
 
-The intended repository is [vagnerpontesbr/mdb_agents_using_openai_agents_sdk](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk). Read [AGENTS.md](AGENTS.md) and the relevant task/ADR before working. Phases 0–7 are published with passing CI; Phase 8 scalability/resilience is complete for the approved demo scope; manual publication is pending. Use [OPS-001](docs/tasks/OPS-001-RESILIENCE.md) for test bounds and the accepted completion scope. Start with [the handoff runbook](docs/runbooks/PHASE_6.md). See the [current checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md).
+The intended repository is [vagnerpontesbr/mdb_agents_using_openai_agents_sdk](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk). Read [AGENTS.md](AGENTS.md) and the relevant task/ADR before working. Phases 0–8 and UI/Tokenomics through TOK-3 are integrated with passing CI. See [UI-4 handoff](docs/runbooks/UI_4_HANDOFF.md) for consolidated acceptance and limitations. Use [OPS-001](docs/tasks/OPS-001-RESILIENCE.md) for test bounds and the accepted completion scope. Start with [the handoff runbook](docs/runbooks/PHASE_6.md). See the [current checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md).
 
 ## Application validation
 
@@ -22,7 +22,7 @@ uv run --no-project --no-managed-python --offline python3 scripts/check_reposito
 
 This checks documentation structure only. Phase 0 separately validated the pinned Python environments and bounded SDK/provider integration. The root application and frontend now have their own validated lockfiles.
 
-The [local dependency proof](docs/tasks/COMP-001-DEPENDENCIES.md) now provides frozen split compatibility environments and actual build commands for macOS ARM64. These diagnostic packages do not replace the future application/frontend manifests.
+The [local dependency proof](docs/tasks/COMP-001-DEPENDENCIES.md) now provides frozen split compatibility environments and actual build commands for macOS ARM64. These diagnostic packages remain separate from the root application/frontend manifests.
 
 ## Task and review workflow
 
@@ -43,7 +43,7 @@ Run the deterministic suites from the repository root:
 ```sh
 python3 -m unittest discover -s tests/compatibility -v
 python3 -m unittest discover -s tests/demo_auth -v
-uv run --project compatibility/hosted-runtime --frozen --no-sync python -m unittest discover -s tests/hosted_contract -v
+uv run --project compatibility/openai_engine_adapter --frozen --no-sync python -m unittest discover -s tests/hosted_contract -v
 ```
 
 The hosted suite requires its installed pinned environment. Compatibility and
@@ -57,19 +57,23 @@ that the completed Phase 0 evidence has been invalidated. Consult the runbook
 before live probes. The workflow retains repository, compatibility and demo identity suites and adds
 a Phase 1 application job. That job installs frozen dependencies, runs backend
 and frontend checks, and exercises the synthetic Chromium identity journey. It
-does not run the hosted-contract suite or credentialed provider probes; remote
+also runs the pinned hosted-contract suite without providers. Credentialed provider
+probes remain separate; remote
 status must be checked after publication.
 The [publication runbook](docs/runbooks/REPOSITORY_SETUP.md) records the resolved
 disconnect-test failure and passing push/PR CI for `60ef97b`. Each subsequent
 commit requires its own CI run.
 
-Default to manual Git commands unless the user explicitly authorizes the assistant to commit/push. The latest user instruction takes precedence. Stop at each completed implementation phase and wait for the user's commit confirmation before beginning the next one. Do not label an unresolved phase complete merely to reach a commit checkpoint.
+The requester authorizes scoped commits, branch pushes, PR publication and quality-gated
+merge after required CI. Follow AGENTS.md, preserve remote history and begin the next
+phase from integrated main. Shared Atlas mutations still require exact approval.
+Do not label an unresolved phase complete merely to reach a commit checkpoint.
 
 | Level | Purpose | Status |
 |---|---|---|
 | Repository check | Local Markdown links, key foundation files, ADR sections/IDs | Available |
 | Unit/contract | Diagnostic, identity and hosted adapter behavior | Available; see commands above |
-| Build/lint/types | Packaging versus future application checks | Application lint/types/backend packaging and React build available |
+| Build/lint/types | Application packaging, lint and types | Application lint/types/backend packaging and React build available |
 | Provider integration | Actual version/account/API compatibility | Phase 0 and feature tasks |
 | Evals/load | Quality, cost, stability, and capacity | Separate explicit workloads and budgets |
 
@@ -77,4 +81,4 @@ Do not install custom skills or modify a developer's global Codex configuration 
 
 ## Licensing
 
-A project license has not yet been selected. Record the owner's license decision and third-party notices before distributing this asset as a reusable licensed release. Do not infer a license from dependencies or the repository URL.
+Original code uses the [MIT License](LICENSE). Dependencies and hosted services retain their own licenses and terms.

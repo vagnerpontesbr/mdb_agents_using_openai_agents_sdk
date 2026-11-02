@@ -1,6 +1,6 @@
 # UI-001: Profile navigation and application Control Plane
 
-- Status: LANG-3 merged in PR #14; UI-3 implementation and authorized Atlas/persistence gates passed; publication/CI pending
+- Status: UI-0–3, multilingual and TOK-0–3 integrated through PR #19; UI-4 clean-source acceptance passed, handoff publication/CI pending
 - Owner: Telecom demo maintainer
 - Requested: 2026-11-01
 - Branch: `codex/ui-profiles-control-plane`
@@ -197,9 +197,9 @@ reported. No repeated load, pricing or production-capacity proof is part of this
 | --- | --- | --- | --- |
 | UI-0 | Design and migration inventory complete; requester decisions recorded | Local and remote gates passed | PR #5 merged as `f43a10f` |
 | UI-1 | Responsive workspace, profile disclosure, fixed routes, preserved journey | Local gates and 332 remote tests passed | PR #6 merged as `95d2982` |
-| UI-2 | UI-2a and UI-2b merged; UI-2c password implemented | Local UI-2c gates passed | PR #8 merged as `9f466e5`; UI-2c publication pending |
-| UI-3 | Implemented; approved settings collection and role applied | Local regression and isolated real HTTP persistence/restart/denial passed; see UI_3_CONTROL_PLANE runbook | Publication/CI pending |
-| UI-4 | Not started | Not run | None |
+| UI-2 | Profile, photo and password complete | Local and remote gates passed | PRs #7–9 merged; password `16681b9` |
+| UI-3 | Approved settings collection and role applied | Persistence and local/remote regression passed; see UI_3_CONTROL_PLANE runbook | PR #15 merged as `3fa6fab` |
+| UI-4 | Consolidated handoff and clean-source proof | [Acceptance table](../runbooks/UI_4_HANDOFF.md) | Publication/CI pending |
 
 Planning checks must not be reported as UI acceptance. Baseline from the preceding
 review: 138 backend tests, Ruff, mypy and repository checks passed; PR #4 was merged.

@@ -43,6 +43,8 @@ correction remain in the [execution record](runbooks/MM_DEV_CUTOVER.md).
 
 ## Remaining limits and follow-up
 
+- [SEC-001](tasks/guardrails_avoid_prompt_injection.md) is the planned prompt-injection assurance track, restricted to agentsdk-only guardrails, approval, egress and application gap fixes. Shared project/organization policies are read-only; Geo changes are excluded. Existing tests establish narrow controls; broader indirect/multi-turn evidence remains open. The plan does not resume app testing.
+
 - Lossless migration and rollback design remain future product review; the accepted
   development cutover is complete. No full hosted chat/voice evaluation was rerun
   after this cutover, and retained source data does not guarantee lossless rollback.

@@ -6,6 +6,7 @@ Current cycle: UI-0–4, multilingual, TOK-0–3 and the approved development me
 
 | ID | Deliverable | Dependency | Acceptance | Status |
 |---|---|---|---|---|
+| SEC-001 | agentsdk-only native guardrails and prompt-injection assurance | EVAL-001, memory/runtime and multilingual contracts | Threat-specific authority, indirect-input and real-model gates | Planned only; [phases and acceptance](guardrails_avoid_prompt_injection.md) |
 | I18N-001 | Three-language UI, agent responses and voice | UI-001 profile, journey/voice contracts | Catalog completeness, protected templates, locale isolation and multilingual speech acceptance | LANG-3 demo accepted and merged in PR #14; [scope and evidence](I18N-001-MULTILINGUAL.md) |
 | MEM-002 | Engine memory destination mymemory | MEM-001, COMP-002 | Accepted dev memory-loss override, shared scope, store dependency and native isolation | Dev cutover passed; [scope and evidence](MEM-002-MYMEMORY-MIGRATION.md) |
 | TOK-001 | Control Plane Tokenomics dashboards | UI-001 admin shell, native usage APIs | Fiserv-inspired visualizations, truthful data coverage and tested calculations | TOK-0–3 integrated through PR #19; [inventory and gates](TOK-001-TOKENOMICS.md) |

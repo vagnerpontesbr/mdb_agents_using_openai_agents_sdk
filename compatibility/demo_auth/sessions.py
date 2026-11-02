@@ -126,3 +126,18 @@ class SessionAuth:
         if not self.store.replace_password(principal.email, principal.user_id,
                                            user["password_hash"], replacement):
             raise ProfileConflict("Credentials changed; sign in again")
+
+    def list_users(self, token, *, after=None, limit=20):
+        from uuid import UUID
+        actor = self.principal(token)
+        if actor.role != "admin":
+            raise AccessDenied("Administrator required")
+        if type(limit) is not int or not 1 <= limit <= 50:
+            raise ValueError("Invalid page limit")
+        if after is not None:
+            after = str(UUID(after))
+        rows = self.store.list_users(after, limit + 1)
+        selected = rows[:limit]
+        return {"items": [{key: row[key] for key in ("user_id", "email", "role")}
+                          for row in selected],
+                "next_cursor": selected[-1]["user_id"] if len(rows) > limit else None}

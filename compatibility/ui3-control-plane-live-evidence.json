@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "successful_config_saves": 3,
+  "provider_calls": 0,
+  "checks": [
+    "stale revision denied",
+    "normal user read/write/list denied",
+    "bounded admin user listing projection",
+    "real process restart preserved settings and session",
+    "defaults restored at revision 3",
+    "strict validator rejected malformed insert",
+    "atomic history matches three successful saves"
+  ],
+  "scope": "isolated real identity HTTP application",
+  "isolated_server_stopped": true
+}

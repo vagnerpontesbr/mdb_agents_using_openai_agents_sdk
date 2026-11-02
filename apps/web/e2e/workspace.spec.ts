@@ -5,6 +5,10 @@ async function workspace(page: Page, role: 'user' | 'admin' = 'admin', route = '
   await page.route('**/api/profile', r => r.fulfill({ json: { user_id: `synthetic-${role}`, email: `${role}@example.test`, role, display_name: 'Synthetic User', locale: 'en-US', timezone: 'UTC', revision: 0 } }));
   await page.route('**/api/capabilities', r => r.fulfill({ json: { journey: true, voice: true, knowledge: false } }));
   await page.route('**/api/journey/latest', r => r.fulfill({ json: { status: 'empty' } }));
+  await page.route('**/api/admin/control-plane', r => r.fulfill({ json: {
+    revision: 0, values: { chat_max_chars: 4000, knowledge_query_max_chars: 2000, library_cache_max_age_seconds: 900 },
+    editable: false, source: 'code_defaults', observed_at: '2026-11-01T00:00:00Z',
+  } }));
   await page.goto(`/#${route}`);
 }
 

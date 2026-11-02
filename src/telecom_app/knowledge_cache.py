@@ -1,5 +1,6 @@
 """Optional bounded candidate cache; authoritative source release remains in retrieval."""
 
+import copy
 import hashlib
 import json
 from collections.abc import Sequence
@@ -37,6 +38,14 @@ class MongoCandidateCache:
         self.collection: Collection[dict[str, Any]] = database.with_options(
             codec_options=CodecOptions(tz_aware=True)).retrieval_cache
         self.reader = reader
+        self.max_age = MAX_AGE
+
+    def bounded(self, seconds: int) -> MongoCandidateCache:
+        if type(seconds) is not int or not 1 <= seconds <= 900:
+            raise ValueError("Invalid cache age")
+        result = copy.copy(self)
+        result.max_age = timedelta(seconds=seconds)
+        return result
 
     def lookup(self, scope: Scope, query: str, vector: Sequence[float],
                now: datetime) -> list[Candidate] | None:
@@ -59,7 +68,7 @@ class MongoCandidateCache:
                 or row.get("sources") != indexed.get("sources")
                 or not isinstance(indexed.get("score"), (int, float))
                 or not indexed["score"] >= SIMILARITY
-                or not now - MAX_AGE <= row["created_at"] <= now
+                or not now - self.max_age <= row["created_at"] <= now
                 or not now < row["expires_at"] <= row["created_at"] + MAX_AGE):
             return None
         references = row.get("sources")
@@ -78,7 +87,7 @@ class MongoCandidateCache:
               candidates: list[Candidate], now: datetime) -> None:
         if not 1 <= len(candidates) <= 20:
             return
-        expiry = now + MAX_AGE
+        expiry = now + self.max_age
         for candidate in candidates:
             version = self.reader.version(scope.tenant_id, candidate.version_key)
             if version is None:

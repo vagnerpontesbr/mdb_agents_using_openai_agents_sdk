@@ -17,6 +17,7 @@ from .document_review import DocumentReview
 from .identity import IdentityService
 from .ingestion import MongoIngestion
 from .knowledge import Scope, Version, assess, utc_now
+from .knowledge_cache import MongoCandidateCache
 from .knowledge_mongo import MongoKnowledgeReader
 from .knowledge_publication import MongoKnowledgePublisher, PublicationConflict
 from .knowledge_search import CandidateCache, retrieve
@@ -186,13 +187,18 @@ class CurationService:
         )
         return {"version_key": key, "status": "published"}
 
-    def search(self, token: str, query: str) -> str:
+    def search(self, token: str, query: str, *, cache_max_age_seconds: int = 900) -> str:
         self.identity.principal(token)
         locale = validated_locale(self.identity.profile(token)["locale"])
         scope = replace(SCOPE, language={"en-US": "en", "pt-BR": "pt", "es-ES": "es"}[locale])
+        cache = self.cache
+        if isinstance(cache, MongoCandidateCache):
+            cache = cache.bounded(cache_max_age_seconds)
+        elif cache is not None and cache_max_age_seconds != 900:
+            raise RuntimeError("Cache does not support bounded request settings")
         response = retrieve(
             self.reader, self.publisher, self.voyage, scope, query, self.voyage.embed_query(query),
-            cache=self.cache,
+            cache=cache,
         )
         self.identity.principal(token)
         return response

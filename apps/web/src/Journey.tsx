@@ -34,6 +34,7 @@ export default function Journey({ user, active = true }: { user: Principal; acti
     const id = crypto.randomUUID(); sessionStorage.setItem(key, id); return id;
   });
   const [available, setAvailable] = useState(false);
+  const [messageLimit, setMessageLimit] = useState(4000);
   const [voice, setVoice] = useState(false);
   const [draft, setDraft] = useState('');
   const [draftLocale, setDraftLocale] = useState<Locale | null>(null);
@@ -65,9 +66,10 @@ export default function Journey({ user, active = true }: { user: Principal; acti
   useEffect(() => {
     mounted.current = true;
     request('/api/capabilities').then(value => {
-      const data = value as { journey: boolean; voice: boolean };
+      const data = value as { journey: boolean; voice: boolean; chat_max_chars?: number };
       if (!mounted.current) return;
       setAvailable(data.journey); setVoice(data.voice);
+      if (Number.isInteger(data.chat_max_chars) && data.chat_max_chars! >= 100 && data.chat_max_chars! <= 4000) setMessageLimit(data.chat_max_chars!);
       setMessage(data.journey ? 'Ask about your invoice, connection or plans.' :
         'The support journey is not configured. Your account remains available.');
     }).catch(() => setMessage('Support availability could not be checked.'));
@@ -121,6 +123,11 @@ export default function Journey({ user, active = true }: { user: Principal; acti
           ...(draftLocale ? { audio_locale: draftLocale } : {}) }),
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(150_000)]) });
       if (response.status === 401) window.dispatchEvent(new Event('telecom-session-expired'));
+      if ([400, 413].includes(response.status)) {
+        sessionStorage.removeItem(`telecom-uncertain-${conversation}`);
+        setMessage('Request rejected. Shorten your message before sending again.');
+        return;
+      }
       if (!response.ok || !response.body) throw new Error('Support request was not accepted.');
       setDraft(''); setDraftLocale(null);
       const reader = response.body.getReader(); const decoder = new TextDecoder();
@@ -264,7 +271,7 @@ export default function Journey({ user, active = true }: { user: Principal; acti
       </div>}
     </div>}
     {(recording || draftLocale) && <p className="audio-language">{t("Audio language:")} {t(languageNames[recording ? recordingLocale.current : draftLocale!])}</p>}
-    <label>{t("Your message")}<textarea value={draft} maxLength={4000} rows={3}
+    <label>{t("Your message")}<textarea value={draft} maxLength={messageLimit} rows={3}
       onChange={event => { setDraft(event.target.value); if (!event.target.value) setDraftLocale(null); }} disabled={!available || busy || !!waiting || recording}
       placeholder={t("Read invoice demo-1 and check my slow connection.")} /></label>
     <div className="actions">

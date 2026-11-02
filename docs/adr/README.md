@@ -10,6 +10,7 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 
 | ADR | Decision | Status |
 |---|---|---|
+| [ADR-0034](0034-application-control-plane-settings.md) | Bounded application settings and immutable request snapshots | Approved and live-validated for the demo |
 | [ADR-0032](0032-multilingual-profile.md) | Full profile and pt-BR/en-US/es-ES UI, answers and voice | Scope confirmed; implementation planned |
 | [ADR-0031](0031-mymemory-target.md) | Engine-managed memory destination mymemory | Target requested; planned, not applied |
 | [ADR-0030](0030-ui-profiles-control-plane.md) | Profile navigation and application Control Plane with existing ownership boundaries | Proposed; implementation not started |

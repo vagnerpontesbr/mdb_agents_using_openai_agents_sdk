@@ -76,3 +76,10 @@ class MongoUserStore:
             {"_id": email, "user_id": user_id, "active": True, "password_hash": expected_hash},
             {"$set": {"password_hash": replacement}, "$inc": {"credential_version": 1}},
         ).modified_count == 1
+
+    def list_users(self, after, limit):
+        query = {"user_id": {"$gt": after}} if after else {}
+        rows = self.collection.find(query, {"_id": 1, "user_id": 1, "role": 1}).sort(
+            "user_id", 1).limit(limit)
+        return [{"user_id": row["user_id"], "email": row["_id"], "role": row["role"]}
+                for row in rows]

@@ -63,9 +63,10 @@ results are recorded below; planned checks are not counted as executed.
 
 ## Remaining supported-source limits
 
-Only 7/30/90 trailing presets are supported. Arbitrary historical date filtering is
-still an unfulfilled source capability; no native contract proves exact historical
-boundaries. Do not describe the full original date-filter request as implemented.
+Only 7/30/90 trailing presets are supported. After reviewing this exact limitation,
+the requester replied "sim aceito", accepting it for the demo scope. Arbitrary
+historical filtering remains technically unsupported, but no longer blocks demo
+acceptance. Do not describe historical filtering as implemented.
 Native FOCUS invoices/SKUs, execution denominator, cache lookup ratio, token goodput,
 context/agent/intent attribution and comparable anomaly baselines are unavailable.
 The dashboard renders each missing section explicitly, as required by TOK-001.
@@ -74,9 +75,8 @@ Only the exact observed OpenAI model has a reviewed packaged rate; Anthropic's s
 is approved, but no corresponding live usage was observed. Cache reads/writes,
 embedding/voice/tool costs, gateway fees, discounts, taxes and historical price
 changes are excluded from the standard estimate. No billed-cost reconciliation or
-production capacity claim is made. The full expanded UI-4 gate must retain these
-limitations; a new native source or explicit scope decision is needed for arbitrary
-historical filters. Memory migration remains a separate phase.
+production capacity claim is made. The expanded UI-4 gate retains these explicitly accepted
+limitations. Future historical filters require a new supported native source. Memory migration remains a separate phase.
 
 Final local regression command `TELECOM_TEST_PORT=53189 npm --prefix apps/web run test:e2e`
 passed **36 tests**. No new browser assertion failed in TOK-3. Repository/diff checks
@@ -85,8 +85,8 @@ operator-helper import path before any source access. Local/backend unit suites 
 not unnecessarily repeated for this test/evidence-only phase; required remote CI
 repeats all suites. The supported integration proof is ready for publication.
 
-The requester has been asked to decide whether trailing 7/30/90 presets satisfy the
-demo scope or arbitrary historical filters remain a blocking requirement. Until an
-explicit answer, do not mark the expanded UI-4 acceptance complete or silently waive
-that requested behavior. Other native unavailable metrics retain their documented
-unavailable-state treatment under TOK-001.
+The requester explicitly accepted the 7/30/90-day demo scope with "sim aceito" after
+being told that custom historical ranges such as 10–20 October are not supported.
+This resolves the remaining scope decision. The supported TOK-3 acceptance is complete
+locally; CI/publication and UI-4 handoff remain. Other native unavailable metrics retain
+their documented unavailable-state treatment under TOK-001.

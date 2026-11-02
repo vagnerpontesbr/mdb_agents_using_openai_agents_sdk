@@ -3,8 +3,9 @@
 ## Current status
 
 UI-3 is implemented and its explicitly authorized Atlas/persistence gate passed.
-Branch codex/ui-3-control-plane is based on LANG-3 merge 856bc60. Publication and
-remote CI remain pending. [ADR-0034](../adr/0034-application-control-plane-settings.md)
+PR #15 merged as `3fa6fab` from source `ba47d05`. Repository and application CI
+passed in runs [41366108446](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41366108446) and [41366115010](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41366115010).
+Branch codex/ui-3-control-plane was based on LANG-3 merge 856bc60. [ADR-0034](../adr/0034-application-control-plane-settings.md)
 owns storage/runtime decisions; chronological preparation records below are retained.
 
 ## Delivered locally

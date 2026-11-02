@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-11-02T01:00:20.845596+00:00",
+  "api_contract": "2026-09-20-preview",
+  "source": "https://www.mongodb.com/docs/api/doc/agentengine.json",
+  "openapi_sha256": "86fc95535dcea5c3fdd9d0087a0b160e399a610f8f258b4cacd97cbfdcdbb21c",
+  "scope": "configured Telecom workspace",
+  "period": "7d",
+  "provider_calls": 0,
+  "openai_admin_key_configured": false,
+  "status": "read_succeeded",
+  "previous_attempt": {
+    "status": "read_failed",
+    "error_type": "EngineUnavailable",
+    "cause": "Local access token expired; requester renewed login"
+  },
+  "diagnostic": {
+    "http_status": 200
+  },
+  "summary": {
+    "total_cost_usd": 0,
+    "total_tokens": 259874,
+    "total_prompt_tokens": 230660,
+    "total_completion_tokens": 29214,
+    "total_llm_calls": 280,
+    "unpriced_llm_calls": 280
+  },
+  "rows": {
+    "by_model": 1,
+    "by_workspace": 1,
+    "daily_trend": 5
+  },
+  "success_field_state": "absent",
+  "workspace_scope_verified": true,
+  "models": [
+    {
+      "model": "gpt-5.6-luna",
+      "call_count": 280,
+      "total_tokens": 259874,
+      "total_cost_usd": 0
+    }
+  ],
+  "attempt_history": [
+    {
+      "checked_at": "2026-11-02T00:44:58.979217+00:00",
+      "http_status": 500,
+      "context": "After user login renewal, before reported Atlas resume"
+    },
+    {
+      "checked_at": "2026-11-02T00:59:15.723981+00:00",
+      "http_status": 401,
+      "context": "After reported Atlas resume; local JWT expiration confirmed"
+    },
+    {
+      "checked_at": "2026-11-02T01:00:08.344951+00:00",
+      "http_status": 200,
+      "context": "After native CLI status renewed credentials; helper initially mislabeled absent optional success field"
+    },
+    {
+      "checked_at": "2026-11-02T01:00:20.845596+00:00",
+      "http_status": 200,
+      "context": "Confirmed scoped summary after correcting helper classification"
+    }
+  ],
+  "atlas_observation": {
+    "ClusterDemoTelco": {
+      "paused": false,
+      "state": "IDLE"
+    },
+    "OpenAI-SDK": {
+      "paused": false,
+      "state": "IDLE"
+    }
+  },
+  "monetary_acceptance": "blocked_all_280_calls_unpriced",
+  "priced_call_coverage": 0,
+  "new_inference_calls": 0
+}

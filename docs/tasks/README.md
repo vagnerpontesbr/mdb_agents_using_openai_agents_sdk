@@ -7,7 +7,7 @@ The plan defines UI-0 through UI-4 with per-phase quality gates. UI-0 merged in 
 
 | ID | Deliverable | Dependency | Acceptance | Status |
 |---|---|---|---|---|
-| I18N-001 | Three-language UI, agent responses and voice | UI-001 profile, journey/voice contracts | Catalog completeness, protected templates, locale isolation and multilingual speech acceptance | Partially implemented; [LANG-0 through LANG-3](I18N-001-MULTILINGUAL.md) |
+| I18N-001 | Three-language UI, agent responses and voice | UI-001 profile, journey/voice contracts | Catalog completeness, protected templates, locale isolation and multilingual speech acceptance | LANG-3 demo accepted and merged in PR #14; [scope and evidence](I18N-001-MULTILINGUAL.md) |
 | MEM-002 | Engine memory destination mymemory | MEM-001, COMP-002 | Supported migration, shared-project scope, continuity/isolation and rollback gates | Planned; [phases](MEM-002-MYMEMORY-MIGRATION.md) |
 | TOK-001 | Control Plane Tokenomics dashboards | UI-001 admin shell, native usage APIs | Fiserv-inspired visualizations, truthful data coverage and tested calculations | Planned; [inventory and gates](TOK-001-TOKENOMICS.md) |
 | UI-001 | Profile menu, responsive navigation and admin Control Plane | FND-003, VERT-001/002, RAG-001, OPS-001 | Per-phase navigation, authorization, persistence, regression and visual gates | UI-2c merged; multilingual gates in progress; [scope and phase gates](UI-001-PROFILES-CONTROL-PLANE.md) |

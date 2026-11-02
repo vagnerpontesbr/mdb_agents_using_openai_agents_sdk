@@ -1,6 +1,6 @@
 # UI-001: Profile navigation and application Control Plane
 
-- Status: UI-0 through UI-2c merged; LANG-3 bounded demo accepted, publication pending; UI-3 next
+- Status: LANG-3 merged in PR #14; UI-3 implementation and authorized Atlas/persistence gates passed; publication/CI pending
 - Owner: Telecom demo maintainer
 - Requested: 2026-11-01
 - Branch: `codex/ui-profiles-control-plane`
@@ -198,7 +198,7 @@ reported. No repeated load, pricing or production-capacity proof is part of this
 | UI-0 | Design and migration inventory complete; requester decisions recorded | Local and remote gates passed | PR #5 merged as `f43a10f` |
 | UI-1 | Responsive workspace, profile disclosure, fixed routes, preserved journey | Local gates and 332 remote tests passed | PR #6 merged as `95d2982` |
 | UI-2 | UI-2a and UI-2b merged; UI-2c password implemented | Local UI-2c gates passed | PR #8 merged as `9f466e5`; UI-2c publication pending |
-| UI-3 | Not started | Not run | None |
+| UI-3 | Implemented; approved settings collection and role applied | Local regression and isolated real HTTP persistence/restart/denial passed; see UI_3_CONTROL_PLANE runbook | Publication/CI pending |
 | UI-4 | Not started | Not run | None |
 
 Planning checks must not be reported as UI acceptance. Baseline from the preceding
@@ -599,3 +599,9 @@ LANG-3 scope exception: the requester explicitly accepted the real three-languag
 voice demo and regression evidence in place of the complete nine-case matrix.
 [I18N-001](I18N-001-MULTILINGUAL.md) records the decision and limitations. This does
 not waive UI-3, Tokenomics, memory-migration or UI-4 gates.
+
+
+UI-3 implementation and evidence are tracked in [the Control Plane runbook](../runbooks/UI_3_CONTROL_PLANE.md) and [ADR-0034](../adr/0034-application-control-plane-settings.md). No live persistence or publication is claimed before the pending Atlas gate.
+
+
+The requester approved the exact UI-3 Atlas proposal with "autorizado". Collection/role readback and the three-save real persistence test passed. Values were restored to defaults at revision 3; existing demo servers and Engine were untouched. [UI-3](../runbooks/UI_3_CONTROL_PLANE.md) owns execution evidence and rollback.

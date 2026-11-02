@@ -102,3 +102,26 @@ def test_duplicate_cached_candidates_fall_back_to_valid_search():
                       lambda: NOW, cache=cache)
     assert chunk.text in answer
     reader.search.assert_called_once()
+
+
+def test_request_cache_age_snapshot_does_not_mutate_shared_cache():
+    _, chunk, reader, _ = retrieval_fixture()
+    db = Mock()
+    db.name = "telecom_demo_knowledge"
+    db.with_options.return_value = db
+    shared = MongoCandidateCache(db, reader)
+    bounded = shared.bounded(30)
+    assert shared.max_age == timedelta(minutes=15)
+    assert bounded.max_age == timedelta(seconds=30)
+    bounded.store(SCOPE, "router", [.1]*1024, [chunk], NOW)
+    row = db.retrieval_cache.replace_one.call_args.args[1]
+    assert row["expires_at"] <= NOW + timedelta(seconds=30)
+    # Existing entries with a long database expiry are still rejected by the shorter age.
+    shared.store(SCOPE, "router", [.1]*1024, [chunk], NOW)
+    row = db.retrieval_cache.replace_one.call_args.args[1]
+    db.retrieval_cache.aggregate.return_value = [{**row, "score": 1.0}]
+    db.retrieval_cache.find_one.return_value = row
+    assert bounded.lookup(SCOPE, "router", [.1]*1024, NOW + timedelta(seconds=31)) is None
+    assert shared.max_age == timedelta(minutes=15)
+    with pytest.raises(ValueError):
+        shared.bounded(901)

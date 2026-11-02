@@ -25,6 +25,7 @@ from compatibility.demo_auth.sessions import (
 from .avatar import AvatarRevision, AvatarUpload, normalize_avatar
 from .config import Settings
 from .contracts import LoginRequest, PrincipalView, RegistrationRequest
+from .control_plane import ControlPlane, MongoSettingsStore, SettingsChange
 from .curation import CurationService, Upload
 from .curation_runtime import configure as configure_curation
 from .database import connect, user_store, verify_connection
@@ -55,6 +56,7 @@ def create_app(
     journey: JourneyService | None = None,
     voice: VoiceService | None = None,
     curation: CurationService | None = None,
+    control: ControlPlane | None = None,
 ) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -67,6 +69,10 @@ def create_app(
                 app.state.identity = identity_service(user_store(client))
             else:
                 app.state.identity = identity
+            app.state.control = control or ControlPlane(
+                app.state.identity, MongoSettingsStore(
+                    client["telecom_identity"]["application_settings"])
+                if client is not None and settings.control_plane_enabled else None)
             app.state.journey = journey or (
                 JourneyService(app.state.identity, EngineAPI(),
                                localized_turns=settings.journey_locale_enabled)
@@ -233,6 +239,12 @@ def create_app(
         response.delete_cookie(COOKIE, path="/", httponly=True, samesite="strict")
         return {"status": "logged_out"}
 
+    @app.get("/api/users")
+    def users(request: Request, after: str | None = None, limit: int = 20) -> dict[str, Any]:
+        if set(request.query_params) - {"after", "limit"}:
+            raise ValueError("Unknown pagination parameter")
+        return service().list_users(token(request), after=after, limit=limit)
+
     @app.post("/api/users", response_model=PrincipalView, status_code=201)
     def register(data: RegistrationRequest, request: Request) -> PrincipalView:
         return public_principal(
@@ -252,10 +264,11 @@ def create_app(
         return result
 
     @app.get("/api/capabilities")
-    def capabilities(request: Request) -> dict[str, bool]:
+    def capabilities(request: Request) -> dict[str, Any]:
         service().principal(token(request))
         enabled = app.state.journey is not None
         return {
+            "chat_max_chars": app.state.control.snapshot().values.chat_max_chars,
             "journey": enabled,
             "voice": enabled and app.state.voice is not None,
             "knowledge": app.state.curation is not None,
@@ -320,12 +333,42 @@ def create_app(
 
     @app.post("/api/knowledge/search")
     def search_documents(data: KnowledgeQuery, request: Request) -> dict[str, str]:
-        return {"text": knowledge(request).search(token(request), data.query)}
+        handler = knowledge(request)
+        snapshot = app.state.control.snapshot()
+        if len(data.query) > snapshot.values.knowledge_query_max_chars:
+            raise ValueError("Query exceeds application limit")
+        return {"text": handler.search(token(request), data.query,
+                cache_max_age_seconds=snapshot.values.library_cache_max_age_seconds)}
+
+    @app.get("/api/admin/control-plane")
+    def control_view(request: Request) -> dict[str, Any]:
+        if request.query_params:
+            raise ValueError("Control Plane scope is server-owned")
+        plane: ControlPlane = app.state.control
+        result = plane.read(token(request))
+        result["capabilities"] = {
+            "journey": app.state.journey is not None,
+            "voice": app.state.voice is not None,
+            "knowledge": app.state.curation is not None,
+            "localized_turns": settings.journey_locale_enabled,
+        }
+        result["integration_status"] = "configured_not_health_verified"
+        result["memory_owner"] = "Agent Engine"
+        result["hosted_cache"] = "runtime_owned_read_only"
+        return result
+
+    @app.post("/api/admin/control-plane")
+    def control_save(data: SettingsChange, request: Request) -> dict[str, Any]:
+        plane: ControlPlane = app.state.control
+        return plane.save(token(request), data)
 
     @app.post("/api/journey/chat")
     def chat(data: ChatInput, request: Request) -> StreamingResponse:
         handler = journey_service(request)
         session_token = token(request)
+        snapshot = app.state.control.snapshot()
+        if len(data.message) > snapshot.values.chat_max_chars:
+            raise ValueError("Message exceeds application limit")
         locale = handler.turn_locale(session_token)
         if data.audio_locale is not None:
             if not handler.localized_turns and data.audio_locale != "en-US":

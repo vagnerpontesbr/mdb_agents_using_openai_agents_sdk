@@ -1,0 +1,8 @@
+{
+  "status": "applied_readback_verified",
+  "proposal_sha256": "787ce7e4f5adaff4f5b0834ea9d794e6baccbc46ea9c3ca29da492bb83d0d7e2",
+  "collection_created": true,
+  "role_updated": true,
+  "authorization": "Requester explicitly answered autorizado for the reviewed collection/role proposal and bounded persistence test",
+  "scope": "OpenAI-SDK / telecom_identity.application_settings; existing role grants preserved"
+}

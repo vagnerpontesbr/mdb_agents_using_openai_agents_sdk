@@ -1,5 +1,10 @@
 # MM-0: memory migration inventory
 
+> Historical preservation-first checkpoint. The requester later accepted dev memory
+> loss and authorized the project-store dependency copy. The applied result and
+> current limits are in [MM_DEV_CUTOVER](MM_DEV_CUTOVER.md); blockers below are
+> preserved as history, not current dev-cutover status.
+
 ## Current gate — 2026-11-02
 
 MM-0 is incomplete. No source/target memory write, configuration apply, deployment,

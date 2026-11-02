@@ -1,0 +1,23 @@
+{
+  "status": "approved_and_executed",
+  "reason": "Project MONGODB_URI is also used by managed store/checkpointers; source mdb_store database observed; orchestration runtime failed after memory-only grant",
+  "existing_user": "engine_memory_devmove_20261102",
+  "cluster_scope_unchanged": "mymemory",
+  "add_roles": [
+    {
+      "roleName": "readWrite",
+      "databaseName": "mdb_store_67b385a7976edf15ecc62e06"
+    },
+    {
+      "roleName": "dbAdmin",
+      "databaseName": "mdb_store_67b385a7976edf15ecc62e06"
+    }
+  ],
+  "retain_existing_roles": true,
+  "source_unchanged": true,
+  "scope_consequence": "Project managed store/checkpoints copied before enabling runtime access; dev best-effort copy, not a point-in-time continuity guarantee",
+  "verification": "Readback exact roles; reapply existing project secret and check runtime readiness, native canaries, target storage and cross-user denial",
+  "failure_boundary": "Do not widen to anyDatabase or atlasAdmin if runtime still fails; diagnose the next explicit failure",
+  "rollback": "Remove only these added grants if unused; after target store writes retain both stores; no automatic source reconciliation or verified original credential rollback",
+  "approval": "User replied pode copiar todas as dependencias"
+}

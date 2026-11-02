@@ -1,5 +1,10 @@
 # MM-0: managed-memory transfer review
 
+> Historical preservation-first checkpoint. The requester later accepted dev memory
+> loss and authorized the project-store dependency copy. The applied result and
+> current limits are in [MM_DEV_CUTOVER](MM_DEV_CUTOVER.md); blockers below are
+> preserved as history, not current dev-cutover status.
+
 ## Status and scope
 
 Prepared for technical review; not a supported execution recipe. No request has
@@ -14,8 +19,9 @@ Move managed memory from ClusterDemoTelco to mymemory without deleting the sourc
 
 ## Observed baseline
 
-- Engine CLI 0.1.120; memory status ready after cluster resume. Runtime image/version
-  still needs authoritative readback before selecting an operational procedure.
+- Engine CLI 0.1.120; memory status ready after cluster resume. Subsequent authenticated runtime readback confirmed v0.11.11; stored and received
+  config generations are both 10. Received generation does not independently prove
+  every effective setting inside the process.
 - Source and destination MongoDB 9.0.4 replica sets; source M30_GEN_2, target M20.
 - Source project database: 12 collections, 1,421 documents and 80 classic indexes
   at the recorded observation, plus 12 READY/queryable search/vector indexes.
@@ -73,3 +79,29 @@ copy real memory into a test namespace before that proposal is concrete.
 
 Until then, MM-0 is blocked on transfer compatibility and remains incomplete. This
 review is a deliverable for unblocking the dependency, not a migration acceptance.
+
+## Public API verification — 2026-11-02
+
+Fetched the official OpenAPI document from the JSON link on the API documentation
+page. Initial decoding failed because the downloaded response was gzip-compressed;
+decoding its gzip bytes resolved the parsing error. [Schema evidence](../../compatibility/mm0-public-api-evidence.json)
+records the inspected operations and constraints. The public memory API has config,
+config sync, runtime status/provision/restart, retrieval and turn recording, but no
+memory maintenance/stop/drain operation. Capacity has a minimum of one replica;
+zero is not a documented shutdown mechanism. Tasks configuration exposes only
+legacy_retry, which can terminalize backlog and is not a maintenance switch.
+
+Performed two GETs for memory config/runtime with bounded responses and no redirects.
+Sandbox requests failed with URLError; network-enabled requests returned 401.
+Native `agentengine auth status` refreshed the private session, after which both
+GETs passed. [Redacted readback](../../compatibility/mm0-engine-config-evidence.json)
+records runtime v0.11.11/ready and config generation=received_generation=10. Only
+field names, selected non-secret controls and a config hash were retained; no
+prompts, credentials or private URLs were logged or committed.
+
+The missing prerequisite is now specifically an operator-supported maintenance/
+writer-drain and restoration procedure for this runtime. The absence of a public
+endpoint does not prove an internal procedure does not exist. The requester was
+asked for an internal reference or instructions; no support message was sent and
+no shared configuration was changed. Do not replace this evidence gap with a
+zero-replica setting, arbitrary role revocation or destructive retry configuration.

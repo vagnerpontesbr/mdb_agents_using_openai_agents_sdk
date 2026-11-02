@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-11-02T12:08:58.385494+00:00",
+  "method": "GET only",
+  "writes": 0,
+  "config": {
+    "generation": 10,
+    "received_generation": 10,
+    "sha256": "a6d08f6efd12cfc7edbb494bf68b7594cd98f82be5739cdb68561fd32748aece",
+    "configured_fields": [
+      "background_extraction",
+      "extraction",
+      "extraction_llm",
+      "log_level",
+      "metadata_partition_index",
+      "short_term",
+      "voyage"
+    ],
+    "extraction_enabled": [
+      "semantic",
+      "episodic",
+      "taxonomic"
+    ],
+    "tasks_fields": []
+  },
+  "runtime": {
+    "state": "ready",
+    "blocked_on": null,
+    "image_tag": "v0.11.11",
+    "pinned_equals_resolved": true
+  }
+}

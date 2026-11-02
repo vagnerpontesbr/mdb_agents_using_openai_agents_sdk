@@ -1,11 +1,28 @@
 # MEM-002: Move Engine-managed memory to mymemory
 
-- Status: MM-0 inventory recorded; transfer compatibility gate blocked; application/target authenticated connections and source metadata reads passed; Engine ready after cluster resume; transfer compatibility and continuity gates remain unverified
+- Status: Dev cutover passed: Engine ready on mymemory, scoped identity, copied project store and native canary/isolation checks; publication/CI pending
 - Requested: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: MEM-001, COMP-002, existing Engine project/workspace inventory
 - Decision: [ADR-0031](../adr/0031-mymemory-target.md)
 - Related interface work: [UI-001](UI-001-PROFILES-CONTROL-PLANE.md), [TOK-001](TOK-001-TOKENOMICS.md)
+
+## Development scope override — 2026-11-02
+
+The requester explicitly accepted memory loss because this is a preview/development
+system and will review preservation with the product manager later. This supersedes
+the preservation-required gate for the current change: initialize Engine-managed
+memory on mymemory for both workspaces, retaining the old cluster without copying
+or deleting its data. Historical continuity, complete transfer, reverse reconciliation
+and a consistent archival snapshot are not acceptance requirements for this dev switch.
+They remain future work, not claims of supported production migration.
+
+[Exact dev cutover proposal](../../compatibility/mm-dev-cutover-proposal.json) records
+scope, checks and rollback limits. The supplied destination credential is atlasAdmin
+with no cluster scope. Do not install it in the runtime. The requester replied "continuar" to the exact restricted-user proposal, authorizing
+its creation and the documented cutover. The original preservation-first phases below
+are historical requirements for a future lossless migration; this dev override governs
+the current acceptance. [Dev cutover](../runbooks/MM_DEV_CUTOVER.md) owns execution evidence.
 
 ## Requested outcome and current boundary
 
@@ -81,7 +98,7 @@ both stores, and use a verified reverse-transfer/reconciliation procedure before
 restoring service. If unavailable, keep the change window closed for diagnosis;
 never advertise unconditional zero-loss rollback. Source deletion is excluded.
 
-## Phases and tests after each change
+## Original preservation-first phases (superseded for this dev cutover)
 
 | Phase | Change / deliverable | Required verification before advancing |
 | --- | --- | --- |
@@ -134,3 +151,19 @@ and unsupported-transfer gate. MM-0 is not complete; no live switch was performe
 [Transfer review](../runbooks/MM_0_TRANSFER_REVIEW.md) lists the exact technical
 answers needed to unblock the preservation/consistency gate. Joint migration scope
 is approved; an executable supported procedure is still required.
+
+## Dev cutover acceptance
+
+[MM_DEV_CUTOVER](../runbooks/MM_DEV_CUTOVER.md) and its sanitized evidence own the
+executed outcome. The user also approved copying all dependencies: the project
+mdb_store database was copied (14,951 documents, zero restore failures), and its
+readWrite/dbAdmin grants were added to the same cluster-scoped runtime identity.
+Both deployments synchronized; runtime v0.11.11 is ready with config generation 10
+unchanged. Two native memory writes/readbacks and cross-user denial passed; target
+storage contains the canaries and source storage does not. No source data was deleted.
+
+The original MM-0 blocker is resolved by the explicit dev scope override, not by
+proving a lossless transfer. Future product-manager review of preservation, production
+migration and complete rollback remains separate; do not reopen it as a blocker for
+this accepted dev destination change. Historical full chat/voice acceptance was not
+rerun here; provider retrieval canaries and direct application connectivity were.

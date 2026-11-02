@@ -64,7 +64,7 @@ export default function ControlPlane({ page }: { page: string }) {
         <dt>{t(key)}</dt><dd>{t(data.capabilities?.[key] ? 'Configured' : 'Not configured')}</dd></div>)}</dl>}
       {page === 'integrations' && <>
         <p>{t('Application data: OpenAI-SDK')}</p><p>{t('Managed memory owner: Agent Engine')}</p>
-        <p>{t('Memory migration to mymemory is planned, not active.')}</p>
+        <p>{t('Memory destination is configured in Agent Engine.')}</p>
         <p>{t('Provider credentials, models and Engine policies are not editable here.')}</p>
       </>}
     </>}

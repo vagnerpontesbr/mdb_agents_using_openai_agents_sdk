@@ -79,7 +79,7 @@ claim follows from the tests. See ADRs [0021](docs/adr/0021-demo-semantic-episod
 The user authorized Phase 2; [journey evidence](docs/tasks/VERT-001-JOURNEY.md)
 records local tests, live acceptance and the final audio correction. Governed ingestion, RAG quality
 evaluations and bounded load evidence are recorded in the [backlog](docs/tasks/README.md).
-The separate [mymemory migration](docs/tasks/MEM-002-MYMEMORY-MIGRATION.md) remains unexecuted. Tokenomics supports trailing 7/30/90 days; native billing and unavailable metrics are not invented.
+The [mymemory dev cutover](docs/runbooks/MM_DEV_CUTOVER.md) passed: fresh memory and copied project state, with the original cluster retained. Tokenomics supports trailing 7/30/90 days; native billing and unavailable metrics are not invented.
 
 ## Documentation and contribution
 

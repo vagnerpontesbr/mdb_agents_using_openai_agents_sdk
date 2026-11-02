@@ -1,0 +1,56 @@
+{
+  "status": "approved",
+  "decision_date": "2026-11-02",
+  "user_decision": "Development memory loss accepted; both workspaces may move together",
+  "engine_project_id": "67b385a7976edf15ecc62e06",
+  "workspaces": [
+    "agentsdk",
+    "geo-intelligence-network"
+  ],
+  "source": "ClusterDemoTelco",
+  "destination": "mymemory",
+  "mode": "fresh Engine-managed destination; no historical copy guarantee",
+  "database_user": {
+    "username": "engine_memory_devmove_20261102",
+    "authentication": "SCRAM; random password stored only in private configuration and Engine secret store",
+    "roles": [
+      {
+        "roleName": "readWrite",
+        "databaseName": "mdb_memory_67b385a7976edf15ecc62e06"
+      },
+      {
+        "roleName": "dbAdmin",
+        "databaseName": "mdb_memory_67b385a7976edf15ecc62e06"
+      }
+    ],
+    "scopes": [
+      {
+        "name": "mymemory",
+        "type": "CLUSTER"
+      }
+    ]
+  },
+  "engine_change": "Set project-scoped MONGODB_URI to the new restricted mymemory credential through stdin; sync the project secret; retain runtime image and memory configuration",
+  "verification": [
+    "Read back exact Atlas roles and cluster scope",
+    "Authenticate with new credential; test denied access outside the memory database",
+    "Record target baseline without deleting existing data",
+    "Wait for Engine readiness and inspect managed target collections/indexes",
+    "Write bounded synthetic canaries through Engine only and confirm target storage and source absence",
+    "Verify user isolation and application-cluster connectivity"
+  ],
+  "excluded": [
+    "source deletion",
+    "bulk_write runtime memory owner",
+    "application data migration",
+    "runtime atlasAdmin credential",
+    "model or embedding dimension changes",
+    "automatic widening of permissions"
+  ],
+  "rollback": {
+    "before_engine_switch": "New database user may be removed after confirming it is unused; source configuration and data remain intact",
+    "after_engine_switch": "Retain both stores. Restoring the original source requires its verified private connection configuration; it is not available as local MONGODB_URI. New destination memories are not reconciled back automatically; data loss is accepted for development",
+    "existing_users": "Do not alter or delete the existing administrative credential or other Atlas users"
+  },
+  "approval": "User replied continuar after the exact scoped-user proposal"
+}

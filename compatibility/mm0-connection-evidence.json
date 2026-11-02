@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-11-02T11:52:55.553Z",
+  "scope": "local read-only authenticated ping; not Engine attachment proof",
+  "results": [
+    {
+      "connection": "OpenAI-SDK diagnostic credential",
+      "input": "MONGODB_URI",
+      "status": "passed",
+      "ping": true,
+      "authenticated": true,
+      "tls_validation": true,
+      "elapsed_seconds": 2.704
+    },
+    {
+      "connection": "mymemory",
+      "input": "MYMEMORY_MONGODB_URI",
+      "status": "passed",
+      "ping": true,
+      "authenticated": true,
+      "tls_validation": true,
+      "elapsed_seconds": 2.613
+    },
+    {
+      "connection": "OpenAI-SDK application credential",
+      "input": "APP_MONGODB_URI",
+      "status": "passed",
+      "ping": true,
+      "authenticated": true,
+      "tls_validation": true,
+      "elapsed_seconds": 2.388
+    }
+  ],
+  "writes": 0,
+  "clients_closed": true,
+  "interpretation_correction": "MONGODB_URI maps to OpenAI-SDK, not ClusterDemoTelco; source verified separately through its MCP connector."
+}

@@ -16,14 +16,18 @@ MongoDB is the integrated data platform for operational documents, full-text Sea
 
 ## Approved two-cluster topology
 
-Planned change (2026-11-01): [MEM-002](tasks/MEM-002-MYMEMORY-MIGRATION.md) and
-[ADR-0031](adr/0031-mymemory-target.md) target `mymemory` for Engine-managed memory.
-This is not applied: ClusterDemoTelco remains the current source until cutover
-acceptance. OpenAI-SDK remains the application cluster. Shared Engine-project
-consumers must be inventoried; the later DemoTelco project change is separate.
+The dev cutover in [MEM-002](tasks/MEM-002-MYMEMORY-MIGRATION.md) and
+[ADR-0031](adr/0031-mymemory-target.md) is applied: mymemory holds shared
+project-managed Engine memory and state, while OpenAI-SDK holds application data.
+ClusterDemoTelco is retained as the historical source. Both agentsdk and
+geo-intelligence-network share this Engine project; moving DemoTelco to another
+project remains separate. [Execution evidence](runbooks/MM_DEV_CUTOVER.md) records
+accepted dev data-loss limits and the copied project-store dependency.
 
-
-Use the existing OpenAI-SDK cluster for application data and ClusterDemoTelco for shared project-managed Engine memory, as approved in [ADR-0017](adr/0017-two-cluster-memory-boundary.md). Separate namespaces by environment and service/domain ownership. Application eval/load databases use OpenAI-SDK with separate credentials; schedule disruptive tests away from demonstrations. Logical isolation cannot isolate shared CPU, I/O, storage, failures, or administrative privileges.
+Separate namespaces by environment and service/domain ownership. Application
+eval/load databases use OpenAI-SDK with separate credentials; schedule disruptive
+tests away from demonstrations. Logical isolation cannot isolate shared CPU, I/O,
+storage, failures or administrative privileges.
 
 Use deployment-allowlisted names such as `telecom_<env>_<domain>`, never arbitrary LLM/request-supplied database names. Proposed application namespaces:
 
@@ -35,7 +39,7 @@ Use deployment-allowlisted names such as `telecom_<env>_<domain>`, never arbitra
 | `telecom_demo_ingestion` | Ingestion service/workers | `jobs`, `attempts`, `staged_artifacts`, `outbox`; publication through the knowledge contract, no direct knowledge writes |
 | `telecom_demo_business` | Simulated business adapter | `customers`, `accounts`, `invoices`, `plans`, `service_incidents`, `tickets`, `action_receipts` |
 | `telecom_eval_*`, `telecom_load_*` | Evaluation/load identities | Copies of required service namespaces; negative-control data inaccessible to demo credentials |
-| Engine-managed namespaces | Official Engine services | On ClusterDemoTelco: discover supported names/permissions and verify managed attachment; do not assume arbitrary renaming |
+| Engine-managed namespaces | Official Engine services | On mymemory: mdb_memory and mdb_store scoped to the existing Engine project; see ADR-0031 and the dev cutover evidence |
 | Auto Embedding internal namespaces | MongoDB-managed functionality | Preserve internal ownership; no application writes or invented layout |
 
 The implemented identity backend accesses only its identity collections; the future API/BFF needs no general cross-domain database access. Give each service a separate least-privilege identity; explicitly review any exceptional read grants. Use separate migration/index-management identities as services are implemented. The bounded identity demo currently grants CREATE_INDEX only on its three collections. The new Phase 1 API performs no startup index writes and exposes a separate idempotent administration command under [ADR-0024](adr/0024-phase-one-application-boundaries.md); the existing grants have not been changed; its exact grants and live denials are recorded in [COMP-005](tasks/COMP-005-DEMO-AUTH.md#restricted-application-identity-passes). The business adapter may begin as a module using its own credentials; process extraction follows measured needs. Collections reflect access patterns, lifecycle, and security, not one collection per customer, agent, intent, or day. Avoid unbounded transcript/chunk arrays.
@@ -73,7 +77,7 @@ Twelve-Factor governs application delivery and processes; it does not prescribe 
 
 ## Acceptance
 
-Verify application data targets OpenAI-SDK and project-managed Engine memory targets ClusterDemoTelco. Validate each connection independently; topology approval does not resolve Engine service failures. Test allowed and denied access per identity, forbidden demo-to-eval access, tenant filtering, migration permissions, and operational-to-search visibility lag. Measure shared contention during bounded load; stop on isolation violations.
+Verify application data targets OpenAI-SDK and project-managed Engine memory/store targets mymemory. Validate each connection independently; topology approval does not resolve Engine service failures. Test allowed and denied access per identity, forbidden demo-to-eval access, tenant filtering, migration permissions, and operational-to-search visibility lag. Measure shared contention during bounded load; stop on isolation violations.
 
 References: [MongoDB research](research/mongodb-engine.md), [MongoDB collection guidance](https://www.mongodb.com/docs/manual/data-modeling/design-antipatterns/reduce-collections/), [Twelve-Factor](https://12factor.net/).
 

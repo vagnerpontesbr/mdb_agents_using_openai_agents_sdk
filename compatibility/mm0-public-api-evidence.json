@@ -1,0 +1,22 @@
+{
+  "source": "https://www.mongodb.com/docs/api/doc/agentengine.json",
+  "decoded_sha256": "86fc95535dcea5c3fdd9d0087a0b160e399a610f8f258b4cacd97cbfdcdbb21c",
+  "memory_operations": [
+    "GET /api/v1/projects/{id}/memory/config",
+    "PUT /api/v1/projects/{id}/memory/config",
+    "POST /api/v1/projects/{id}/memory/config/sync",
+    "POST /api/v1/projects/{id}/memory/context",
+    "POST /api/v1/projects/{id}/memory/retrieval/context-from-sources",
+    "GET /api/v1/projects/{id}/memory/runtime",
+    "POST /api/v1/projects/{id}/memory/runtime",
+    "POST /api/v1/projects/{id}/memory/runtime/restart",
+    "POST /api/v1/projects/{id}/memory/search",
+    "POST /api/v1/projects/{id}/memory/turns"
+  ],
+  "capacity_minimum_replicas": 1,
+  "task_config_fields": [
+    "legacy_retry"
+  ],
+  "maintenance_or_drain_operation_found": false,
+  "scope": "Public schema inspection; not proof that no internal operator procedure exists"
+}

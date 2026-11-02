@@ -1,11 +1,28 @@
 # MEM-002: Move Engine-managed memory to mymemory
 
-- Status: Planned; destination and migration compatibility not verified
+- Status: Dev cutover passed: Engine ready on mymemory, scoped identity, copied project store and native canary/isolation checks; publication/CI pending
 - Requested: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: MEM-001, COMP-002, existing Engine project/workspace inventory
 - Decision: [ADR-0031](../adr/0031-mymemory-target.md)
 - Related interface work: [UI-001](UI-001-PROFILES-CONTROL-PLANE.md), [TOK-001](TOK-001-TOKENOMICS.md)
+
+## Development scope override — 2026-11-02
+
+The requester explicitly accepted memory loss because this is a preview/development
+system and will review preservation with the product manager later. This supersedes
+the preservation-required gate for the current change: initialize Engine-managed
+memory on mymemory for both workspaces, retaining the old cluster without copying
+or deleting its data. Historical continuity, complete transfer, reverse reconciliation
+and a consistent archival snapshot are not acceptance requirements for this dev switch.
+They remain future work, not claims of supported production migration.
+
+[Exact dev cutover proposal](../../compatibility/mm-dev-cutover-proposal.json) records
+scope, checks and rollback limits. The supplied destination credential is atlasAdmin
+with no cluster scope. Do not install it in the runtime. The requester replied "continuar" to the exact restricted-user proposal, authorizing
+its creation and the documented cutover. The original preservation-first phases below
+are historical requirements for a future lossless migration; this dev override governs
+the current acceptance. [Dev cutover](../runbooks/MM_DEV_CUTOVER.md) owns execution evidence.
 
 ## Requested outcome and current boundary
 
@@ -17,15 +34,18 @@ DemoTelco project later; that project migration is not included in this executio
 
 Current application/memory segregation already exists under ADR-0017. This change
 replaces the memory destination; it does not move application data. The cluster
-name `mymemory` is requester-supplied. Its actual SRV host, Atlas project, version,
-tier, network access and existing contents have not been verified.
+name `mymemory` is requester-supplied. Its SRV identity, Atlas project, MongoDB 9.0.4/M20 tier and local authenticated
+connectivity have now been verified. Target emptiness beyond the current credential
+visibility and complete restore compatibility remain unverified.
 
 Memory configuration is project-scoped, not isolated by workspace. Inventory all
 consumers before changing the current project's secret/configuration. If DemoTelco
 or another workspace shares that project, a project-wide switch can affect it now.
-MM-0 must resolve whether all affected consumers can move in one window. Otherwise
-prepare a separate Engine-project/isolation design and identity/deployment mapping;
-do not silently create a project or claim that a workspace-only secret isolates it.
+On 2026-11-02 the requester explicitly confirmed "sim eles podem migrar juntos":
+`agentsdk` and `geo-intelligence-network` may move together in one migration window.
+No separate Engine project is needed for consumer isolation under this decision.
+Preserve both workspaces and their identities; this scope decision does not waive
+the supported-transfer, preservation or exact shared-mutation gates.
 
 ## Private configuration
 
@@ -78,7 +98,7 @@ both stores, and use a verified reverse-transfer/reconciliation procedure before
 restoring service. If unavailable, keep the change window closed for diagnosis;
 never advertise unconditional zero-loss rollback. Source deletion is excluded.
 
-## Phases and tests after each change
+## Original preservation-first phases (superseded for this dev cutover)
 
 | Phase | Change / deliverable | Required verification before advancing |
 | --- | --- | --- |
@@ -116,7 +136,34 @@ it cannot combine old/new observations as duplicate usage.
 - [Memory SDK/configuration](https://www.mongodb.com/docs/agentengine/sdk/python/packages/agent-engine-sdk-memory/): storing configuration differs from applying it; model/dimension changes affect data/index compatibility.
 - [Atlas egress linking](https://www.mongodb.com/docs/agentengine/network-egress/atlas-cluster-link/): changing a linked cluster changes egress; other destinations need appropriate access.
 
-Planning consulted these official documentation excerpts. No migration command,
-configuration apply, runtime upgrade, cluster connection, data copy, provider test
-or live write was executed. All MM phase gates are unrun. Existing source topology
+Initial planning consulted these official documentation excerpts. MM-0 subsequently
+verified connectivity and read-only metadata as recorded below. No migration command,
+configuration apply, runtime upgrade, data copy or managed-memory write was executed.
+MM-0 remains incomplete; MM-1–5 are unrun. Existing source topology
 and historical evidence remain current until successful cutover acceptance.
+
+## MM-0 checkpoint
+
+[Read-only inventory](../runbooks/MM_0_MEMORY_INVENTORY.md) records the two shared
+consumers, private input coherence, current infrastructure/authentication failures
+and unsupported-transfer gate. MM-0 is not complete; no live switch was performed.
+
+[Transfer review](../runbooks/MM_0_TRANSFER_REVIEW.md) lists the exact technical
+answers needed to unblock the preservation/consistency gate. Joint migration scope
+is approved; an executable supported procedure is still required.
+
+## Dev cutover acceptance
+
+[MM_DEV_CUTOVER](../runbooks/MM_DEV_CUTOVER.md) and its sanitized evidence own the
+executed outcome. The user also approved copying all dependencies: the project
+mdb_store database was copied (14,951 documents, zero restore failures), and its
+readWrite/dbAdmin grants were added to the same cluster-scoped runtime identity.
+Both deployments synchronized; runtime v0.11.11 is ready with config generation 10
+unchanged. Two native memory writes/readbacks and cross-user denial passed; target
+storage contains the canaries and source storage does not. No source data was deleted.
+
+The original MM-0 blocker is resolved by the explicit dev scope override, not by
+proving a lossless transfer. Future product-manager review of preservation, production
+migration and complete rollback remains separate; do not reopen it as a blocker for
+this accepted dev destination change. Historical full chat/voice acceptance was not
+rerun here; provider retrieval canaries and direct application connectivity were.

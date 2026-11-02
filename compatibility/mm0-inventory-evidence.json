@@ -1,0 +1,204 @@
+{
+  "scope": "MM-0 metadata-only; no transfer or managed-memory writes",
+  "source": {
+    "connector": "mongodb_clusterdemotelco/preconfigured",
+    "collections": 12,
+    "documents_metadata": 1421,
+    "classic_indexes": 80,
+    "data_bytes": 13564850,
+    "index_inventory": [
+      {
+        "collection": "session_counters",
+        "classic_count": 3,
+        "search_count": 0,
+        "search": [],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "memory_procedural",
+        "classic_count": 9,
+        "search_count": 2,
+        "search": [
+          {
+            "name": "proc_text_search_index",
+            "type": "search",
+            "status": "READY",
+            "queryable": true
+          },
+          {
+            "name": "proc_embedding_vector_index",
+            "type": "vectorSearch",
+            "status": "READY",
+            "queryable": true
+          }
+        ],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "memory_taxonomic",
+        "classic_count": 7,
+        "search_count": 2,
+        "search": [
+          {
+            "name": "tax_text_search_index",
+            "type": "search",
+            "status": "READY",
+            "queryable": true
+          },
+          {
+            "name": "tax_embedding_vector_index",
+            "type": "vectorSearch",
+            "status": "READY",
+            "queryable": true
+          }
+        ],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "tasks",
+        "classic_count": 8,
+        "search_count": 0,
+        "search": [],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "tasks_dlq",
+        "classic_count": 7,
+        "search_count": 0,
+        "search": [],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "memory_semantic",
+        "classic_count": 9,
+        "search_count": 2,
+        "search": [
+          {
+            "name": "sem_text_search_index",
+            "type": "search",
+            "status": "READY",
+            "queryable": true
+          },
+          {
+            "name": "sem_embedding_vector_index",
+            "type": "vectorSearch",
+            "status": "READY",
+            "queryable": true
+          }
+        ],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "extraction_config",
+        "classic_count": 3,
+        "search_count": 0,
+        "search": [],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "memory_user_context",
+        "classic_count": 4,
+        "search_count": 0,
+        "search": [],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "scheduled_tasks",
+        "classic_count": 3,
+        "search_count": 0,
+        "search": [],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "memory_snapshot",
+        "classic_count": 8,
+        "search_count": 2,
+        "search": [
+          {
+            "name": "snap_text_search_index",
+            "type": "search",
+            "status": "READY",
+            "queryable": true
+          },
+          {
+            "name": "snap_embedding_vector_index",
+            "type": "vectorSearch",
+            "status": "READY",
+            "queryable": true
+          }
+        ],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "memory_episodic",
+        "classic_count": 9,
+        "search_count": 2,
+        "search": [
+          {
+            "name": "epi_text_search_index",
+            "type": "search",
+            "status": "READY",
+            "queryable": true
+          },
+          {
+            "name": "epi_embedding_vector_index",
+            "type": "vectorSearch",
+            "status": "READY",
+            "queryable": true
+          }
+        ],
+        "ttl_options_exposed": false
+      },
+      {
+        "collection": "memory_short_term",
+        "classic_count": 10,
+        "search_count": 2,
+        "search": [
+          {
+            "name": "stm_text_search_index",
+            "type": "search",
+            "status": "READY",
+            "queryable": true
+          },
+          {
+            "name": "stm_embedding_vector_index",
+            "type": "vectorSearch",
+            "status": "READY",
+            "queryable": true
+          }
+        ],
+        "ttl_options_exposed": false
+      }
+    ]
+  },
+  "engine": {
+    "state": "ready",
+    "reserved_sessions": {
+      "agentsdk": 0,
+      "geo-intelligence-network": 0
+    },
+    "background_writers_drained": false
+  },
+  "target": {
+    "name": "mymemory",
+    "authenticated_ping": true,
+    "visible_non_system_databases": 0,
+    "expected_memory_database_visible": false,
+    "visibility_caveat": "Authorized databases only; not proof of globally empty cluster"
+  },
+  "local_uri_mapping": {
+    "MONGODB_URI": "OpenAI-SDK",
+    "APP_MONGODB_URI": "OpenAI-SDK",
+    "MYMEMORY_MONGODB_URI": "mymemory"
+  },
+  "migration_status": "not executed; joint consumer scope confirmed; supported transfer and preservation gates unresolved",
+  "shared_consumer_decision": {
+    "date": "2026-11-02",
+    "user_confirmation": "sim eles podem migrar juntos",
+    "workspaces": [
+      "agentsdk",
+      "geo-intelligence-network"
+    ],
+    "same_window": true
+  }
+}

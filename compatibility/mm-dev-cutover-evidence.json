@@ -1,0 +1,443 @@
+{
+  "status": "passed_dev_cutover",
+  "source": "ClusterDemoTelco",
+  "destination": "mymemory",
+  "scope": "Both workspaces; fresh memory and best-effort copy of project managed store; source retained",
+  "secret": {
+    "name": "MONGODB_URI",
+    "scope": "project",
+    "previous_version": 1,
+    "new_version": 2
+  },
+  "runtime": {
+    "checked_at": "2026-11-02T12:35:45.422898+00:00",
+    "method": "GET only",
+    "writes": 0,
+    "config": {
+      "generation": 10,
+      "received_generation": 10,
+      "sha256": "a6d08f6efd12cfc7edbb494bf68b7594cd98f82be5739cdb68561fd32748aece",
+      "configured_fields": [
+        "background_extraction",
+        "extraction",
+        "extraction_llm",
+        "log_level",
+        "metadata_partition_index",
+        "short_term",
+        "voyage"
+      ],
+      "extraction_enabled": [
+        "semantic",
+        "episodic",
+        "taxonomic"
+      ],
+      "tasks_fields": []
+    },
+    "runtime": {
+      "state": "ready",
+      "blocked_on": null,
+      "image_tag": "v0.11.11",
+      "pinned_equals_resolved": true
+    }
+  },
+  "database_user": {
+    "status": "passed",
+    "roles": [
+      {
+        "databaseName": "mdb_memory_67b385a7976edf15ecc62e06",
+        "roleName": "readWrite"
+      },
+      {
+        "databaseName": "mdb_memory_67b385a7976edf15ecc62e06",
+        "roleName": "dbAdmin"
+      },
+      {
+        "databaseName": "mdb_store_67b385a7976edf15ecc62e06",
+        "roleName": "readWrite"
+      },
+      {
+        "databaseName": "mdb_store_67b385a7976edf15ecc62e06",
+        "roleName": "dbAdmin"
+      }
+    ],
+    "scopes": [
+      {
+        "name": "mymemory",
+        "type": "CLUSTER"
+      }
+    ],
+    "password_changed": false
+  },
+  "store_copy": {
+    "started_at": "2026-11-02T12:28:19.935752+00:00",
+    "database": "mdb_store_67b385a7976edf15ecc62e06",
+    "tool_version": "100.20.0",
+    "scope": "Dev best-effort database copy; no oplog snapshot or zero-loss claim",
+    "source_writes": 0,
+    "drop_used": false,
+    "steps": [
+      {
+        "tool": "mongodump",
+        "returncode": 0,
+        "summary": []
+      },
+      {
+        "tool": "mongorestore",
+        "returncode": 0,
+        "summary": [
+          "2026-11-02T09:29:52.907-0300\t14951 document(s) restored successfully. 0 document(s) failed to restore."
+        ]
+      }
+    ],
+    "status": "copied",
+    "completed_at": "2026-11-02T12:29:52.929751+00:00"
+  },
+  "target_indexes": [
+    {
+      "collection": "tasks",
+      "classic_count": 6,
+      "ttl": [
+        {
+          "name": "idx_task_expiry",
+          "seconds": 172800
+        }
+      ],
+      "search": []
+    },
+    {
+      "collection": "extraction_config",
+      "classic_count": 3,
+      "ttl": [],
+      "search": []
+    },
+    {
+      "collection": "memory_taxonomic",
+      "classic_count": 7,
+      "ttl": [],
+      "search": [
+        {
+          "name": "tax_text_search_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "search"
+        },
+        {
+          "name": "tax_embedding_vector_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "vectorSearch"
+        }
+      ]
+    },
+    {
+      "collection": "memory_user_context",
+      "classic_count": 4,
+      "ttl": [],
+      "search": []
+    },
+    {
+      "collection": "session_counters",
+      "classic_count": 3,
+      "ttl": [],
+      "search": []
+    },
+    {
+      "collection": "memory_episodic",
+      "classic_count": 9,
+      "ttl": [],
+      "search": [
+        {
+          "name": "epi_text_search_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "search"
+        },
+        {
+          "name": "epi_embedding_vector_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "vectorSearch"
+        }
+      ]
+    },
+    {
+      "collection": "memory_snapshot",
+      "classic_count": 8,
+      "ttl": [
+        {
+          "name": "snap_ttl",
+          "seconds": 0
+        }
+      ],
+      "search": [
+        {
+          "name": "snap_text_search_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "search"
+        },
+        {
+          "name": "snap_embedding_vector_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "vectorSearch"
+        }
+      ]
+    },
+    {
+      "collection": "tasks_dlq",
+      "classic_count": 7,
+      "ttl": [
+        {
+          "name": "idx_dlq_ttl",
+          "seconds": 5184000
+        }
+      ],
+      "search": []
+    },
+    {
+      "collection": "memory_semantic",
+      "classic_count": 9,
+      "ttl": [],
+      "search": [
+        {
+          "name": "sem_text_search_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "search"
+        },
+        {
+          "name": "sem_embedding_vector_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "vectorSearch"
+        }
+      ]
+    },
+    {
+      "collection": "scheduled_tasks",
+      "classic_count": 3,
+      "ttl": [],
+      "search": []
+    },
+    {
+      "collection": "memory_procedural",
+      "classic_count": 9,
+      "ttl": [],
+      "search": [
+        {
+          "name": "proc_text_search_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "search"
+        },
+        {
+          "name": "proc_embedding_vector_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "vectorSearch"
+        }
+      ]
+    },
+    {
+      "collection": "memory_short_term",
+      "classic_count": 9,
+      "ttl": [],
+      "search": [
+        {
+          "name": "stm_text_search_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "search"
+        },
+        {
+          "name": "stm_embedding_vector_index",
+          "status": "READY",
+          "queryable": true,
+          "type": "vectorSearch"
+        }
+      ]
+    }
+  ],
+  "canary": {
+    "started_at": "2026-11-02T12:33:14.872844+00:00",
+    "run": "mmdev-1f37af47415b",
+    "accounts": [
+      {
+        "user_id": "mmdev-1f37af47415b-a",
+        "session_id": "mmdev-1f37af47415b-session-a",
+        "marker": "SYNTHETIC-MYMEMORY-mmdev-1f37af47415b-a"
+      },
+      {
+        "user_id": "mmdev-1f37af47415b-b",
+        "session_id": "mmdev-1f37af47415b-session-b",
+        "marker": "SYNTHETIC-MYMEMORY-mmdev-1f37af47415b-b"
+      }
+    ],
+    "writes": [
+      {
+        "account": 0,
+        "http_status": 201,
+        "response_keys": [
+          "acknowledged",
+          "has_embedding",
+          "id",
+          "session_id",
+          "turn_seq"
+        ],
+        "success": true
+      },
+      {
+        "account": 1,
+        "http_status": 201,
+        "response_keys": [
+          "acknowledged",
+          "has_embedding",
+          "id",
+          "session_id",
+          "turn_seq"
+        ],
+        "success": true
+      }
+    ],
+    "reads": [
+      {
+        "owner": 0,
+        "reader": 0,
+        "http_status": 200,
+        "marker_found": true,
+        "response_keys": [
+          "formatted_context",
+          "metadata",
+          "selected_memories"
+        ],
+        "metadata": {
+          "token_count": 54,
+          "memory_counts": {
+            "stm": 1
+          },
+          "timing": {
+            "embedding": 0.10580777493305504,
+            "retrieval": 0.005613124929368496,
+            "ranking": 0.00018550804816186428,
+            "budgeting": 0.09226036805193871,
+            "formatting": 0.005131885060109198,
+            "total": 0.2093291140627116
+          },
+          "ranking_strategy": null,
+          "source_outcomes": null
+        }
+      },
+      {
+        "owner": 1,
+        "reader": 1,
+        "http_status": 200,
+        "marker_found": true,
+        "response_keys": [
+          "formatted_context",
+          "metadata",
+          "selected_memories"
+        ],
+        "metadata": {
+          "token_count": 54,
+          "memory_counts": {
+            "stm": 1
+          },
+          "timing": {
+            "embedding": 0.07869346195366234,
+            "retrieval": 0.00560788600705564,
+            "ranking": 0.00016710592899471521,
+            "budgeting": 0.0004552070749923587,
+            "formatting": 0.0041688550263643265,
+            "total": 0.08940554002765566
+          },
+          "ranking_strategy": null,
+          "source_outcomes": null
+        }
+      },
+      {
+        "owner": 0,
+        "reader": 1,
+        "http_status": 200,
+        "marker_found": false,
+        "response_keys": [
+          "formatted_context",
+          "metadata",
+          "selected_memories"
+        ],
+        "metadata": {
+          "token_count": 0,
+          "memory_counts": {},
+          "timing": {
+            "embedding": 0.11933938402216882,
+            "retrieval": 0.003420614986680448,
+            "ranking": 5.634606350213289e-05,
+            "budgeting": 7.603398989886045e-05,
+            "formatting": 0.004125399049371481,
+            "total": 0.1273236540146172
+          },
+          "ranking_strategy": null,
+          "source_outcomes": null
+        }
+      }
+    ],
+    "passed": true
+  },
+  "target_canary_counts": {
+    "target": [
+      {
+        "user": "mmdev-1f37af47415b-a",
+        "count": 1
+      },
+      {
+        "user": "mmdev-1f37af47415b-b",
+        "count": 1
+      }
+    ]
+  },
+  "source_canary_count": 0,
+  "sync": {
+    "deployments": 2,
+    "skipped": 0,
+    "success": true
+  },
+  "failures": [
+    {
+      "operation": "first project secret sync",
+      "result": "5-minute timeout; values stored, runtime readiness unconfirmed"
+    },
+    {
+      "operation": "first memory apply --wait",
+      "result": "5-minute timeout, orchestration_engine failed; target memory collections created"
+    },
+    {
+      "diagnosis": "Original proposal omitted project mdb_store dependency of MONGODB_URI; corrected with authorized store copy and two scoped roles",
+      "rerun": "second sync succeeded and memory runtime ready"
+    }
+  ],
+  "application_connectivity": {
+    "input": "APP_MONGODB_URI",
+    "cluster": "OpenAI-SDK",
+    "ping": true,
+    "authenticated": true
+  },
+  "limitations": [
+    "No historical memory copy",
+    "No point-in-time/oplog consistency guarantee for managed-store copy",
+    "No unconditional post-write rollback",
+    "No new full chat/voice journey evaluation",
+    "Retrieval used provider embedding; no business-agent invocation; exact provider cost unavailable"
+  ],
+  "store_metadata_verification": {
+    "source_collections": 33,
+    "target_collections": 33,
+    "source_classic_indexes": 116,
+    "target_classic_indexes": 116,
+    "source_search_indexes": 0
+  },
+  "runtime_identity_negative_check_after_store_grant": {
+    "outside_database": "telecom_identity",
+    "denied": true,
+    "mongo_error_code": 13
+  }
+}

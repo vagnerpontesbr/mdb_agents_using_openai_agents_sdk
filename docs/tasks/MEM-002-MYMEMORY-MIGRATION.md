@@ -1,6 +1,6 @@
 # MEM-002: Move Engine-managed memory to mymemory
 
-- Status: Planned; destination and migration compatibility not verified
+- Status: MM-0 inventory recorded; transfer compatibility gate blocked; application/target authenticated connections and source metadata reads passed; Engine ready after cluster resume; transfer compatibility and continuity gates remain unverified
 - Requested: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: MEM-001, COMP-002, existing Engine project/workspace inventory
@@ -17,15 +17,18 @@ DemoTelco project later; that project migration is not included in this executio
 
 Current application/memory segregation already exists under ADR-0017. This change
 replaces the memory destination; it does not move application data. The cluster
-name `mymemory` is requester-supplied. Its actual SRV host, Atlas project, version,
-tier, network access and existing contents have not been verified.
+name `mymemory` is requester-supplied. Its SRV identity, Atlas project, MongoDB 9.0.4/M20 tier and local authenticated
+connectivity have now been verified. Target emptiness beyond the current credential
+visibility and complete restore compatibility remain unverified.
 
 Memory configuration is project-scoped, not isolated by workspace. Inventory all
 consumers before changing the current project's secret/configuration. If DemoTelco
 or another workspace shares that project, a project-wide switch can affect it now.
-MM-0 must resolve whether all affected consumers can move in one window. Otherwise
-prepare a separate Engine-project/isolation design and identity/deployment mapping;
-do not silently create a project or claim that a workspace-only secret isolates it.
+On 2026-11-02 the requester explicitly confirmed "sim eles podem migrar juntos":
+`agentsdk` and `geo-intelligence-network` may move together in one migration window.
+No separate Engine project is needed for consumer isolation under this decision.
+Preserve both workspaces and their identities; this scope decision does not waive
+the supported-transfer, preservation or exact shared-mutation gates.
 
 ## Private configuration
 
@@ -116,7 +119,18 @@ it cannot combine old/new observations as duplicate usage.
 - [Memory SDK/configuration](https://www.mongodb.com/docs/agentengine/sdk/python/packages/agent-engine-sdk-memory/): storing configuration differs from applying it; model/dimension changes affect data/index compatibility.
 - [Atlas egress linking](https://www.mongodb.com/docs/agentengine/network-egress/atlas-cluster-link/): changing a linked cluster changes egress; other destinations need appropriate access.
 
-Planning consulted these official documentation excerpts. No migration command,
-configuration apply, runtime upgrade, cluster connection, data copy, provider test
-or live write was executed. All MM phase gates are unrun. Existing source topology
+Initial planning consulted these official documentation excerpts. MM-0 subsequently
+verified connectivity and read-only metadata as recorded below. No migration command,
+configuration apply, runtime upgrade, data copy or managed-memory write was executed.
+MM-0 remains incomplete; MM-1–5 are unrun. Existing source topology
 and historical evidence remain current until successful cutover acceptance.
+
+## MM-0 checkpoint
+
+[Read-only inventory](../runbooks/MM_0_MEMORY_INVENTORY.md) records the two shared
+consumers, private input coherence, current infrastructure/authentication failures
+and unsupported-transfer gate. MM-0 is not complete; no live switch was performed.
+
+[Transfer review](../runbooks/MM_0_TRANSFER_REVIEW.md) lists the exact technical
+answers needed to unblock the preservation/consistency gate. Joint migration scope
+is approved; an executable supported procedure is still required.

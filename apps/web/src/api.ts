@@ -51,6 +51,17 @@ export async function request(path: string, data?: Record<string, unknown>): Pro
       messages[409] = 'The document or review changed. Refresh its status before trying again.';
       messages[413] = 'The PDF exceeds the 5 MB demo limit.';
     }
+    if (path.startsWith('/api/admin/tokenomics/')) {
+      const code = result && typeof result === 'object' ? (result as { code?: string }).code : undefined;
+      const tokenomicsErrors: Record<string, string> = {
+        tokenomics_auth_expired: 'Engine session expired. An operator must refresh it.',
+        tokenomics_range_unsupported: 'Historical date ranges are not supported by this source. Use a trailing period.',
+        tokenomics_rate_limited: 'Usage source is rate limited. Try refresh later.',
+        tokenomics_busy: 'Usage source is busy. Try refresh later.',
+        tokenomics_timeout: 'Usage source timed out. Try refresh later.',
+      };
+      throw new ApiError(response.status, tokenomicsErrors[code ?? ''] ?? 'Tokenomics unavailable.');
+    }
     throw new ApiError(response.status, messages[response.status] ?? 'Request failed.');
   }
   return result;

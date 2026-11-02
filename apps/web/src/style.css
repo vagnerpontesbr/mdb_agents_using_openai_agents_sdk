@@ -97,3 +97,53 @@ footer { min-height: 75px; display: flex; justify-content: space-between; gap: 1
 
 .password-editor { margin-top: 32px; padding-top: 24px; border-top: 1px solid #dce5e0; }
 .password-editor p { font-size: 14px; line-height: 1.5; }
+
+/* Tokenomics uses measured widths; missing and zero never receive decorative minimums. */
+.tokenomics { --tok-accent: #00684a; min-width: 0; }
+.tok-intro { color: #44586a; max-width: 65ch; }
+.tok-filters { display: flex; align-items: end; gap: 1rem; flex-wrap: wrap; }
+.tok-filters label { min-width: 12rem; margin: 0; }
+.tok-filters button { margin: 0; }
+.tok-meta { font-size: .85rem; overflow-wrap: anywhere; }
+.tok-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; margin: 1.4rem 0; }
+.tok-card { border: 1px solid #c9d8d1; border-radius: 12px; padding: 1rem; background: #f7fbf8; min-width: 0; }
+.tok-card h2 { font-size: .95rem; margin: 0 0 .7rem; font-weight: 500; }
+.tok-card strong { display: block; font-size: clamp(1.2rem, 2.2vw, 1.9rem); overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.tok-badge { display: inline-block; font-size: .75rem; padding: .15rem .45rem; border: 1px solid #a7c3b6; border-radius: 1rem; margin: .6rem 0; }
+.tokenomics summary { cursor: pointer; font-size: .85rem; }
+.tokenomics summary:focus-visible, .tok-table:focus-visible { outline: 3px solid #00684a; outline-offset: 3px; }
+.tok-card details p { font-size: .8rem; }
+.tok-note { border-left: 3px solid #00684a; padding: .7rem 1rem; background: #f3f7f5; margin: 1rem 0; }
+.tok-tabs { display: flex; gap: .4rem; border-bottom: 1px solid #b8cbbf; margin-top: 1.5rem; }
+.tok-tabs button { background: transparent; color: #25382e; border-radius: 8px 8px 0 0; border: 1px solid transparent; font-size: .95rem; padding: .6rem .85rem; }
+.tok-tabs button[aria-selected="true"] { background: #e0f2e8; border-color: #b8cbbf; border-bottom: 3px solid #00684a; }
+.tok-section { margin: 1.6rem 0; min-width: 0; }
+.tok-section h2 { font-size: 1.1rem; }
+.tok-section > p { color: #4b5e55; font-size: .9rem; }
+.tok-chart { display: grid; gap: .8rem; padding: .8rem 0 1.2rem; }
+.tok-bar-row { display: grid; grid-template-columns: minmax(6rem, 1fr) minmax(2rem, 2fr) minmax(3rem, auto); gap: .7rem; align-items: center; font-size: .8rem; }
+.tok-bar-row > span:first-child { overflow-wrap: anywhere; }
+.tok-bar-row > span:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.tok-track { height: .75rem; background: #e5eeea; border-radius: .2rem; overflow: hidden; }
+.tok-track i { display: block; height: 100%; background: #008565; }
+.tok-table { max-width: 100%; overflow-x: auto; border: 1px solid #d5e1db; border-radius: .5rem; }
+.tok-table table { border-collapse: collapse; width: 100%; font-size: .85rem; }
+.tok-table caption { text-align: left; padding: .7rem; color: #44584e; }
+.tok-table th, .tok-table td { padding: .65rem; border-top: 1px solid #e0e8e3; text-align: left; overflow-wrap: anywhere; }
+.tok-table th { font-weight: 600; background: #f3f7f5; }
+.tok-unavailable { padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+.tok-unavailable li { border-bottom: 1px solid #d9e3de; padding: .5rem 0; font-size: .85rem; }
+.tok-unavailable span { display: block; color: #52685d; font-size: .75rem; }
+@media (max-width: 800px) { .tok-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .tok-kpis { grid-template-columns: 1fr; } .tok-tabs { gap: 0; } .tok-tabs button { padding: .6rem; } }
+.tok-daily { display: flex; overflow-x: auto; max-width: 100%; gap: .9rem; }
+.tok-daily .tok-bar-row { display: flex; flex-direction: column-reverse; flex: 0 0 5.5rem; gap: .5rem; justify-content: end; }
+.tok-daily .tok-track { height: 7rem; width: 2rem; display: flex; align-items: end; border-radius: .2rem .2rem 0 0; }
+.tok-daily .tok-track i { width: 100%; }
+.tok-table table { min-width: 24rem; }
+.tok-table th, .tok-table td { word-break: normal; overflow-wrap: normal; }
+.tok-filters > label { width: auto; flex: 0 1 14rem; }
+.tok-filters > button { width: auto; }
+@media (max-width: 460px) { .tok-filters > button { width: 100%; } }
+/* Fit cards to available content width, including CSS/browser zoom reflow. */
+.tok-kpis { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }

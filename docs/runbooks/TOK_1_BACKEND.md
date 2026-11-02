@@ -105,3 +105,13 @@ or runtime secret exposure. Missing native attribution stays unavailable. Suppor
 presets are validated; arbitrary historical-range support remains an explicit feature
 limitation, not a claimed passed historical filtering test. Local TOK-1 acceptance is
 complete; remote CI/publication remain pending.
+
+
+## Integration
+
+PR #17 merged as `cd342180a805a9070936e2683d231b93c0050def` from source
+`f5c077a9e65f2c857dfa667785723c15f4b47229`. Both repository/application jobs passed
+in runs [41373605284](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41373605284)
+and [41373690341](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41373690341).
+No remote check failed. Sandbox GitHub status connectivity failures were resolved
+through permitted execution. TOK-2 branches from this integrated main.

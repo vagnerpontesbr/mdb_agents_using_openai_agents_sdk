@@ -3,6 +3,8 @@ import type { ReactNode } from 'react';
 import type { Principal } from './api';
 import Journey from './Journey';
 import ControlPlane, { UsersList } from './ControlPlane';
+import Tokenomics from './Tokenomics';
+import type { Period, TokenomicsTab } from './tokenomicsApi';
 import Knowledge from './Knowledge';
 import Profile from './Profile';
 import { parseProfile } from './profileApi';
@@ -20,6 +22,8 @@ export default function WorkspaceLayout({ user, account, busy, logout, feedback 
 }) {
   const { t, locale, setLocale, setTimezone } = useI18n();
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [tokenomicsPeriod, setTokenomicsPeriod] = useState<Period>('7d');
+  const [tokenomicsTab, setTokenomicsTab] = useState<TokenomicsTab>('Overview');
   const [savingLocale, setSavingLocale] = useState(false);
   const [localeError, setLocaleError] = useState(false);
   const [profileError, setProfileError] = useState(false);
@@ -112,7 +116,7 @@ export default function WorkspaceLayout({ user, account, busy, logout, feedback 
         {adminRoute && user.role !== 'admin' ? <section className="panel" role="alert"><h1>{t('Access denied')}</h1>
           <p>{t('This area requires an administrator.')}</p>{link('/support', 'Return to Support')}</section> :
           known && adminRoute && <section className="panel"><h1>{t(adminPage[0].toUpperCase() + adminPage.slice(1))}</h1>
-            {adminPage === 'users' ? <>{account}<UsersList /></> : adminPage === 'tokenomics' ? <p>{t('This view is coming soon.')}</p> : <ControlPlane key={adminPage} page={adminPage} />}
+            {adminPage === 'users' ? <>{account}<UsersList /></> : adminPage === 'tokenomics' ? <Tokenomics period={tokenomicsPeriod} setPeriod={setTokenomicsPeriod} tab={tokenomicsTab} setTab={setTokenomicsTab} /> : <ControlPlane key={adminPage} page={adminPage} />}
           </section>}
         {!known && !(adminRoute && user.role !== 'admin') && <section className="panel"><h1>{t('Page not found')}</h1>
           {link('/support', 'Return to Support')}</section>}

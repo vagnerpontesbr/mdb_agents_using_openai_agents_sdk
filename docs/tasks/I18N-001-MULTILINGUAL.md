@@ -1,6 +1,6 @@
 # I18N-001: Portuguese, English and Spanish across UI, responses and voice
 
-- Status: LANG-3 accepted for bounded three-language demo; publication/CI pending; full nine-case matrix explicitly excluded from this acceptance
+- Status: LANG-3 accepted for bounded three-language demo; integrated in PR #14 (`856bc60`), CI passed; full nine-case matrix explicitly excluded from this acceptance
 - Date: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 profile preferences, existing journey/voice contracts

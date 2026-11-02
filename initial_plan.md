@@ -1,5 +1,7 @@
 # Telecom agent framework: implementation plan
 
+Current integrated scope, verification and remaining limitations: [delivery status](docs/STATUS.md).
+
 **Status:** Phase 0 compatibility is complete for the explicitly accepted demo scope on 2026-10-29; the implementation/evidence checkpoint was published as `43746c6`; [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md) records the publication checkpoint and passing push/PR CI for the disconnect-test fix `60ef97b`. Phase 1 application foundation is published and merged; [FND-003](docs/tasks/FND-003-FOUNDATION.md) records validation. Phase 2 is complete for the bounded demo; [VERT-001/002](docs/tasks/VERT-001-JOURNEY.md) records local implementation, live Engine acceptance and the user-confirmed audio repair. See the authoritative [Phase 0 checkpoint](docs/compatibility/PHASE_0.md) for tested versions, accepted limitations and remote restoration evidence. Earlier planning findings below are historical where superseded by that checkpoint.
 
 **Language:** documentation, code identifiers, comments, prompts, configuration, navigation, user-facing UI, and sample chat/voice conversations will all be English.
@@ -16,7 +18,7 @@ Initial scope includes both text chat and browser voice agents. Working assumpti
 
 ## 2. Critical compatibility decisions
 
-**Implementation update:** Phase 0 passed for the accepted demo scope, including split Python dependency environments, hosted custom SDK orchestration, Engine memory/native review, application identity and restricted database permissions, search/provider controls, real microphone/listening, and bounded injected failures. The agent runtime remains Python 3.15.2; CPU Docling/OCR uses the approved separate Python 3.14.6 environment. Exact versions, limits and acceptance evidence live in the [Phase 0 checkpoint](docs/compatibility/PHASE_0.md). The component design below describes the intended full application; Phase 2 implementation and acceptance are recorded in VERT-001/002; Phase 3 bounded memory/recovery passed in [MEM-001](docs/tasks/MEM-001-MEMORY.md). Phase 4 governed PDF implementation and acceptance are tracked in [RAG-001](docs/tasks/RAG-001-KNOWLEDGE.md); Phase 4 publication/CI passed at `1a52afc`; Phase 5 bounded evaluation and calibrated candidate cache are complete in [EVAL-001](docs/tasks/EVAL-001-QUALITY.md); workflow 8 is deployed and final hosted acceptance passed. Phase 5 is published as `1a81be6` with passing CI; Phase 6 experience/packaging is complete with MIT and requester-accepted automated handoff in [REL-001](docs/tasks/REL-001-HANDOFF.md). Phase 6 is published as `9b048bb`, with correction `a4f5c4c` and passing CI `41207242615`. Phase 7 is published as `610ca8b` with passing CI. Phase 8 scalability/resilience is complete for the approved demo scope in [OPS-001](docs/tasks/OPS-001-RESILIENCE.md); local HTTP characterization and bounded native concurrency passed, with bounded sustained/Atlas/voice profiles passed. The requester explicitly excluded production-capacity and pricing proof from acceptance; manual publication is pending.
+**Implementation update:** Phase 0 passed for the accepted demo scope, including split Python dependency environments, hosted custom SDK orchestration, Engine memory/native review, application identity and restricted database permissions, search/provider controls, real microphone/listening, and bounded injected failures. The agent runtime remains Python 3.15.2; CPU Docling/OCR uses the approved separate Python 3.14.6 environment. Exact versions, limits and acceptance evidence live in the [Phase 0 checkpoint](docs/compatibility/PHASE_0.md). The component design below describes the intended full application; Phase 2 implementation and acceptance are recorded in VERT-001/002; Phase 3 bounded memory/recovery passed in [MEM-001](docs/tasks/MEM-001-MEMORY.md). Phase 4 governed PDF implementation and acceptance are tracked in [RAG-001](docs/tasks/RAG-001-KNOWLEDGE.md); Phase 4 publication/CI passed at `1a52afc`; Phase 5 bounded evaluation and calibrated candidate cache are complete in [EVAL-001](docs/tasks/EVAL-001-QUALITY.md); workflow 8 is deployed and final hosted acceptance passed. Phase 5 is published as `1a81be6` with passing CI; Phase 6 experience/packaging is complete with MIT and requester-accepted automated handoff in [REL-001](docs/tasks/REL-001-HANDOFF.md). Phase 6 is published as `9b048bb`, with correction `a4f5c4c` and passing CI `41207242615`. Phase 7 is published as `610ca8b` with passing CI. Phase 8 scalability/resilience is complete for the approved demo scope in [OPS-001](docs/tasks/OPS-001-RESILIENCE.md); local HTTP characterization and bounded native concurrency passed, with bounded sustained/Atlas/voice profiles passed. The requester explicitly excluded production-capacity and pricing proof from acceptance; integration completed through PR #4; see the current delivery status.
 
 | Topic | Evidence and planned decision |
 |---|---|
@@ -47,7 +49,7 @@ flowchart TD
     SALES --> BIZ
     TEC --> BIZ
     SUP --> MEM[Engine semantic/episodic context]
-    MEM --> MEMDB[(ClusterDemoTelco: managed memory)]
+    MEM --> MEMDB[(mymemory: managed memory and store)]
     TEC --> RAG[Eligible cache → hybrid retrieval → reranking]
     RAG --> DB[(OpenAI-SDK: application data)]
     RAG --> VOY[Voyage AI]
@@ -197,7 +199,7 @@ Keep the reusable core small and typed. Clients replace contracts and configurat
 
 Phase 1 scope is refined by [ADR-0024](docs/adr/0024-phase-one-application-boundaries.md): deliver the working identity journey and actual API/admin entrypoints, retain the separate Engine runtime, and defer knowledge/worker implementations until their feature phase. Do not scaffold empty services. ADR-0021 supersedes exact chronological restoration in the original Phase 3 row; native expurgo remains accepted without additional deletion proof.
 
-**Manual phase checkpoints:** finish one phase, report actual evidence and any remaining limitations, then stop and provide commit commands. The user performs the commit/push manually. Begin the next phase only after the user confirms. A failed compatibility gate remains open; do not call it phase completion.
+**Quality-gated phase delivery:** finish one phase, report evidence and limitations, commit and publish its PR, and merge after required CI passes under the standing authorization. A failed compatibility gate remains open; do not call it phase completion.
 
 | Phase | Deliverable | Completion evidence |
 |---|---|---|
@@ -314,7 +316,7 @@ The asset retains the supervisor/specialist routing described above. Building an
 
 Use MongoDB as the integrated platform for operational data, full-text Search, Vector Search, and native hybrid retrieval. This reduces separate database/search/vector products, external data copies, and application-managed synchronization pipelines. It does not imply one physical process, one index, immediate search consistency, or removal of external AI services. Mutable financial facts and document eligibility still require authoritative reads.
 
-**Two existing Atlas clusters** are approved in [ADR-0017](docs/adr/0017-two-cluster-memory-boundary.md): OpenAI-SDK for application data and ClusterDemoTelco for project-managed Engine memory. Follow the [database/collection ownership design](docs/DATA_ARCHITECTURE.md): `telecom_demo_runtime`, `telecom_demo_knowledge`, `telecom_demo_ingestion`, and `telecom_demo_business`, plus separate eval/load namespaces. Engine and Auto Embedding internal namespaces retain official ownership and naming. Prove Engine can access its designated memory cluster; application connectivity is independent evidence.
+**Two existing Atlas clusters** are approved in [ADR-0017](docs/adr/0017-two-cluster-memory-boundary.md): OpenAI-SDK for application data and mymemory for project-managed Engine memory/store under [ADR-0031](docs/adr/0031-mymemory-target.md); ClusterDemoTelco is retained as the historical source. Follow the [database/collection ownership design](docs/DATA_ARCHITECTURE.md): `telecom_demo_runtime`, `telecom_demo_knowledge`, `telecom_demo_ingestion`, and `telecom_demo_business`, plus separate eval/load namespaces. Engine and Auto Embedding internal namespaces retain official ownership and naming. Prove Engine can access its designated memory cluster; application connectivity is independent evidence.
 
 Use separate least-privilege identities, service-owned writes, collection lifecycle policies, schema validation, tenant/ACL filters, and deployment-allowlisted database names. API ingress does not receive broad database access. Hybrid search stays on the relevant service-owned collection; cross-domain access goes through contracts. Avoid databases per agent and collections per tenant/day as a default partitioning scheme.
 
@@ -364,15 +366,14 @@ for unresolved material questions.
 
 The requester added [Tokenomics](docs/tasks/TOK-001-TOKENOMICS.md) dashboards from
 the Fiserv reference and a separate phased [mymemory migration](docs/tasks/MEM-002-MYMEMORY-MIGRATION.md).
-All changes require per-phase tests. DemoTelco project changes remain later work.
-Private URI placeholders do not change the running memory destination.
+These tracks are integrated through PRs #19 and #21. The approved development cutover moved both shared-project workspaces and their store dependency; see the execution record in MEM-002.
 
 
 After demo phases 0–8 and merged PR #4, the requester asked for profile menus and
 an application Control Plane inspired by `gensdd-main`. The authoritative new plan
 is [UI-001](docs/tasks/UI-001-PROFILES-CONTROL-PLANE.md), with five phases UI-0–UI-4,
-per-phase verification and manual publication gates. [ADR-0030](docs/adr/0030-ui-profiles-control-plane.md)
-records proposed ownership/navigation choices. Implementation has not started;
+per-phase verification and authorized quality-gated publication. [ADR-0030](docs/adr/0030-ui-profiles-control-plane.md)
+records ownership/navigation choices. UI-0 through UI-4 are integrated;
 this UI cycle does not reopen production-capacity or pricing requirements.
 
 ## Sources

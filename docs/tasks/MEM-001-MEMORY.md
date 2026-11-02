@@ -1,5 +1,7 @@
 # MEM-001: Semantic continuity and native execution recovery
 
+For current integration and delivery workflow, see [current delivery status](../STATUS.md). Dated checkpoints below retain their original results and limitations; historical pending-publication and manual Git instructions are superseded.
+
 Dated checkpoints below preserve historical results and pending work at that time.
 [Publication status](../runbooks/REPOSITORY_SETUP.md) and [RUN-001](RUN-001-RUNTIME.md)
 identify the current published checkpoint and active runtime.

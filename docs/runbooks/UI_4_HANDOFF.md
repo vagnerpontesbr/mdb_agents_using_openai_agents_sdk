@@ -46,8 +46,7 @@ shared Atlas migration or live server restart is part of this handoff.
 Baseline TOK-3 source `c6264803e4ec7e72bb0688e74e3b877b9e7eb184` passed both jobs in
 runs [41376342124](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41376342124)
 and [41376347743](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41376347743),
-then merged in PR #19. UI-4 publication is pending until its exact source passes CI;
-its PR will record the final head and run links. Local documentation validation passed:
+then merged in PR #19. UI-4 merged in PR #20 (`3fc9329`); exact source and both passing CI runs are recorded in [current delivery status](../STATUS.md). Local documentation validation passed:
 `python3 scripts/check_repository.py` (102 Markdown files, 34 ADRs) and `git diff --check` (no whitespace errors). No full application
 suite is claimed as newly executed locally for this documentation-only phase.
 Required remote CI runs repository/compatibility/identity checks, backend lint/types/
@@ -55,9 +54,7 @@ tests/build, pinned hosted contracts, and frontend lint/types/unit/build/browser
 
 ## Remaining work and rollout boundary
 
-[MEM-002](../tasks/MEM-002-MYMEMORY-MIGRATION.md) is separate and unexecuted. Shared
-project impact and supported Engine migration must be established before requesting
-approval for an exact live switch. Engine retains sole managed-memory ownership.
+[MEM-002](../tasks/MEM-002-MYMEMORY-MIGRATION.md) subsequently completed the separately authorized development memory/store cutover in PR #21. The accepted memory-loss override and copied store dependency are recorded in [execution evidence](MM_DEV_CUTOVER.md). Engine retains sole managed-memory ownership.
 
 Native billing/FOCUS records, historical custom ranges and other unavailable native
 metrics remain unsupported; see TOK-3. Pricing sources are the requester-selected

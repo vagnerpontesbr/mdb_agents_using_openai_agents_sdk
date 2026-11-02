@@ -1,6 +1,6 @@
 # Service boundaries and stress-test plan
 
-Status: Phase 8 complete for the approved demo scope; manual publication pending. [OPS-001](tasks/OPS-001-RESILIENCE.md) records completed short local HTTP characterization and bounded real Engine concurrency controls. Bounded sustained/soak, Atlas and voice profiles passed; production-capacity and pricing proof are excluded from demo acceptance by the final requester decision; no production capacity is claimed.
+Status: Phase 8 complete for the approved demo scope; integrated through PR #4. [OPS-001](tasks/OPS-001-RESILIENCE.md) records completed short local HTTP characterization and bounded real Engine concurrency controls. Bounded sustained/soak, Atlas and voice profiles passed; production-capacity and pricing proof are excluded from demo acceptance by the final requester decision; no production capacity is claimed.
 
 ## Deployable boundaries
 
@@ -49,4 +49,4 @@ Implementation adds versioned workload manifests, a repeatable runner, dashboard
 
 ## Cluster boundaries
 
-Application demo, evaluation and load namespaces use OpenAI-SDK with separate identities and service/domain databases. Project-managed Engine memory remains on ClusterDemoTelco under [ADR-0017](adr/0017-two-cluster-memory-boundary.md). Scope memory load tests to the shared project and protect other workspaces; application isolation does not isolate the managed memory runtime. Schedule disruptive tests, enforce budgets, and measure shared-resource contention. The negative-control database must be inaccessible to demo roles. See [data architecture](DATA_ARCHITECTURE.md).
+Application demo, evaluation and load namespaces use OpenAI-SDK with separate identities and service/domain databases. Project-managed Engine memory/store now uses mymemory under [ADR-0031](adr/0031-mymemory-target.md). Historical load results below describe the topology at measurement time. Scope memory load tests to the shared project and protect other workspaces; application isolation does not isolate the managed memory runtime. Schedule disruptive tests, enforce budgets, and measure shared-resource contention. The negative-control database must be inaccessible to demo roles. See [data architecture](DATA_ARCHITECTURE.md).

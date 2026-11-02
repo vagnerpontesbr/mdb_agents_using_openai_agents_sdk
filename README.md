@@ -1,11 +1,13 @@
 # Telecom Agent Reference Asset
 
+Current integrated scope, verification and remaining limitations: [delivery status](docs/STATUS.md).
+
 A telecom customer-service reference using OpenAI Agents SDK for orchestration,
 MongoDB Agent Engine for managed platform capabilities, MongoDB Atlas, Voyage AI,
 and Python managed by uv. The bounded implementation includes a supervisor,
 financial/technical/sales specialists, React chat/voice, and governed PDF retrieval.
 
-**Phases 0–8 are integrated for the approved demo scope. UI, multilingual support and Tokenomics are integrated through PR #19; [UI-4 handoff](docs/runbooks/UI_4_HANDOFF.md) consolidates acceptance. Historical resilience evidence: [OPS-001](docs/tasks/OPS-001-RESILIENCE.md) records short local HTTP
+**Phases 0–8 are integrated for the approved demo scope. UI, multilingual support and Tokenomics are integrated through PR #20; the development memory/store cutover is integrated in PR #21; [UI-4 handoff](docs/runbooks/UI_4_HANDOFF.md) consolidates acceptance. Historical resilience evidence: [OPS-001](docs/tasks/OPS-001-RESILIENCE.md) records short local HTTP
 characterization, sustained/Atlas/voice acceptance and the final requester scope decision.** Start with
 [the handoff runbook](docs/runbooks/PHASE_6.md), then read the
 [current runtime contract](docs/runbooks/PHASE_7.md) and

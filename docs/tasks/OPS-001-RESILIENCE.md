@@ -1,6 +1,6 @@
 # OPS-001: Scalability and resilience
 
-- Status: Complete for the requester-approved demo scope; manual publication pending
+- Status: Complete for the requester-approved demo scope; integrated through PR #4
 - Owner: Telecom demo maintainer
 - Dependencies: RUN-001, EVAL-001, RAG-001, MEM-001
 - Plan: [Scalability and stress tests](../SCALABILITY_AND_STRESS_TESTS.md)

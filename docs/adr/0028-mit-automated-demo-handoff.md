@@ -27,7 +27,7 @@ undecided would prevent a clear reusable package.
 
 The asset remains a synthetic reference. The accepted rehearsal does not establish
 production operations, capacity or unattended credentials. Phase 8 retains its
-separate scalability/resilience acceptance. Git commits and pushes remain manual;
+separate scalability/resilience acceptance. At this historical checkpoint Git commits and pushes were manual; the current authorized quality-gated workflow supersedes that rule;
 phase completion requires stopping before the next phase unless authorized.
 
 ## Validation

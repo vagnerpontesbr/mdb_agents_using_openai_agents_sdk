@@ -34,9 +34,9 @@ Verify each connection targets its intended cluster and has the required permitt
 
 Revisit for memory isolation, operational ownership, residency, recovery or cost requirements that cannot be met by the shared Engine project.
 
-## Planned transition — 2026-11-01
+## Applied development transition — 2026-11-02
 
-The requester selected mymemory as the future memory destination.
+The requester selected and authorized mymemory as the development memory/store destination.
 [ADR-0031](0031-mymemory-target.md) and [MEM-002](../tasks/MEM-002-MYMEMORY-MIGRATION.md)
-define the transition. This historical decision is not yet replaced operationally;
+record the applied transition integrated in PR #21. The original destination is superseded operationally;
 application separation and Engine ownership remain intact.

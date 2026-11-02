@@ -1,5 +1,7 @@
 # FND-003: Executable application foundation
 
+For current integration and delivery workflow, see [current delivery status](../STATUS.md). Dated checkpoints below retain their original results and limitations; historical pending-publication and manual Git instructions are superseded.
+
 - Status: Complete; commit b2ff9c7 published, PR #2 merged, main CI passed
 - Owner: Repository implementation
 - Phase: 1

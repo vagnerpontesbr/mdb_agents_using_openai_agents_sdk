@@ -1,5 +1,7 @@
 # Phase 0: compatibility evidence and explicit probes
 
+For current integration and delivery workflow, see [current delivery status](../STATUS.md). Dated checkpoints below retain their original results and limitations; historical pending-publication and manual Git instructions are superseded.
+
 Status: **complete for the explicitly accepted demo scope** on 2026-10-29.
 The Phase 0 compatibility checkpoint is complete; this is not completion of the
 full application, a production-readiness claim or authorization to start Phase 1.

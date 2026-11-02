@@ -90,3 +90,12 @@ being told that custom historical ranges such as 10–20 October are not support
 This resolves the remaining scope decision. The supported TOK-3 acceptance is complete
 locally; CI/publication and UI-4 handoff remain. Other native unavailable metrics retain
 their documented unavailable-state treatment under TOK-001.
+
+## Publication result
+
+PR #19 merged as `4b21bd64c08349bd717a35dfb65cb8f9e4f67972`. Source
+`c6264803e4ec7e72bb0688e74e3b877b9e7eb184` passed repository/application CI runs
+[41376342124](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41376342124)
+and [41376347743](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41376347743).
+This supersedes the local-only publication checkpoint above. [UI-4](UI_4_HANDOFF.md)
+consolidates the final handoff. No existing server deployment is implied.

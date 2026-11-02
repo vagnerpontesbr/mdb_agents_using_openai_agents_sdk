@@ -5,7 +5,7 @@ MongoDB Agent Engine for managed platform capabilities, MongoDB Atlas, Voyage AI
 and Python managed by uv. The bounded implementation includes a supervisor,
 financial/technical/sales specialists, React chat/voice, and governed PDF retrieval.
 
-**Phases 0–7 are published with passing CI. Phase 8 scalability/resilience is complete for the approved demo scope; manual publication is pending: [OPS-001](docs/tasks/OPS-001-RESILIENCE.md) records short local HTTP
+**Phases 0–8 are integrated for the approved demo scope. UI, multilingual support and Tokenomics are integrated through PR #19; [UI-4 handoff](docs/runbooks/UI_4_HANDOFF.md) consolidates acceptance. Historical resilience evidence: [OPS-001](docs/tasks/OPS-001-RESILIENCE.md) records short local HTTP
 characterization, sustained/Atlas/voice acceptance and the final requester scope decision.** Start with
 [the handoff runbook](docs/runbooks/PHASE_6.md), then read the
 [current runtime contract](docs/runbooks/PHASE_7.md) and
@@ -26,7 +26,7 @@ The authenticated workspace now uses Support/Knowledge navigation and a Profile
 menu. Administrators create accounts under Control Plane → Users. Name, timezone and interface language editing are implemented with validated Atlas persistence. Profile photo add/replace/remove is implemented with private normalized thumbnails.
 Self-service password change is implemented with current-password verification and
 session invalidation. Upgrade all identity-serving processes before enabling it; see
-the [application runbook](docs/runbooks/APPLICATION.md). Admin Control Plane now edits application message/query limits and library-cache age, with revision checks and real persistence validated. See [Control Plane setup and limits](docs/runbooks/UI_3_CONTROL_PLANE.md). Tokenomics data remains pending in the [UI plan](docs/tasks/UI-001-PROFILES-CONTROL-PLANE.md).
+the [application runbook](docs/runbooks/APPLICATION.md). Admin Control Plane now edits application message/query limits and library-cache age, with revision checks and real persistence validated. See [Control Plane setup and limits](docs/runbooks/UI_3_CONTROL_PLANE.md). Tokenomics provides admin-only usage dashboards and explicitly estimated costs with partial coverage; see [integration evidence](docs/runbooks/TOK_3_INTEGRATION.md).
 Chat, specialists and voice are opt-in under the [Phase 2 runbook](docs/runbooks/PHASE_2.md)
 and are disabled by default until configured against the accepted deployment. The [application runbook](docs/runbooks/APPLICATION.md)
 provides prerequisites, private configuration, optional index/bootstrap commands,
@@ -34,8 +34,10 @@ and the API contract.
 
 ```sh
 uv sync --frozen --python /path/to/python3.15
-npm --prefix apps/web ci
-npm --prefix apps/web run build
+cd apps/web
+npm ci
+npm run build
+cd ../..
 uv run --frozen --env-file .env telecom-api --port 8000
 ```
 
@@ -76,7 +78,8 @@ claim follows from the tests. See ADRs [0021](docs/adr/0021-demo-semantic-episod
 
 The user authorized Phase 2; [journey evidence](docs/tasks/VERT-001-JOURNEY.md)
 records local tests, live acceptance and the final audio correction. Governed ingestion, RAG quality
-evaluations and load profiles remain later phases in the [backlog](docs/tasks/README.md).
+evaluations and bounded load evidence are recorded in the [backlog](docs/tasks/README.md).
+The separate [mymemory migration](docs/tasks/MEM-002-MYMEMORY-MIGRATION.md) remains unexecuted. Tokenomics supports trailing 7/30/90 days; native billing and unavailable metrics are not invented.
 
 ## Documentation and contribution
 
@@ -86,7 +89,8 @@ evaluations and load profiles remain later phases in the [backlog](docs/tasks/RE
 - [Best practices](docs/BEST_PRACTICES.md), [voice design](docs/research/voice-agents.md), and [scalability plan](docs/SCALABILITY_AND_STRESS_TESTS.md)
 - [Contributor commands](CONTRIBUTING.md), [agent instructions](AGENTS.md), and [security](SECURITY.md)
 
-All documentation, code and user-facing demo content is in English. Run
+Developer documentation and source identifiers are English. The UI and accepted
+response/voice journeys support pt-BR, en-US and es-ES. Run
 `python3 scripts/check_repository.py` for repository structure and local link
 validation; it is not an application or provider test.
 

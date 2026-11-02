@@ -18,8 +18,10 @@ From the repository root:
 
 ```sh
 uv sync --frozen --python /path/to/python3.15
-npm --prefix apps/web ci
-npm --prefix apps/web run build
+cd apps/web
+npm ci
+npm run build
+cd ../..
 ```
 
 Build dependencies are locked and included in the default `build` group. Runtime
@@ -83,10 +85,13 @@ use Choose photo or Remove photo. Change password verifies the current password,
 requires a new login. Upgrade/restart all identity-serving processes before enabling
 this route: old processes do not enforce credential versions. Keep version checks
 when rolling back UI; otherwise previously invalidated sessions could become valid
-again. Other Control Plane views remain planned.
-Agent response and speech localization remain separate phases; current voice still
-expects English. The runtime role now includes UPDATE only on telecom_identity.users
-for profile persistence; see UI-001 for verified scope and rollback. Ordinary users see their
+again. Control Plane includes read-only capabilities/integrations, editable application
+limits/cache settings and admin-only Tokenomics. [UI-3](UI_3_CONTROL_PLANE.md) owns
+approved settings collection/role scope and rollback; identity UPDATE remains scoped
+to telecom_identity.users. [TOK-1](TOK_1_BACKEND.md) documents private usage-source
+configuration; unconfigured dashboards explicitly report unavailable. Estimates are
+not billed costs. [Multilingual rollout](MULTILINGUAL.md) and [voice acceptance](LANG_3_VOICE.md)
+own pt-BR/en-US/es-ES activation and limitations. Ordinary users see their
 account without administration controls; the backend independently denies a
 forged registration request. Re-login revokes the browser's previous session.
 
@@ -103,7 +108,7 @@ API while keeping `telecom-api --port 8000`, and run `npm --prefix apps/web run 
 Vite forwards `/api` and `/healthz` without changing the browser Host or Origin.
 The release acceptance flow uses built static files from the API itself.
 
-## API contract v1
+## Identity API contract v1
 
 | Method/path | Authentication / result |
 | --- | --- |
@@ -116,7 +121,9 @@ The release acceptance flow uses built static files from the API itself.
 Errors are `{ "error": "..." }`: 400 invalid input, 401 unauthenticated, 403
 forbidden, 409 duplicate account, 413 oversized body, 429 throttled login, 503
 unavailable/busy. Unknown fields cannot supply tenant, requester or approval
-authority. Public identity fields are only `user_id`, `email` and `role`.
+authority. The original identity principal contains `user_id`, `email` and `role`. Profile,
+settings and Tokenomics endpoints extend this foundation; their contracts and
+acceptance are linked from [UI-4](UI_4_HANDOFF.md).
 
 ## Checks
 

@@ -1,6 +1,6 @@
 # TOK-001: Control Plane Tokenomics dashboards
 
-- Status: TOK-0 merged in PR #16 (`3fc274c`), local/remote CI passed; TOK-1 merged in PR #17 (`cd34218`); TOK-2 merged in PR #18 (`44e69a4`); TOK-3 supported-source integration passed locally, publication/CI pending; 7/30/90-day demo scope explicitly accepted
+- Status: TOK-0 merged in PR #16 (`3fc274c`), local/remote CI passed; TOK-1 merged in PR #17 (`cd34218`); TOK-2 merged in PR #18 (`44e69a4`); TOK-3 merged in PR #19 (`4b21bd6`), local/remote CI passed; 7/30/90-day demo scope explicitly accepted
 - Requested: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: UI-001 shell/admin boundaries; native Engine usage metadata

@@ -2,10 +2,10 @@
 
 ## Status
 
-Local TOK-0 acceptance complete; publication/CI pending. Native usage reads work.
+TOK-0 merged in PR #16 as `3fc274c`; local and remote gates passed. Native usage reads work.
 The requester has superseded the historical
-actual-cost-only gate with official-price estimates. Local contracts are validated; publication/CI is pending. No TOK-1 adapter or
-live dashboard is delivered. The `tokenomics.py` contracts are locally validated; publication remains pending. [TOK-001](../tasks/TOK-001-TOKENOMICS.md) owns acceptance.
+actual-cost-only gate with official-price estimates. Local and remote contract gates passed. No TOK-1 adapter or
+live dashboard is delivered. The `tokenomics.py` contracts are integrated. [TOK-001](../tasks/TOK-001-TOKENOMICS.md) owns acceptance.
 
 ## Native contract inspected
 
@@ -177,3 +177,16 @@ credentials, private URIs or usage fallback is introduced. The user-selected tar
 scenario intentionally remains incomplete and cannot populate FOCUS billed cost.
 TOK-0 local acceptance is complete; remote CI is the publication gate. TOK-1 owns
 supported native adapters and admin authorization; TOK-2 owns interface rendering.
+
+
+## Remote gate and integration
+
+Source `d0fdf2e5d4a4e3b08c8f76ae49ceb3fb4947624a` passed repository/application jobs
+in runs [41370855873](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41370855873)
+and [41370868236](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41370868236).
+The PR run passed 75 compatibility, 15 identity, 277 foundation, 96 hosted-contract,
+6 frontend unit and 29 browser tests, plus lint/types/build/package checks. No remote
+behavioral failure occurred. Log/status retrieval encountered a sandbox network
+failure; permission-enabled retries succeeded. PR #16 merged as `3fc274c`.
+TOK-1 branch `codex/tok-1-backend` starts from that integrated main. This integration
+record is authored on the successor branch; no TOK-1 endpoint or deployment is yet claimed.

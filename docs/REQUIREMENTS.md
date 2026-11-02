@@ -78,7 +78,7 @@ The first three research in parallel; the fourth reviews findings after an auxil
 
 ## Selected data architecture
 
-Use MongoDB as the integrated operational/full-text/vector data platform to reduce separately operated engines and synchronization pipelines. Use the two existing clusters approved in [ADR-0017](adr/0017-two-cluster-memory-boundary.md): OpenAI-SDK for application data and ClusterDemoTelco for shared Engine memory; segregate environment/service-domain databases and service-owned collections with least-privilege identities. Enforce tenant/ACL isolation in shared collections. Align application configuration, backing services, stateless processes, releases, and administration with Twelve-Factor; do not claim that Twelve-Factor or namespace names provide isolation. Validate Engine attachment to its designated memory cluster and preserve managed namespaces.
+Use MongoDB as the integrated operational/full-text/vector data platform to reduce separately operated engines and synchronization pipelines. Use the two existing clusters approved in [ADR-0017](adr/0017-two-cluster-memory-boundary.md): OpenAI-SDK for application data and mymemory for shared Engine memory/store under [ADR-0031](adr/0031-mymemory-target.md), retaining ClusterDemoTelco as historical source; segregate environment/service-domain databases and service-owned collections with least-privilege identities. Enforce tenant/ACL isolation in shared collections. Align application configuration, backing services, stateless processes, releases, and administration with Twelve-Factor; do not claim that Twelve-Factor or namespace names provide isolation. Validate Engine attachment to its designated memory cluster and preserve managed namespaces.
 
 The canonical project creation plan is `initial_plan.md` at the project root.
 
@@ -96,9 +96,7 @@ calibrated candidate cache and isolated evaluator are recorded in
 [ADR-0027](adr/0027-bounded-knowledge-evaluation-cache.md) and
 [EVAL-001](tasks/EVAL-001-QUALITY.md); these are bounded demo results.
 
-There are nine phases, numbered 0–8. Phases 0–7 are published with passing CI.
-[Phase 8](tasks/OPS-001-RESILIENCE.md) scalability/resilience is complete for the approved demo scope; manual publication is pending. User-performed commit/push
-and a pause at each completed phase remain the delivery workflow.
+Phases 0–8 are integrated through PR #4. Subsequent UI, multilingual, Tokenomics and development memory/store work is integrated through PR #21. [Current delivery status](STATUS.md) records evidence and limitations. Scoped commit/push/PR and quality-gated automatic merge are authorized.
 
 ## Decision lookup
 
@@ -121,7 +119,7 @@ Phase 8 budget and routing decisions are authoritative in [OPS-001](tasks/OPS-00
 
 The requester clarified Phase 8 application tests use M20 and previous phases used M10. Current cluster-specific observations and the historical limitation are recorded in [OPS-001](tasks/OPS-001-RESILIENCE.md), including the separate Engine-memory tier. The requester authorized continuing the bounded phase without further questions; this does not turn unavailable billing or unexecuted profiles into accepted results.
 
-Final Phase 8 scope: the requester explicitly excluded production-capacity and pricing proof and requested committing the work. [OPS-001](tasks/OPS-001-RESILIENCE.md) records the superseded billing gate and completed demo acceptance. Historical unknown costs and test limitations remain unchanged; manual publication is pending.
+Final Phase 8 scope: the requester explicitly excluded production-capacity and pricing proof and requested committing the work. [OPS-001](tasks/OPS-001-RESILIENCE.md) records the superseded billing gate and completed demo acceptance. Historical unknown costs and test limitations remain unchanged; integration completed through PR #4.
 
 ## Confirmed profile and multilingual scope — 2026-11-01
 

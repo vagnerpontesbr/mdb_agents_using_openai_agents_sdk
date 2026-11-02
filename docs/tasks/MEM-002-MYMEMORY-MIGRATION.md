@@ -1,6 +1,6 @@
 # MEM-002: Move Engine-managed memory to mymemory
 
-- Status: Dev cutover passed: Engine ready on mymemory, scoped identity, copied project store and native canary/isolation checks; publication/CI pending
+- Status: Dev cutover passed: Engine ready on mymemory, scoped identity, copied project store and native canary/isolation checks; integrated in PR #21 (`bfb52ef`), both required CI workflows passed
 - Requested: 2026-11-01
 - Owner: Telecom demo maintainer
 - Dependencies: MEM-001, COMP-002, existing Engine project/workspace inventory
@@ -12,8 +12,7 @@
 The requester explicitly accepted memory loss because this is a preview/development
 system and will review preservation with the product manager later. This supersedes
 the preservation-required gate for the current change: initialize Engine-managed
-memory on mymemory for both workspaces, retaining the old cluster without copying
-or deleting its data. Historical continuity, complete transfer, reverse reconciliation
+memory on mymemory for both workspaces, retaining the old cluster without copying its historical memory or deleting source data. The later authorized dependency copy transferred the project store, as recorded in the execution runbook. Historical continuity, complete transfer, reverse reconciliation
 and a consistent archival snapshot are not acceptance requirements for this dev switch.
 They remain future work, not claims of supported production migration.
 

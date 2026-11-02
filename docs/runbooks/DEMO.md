@@ -1,5 +1,7 @@
 # Running the Phase 0 demo
 
+For current integration and delivery workflow, see [current delivery status](../STATUS.md). Dated checkpoints below retain their original results and limitations; historical pending-publication and manual Git instructions are superseded.
+
 For the current React/SDK/knowledge demo, use [Phase 6](PHASE_6.md). This page
 retains the historical Phase 0 compatibility walkthrough.
 

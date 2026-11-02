@@ -21,7 +21,7 @@ owns storage/runtime decisions; chronological preparation records below are reta
   source expiry, tenant/ACL and release checks remain authoritative. Hosted cache is
   unchanged and explicitly labeled read-only.
 - Capabilities distinguish configured from live health; integration information is
-  sanitized and shows mymemory as planned. No inference occurs when loading these pages.
+  sanitized; the original UI-3 planned-target label was superseded in PR #21 by neutral text stating that the destination is configured in Agent Engine. No inference occurs when loading these pages.
 - Users listing is admin-only, uses public fields, stable user-ID pagination and a
   50-row maximum. Existing registration remains in the Users screen.
 - English, Brazilian Portuguese and Spanish labels; observed timestamps use the

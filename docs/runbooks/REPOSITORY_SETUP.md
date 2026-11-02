@@ -1,18 +1,14 @@
 # Repository publication and CI status
 
+For current integration and delivery workflow, see [current delivery status](../STATUS.md). Dated checkpoints below retain their original results and limitations; historical pending-publication and manual Git instructions are superseded.
+
 Remote: https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk
 
 ## Current publication and work checkpoint
 
-Phase 2 is published on `codex/phase-2-journey` as
-`3c68530d932182b0fdba81319dc08a5a4dfb841d`. Its
-[GitHub Actions run](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk/actions/runs/41036233739)
-passed, verified on 2026-10-30. Phase 1 commit `b2ff9c7` also has successful remote CI.
+[Current delivery status](../STATUS.md) records integration through PR #21, exact source commits and CI runs. UI-4 and the approved development memory/store cutover are complete. Scoped publication and quality-gated automatic merge are authorized.
 
-The user authorized Phase 3 after that publication. [MEM-001](../tasks/MEM-001-MEMORY.md)
-records its local changes and hosted evidence. Phase 3 has not been committed or
-pushed; its new remote CI remains separate. The user performs Git publication
-manually. Earlier checkpoints below are history.
+The following dated checkpoints preserve historical publication results and failures; their manual-publication instructions and pending statuses are superseded.
 
 ## Verified Phase 0 publication checkpoint
 

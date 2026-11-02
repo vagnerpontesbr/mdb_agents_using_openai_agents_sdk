@@ -7,13 +7,13 @@
 
 ## Context
 
-Engine memory currently uses ClusterDemoTelco and is project-scoped. The requester
+At proposal time, Engine memory used ClusterDemoTelco and is project-scoped. The requester
 wants to move this memory to mymemory and change the DemoTelco project later.
 Application data must remain separate and prior memory ownership must be preserved.
 
 ## Decision
 
-Plan mymemory as the dedicated destination and retain OpenAI-SDK for application
+Use mymemory as the dedicated destination and retain OpenAI-SDK for application
 data. The accepted dev cutover uses mymemory for memory and the managed project store;
 ClusterDemoTelco is retained as the historical source.
 Engine remains the managed-memory owner. Local `MYMEMORY_MONGODB_URI` is a private

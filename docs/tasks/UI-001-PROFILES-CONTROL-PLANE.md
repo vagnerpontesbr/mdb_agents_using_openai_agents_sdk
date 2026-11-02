@@ -1,6 +1,8 @@
 # UI-001: Profile navigation and application Control Plane
 
-- Status: UI-0–3, multilingual and TOK-0–3 integrated through PR #19; UI-4 clean-source acceptance passed, handoff publication/CI pending
+For current integration and delivery workflow, see [current delivery status](../STATUS.md). Dated checkpoints below retain their original results and limitations; historical pending-publication and manual Git instructions are superseded.
+
+- Status: UI-0–3, multilingual and TOK-0–3 integrated through PR #19; UI-4 clean-source acceptance and CI passed, integrated in PR #20
 - Owner: Telecom demo maintainer
 - Requested: 2026-11-01
 - Branch: `codex/ui-profiles-control-plane`
@@ -199,7 +201,7 @@ reported. No repeated load, pricing or production-capacity proof is part of this
 | UI-1 | Responsive workspace, profile disclosure, fixed routes, preserved journey | Local gates and 332 remote tests passed | PR #6 merged as `95d2982` |
 | UI-2 | Profile, photo and password complete | Local and remote gates passed | PRs #7–9 merged; password `16681b9` |
 | UI-3 | Approved settings collection and role applied | Persistence and local/remote regression passed; see UI_3_CONTROL_PLANE runbook | PR #15 merged as `3fa6fab` |
-| UI-4 | Consolidated handoff and clean-source proof | [Acceptance table](../runbooks/UI_4_HANDOFF.md) | Publication/CI pending |
+| UI-4 | Consolidated handoff and clean-source proof | [Acceptance table](../runbooks/UI_4_HANDOFF.md) | Integrated in PR #20; CI passed |
 
 Planning checks must not be reported as UI acceptance. Baseline from the preceding
 review: 138 backend tests, Ruff, mypy and repository checks passed; PR #4 was merged.
@@ -217,10 +219,7 @@ Overview/Breakdown/FOCUS dashboards, with admin-only access and tested data sema
 The expanded UI-4 acceptance requires TOK-3 to pass. Missing prices remain unavailable;
 usage dashboards do not reopen the waived billing/production-capacity proof gates.
 
-[MEM-002](MEM-002-MYMEMORY-MIGRATION.md) plans the independent migration of Engine
-memory to mymemory, with tests after every change. Integrations shows current versus
-planned destination from sanitized verified metadata, never a URI. If migration
-ships later, label it planned; only MM-4 acceptance can mark mymemory active.
+[MEM-002](MEM-002-MYMEMORY-MIGRATION.md) records the applied development cutover under the explicit memory-loss override. Integrations states that the destination is configured in Agent Engine; static UI text is not a live health probe and exposes no URI. The preservation-first MM-4 gate is superseded for this accepted dev scope.
 Never combine a UI rollout and a memory cutover. No migration button or secret
 editor is added. Changes to the DemoTelco project remain later work.
 
@@ -601,7 +600,7 @@ voice demo and regression evidence in place of the complete nine-case matrix.
 not waive UI-3, Tokenomics, memory-migration or UI-4 gates.
 
 
-UI-3 implementation and evidence are tracked in [the Control Plane runbook](../runbooks/UI_3_CONTROL_PLANE.md) and [ADR-0034](../adr/0034-application-control-plane-settings.md). No live persistence or publication is claimed before the pending Atlas gate.
+UI-3 implementation and evidence are tracked in [the Control Plane runbook](../runbooks/UI_3_CONTROL_PLANE.md) and [ADR-0034](../adr/0034-application-control-plane-settings.md). The approved Atlas persistence gates passed; UI-3 merged in PR #15 with passing CI.
 
 
 The requester approved the exact UI-3 Atlas proposal with "autorizado". Collection/role readback and the three-save real persistence test passed. Values were restored to defaults at revision 3; existing demo servers and Engine were untouched. [UI-3](../runbooks/UI_3_CONTROL_PLANE.md) owns execution evidence and rollback.

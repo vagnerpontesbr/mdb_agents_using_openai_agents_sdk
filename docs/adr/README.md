@@ -11,9 +11,9 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 | ADR | Decision | Status |
 |---|---|---|
 | [ADR-0034](0034-application-control-plane-settings.md) | Bounded application settings and immutable request snapshots | Approved and live-validated for the demo |
-| [ADR-0032](0032-multilingual-profile.md) | Full profile and pt-BR/en-US/es-ES UI, answers and voice | Scope confirmed; implementation planned |
-| [ADR-0031](0031-mymemory-target.md) | Engine-managed memory destination mymemory | Target requested; planned, not applied |
-| [ADR-0030](0030-ui-profiles-control-plane.md) | Profile navigation and application Control Plane with existing ownership boundaries | Proposed; implementation not started |
+| [ADR-0032](0032-multilingual-profile.md) | Full profile and pt-BR/en-US/es-ES UI, answers and voice | Integrated through PR #14; bounded demo limitations retained |
+| [ADR-0031](0031-mymemory-target.md) | Engine-managed memory destination mymemory | Dev memory/store cutover applied; PR #21 integrated |
+| [ADR-0030](0030-ui-profiles-control-plane.md) | Profile navigation and application Control Plane with existing ownership boundaries | UI-0–4 integrated through PR #20 |
 | [ADR-0001](0001-framework-platform.md) | Separate agent framework from agent platform | Proposed |
 | [ADR-0002](0002-service-boundaries.md) | Separate workloads at justified service boundaries | Proposed |
 | [ADR-0003](0003-memory-state.md) | Separate conversation, durable memory, and execution state | Proposed |
@@ -52,4 +52,4 @@ Each ADR records context, decision, alternatives, consequences, and validation. 
 
 | [ADR-0029](0029-isolated-load-environment.md) | Explicit isolated load namespaces and scoped identities | Approved resources applied; bounded role/domain checks passed |
 
-| [ADR-0033](0033-governed-language-source-lineage.md) | Additive source languages and bounded translation lineage | Local validation passed; Atlas approval pending |
+| [ADR-0033](0033-governed-language-source-lineage.md) | Additive source languages and bounded translation lineage | Approved validators and sources applied; hosted acceptance passed |

@@ -101,7 +101,7 @@ Verify exact deployment IDs because generic status has returned stale build data
    in a quiet environment. Prior Phase 0 microphone acceptance is not acceptance
    of this new complete journey.
 6. Record sanitized evidence and remaining limits, run final local checks, and stop
-   at the Phase 2 checkpoint with manual Git commands. Do not advance to Phase 3.
+   at the historical Phase 2 checkpoint. This manual stop was subsequently superseded by the authorized quality-gated publication workflow in AGENTS.md.
 
 ## Browser audio and session capacity
 

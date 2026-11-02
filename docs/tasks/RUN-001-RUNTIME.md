@@ -1,5 +1,7 @@
 # RUN-001: Engine runtime target
 
+For current integration and delivery workflow, see [current delivery status](../STATUS.md). Dated checkpoints below retain their original results and limitations; historical pending-publication and manual Git instructions are superseded.
+
 - Status: Complete and published as `610ca8b` with passing CI `41207595549`
 - Owner: Telecom demo maintainer
 - Dependencies: COMP-003, VERT-001/002, MEM-001, RAG-001, EVAL-001, REL-001

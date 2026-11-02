@@ -1,7 +1,7 @@
 # Phase 8: Scalability and resilience
 
 [OPS-001](../tasks/OPS-001-RESILIENCE.md) owns scope, decisions and acceptance.
-Phase 8 is complete for the approved demo scope; manual publication is pending. Phase 7 commit `610ca8b` passed CI run `41207595549`.
+Phase 8 is complete for the approved demo scope; integrated through PR #4. Phase 7 commit `610ca8b` passed CI run `41207595549`.
 
 ## Local HTTP characterization — no providers
 

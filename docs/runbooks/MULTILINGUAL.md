@@ -1,7 +1,6 @@
 # Multilingual acceptance and rollout
 
-Authority: [I18N-001](../tasks/I18N-001-MULTILINGUAL.md). Inventory captured from
-integrated `16681b9` on 2026-11-01. This document describes gates, not a deployment.
+Authority: [I18N-001](../tasks/I18N-001-MULTILINGUAL.md). The original inventory was captured from `16681b9`; subsequent LANG-3 integration is PR #14. Hosted multilingual acceptance passed; the incomplete nine-case voice matrix remains explicitly accepted. See [current delivery status](../STATUS.md).
 
 ## Surface inventory
 
@@ -9,7 +8,7 @@ integrated `16681b9` on 2026-11-01. This document describes gates, not a deploym
 | --- | --- | --- |
 | Login, shell, profile, photo, password | `apps/web/src/catalogs.ts`, `i18n.tsx`, profile components | Three catalogs exist; new views must retain key/placeholder parity |
 | Support and knowledge controls | `Journey.tsx`, `Knowledge.tsx` | Controls localized; historical messages and source metadata stay verbatim |
-| Admin, integration, costs | UI-3 and TOK-001 | Future views must use the same catalogs, including empty/error states |
+| Admin, integration, costs | UI-3 and TOK-001 | Integrated UI-3/TOK views use the same catalogs, including empty/error states |
 | Profile preference | `src/telecom_app/profile.py`, identity store | Exact en-US/pt-BR/es-ES allowlist; legacy en-US; no bulk migration |
 | Turn admission and recovery | `src/telecom_app/journey.py` | Snapshot locale when accepting a new turn; execution recovery must not reread today's preference |
 | Native execution and replay | adapter `journey.py` | Carry snapshot in durable input/output, preserve it over suspend/resume; retain legacy executions |
@@ -17,8 +16,8 @@ integrated `16681b9` on 2026-11-01. This document describes gates, not a deploym
 | Invoice, diagnosis, offers, receipts | adapter `journey_domain.py` | Versioned protected templates; same validated values, IDs and eligibility |
 | Local invoice renderer | `src/telecom_app/rendering.py` | Same locale semantics; this path alone does not prove hosted support |
 | Rejection, expiry and uncertain outcome | adapter and API `journey.py` | Localized templates; no successful-action claim from an uncertain result |
-| Knowledge retrieval/publication/cache | `knowledge.py`, `curation.py`, `knowledge_search.py`, `knowledge_cache.py`, adapter `knowledge_tools.py` | LANG-2c local contracts support en/pt/es; approved Atlas validators applied; three live sources/direct retrieval verified; hosted acceptance pending |
-| Speech input/output | `src/telecom_app/voice.py`, API speech routes | STT currently en; capture recording locale, use the execution locale for TTS |
+| Knowledge retrieval/publication/cache | `knowledge.py`, `curation.py`, `knowledge_search.py`, `knowledge_cache.py`, adapter `knowledge_tools.py` | LANG-2c local contracts support en/pt/es; approved Atlas validators applied; three live sources/direct retrieval verified; 20 hosted multilingual cases and HTTP recovery/isolation acceptance passed |
+| Speech input/output | `src/telecom_app/voice.py`, API speech routes | Recording locale is captured for en-US/pt-BR/es-ES; execution locale governs TTS; LANG-3 retains bounded provider limitations |
 | Errors | `api.ts`, API exception handlers | Add stable safe codes; localize known codes without matching raw provider prose |
 
 ## Transport and compatibility gate

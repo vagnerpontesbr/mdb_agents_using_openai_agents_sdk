@@ -115,7 +115,7 @@ static text as a live health probe. No existing local application server was res
 Executed frontend lint, typecheck, 11 unit tests and build; all passed. Repository
 link/ADR checks and git diff --check passed. Full local Python/browser suites were
 not rerun: the earlier local Python 3.15.2 standard-library failure remains unresolved.
-Remote CI must run those suites on the publication commit. No new full hosted chat/
+Remote CI passed on source `6269f20a5c608620340a5cd9b712172c5871d6c4`; PR #21 merged as `bfb52ef`. [Current delivery status](../STATUS.md) links both runs and the 555-test suite breakdown. No new full hosted chat/
 voice evaluation or production-capacity claim is part of this dev cutover.
 
 Final metadata verification: the copied store has **33 collections and 116 classic

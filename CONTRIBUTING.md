@@ -1,5 +1,7 @@
 # Contributing
 
+Current integrated scope, verification and remaining limitations: [delivery status](docs/STATUS.md).
+
 The intended repository is [vagnerpontesbr/mdb_agents_using_openai_agents_sdk](https://github.com/vagnerpontesbr/mdb_agents_using_openai_agents_sdk). Read [AGENTS.md](AGENTS.md) and the relevant task/ADR before working. Phases 0–8 and UI/Tokenomics through TOK-3 are integrated with passing CI. See [UI-4 handoff](docs/runbooks/UI_4_HANDOFF.md) for consolidated acceptance and limitations. Use [OPS-001](docs/tasks/OPS-001-RESILIENCE.md) for test bounds and the accepted completion scope. Start with [the handoff runbook](docs/runbooks/PHASE_6.md). See the [current checkpoint](docs/compatibility/PHASE_0.md) and [publication/CI status](docs/runbooks/REPOSITORY_SETUP.md).
 
 ## Application validation
